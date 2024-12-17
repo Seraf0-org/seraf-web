@@ -29,15 +29,15 @@ export function Members() {
                             href={member.sns}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`text-center cursor-pointer hover:opacity-80 transition-all duration-1000 transform 
+                            className={`group text-center cursor-pointer transition-all duration-300 
                                 bg-white dark:bg-gray-900 rounded-xl p-4 
                                 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
                                 hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
                                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                             style={{ transitionDelay: `${index * 0.1}s` }}
                         >
-                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden group rounded-lg">
-                                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 transition-transform duration-300 hover:scale-110">
+                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg">
+                                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 transition-transform duration-300 group-hover:scale-110">
                                     <img
                                         src={member.mainImage}
                                         alt={member.name}
@@ -51,7 +51,7 @@ export function Members() {
                                     }}
                                 >
                                     <div
-                                        className="w-full h-full group-hover:scale-100 transition-all duration-300 ease-in-out hover:clip-path-full"
+                                        className="w-full h-full group-hover:scale-110 transition-all duration-300 ease-in-out group-hover:clip-path-full"
                                         style={{
                                             backgroundImage: `url(${member.subImage})`,
                                             backgroundSize: 'cover',
@@ -63,7 +63,9 @@ export function Members() {
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                                 {member.name}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-300 w-11/12 md:w-4/5 mx-auto">{member.position}</p>
+                            <p className="text-gray-600 dark:text-gray-300 w-11/12 md:w-4/5 mx-auto">
+                                {member.position}
+                            </p>
                         </a>
                     ))}
                 </div>
