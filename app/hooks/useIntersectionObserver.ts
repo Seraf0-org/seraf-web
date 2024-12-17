@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export function useIntersectionObserver(options = {}) {
-  const elementRef = useRef(null);
+  const elementRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -27,5 +27,5 @@ export function useIntersectionObserver(options = {}) {
     };
   }, []);
 
-  return [elementRef, isVisible];
+  return [elementRef, isVisible] as const;
 } 

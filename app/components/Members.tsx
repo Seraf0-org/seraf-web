@@ -22,7 +22,7 @@ export function Members() {
                         </svg>
                     </div>
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto px-4 md:px-8">
                     {members.map((member, index) => (
                         <a
                             key={member.id}
@@ -35,7 +35,7 @@ export function Members() {
                                 }`}
                             style={{ transitionDelay: `${index * 0.1}s` }}
                         >
-                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden">
+                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden group">
                                 <div className="w-full h-full bg-gray-200 dark:bg-gray-700 transition-transform duration-300 hover:scale-110">
                                     <img
                                         src={member.mainImage}
@@ -44,22 +44,25 @@ export function Members() {
                                     />
                                 </div>
                                 <div
-                                    className="absolute bottom-0 right-0 w-full h-full overflow-hidden transition-transform duration-300 hover:scale-100"
+                                    className="absolute bottom-0 right-0 w-full h-full overflow-hidden transition-all duration-300 ease-in-out"
                                     style={{
-                                        clipPath: 'polygon(100% 70%, 100% 100%, 70% 100%)'
+                                        clipPath: 'polygon(100% 70%, 100% 100%, 70% 100%)',
                                     }}
                                 >
-                                    <img
-                                        src={member.subImage}
-                                        alt=""
-                                        className="w-full h-full object-cover"
+                                    <div
+                                        className="w-full h-full group-hover:scale-100 transition-all duration-300 ease-in-out hover:clip-path-full"
+                                        style={{
+                                            backgroundImage: `url(${member.subImage})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                        }}
                                     />
                                 </div>
                             </div>
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                                 {member.name}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-300">{member.position}</p>
+                            <p className="text-gray-600 dark:text-gray-300 w-11/12 md:w-4/5 mx-auto">{member.position}</p>
                         </a>
                     ))}
                 </div>
