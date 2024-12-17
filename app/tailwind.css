@@ -2,11 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+@layer base {
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+  html,
+  body {
+    @apply bg-white dark:bg-gray-950;
+  }
+}
+
+@layer utilities {
+  img {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
   }
 }
