@@ -1,7 +1,13 @@
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+
 export function Footer() {
+    const [sectionRef, isVisible] = useIntersectionObserver();
+
     return (
-        <footer className="bg-gray-900 text-white py-12">
-            <div className="container mx-auto px-4">
+        <footer ref={sectionRef} className="bg-gray-900 text-white py-12">
+            <div className={`container mx-auto px-4 transition-all duration-1000 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
                         <h3 className="text-xl font-bold mb-4">Seraf()</h3>

@@ -19,8 +19,58 @@ export const links: LinksFunction = () => [
 // テーマの型を他のコンポーネントでも使えるように
 export type Theme = 'light' | 'dark';
 
+// スクロール関連の型定義を追加
+type ScrollFunction = (targetPosition: number, duration?: number) => void;
+
+// コンテキストの型を更新
+export type OutletContext = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  smoothScrollTo: ScrollFunction;
+};
+
 export default function App() {
   const [theme, setTheme] = useState<Theme>('light');
+
+  // スムーズスクロール関数
+  const smoothScrollTo: ScrollFunction = (targetPosition: number, duration: number = 500) => {
+    window.stopSmoothScroll?.();
+
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    function animation(currentTime: number) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    function ease(t: number, b: number, c: number, d: number) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
+
+    // スクロール完了後に履歴を更新
+    setTimeout(() => {
+      const state = window.history.state || {};
+      window.history.replaceState(
+        {
+          ...state,
+          scroll: targetPosition,
+          key: location.pathname + new Date().getTime()
+        },
+        '',
+        window.location.pathname
+      );
+    }, duration);
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as Theme | null;
@@ -45,19 +95,20 @@ export default function App() {
 
   // スムーズスクロールの実装
   useEffect(() => {
+    // グローバルに現在のアニメーションフレームIDを保存
+    let globalRequestId: number | null = null;
+
     // タッチデバイスの判定
     const isTouchDevice = () => {
       return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     };
 
-    // タッチデバイスの場合は、カスタムスクロールを適用しない
-    if (isTouchDevice()) {
+    if (isTouchDevice() || window.location.hash) {
       return;
     }
 
     let currentScroll = window.scrollY;
     let targetScroll = currentScroll;
-    let requestId: number | null = null;
     let lastTime = performance.now();
     let velocity = 0;
 
@@ -88,14 +139,14 @@ export default function App() {
       if (Math.abs(difference) < 0.01 && Math.abs(velocity) < 0.01) {
         currentScroll = targetScroll;
         window.scrollTo(0, currentScroll);
-        requestId = null;
+        globalRequestId = null;
         velocity = 0;
         return;
       }
 
       currentScroll += velocity;
       window.scrollTo(0, currentScroll);
-      requestId = requestAnimationFrame(smoothScroll);
+      globalRequestId = requestAnimationFrame(smoothScroll);
     };
 
     const handleWheel = (e: WheelEvent) => {
@@ -118,19 +169,30 @@ export default function App() {
 
       targetScroll = newTarget;
 
-      if (!requestId) {
+      if (!globalRequestId) {
         lastTime = performance.now();
-        requestId = requestAnimationFrame(smoothScroll);
+        globalRequestId = requestAnimationFrame(smoothScroll);
+      }
+    };
+
+    // グローバルにスクロールアニメーションを停止する関数を公開
+    window.stopSmoothScroll = () => {
+      if (globalRequestId) {
+        cancelAnimationFrame(globalRequestId);
+        globalRequestId = null;
+        velocity = 0;
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      if (requestId) {
-        cancelAnimationFrame(requestId);
+      if (globalRequestId) {
+        cancelAnimationFrame(globalRequestId);
       }
       window.removeEventListener("wheel", handleWheel);
+      // クリーンアップ時にグローバル関数を削除
+      delete window.stopSmoothScroll;
     };
   }, []);
 
@@ -143,11 +205,24 @@ export default function App() {
         <Links />
       </head>
       <body className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-        <Outlet context={{ theme, setTheme }} />
-        <ScrollRestoration />
+        <Outlet context={{
+          theme,
+          setTheme,
+          smoothScrollTo
+        }} />
+        <ScrollRestoration
+          getKey={location => location.pathname + new Date().getTime()}
+        />
         <Scripts />
         <LiveReload />
       </body>
     </html>
   );
+}
+
+// TypeScriptのグローバル型定義を追加
+declare global {
+  interface Window {
+    stopSmoothScroll?: () => void;
+  }
 }

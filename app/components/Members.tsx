@@ -29,13 +29,14 @@ export function Members() {
                             href={member.sns}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`text-center cursor-pointer hover:opacity-80 transition-all duration-1000 transform ${isVisible
-                                ? 'opacity-100 translate-y-0'
-                                : 'opacity-0 translate-y-10'
-                                }`}
+                            className={`text-center cursor-pointer hover:opacity-80 transition-all duration-1000 transform 
+                                bg-white dark:bg-gray-900 rounded-xl p-4 
+                                shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
+                                hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
+                                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                             style={{ transitionDelay: `${index * 0.1}s` }}
                         >
-                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden group">
+                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden group rounded-lg">
                                 <div className="w-full h-full bg-gray-200 dark:bg-gray-700 transition-transform duration-300 hover:scale-110">
                                     <img
                                         src={member.mainImage}

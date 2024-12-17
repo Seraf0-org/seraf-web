@@ -6,17 +6,19 @@ export function Products() {
 
   return (
     <section ref={sectionRef} className="py-12 bg-gray-50 dark:bg-gray-900">
-      <div className={`container mx-auto px-4 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-        <h1 className="text-4xl md:text-6xl font-bold text-center text-gray-900 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,0,0,0.6)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
+      <div className={`container mx-auto px-4 transition-all duration-1000 transform ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}>
+        <h1 className="text-4xl md:text-6xl font-bold text-center text-gray-900 dark:text-white mb-16">
           Products
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <div
               key={product.id}
-              className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
+              className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-1000 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
               style={{ transitionDelay: `${index * 0.1}s` }}
             >
               <div className="relative pt-[56.25%] overflow-hidden">

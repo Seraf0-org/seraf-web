@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "@remix-run/react";
 import type { Theme } from "~/root";
-
-type ContextType = {
-    theme: Theme;
-    setTheme: (theme: Theme) => void;
-};
+import type { OutletContext } from "~/root";
 
 export function Header() {
-    const { theme, setTheme } = useOutletContext<ContextType>();
+    const { theme, setTheme, smoothScrollTo } = useOutletContext<OutletContext>();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const isDark = theme === 'dark';
+    const invertedTheme = isDark ? 'light' : 'dark';
+    const currentTheme = isHovered ? invertedTheme : theme;
+    const isCurrentDark = currentTheme === 'dark';
 
     useEffect(() => {
         setIsVisible(true);
@@ -22,29 +21,6 @@ export function Header() {
         setTheme(prev => prev === 'light' ? 'dark' : 'light');
     };
 
-    const smoothScroll = (targetPosition: number, duration: number = 1000) => {
-        const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition;
-        let startTime: number | null = null;
-
-        function animation(currentTime: number) {
-            if (startTime === null) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const run = ease(timeElapsed, startPosition, distance, duration);
-            window.scrollTo(0, run);
-            if (timeElapsed < duration) requestAnimationFrame(animation);
-        }
-
-        function ease(t: number, b: number, c: number, d: number) {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t + b;
-            t--;
-            return -c / 2 * (t * (t - 2) - 1) + b;
-        }
-
-        requestAnimationFrame(animation);
-    };
-
     const handleClick = (sectionId: string) => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -52,11 +28,14 @@ export function Header() {
             const elementPosition = element.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition - headerHeight;
 
-            smoothScroll(offsetPosition, 500);
-            setTimeout(() => {
-                setIsMenuOpen(false);
-            }, 100);
+            smoothScrollTo(offsetPosition);
+            setIsMenuOpen(false);
         }
+    };
+
+    const handleLogoClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        smoothScrollTo(0);
     };
 
     return (
@@ -65,28 +44,21 @@ export function Header() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <div className={`relative transition-colors duration-300 rounded-full ${isHovered
-                ? 'bg-white shadow-[0_0_25px_rgba(0,0,0,0.1)]'
-                : 'bg-white/60 dark:bg-gray-800/60 backdrop-blur-md shadow-[0_0_18px_rgba(0,0,0,0.2)] dark:shadow-[0_0_18px_rgba(255,255,255,0.1)]'
+            <div className={`relative transition-colors duration-300 rounded-full ${isCurrentDark
+                ? 'bg-gray-800/60 backdrop-blur-md shadow-[0_0_18px_rgba(255,255,255,0.1)]'
+                : 'bg-white/60 backdrop-blur-md shadow-[0_0_18px_rgba(0,0,0,0.2)]'
                 }`}>
                 <nav className="container mx-auto px-4 py-2 overflow-x-hidden">
                     <div className="flex items-center justify-between">
                         <a
                             href="#"
-                            onClick={(e) => {
-                                smoothScroll(0, 500);
-                            }}
+                            onClick={handleLogoClick}
                             className="flex items-center text-xl font-bold text-gray-800 dark:text-white"
                         >
                             <img
-                                src={isHovered ? "/images/logo-dark.png" : "/images/logo-dark.png"}
+                                src={isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png"}
                                 alt="Logo"
-                                className={`w-16 md:w-24 h-auto mr-2 ${isHovered ? 'block' : 'dark:hidden'}`}
-                            />
-                            <img
-                                src={isHovered ? "/images/logo-dark.png" : "/images/logo-light.png"}
-                                alt="Logo"
-                                className={`w-16 md:w-24 h-auto mr-2 ${isHovered ? 'hidden' : 'hidden dark:block'}`}
+                                className="w-16 md:w-24 h-auto mr-2"
                             />
                         </a>
 
@@ -97,9 +69,9 @@ export function Header() {
                                     <li key={item}>
                                         <button
                                             onClick={() => handleClick(item)}
-                                            className={`text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isHovered
-                                                ? 'text-gray-800 hover:text-gray-600'
-                                                : 'text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white'
+                                            className={`text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isCurrentDark
+                                                ? 'text-gray-200 hover:text-white'
+                                                : 'text-gray-600 hover:text-gray-900'
                                                 }`}
                                         >
                                             {item.charAt(0).toUpperCase() + item.slice(1)}
