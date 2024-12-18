@@ -35,20 +35,20 @@ export function News() {
           className="w-auto h-auto opacity-80"
         />
       </div>
-      <div className={`container mx-auto px-4 relative z-10 transition-all duration-1000 transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
+      <div className={`container mx-auto px-4 relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
         <div className="ml-auto max-w-3xl">
-          <h1 className="text-4xl md:text-6xl font-bold text-right text-cyan-100 dark:text-cyan-400 mb-16 relative drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,192,192,0.5)]">
+          <h1 className="text-4xl md:text-6xl font-bold text-right text-white dark:text-gray-900 mb-16 relative drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,192,192,0.5)]">
             News
             <div className="absolute fixed-right">
               <svg width="100vw" height="45" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw' }}>
                 <path
-                  d="M600 10 L880 10 900 0 L1000 0"
+                  d="M470 10 L910 10 930 0 L1000 0"
                   stroke="currentColor"
                   strokeWidth="3"
                   fill="none"
-                  className="text-cyan-100 dark:text-cyan-400"
+                  className={`text-cyan-100 dark:text-cyan-400 ${isVisible ? 'animate-draw-line-from-right' : ''}`}
+                  strokeDasharray="1000"
                 />
               </svg>
             </div>
@@ -57,9 +57,8 @@ export function News() {
             {[...newsItems].reverse().map((item, index) => (
               <div
                 key={item.id}
-                className={`bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden flex transition-all duration-1000 transform ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
+                className={`bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden flex transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                  }`}
                 style={{ transitionDelay: `${index * 0.1}s` }}
               >
                 <div className="w-1/3 relative">

@@ -11,7 +11,7 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "代表, シナリオライター, エンジニア, モデラー,映像作家",
+        position: "ゲームデザイナー, シナリオライター, エンジニア, モデラー,映像作家",
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
         sns: "https://twitter.com/KTN_PERIOD"
@@ -19,7 +19,7 @@ export const members: Member[] = [
     {
         id: 2,
         name: "ゆぴる",
-        position: "専属デザイナー, モデラー",
+        position: "専属デザイナー, イラストレーター, モデラー",
         mainImage: "/images/member-2.jpg",
         subImage: "/images/member-2-sub.jpg",
         sns: "https://twitter.com/yupi_yupapa9"

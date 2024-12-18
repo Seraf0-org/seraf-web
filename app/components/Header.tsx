@@ -45,8 +45,8 @@ export function Header() {
             onMouseLeave={() => setIsHovered(false)}
         >
             <div className={`relative transition-colors duration-300 rounded-full ${isCurrentDark
-                ? 'bg-gray-800/60 backdrop-blur-md shadow-[0_0_18px_rgba(255,255,255,0.1)]'
-                : 'bg-white/60 backdrop-blur-md shadow-[0_0_18px_rgba(0,0,0,0.2)]'
+                ? 'bg-gray-800/50 backdrop-blur-md shadow-[0_0_18px_rgba(255,255,255,0.1)]'
+                : 'bg-white/50 backdrop-blur-md shadow-[0_0_18px_rgba(0,0,0,0.2)]'
                 }`}>
                 <nav className="container mx-auto px-4 py-2 overflow-x-hidden">
                     <div className="flex items-center justify-between">

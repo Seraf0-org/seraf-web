@@ -19,6 +19,8 @@ export default {
       },
       animation: {
         'fade-in-down': 'fade-in-down 1s ease-out forwards',
+        'draw-line-from-left': 'draw-line-from-left 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards',
+        'draw-line-from-right': 'draw-line-from-right 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards',
       },
       keyframes: {
         'fade-in-down': {
@@ -29,6 +31,22 @@ export default {
           '100%': {
             opacity: '1',
             transform: 'translateY(0)'
+          }
+        },
+        'draw-line-from-left': {
+          'from': {
+            strokeDashoffset: '1000'
+          },
+          'to': {
+            strokeDashoffset: '0'
+          }
+        },
+        'draw-line-from-right': {
+          'from': {
+            strokeDashoffset: '-1000'
+          },
+          'to': {
+            strokeDashoffset: '0'
           }
         }
       }
