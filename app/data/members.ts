@@ -34,7 +34,7 @@ export const members: Member[] = [
     },
     {
         id: 4,
-        name: "れれれれ",
+        name: "Jiska",
         position: "デザイナー, 映像作家",
         mainImage: "/images/member-4.jpg",
         subImage: "/images/member-4-sub.jpg",
@@ -56,4 +56,12 @@ export const members: Member[] = [
         subImage: "/images/member-6-sub.jpg",
         sns: "https://twitter.com/Sm_1010_"
     },
+    {
+        id: 7,
+        name: "あきべ",
+        position: "イラストレーター",
+        mainImage: "/images/member-7.jpg",
+        subImage: "/images/member-7.jpg",
+        sns: "https://twitter.com/pikobi222"
+    }
 ];
