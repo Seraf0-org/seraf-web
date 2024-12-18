@@ -49,11 +49,11 @@ export function Header() {
                 : 'bg-white/50 backdrop-blur-md shadow-[0_0_18px_rgba(0,0,0,0.2)]'
                 }`}>
                 <nav className="container mx-auto px-4 py-2 overflow-x-hidden">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center">
                         <a
                             href="#"
                             onClick={handleLogoClick}
-                            className="flex items-center text-xl font-bold text-gray-800 dark:text-white"
+                            className="flex items-center text-xl font-bold text-gray-800 dark:text-white ml-4 md:ml-8"
                         >
                             <img
                                 src={isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png"}
@@ -62,16 +62,16 @@ export function Header() {
                             />
                         </a>
 
-                        <div className="hidden md:flex items-center space-x-6 lg:space-x-12">
+                        <div className="hidden md:flex items-center flex-1">
                             {/* デスクトップメニュー */}
-                            <ul className="flex space-x-6 lg:space-x-12">
+                            <ul className="flex space-x-6 lg:space-x-12 ml-auto">
                                 {['about', 'news', 'products', 'members', 'contact'].map((item) => (
                                     <li key={item}>
                                         <button
                                             onClick={() => handleClick(item)}
                                             className={`text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isCurrentDark
-                                                ? 'text-gray-200 hover:text-white'
-                                                : 'text-gray-600 hover:text-gray-900'
+                                                ? 'text-gray-300 hover:text-white'
+                                                : 'text-gray-700 hover:text-gray-900'
                                                 }`}
                                         >
                                             {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -83,9 +83,9 @@ export function Header() {
                             {/* テーマ切り替えボタン */}
                             <button
                                 onClick={toggleTheme}
-                                className={`p-2 rounded-full transition-colors duration-300 ${isHovered
-                                    ? 'text-gray-800 hover:text-gray-600'
-                                    : 'text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white'
+                                className={`p-2 rounded-full transition-colors duration-300 ml-8 mr-4 md:mr-8 ${isHovered
+                                    ? 'text-gray-300 dark:text-gray-700 hover:text-white dark:hover:text-gray-900'
+                                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                                     }`}
                                 aria-label="テーマ切り替え"
                             >
@@ -101,7 +101,7 @@ export function Header() {
                             </button>
                         </div>
 
-                        {/* モバイルメニューボタン */}
+                        {/* モバイルメニュー���タン */}
                         <div className="md:hidden flex items-center space-x-4">
                             {/* テーマ切り替えボタン（モバイル） */}
                             <button

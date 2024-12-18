@@ -23,7 +23,7 @@ export function Members() {
                         </svg>
                     </div>
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto px-4 md:px-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 max-w-7xl mx-auto px-4 md:px-8">
                     {members.map((member, index) => (
                         <a
                             key={member.id}
@@ -64,7 +64,7 @@ export function Members() {
                             <h3 className="text-lg font-semibold text-white dark:text-gray-900">
                                 {member.name}
                             </h3>
-                            <p className="text-gray-300 dark:text-gray-600 w-11/12 md:w-4/5 mx-auto">
+                            <p className="text-gray-300 dark:text-gray-600 w-11/12 md:w-5/6 mx-auto">
                                 {member.position}
                             </p>
                         </a>

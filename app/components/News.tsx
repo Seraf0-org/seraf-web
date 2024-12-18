@@ -43,7 +43,7 @@ export function News() {
             <div className="absolute fixed-right">
               <svg width="100vw" height="45" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw' }}>
                 <path
-                  d="M470 10 L910 10 930 0 L1000 0"
+                  d="M470 10 L910 10 940 0 L1000 0"
                   stroke="currentColor"
                   strokeWidth="3"
                   fill="none"

@@ -4,6 +4,10 @@ import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 export function Products() {
   const [sectionRef, isVisible] = useIntersectionObserver();
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = "/images/products/product-none.jpg";
+  };
+
   return (
     <section ref={sectionRef} className="py-12 bg-gray-50 dark:bg-gray-900">
       <div className={`container mx-auto px-4 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -13,7 +17,7 @@ export function Products() {
           <div className="absolute top-24 fixed-left">
             <svg width="100vw" height="80" viewBox="0 0 1000 20" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
               <path
-                d="M220 0 L940 0 970 20 L1000 20"
+                d="M220 0 L930 0 950 20 L1000 20"
                 stroke="currentColor"
                 strokeWidth="3"
                 fill="none"
@@ -27,14 +31,15 @@ export function Products() {
           {products.map((product, index) => (
             <div
               key={product.id}
-              className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
               style={{ transitionDelay: `${index * 0.1}s` }}
             >
               <div className="relative pt-[56.25%] overflow-hidden">
                 <img
-                  src={product.image}
+                  src={product.image || "/images/products/product-none.jpg"}
                   alt={product.name}
+                  onError={handleImageError}
                   className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>

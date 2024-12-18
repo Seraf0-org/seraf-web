@@ -11,7 +11,7 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "ゲームデザイナー, シナリオライター, エンジニア, モデラー,映像作家",
+        position: "ゲームデザイナー, 脚本家, エンジニア, モデラー, 映像作家",
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
         sns: "https://twitter.com/KTN_PERIOD"
