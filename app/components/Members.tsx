@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { members } from "~/data/members";
 import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 
 export function Members() {
     const [sectionRef, isVisible] = useIntersectionObserver();
+    const [hoveredId, setHoveredId] = useState<number | null>(null);
 
     return (
         <section ref={sectionRef} className="py-12 bg-gray-900 dark:bg-white">
@@ -38,7 +40,7 @@ export function Members() {
                             style={{ transitionDelay: `${index * 0.1}s` }}
                         >
                             <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg">
-                                <div className="w-full h-full bg-gray-700 dark:bg-gray-200 transition-transform duration-300 group-hover:scale-110">
+                                <div className="w-full h-full bg-gray-700 dark:bg-gray-200 group-hover:scale-110 transition-transform duration-300">
                                     <img
                                         src={member.mainImage}
                                         alt={member.name}
@@ -46,18 +48,25 @@ export function Members() {
                                     />
                                 </div>
                                 <div
-                                    className="absolute bottom-0 right-0 w-full h-full overflow-hidden transition-all duration-300 ease-in-out"
+                                    className="absolute bottom-0 right-0 w-full h-full overflow-hidden"
                                     style={{
-                                        clipPath: 'polygon(100% 70%, 100% 100%, 70% 100%)',
+                                        clipPath: hoveredId === member.id
+                                            ? 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+                                            : 'polygon(100% 70%, 100% 100%, 70% 100%)',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        WebkitTransition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        transitionProperty: 'clip-path, -webkit-clip-path',
                                     }}
                                 >
                                     <div
-                                        className="w-full h-full group-hover:scale-110 transition-all duration-300 ease-in-out group-hover:clip-path-full"
+                                        className="w-full h-full group-hover:scale-110 transition-all duration-300"
                                         style={{
                                             backgroundImage: `url(${member.subImage})`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
                                         }}
+                                        onMouseEnter={() => setHoveredId(member.id)}
+                                        onMouseLeave={() => setHoveredId(null)}
                                     />
                                 </div>
                             </div>
@@ -71,6 +80,6 @@ export function Members() {
                     ))}
                 </div>
             </div>
-        </section>
+        </section >
     );
 }

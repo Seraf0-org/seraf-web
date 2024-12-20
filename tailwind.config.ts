@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}"],
   darkMode: 'class',
   theme: {
     extend: {
@@ -49,7 +49,19 @@ export default {
             strokeDashoffset: '0'
           }
         }
-      }
+      },
+      clipPath: {
+        full: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+      },
+      transitionProperty: {
+        'clip-path': 'clip-path',
+      },
+      transitionTimingFunction: {
+        'clip': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+      transitionDuration: {
+        '400': '400ms',
+      },
     },
   },
   plugins: [],
