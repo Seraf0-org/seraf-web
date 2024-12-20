@@ -31,9 +31,12 @@ export function Products() {
           {products.map((product, index) => (
             <div
               key={product.id}
-              className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
-              style={{ transitionDelay: `${index * 0.1}s` }}
+              style={{
+                transitionDelay: `${index * 200}ms`,
+                transitionProperty: 'opacity, transform'
+              }}
             >
               <div className="relative pt-[56.25%] overflow-hidden">
                 <img
@@ -50,10 +53,22 @@ export function Products() {
                   }}
                 />
                 <div className="relative z-10">
-                  <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                  <h3
+                    className={`text-xl font-semibold mb-2 text-gray-900 dark:text-white transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                    style={{
+                      transitionDelay: `${(products.length * 200) + 200}ms`,
+                      transitionProperty: 'opacity, transform'
+                    }}
+                  >
                     {product.name}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p
+                    className={`text-gray-600 dark:text-gray-300 transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                    style={{
+                      transitionDelay: `${(products.length * 200) + 400}ms`,
+                      transitionProperty: 'opacity, transform'
+                    }}
+                  >
                     {product.description}
                   </p>
                 </div>
@@ -64,4 +79,4 @@ export function Products() {
       </div>
     </section>
   );
-} 
+}

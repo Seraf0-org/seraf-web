@@ -32,12 +32,15 @@ export function Members() {
                             href={member.sns}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`group text-center cursor-pointer transition-all duration-300 
+                            className={`group text-center cursor-pointer transition-all duration-500 
                                 bg-gray-800 dark:bg-gray-100 rounded-xl p-4 
                                 shadow-[0_0_15px_rgba(255,255,255,0.1)] dark:shadow-[0_0_15px_rgba(0,0,0,0.1)]
                                 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] dark:hover:shadow-[0_0_20px_rgba(0,0,0,0.15)]
                                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                            style={{ transitionDelay: `${index * 0.1}s` }}
+                            style={{ 
+                                transitionDelay: `${index * 200}ms`,
+                                transitionProperty: 'opacity, transform'
+                            }}
                         >
                             <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg">
                                 <div className="w-full h-full bg-gray-700 dark:bg-gray-200 group-hover:scale-110 transition-transform duration-300">
@@ -70,16 +73,30 @@ export function Members() {
                                     />
                                 </div>
                             </div>
-                            <h3 className="text-lg font-semibold text-white dark:text-gray-900">
+                            <h3 
+                                className={`text-lg font-semibold text-white dark:text-gray-900 transition-all duration-500 transform
+                                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                                style={{ 
+                                    transitionDelay: `${(index * 200) + 300}ms`,
+                                    transitionProperty: 'opacity, transform'
+                                }}
+                            >
                                 {member.name}
                             </h3>
-                            <p className="text-gray-300 dark:text-gray-600 w-11/12 md:w-5/6 mx-auto">
+                            <p 
+                                className={`text-gray-300 dark:text-gray-600 w-11/12 md:w-5/6 mx-auto transition-all duration-500 transform
+                                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                                style={{ 
+                                    transitionDelay: `${(index * 200) + 400}ms`,
+                                    transitionProperty: 'opacity, transform'
+                                }}
+                            >
                                 {member.position}
                             </p>
                         </a>
                     ))}
                 </div>
             </div>
-        </section >
+        </section>
     );
 }
