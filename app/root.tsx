@@ -32,44 +32,82 @@ export type OutletContext = {
 export default function App() {
   const [theme, setTheme] = useState<Theme>('light');
 
-  // スムーズスクロール関数
+  // スムーズスクロール関数を修正
   const smoothScrollTo: ScrollFunction = (targetPosition: number, duration: number = 500) => {
+    // 既存のスムーズスクロールを停止
     window.stopSmoothScroll?.();
 
+    // 現在のスクロール位置を開始位置として使用
     const startPosition = window.scrollY;
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
+    let animationFrameId: number;
+    let currentPosition = startPosition;
+    let isManualScrollDetected = false;
 
     function animation(currentTime: number) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
+        // マニュアルスクロールが検出された場合、アニメーションを停止
+        if (isManualScrollDetected) {
+            cancelAnimationFrame(animationFrameId);
+            return;
+        }
+
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // イージング関数を使用して現在位置を計算
+        currentPosition = startPosition + distance * easeInOutQuad(progress);
+        window.scrollTo(0, currentPosition);
+        
+        if (progress < 1) {
+            animationFrameId = requestAnimationFrame(animation);
+        } else {
+            currentPosition = targetPosition;
+            window.scrollTo(0, currentPosition);
+            
+            if (window.smoothScrollState) {
+                window.smoothScrollState.currentScroll = currentPosition;
+                window.smoothScrollState.targetScroll = currentPosition;
+                window.smoothScrollState.isAutoScrolling = false;
+            }
+        }
     }
 
-    function ease(t: number, b: number, c: number, d: number) {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t + b;
-      t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
+    function easeInOutQuad(t: number): number {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
     }
 
-    requestAnimationFrame(animation);
+    // ホイールイベントのハンドラー
+    const handleWheelDuringAutoScroll = (e: WheelEvent) => {
+        isManualScrollDetected = true;
+        if (window.smoothScrollState) {
+            window.smoothScrollState.isAutoScrolling = false;
+            window.smoothScrollState.currentScroll = window.scrollY;
+            window.smoothScrollState.targetScroll = window.scrollY;
+        }
+        window.removeEventListener('wheel', handleWheelDuringAutoScroll);
+    };
 
-    // スクロール完了後に履歴を更新
-    setTimeout(() => {
-      const state = window.history.state || {};
-      window.history.replaceState(
-        {
-          ...state,
-          scroll: targetPosition,
-          key: location.pathname + new Date().getTime()
-        },
-        '',
-        window.location.pathname
-      );
-    }, duration);
+    // 自動スクロール中のホイールイベントを監視
+    window.addEventListener('wheel', handleWheelDuringAutoScroll);
+
+    // アニメーションを開始
+    if (window.smoothScrollState) {
+        window.smoothScrollState.isAutoScrolling = true;
+    }
+    animationFrameId = requestAnimationFrame(animation);
+
+    // クリーンアップ関数を更新
+    window.stopSmoothScroll = () => {
+        cancelAnimationFrame(animationFrameId);
+        window.removeEventListener('wheel', handleWheelDuringAutoScroll);
+        if (window.smoothScrollState) {
+            window.smoothScrollState.currentScroll = window.scrollY;
+            window.smoothScrollState.targetScroll = window.scrollY;
+            window.smoothScrollState.isAutoScrolling = false;
+        }
+    };
   };
 
   useEffect(() => {
@@ -95,97 +133,81 @@ export default function App() {
 
   // スムーズスクロールの実装
   useEffect(() => {
-    // グローバルに現在のアニメーションフレームIDを保存
+    // グローバルスクロール状態の初期化
+    window.smoothScrollState = {
+        currentScroll: window.scrollY,
+        targetScroll: window.scrollY,
+        velocity: 0
+    };
+
     let globalRequestId: number | null = null;
 
-    // タッチデバイスの判定
     const isTouchDevice = () => {
-      return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     };
 
     if (isTouchDevice() || window.location.hash) {
-      return;
+        return;
     }
 
-    let currentScroll = window.scrollY;
-    let targetScroll = currentScroll;
-    let lastTime = performance.now();
-    let velocity = 0;
-
     const smoothScroll = (currentTime: number) => {
-      const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.1);
-      lastTime = currentTime;
+        const state = window.smoothScrollState;
+        if (!state) return;
 
-      const difference = targetScroll - currentScroll;
+        const deltaTime = Math.min((currentTime - state.lastTime) / 1000, 0.1);
+        state.lastTime = currentTime;
 
-      // より小さな加速度（0.1 → 0.05）
-      const targetVelocity = difference * 0.03;
+        const difference = state.targetScroll - state.currentScroll;
+        const targetVelocity = difference * 0.03;
+        state.velocity = targetVelocity;
 
-      // 現在の速度を減衰させながら目標速度に近づける
-      velocity = targetVelocity;
+        if ((state.velocity > 0 && difference < 0) || (state.velocity < 0 && difference > 0)) {
+            state.velocity = 0;
+        }
 
-      // 速度の符号が目標への方向と逆になった場合は速度をゼロにする
-      if ((velocity > 0 && difference < 0) || (velocity < 0 && difference > 0)) {
-        velocity = 0;
-      }
+        if (Math.abs(state.velocity) < 0.02 && Math.abs(difference) < 0.1) {
+            state.currentScroll = state.targetScroll;
+            window.scrollTo(0, state.currentScroll);
+            globalRequestId = null;
+            state.velocity = 0;
+            return;
+        }
 
-      // より小さな停止判定のしきい値（0.5 → 0.1）
-      if (Math.abs(velocity) < 0.02) {
-        currentScroll = targetScroll;
-        window.scrollTo(0, currentScroll);
-        globalRequestId = null;
-        velocity = 0;
-        return;
-      }
-
-      currentScroll += velocity;
-      window.scrollTo(0, currentScroll);
-      globalRequestId = requestAnimationFrame(smoothScroll);
+        state.currentScroll += state.velocity;
+        window.scrollTo(0, state.currentScroll);
+        globalRequestId = requestAnimationFrame(smoothScroll);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
+        e.preventDefault();
+        const state = window.smoothScrollState;
+        if (!state) return;
 
-      const scrollMultiplier = 1.3;
-      const deltaY = e.deltaMode === 1 ? e.deltaY * 20 : e.deltaY;
+        const scrollMultiplier = 1.5;
+        const deltaY = e.deltaMode === 1 ? e.deltaY * 20 : e.deltaY;
 
-      const newTarget = Math.max(
-        0,
-        Math.min(
-          targetScroll + (deltaY * scrollMultiplier),
-          document.documentElement.scrollHeight - window.innerHeight
-        )
-      );
+        state.targetScroll = Math.max(
+            0,
+            Math.min(
+                state.targetScroll + (deltaY * scrollMultiplier),
+                document.documentElement.scrollHeight - window.innerHeight
+            )
+        );
 
-      if ((targetScroll - newTarget) * velocity > 0) {
-        velocity *= 0.92;
-      }
-
-      targetScroll = newTarget;
-
-      if (!globalRequestId) {
-        lastTime = performance.now();
-        globalRequestId = requestAnimationFrame(smoothScroll);
-      }
-    };
-
-    window.stopSmoothScroll = () => {
-      if (globalRequestId) {
-        cancelAnimationFrame(globalRequestId);
-        globalRequestId = null;
-        velocity = 0;
-      }
+        if (!globalRequestId) {
+            state.lastTime = performance.now();
+            globalRequestId = requestAnimationFrame(smoothScroll);
+        }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      if (globalRequestId) {
-        cancelAnimationFrame(globalRequestId);
-      }
-      window.removeEventListener("wheel", handleWheel);
-      // クリーンアップ時にグローバル関数を削除
-      delete window.stopSmoothScroll;
+        window.removeEventListener("wheel", handleWheel);
+        if (globalRequestId) {
+            cancelAnimationFrame(globalRequestId);
+        }
+        delete window.smoothScrollState;
     };
   }, []);
 
@@ -217,5 +239,12 @@ export default function App() {
 declare global {
   interface Window {
     stopSmoothScroll?: () => void;
+    smoothScrollState?: {
+        currentScroll: number;
+        targetScroll: number;
+        velocity: number;
+        lastTime?: number;
+        isAutoScrolling: boolean;
+    };
   }
 }
