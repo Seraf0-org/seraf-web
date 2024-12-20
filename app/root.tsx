@@ -36,7 +36,7 @@ export default function App() {
   const smoothScrollTo: ScrollFunction = (targetPosition: number, duration: number = 500) => {
     window.stopSmoothScroll?.();
 
-    const startPosition = window.pageYOffset;
+    const startPosition = window.scrollY;
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
 
@@ -112,31 +112,25 @@ export default function App() {
     let lastTime = performance.now();
     let velocity = 0;
 
-    const easeOutSine = (x: number): number => {
-      return Math.sin((x * Math.PI) / 2);
-    };
-
     const smoothScroll = (currentTime: number) => {
       const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.1);
       lastTime = currentTime;
 
       const difference = targetScroll - currentScroll;
 
-      const progress = Math.min(Math.abs(difference) / 3500, 1);
-      const easeFactor = easeOutSine(1 - progress);
+      // より小さな加速度（0.1 → 0.05）
+      const targetVelocity = difference * 0.03;
 
-      const endingFactor = Math.max(0.15, Math.min(Math.abs(difference) / 350, 1));
+      // 現在の速度を減衰させながら目標速度に近づける
+      velocity = targetVelocity;
 
-      const deceleration = Math.pow(endingFactor, 1.8);
-      const targetVelocity = difference * (0.045 + easeFactor * 0.018) * deceleration;
+      // 速度の符号が目標への方向と逆になった場合は速度をゼロにする
+      if ((velocity > 0 && difference < 0) || (velocity < 0 && difference > 0)) {
+        velocity = 0;
+      }
 
-      const followFactor = 0.025 + (1 - endingFactor) * 0.01;
-      velocity += (targetVelocity - velocity) * followFactor;
-
-      const maxVelocity = Math.min(Math.abs(difference) * 0.35, 160) * deceleration;
-      velocity = Math.max(Math.min(velocity, maxVelocity), -maxVelocity);
-
-      if (Math.abs(difference) < 0.01 && Math.abs(velocity) < 0.01) {
+      // より小さな停止判定のしきい値（0.5 → 0.1）
+      if (Math.abs(velocity) < 0.02) {
         currentScroll = targetScroll;
         window.scrollTo(0, currentScroll);
         globalRequestId = null;
@@ -175,7 +169,6 @@ export default function App() {
       }
     };
 
-    // グローバルにスクロールアニメーションを停止する関数を公開
     window.stopSmoothScroll = () => {
       if (globalRequestId) {
         cancelAnimationFrame(globalRequestId);

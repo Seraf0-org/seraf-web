@@ -11,7 +11,7 @@ export function Footer() {
                     <div>
                         <h3 className="text-xl font-bold mb-4">Seraf()</h3>
                         <p className="text-gray-400 dark:text-gray-600">
-                            何者にもなれる。何者でもないから。
+                            Become anything, from being nothing.
                         </p>
                     </div>
                     <div>
