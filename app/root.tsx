@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -9,6 +9,7 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import "./tailwind.css";
+import { LinesProvider } from './contexts/LinesContext';
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: "/build/tailwind.css" },
@@ -29,6 +30,23 @@ export type OutletContext = {
   smoothScrollTo: ScrollFunction;
 };
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Seraf()" },
+    { name: "description", content: "We are Seraf()" },
+    {
+      tagName: "link",
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap"
+    },
+    {
+      tagName: "link",
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;500;600;700&display=swap"
+    }
+  ];
+};
+
 export default function App() {
   const [theme, setTheme] = useState<Theme>('light');
 
@@ -46,47 +64,47 @@ export default function App() {
     let isManualScrollDetected = false;
 
     function animation(currentTime: number) {
-      // マニュアルスクロールが検出された場合、アニメーションを停止
-      if (isManualScrollDetected) {
-        cancelAnimationFrame(animationFrameId);
-        return;
-      }
-
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-
-      // イージング関数を使用して現在位置を計算
-      currentPosition = startPosition + distance * easeInOutQuad(progress);
-      window.scrollTo(0, currentPosition);
-
-      if (progress < 1) {
-        animationFrameId = requestAnimationFrame(animation);
-      } else {
-        currentPosition = targetPosition;
-        window.scrollTo(0, currentPosition);
-
-        if (window.smoothScrollState) {
-          window.smoothScrollState.currentScroll = currentPosition;
-          window.smoothScrollState.targetScroll = currentPosition;
-          window.smoothScrollState.isAutoScrolling = false;
+        // マニュアルスクロールが検出された場合、アニメーションを停止
+        if (isManualScrollDetected) {
+            cancelAnimationFrame(animationFrameId);
+            return;
         }
-      }
+
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // イージング関数を使用して現在位置を計算
+        currentPosition = startPosition + distance * easeInOutQuad(progress);
+        window.scrollTo(0, currentPosition);
+        
+        if (progress < 1) {
+            animationFrameId = requestAnimationFrame(animation);
+        } else {
+            currentPosition = targetPosition;
+            window.scrollTo(0, currentPosition);
+            
+            if (window.smoothScrollState) {
+                window.smoothScrollState.currentScroll = currentPosition;
+                window.smoothScrollState.targetScroll = currentPosition;
+                window.smoothScrollState.isAutoScrolling = false;
+            }
+        }
     }
 
     function easeInOutQuad(t: number): number {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
     }
 
     // ホイールイベントのハンドラー
     const handleWheelDuringAutoScroll = (e: WheelEvent) => {
-      isManualScrollDetected = true;
-      if (window.smoothScrollState) {
-        window.smoothScrollState.isAutoScrolling = false;
-        window.smoothScrollState.currentScroll = window.scrollY;
-        window.smoothScrollState.targetScroll = window.scrollY;
-      }
-      window.removeEventListener('wheel', handleWheelDuringAutoScroll);
+        isManualScrollDetected = true;
+        if (window.smoothScrollState) {
+            window.smoothScrollState.isAutoScrolling = false;
+            window.smoothScrollState.currentScroll = window.scrollY;
+            window.smoothScrollState.targetScroll = window.scrollY;
+        }
+        window.removeEventListener('wheel', handleWheelDuringAutoScroll);
     };
 
     // 自動スクロール中のホイールイベントを監視
@@ -94,19 +112,19 @@ export default function App() {
 
     // アニメーションを開始
     if (window.smoothScrollState) {
-      window.smoothScrollState.isAutoScrolling = true;
+        window.smoothScrollState.isAutoScrolling = true;
     }
     animationFrameId = requestAnimationFrame(animation);
 
     // クリーンアップ関数を更新
     window.stopSmoothScroll = () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('wheel', handleWheelDuringAutoScroll);
-      if (window.smoothScrollState) {
-        window.smoothScrollState.currentScroll = window.scrollY;
-        window.smoothScrollState.targetScroll = window.scrollY;
-        window.smoothScrollState.isAutoScrolling = false;
-      }
+        cancelAnimationFrame(animationFrameId);
+        window.removeEventListener('wheel', handleWheelDuringAutoScroll);
+        if (window.smoothScrollState) {
+            window.smoothScrollState.currentScroll = window.scrollY;
+            window.smoothScrollState.targetScroll = window.scrollY;
+            window.smoothScrollState.isAutoScrolling = false;
+        }
     };
   };
 
@@ -133,81 +151,81 @@ export default function App() {
 
   // スムーズスクロールの実装
   useEffect(() => {
-    // グローバルスクロール状態の初期化
+    // グローバルスクロール状態の��期化
     window.smoothScrollState = {
-      currentScroll: window.scrollY,
-      targetScroll: window.scrollY,
-      velocity: 0
+        currentScroll: window.scrollY,
+        targetScroll: window.scrollY,
+        velocity: 0
     };
 
     let globalRequestId: number | null = null;
 
     const isTouchDevice = () => {
-      return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     };
 
     if (isTouchDevice() || window.location.hash) {
-      return;
+        return;
     }
 
     const smoothScroll = (currentTime: number) => {
-      const state = window.smoothScrollState;
-      if (!state) return;
+        const state = window.smoothScrollState;
+        if (!state) return;
 
-      const deltaTime = Math.min((currentTime - state.lastTime) / 1000, 0.1);
-      state.lastTime = currentTime;
+        const deltaTime = Math.min((currentTime - state.lastTime) / 1000, 0.1);
+        state.lastTime = currentTime;
 
-      const difference = state.targetScroll - state.currentScroll;
-      const targetVelocity = difference * 0.03;
-      state.velocity = targetVelocity;
+        const difference = state.targetScroll - state.currentScroll;
+        const targetVelocity = difference * 0.03;
+        state.velocity = targetVelocity;
 
-      if ((state.velocity > 0 && difference < 0) || (state.velocity < 0 && difference > 0)) {
-        state.velocity = 0;
-      }
+        if ((state.velocity > 0 && difference < 0) || (state.velocity < 0 && difference > 0)) {
+            state.velocity = 0;
+        }
 
-      if (Math.abs(state.velocity) < 0.02 && Math.abs(difference) < 0.1) {
-        state.currentScroll = state.targetScroll;
+        if (Math.abs(state.velocity) < 0.02 && Math.abs(difference) < 0.1) {
+            state.currentScroll = state.targetScroll;
+            window.scrollTo(0, state.currentScroll);
+            globalRequestId = null;
+            state.velocity = 0;
+            return;
+        }
+
+        state.currentScroll += state.velocity;
         window.scrollTo(0, state.currentScroll);
-        globalRequestId = null;
-        state.velocity = 0;
-        return;
-      }
-
-      state.currentScroll += state.velocity;
-      window.scrollTo(0, state.currentScroll);
-      globalRequestId = requestAnimationFrame(smoothScroll);
+        globalRequestId = requestAnimationFrame(smoothScroll);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const state = window.smoothScrollState;
-      if (!state) return;
+        e.preventDefault();
+        const state = window.smoothScrollState;
+        if (!state) return;
 
-      const scrollMultiplier = 1.5;
-      const deltaY = e.deltaMode === 1 ? e.deltaY * 20 : e.deltaY;
+        const scrollMultiplier = 1.5;
+        const deltaY = e.deltaMode === 1 ? e.deltaY * 20 : e.deltaY;
 
-      state.targetScroll = Math.max(
-        0,
-        Math.min(
-          state.targetScroll + (deltaY * scrollMultiplier),
-          document.documentElement.scrollHeight - window.innerHeight
-        )
-      );
+        state.targetScroll = Math.max(
+            0,
+            Math.min(
+                state.targetScroll + (deltaY * scrollMultiplier),
+                document.documentElement.scrollHeight - window.innerHeight
+            )
+        );
 
-      if (!globalRequestId) {
-        state.lastTime = performance.now();
-        globalRequestId = requestAnimationFrame(smoothScroll);
-      }
+        if (!globalRequestId) {
+            state.lastTime = performance.now();
+            globalRequestId = requestAnimationFrame(smoothScroll);
+        }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      if (globalRequestId) {
-        cancelAnimationFrame(globalRequestId);
-      }
-      delete window.smoothScrollState;
+        window.removeEventListener("wheel", handleWheel);
+        if (globalRequestId) {
+            cancelAnimationFrame(globalRequestId);
+        }
+        delete window.smoothScrollState;
     };
   }, []);
 
@@ -220,11 +238,13 @@ export default function App() {
         <Links />
       </head>
       <body className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-        <Outlet context={{
-          theme,
-          setTheme,
-          smoothScrollTo
-        }} />
+        <LinesProvider>
+          <Outlet context={{
+            theme,
+            setTheme,
+            smoothScrollTo
+          }} />
+        </LinesProvider>
         <ScrollRestoration
           getKey={location => location.pathname + new Date().getTime()}
         />
@@ -240,11 +260,11 @@ declare global {
   interface Window {
     stopSmoothScroll?: () => void;
     smoothScrollState?: {
-      currentScroll: number;
-      targetScroll: number;
-      velocity: number;
-      lastTime?: number;
-      isAutoScrolling: boolean;
+        currentScroll: number;
+        targetScroll: number;
+        velocity: number;
+        lastTime?: number;
+        isAutoScrolling: boolean;
     };
   }
 }

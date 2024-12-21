@@ -1,12 +1,53 @@
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { useOutletContext } from "@remix-run/react";
+import type { OutletContext } from "~/root";
+import { useBackgroundLines } from "~/hooks/useBackgroundLines";
 
 export function Footer() {
     const [sectionRef, isVisible] = useIntersectionObserver();
+    const { theme } = useOutletContext<OutletContext>();
+    // isFooter を true に設定
+    const lines = useBackgroundLines(theme === 'dark', 'fuchsia', true);
 
     return (
-        <footer ref={sectionRef} className="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 py-12">
-            <div className={`container mx-auto px-4 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}>
+        <footer ref={sectionRef} className="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 py-12 relative overflow-hidden">
+            {/* 背景の線 */}
+            {lines.map((line, index) => (
+                <svg
+                    key={line.id}
+                    className="absolute will-change-transform pointer-events-none"
+                    style={{
+                        left: `${line.left}%`,
+                        top: 0,
+                        width: '200px',
+                        height: '100%',
+                        overflow: 'visible',
+                    }}
+                >
+                    <path
+                        d={`M ${line.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+                        stroke={line.color}
+                        strokeWidth={line.width}
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    {line.branches.map((branch, i) => (
+                        <path
+                            key={`${line.id}-${i}`}
+                            d={`M ${branch.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+                            stroke={branch.color}
+                            strokeWidth={branch.width}
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    ))}
+                </svg>
+            ))}
+
+            {/* 既存のコンテンツ */}
+            <div className={`container mx-auto px-4 relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
                         <h3 className="text-xl font-bold mb-4">Seraf()</h3>

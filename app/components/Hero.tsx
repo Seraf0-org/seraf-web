@@ -1,10 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
+import { useOutletContext } from "@remix-run/react";
+import type { OutletContext } from "~/root";
 
 export function Hero() {
   const japaneseText = "何者にもなれる。何者でもないから。";
   const englishText1 = "Become anything,";
   const englishText2 = "　from being nothing.";
   const [scrollY, setScrollY] = useState(0);
+  const { theme } = useOutletContext<OutletContext>();
 
   const handleScroll = useCallback(() => {
     requestAnimationFrame(() => {
@@ -22,7 +25,10 @@ export function Hero() {
       <span
         key={index}
         className={`inline-block animate-fade-in-down opacity-0 ${className}`}
-        style={{ animationDelay: `${baseDelay + (index * 0.1)}s` }}
+        style={{ 
+          animationDelay: `${baseDelay + (index * 0.1)}s`,
+          textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
+        }}
       >
         {letter}
       </span>
@@ -41,7 +47,7 @@ export function Hero() {
           transform: `translate3d(0, ${scrollY * 0.5}px, 0)`,
         }}
       >
-        <div className="absolute inset-0 bg-black/30" />
+        <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/50' : 'bg-black/30'} transition-colors duration-200`} />
       </div>
 
       <div
@@ -52,25 +58,30 @@ export function Hero() {
       >
         <div className="text-center">
           <h1
-            className="text-4xl md:text-6xl font-bold text-white tracking-[.25em]"
+            className="font-light text-white tracking-[.25em] relative"
             style={{ lineHeight: '2em' }}
           >
-            <div className="block">
-              {createLetterSpans(japaneseText, 0)}
+            <div className="block font-zen text-4xl md:text-6xl font-light relative mb-8">
+              <div className="absolute -left-4 top-1/2 w-8 h-[1px] bg-white/30" />
+              <div className="absolute -right-4 top-1/2 w-8 h-[1px] bg-white/30" />
+              {createLetterSpans(japaneseText, 0, "relative hover:text-cyan-300 transition-colors duration-300")}
             </div>
-            <div className="text-5xl block">
+
+            <div className="font-orbitron text-3xl md:text-4xl block font-light tracking-[.5em] relative">
+              <div className="absolute left-1/2 -translate-x-1/2 -top-4 w-24 h-[1px] bg-white/30" />
               <span
-                className="inline-block animate-fade-in-down opacity-0"
+                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300"
                 style={{ animationDelay: '2s' }}
               >
                 {englishText1}
               </span>
               <span
-                className="inline-block animate-fade-in-down opacity-0"
+                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300"
                 style={{ animationDelay: '2.5s' }}
               >
                 {englishText2}
               </span>
+              <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 w-24 h-[1px] bg-white/30" />
             </div>
           </h1>
         </div>

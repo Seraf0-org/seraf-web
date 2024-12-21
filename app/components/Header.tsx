@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useOutletContext } from "@remix-run/react";
 import type { Theme } from "~/root";
 import type { OutletContext } from "~/root";
+import { useBackgroundLines } from "~/hooks/useBackgroundLines";
 
 export function Header() {
     const { theme, setTheme, smoothScrollTo } = useOutletContext<OutletContext>();
@@ -16,6 +17,7 @@ export function Header() {
     const [isAnimating, setIsAnimating] = useState(true);
     const [isFirstSlideComplete, setIsFirstSlideComplete] = useState(false);
     const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+    const cyanLines = useBackgroundLines('cyan', 'horizontal', isCurrentDark, isHovered);
 
     useEffect(() => {
         setIsInitialRender(false);
@@ -55,7 +57,6 @@ export function Header() {
             const elementPosition = element.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition - headerHeight;
 
-            window.stopSmoothScroll?.();
             smoothScrollTo(offsetPosition);
             setIsMenuOpen(false);
         }
@@ -63,7 +64,6 @@ export function Header() {
 
     const handleLogoClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        window.stopSmoothScroll?.();
         smoothScrollTo(0);
     };
 
@@ -111,144 +111,60 @@ export function Header() {
             >
                 {/* 装飾的なライン - 上部 */}
                 <div className="absolute top-[10%] left-0 w-full pointer-events-none">
-                    {/* シアン色のライン - 左側 */}
-                    <svg height="20" width="100%" className="absolute top-0 left-0">
-                        <path
-                            d="M0 2 L150 2 L170 18 L250 18 M260 2 L300 2"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                        {/* 装飾的な図形 */}
-                        <rect x="155" y="8" width="4" height="4" transform="rotate(45 157 10)" fill="rgb(6 182 212 / 0.3)" />
-                        <rect x="255" y="14" width="3" height="3" fill="rgb(6 182 212 / 0.3)" />
-                    </svg>
-
-                    {/* フクシア色のライン - 左側 */}
-                    <svg height="25" width="100%" className="absolute top-0 left-0">
-                        <path
-                            d="M400 2 L500 2 M520 18 L600 18 L620 2 L700 2"
-                            stroke="rgb(192 38 211 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                        {/* ジグザグライン */}
-                        <path
-                            d="M500 2 L510 18 L520 2 L530 18"
-                            stroke="rgb(192 38 211 / 0.3)"
-                            strokeWidth="2"
-                            fill="none"
-                        />
-                        <circle cx="615" cy="18" r="2" fill="rgb(192 38 211 / 0.3)" />
-                    </svg>
-
-                    {/* シアン色のライン - 中央右（パターン変更） */}
-                    <svg height="25" width="100%" className="absolute top-0 left-0">
-                        <path
-                            d="M750 2 L850 2 L870 10 L890 2 L950 2 M960 18 L1000 18"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                        {/* 小さな三角形の装飾 */}
-                        <path
-                            d="M955 2 L965 8 L975 2"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="2"
-                            fill="none"
-                        />
-                    </svg>
-
-                    {/* 追加の装飾要素 */}
-                    <svg height="30" width="100%" className="absolute top-0 left-0">
-                        <circle cx="350" cy="10" r="1.5" fill="rgb(6 182 212 / 0.3)" />
-                        <circle cx="355" cy="10" r="1.5" fill="rgb(192 38 211 / 0.3)" />
-                        <circle cx="360" cy="10" r="1.5" fill="rgb(6 182 212 / 0.3)" />
-
-                        <rect x="720" y="8" width="4" height="4" transform="rotate(30 722 10)" fill="rgb(192 38 211 / 0.3)" />
-                        <rect x="728" y="8" width="4" height="4" transform="rotate(-30 730 10)" fill="rgb(6 182 212 / 0.3)" />
-                    </svg>
-
-                    {/* フクシア色のライン - 右側 */}
-                    <svg height="20" width="100%" className="absolute top-0 left-0">
-                        <path
-                            d="M1050 2 L1200 2 L1220 18 L1300 18"
-                            stroke="rgb(192 38 211 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                    </svg>
-
-                    {/* シアン色のライン - 最右 */}
-                    <svg height="20" width="100%" className="absolute top-0 left-0">
-                        <path
-                            d="M1350 2 L1500 2 L1520 18 L1600 18"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                    </svg>
+                    {cyanLines.map((line, index) => (
+                        <svg
+                            key={line.id}
+                            className="absolute will-change-transform"
+                            style={{
+                                top: `${line.points[0].y}%`,
+                                left: 0,
+                                width: '100%',
+                                height: '40px',
+                                overflow: 'visible',
+                            }}
+                        >
+                            <path
+                                d={`M ${line.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+                                stroke={line.color}
+                                strokeWidth={line.width}
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                opacity="0.3"
+                            />
+                        </svg>
+                    ))}
                 </div>
 
-                {/* 装飾的なライン - 下部 */}
-                <div className="absolute top-[40%] left-0 w-full pointer-events-none">
-                    {/* シアン色のライン - 左側 */}
-                    <svg height="20" width="100%" className="absolute bottom-0 right-0">
+                {/* ヘッダーのアウトライン - ホバー時のみ表示 */}
+                <div
+                    className="absolute inset-0 pointer-events-none"
+                >
+                    <svg
+                        className="absolute inset-0 w-full h-full"
+                        viewBox="0 0 1000 160"
+                        preserveAspectRatio="none"
+                    >
                         <path
-                            d="M0 18 L150 18 L170 2 L250 2"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="3"
+                            d="M0 0 L950 0 L900 96 L160 96 L130 160 L0 160"
+                            stroke={isCurrentDark 
+                                ? 'rgb(6 182 212 / 0.7)' // ダークテーマ時は cyan のまま
+                                : 'rgb(236 72 153 / 0.9)' // ライトテーマ時は fuchsia-500 に変更
+                            }
+                            strokeWidth={5}
                             fill="none"
-                        />
-                    </svg>
-
-                    {/* フクシア色のライン - 左側 */}
-                    <svg height="20" width="100%" className="absolute bottom-0 right-0">
-                        <path
-                            d="M300 18 L450 18 L470 2 L550 2"
-                            stroke="rgb(192 38 211 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                    </svg>
-
-                    {/* シアン色のライン - 右側 */}
-                    <svg height="20" width="100%" className="absolute bottom-0 right-0">
-                        <path
-                            d="M600 18 L750 18 L770 2 L850 2"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                    </svg>
-
-                    {/* フクシア色のライン - 右側 */}
-                    <svg height="20" width="100%" className="absolute bottom-0 right-0">
-                        <path
-                            d="M900 18 L1050 18 L1070 2 L1150 2"
-                            stroke="rgb(192 38 211 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                    </svg>
-
-                    {/* シアン色のライン - 最右 */}
-                    <svg height="20" width="100%" className="absolute bottom-0 right-0">
-                        <path
-                            d="M1200 18 L1350 18 L1370 2 L1450 2"
-                            stroke="rgb(6 182 212 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
-                        />
-                    </svg>
-
-                    {/* フクシア色のライン - 最右 */}
-                    <svg height="20" width="100%" className="absolute bottom-0 right-0">
-                        <path
-                            d="M1500 18 L1650 18 L1670 2 L1750 2"
-                            stroke="rgb(192 38 211 / 0.3)"
-                            strokeWidth="3"
-                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            pathLength="100"
+                            style={{
+                                strokeDasharray: 100,
+                                strokeDashoffset: isHovered ? 0 : 100,
+                                transition: 'stroke-dashoffset 0.6s ease-in-out',
+                                opacity: 1,
+                                filter: isCurrentDark
+                                    ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 8px rgba(6, 182, 212, 0.7))' // 白 + cyan
+                                    : 'drop-shadow(0 0 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 8px rgba(255, 0, 255, 0.7))' // 黒 + fuchsia
+                            }}
                         />
                     </svg>
                 </div>
@@ -329,7 +245,7 @@ export function Header() {
                                     )}
                                 </button>
 
-                                {/* 既存のハンバーガニューボタン */}
+                                {/* 既存のハンバーガーボタン */}
                                 <button
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     className="p-2"
