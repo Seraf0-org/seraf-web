@@ -58,16 +58,16 @@ export function Hero() {
       >
         <div className="text-center">
           <h1
-            className="font-light text-white tracking-[.25em] relative"
+            className="font-light text-white tracking-[.25em] relative font-mincho"
             style={{ lineHeight: '2em' }}
           >
-            <div className="block font-zen text-4xl md:text-6xl font-light relative mb-8">
+            <div className="block font-mincho text-4xl md:text-6xl font-light relative mb-8">
               <div className="absolute -left-4 top-1/2 w-8 h-[1px] bg-white/30" />
               <div className="absolute -right-4 top-1/2 w-8 h-[1px] bg-white/30" />
               {createLetterSpans(japaneseText, 0, "relative hover:text-cyan-300 transition-colors duration-300")}
             </div>
 
-            <div className="font-orbitron text-3xl md:text-4xl block font-light tracking-[.5em] relative">
+            <div className="font-mincho text-3xl md:text-4xl block font-light tracking-[.5em] relative">
               <div className="absolute left-1/2 -translate-x-1/2 -top-4 w-24 h-[1px] bg-white/30" />
               <span
                 className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300"
