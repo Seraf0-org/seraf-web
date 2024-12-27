@@ -1,9 +1,61 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { members } from "~/data/members";
 import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
+
+const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
+  x: number;
+  y: number;
+  size: number;
+  color: string;
+  opacity: number;
+  delay: number;
+  parallaxSpeed: number;
+  isVisible: boolean;
+}) => {
+  const [offsetY, setOffsetY] = useState(0);
+  const [startScrollY, setStartScrollY] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    if (!isVisible) return;
+
+    requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
+      const relativeScroll = currentScrollY - startScrollY;
+      setOffsetY(relativeScroll * parallaxSpeed);
+    });
+  }, [parallaxSpeed, isVisible, startScrollY]);
+
+  useEffect(() => {
+    if (isVisible) {
+      setStartScrollY(window.scrollY);
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [handleScroll, isVisible]);
+
+  const points = Array.from({ length: 6 }).map((_, i) => {
+    const angle = (i * 60 * Math.PI) / 180;
+    return `${x + size * Math.cos(angle)},${(y + offsetY/50) + size * Math.sin(angle)}`;
+  }).join(' ');
+
+  return (
+    <polygon
+      points={points}
+      fill="none"
+      stroke={color}
+      strokeWidth="1"
+      opacity={opacity}
+      className={`transition-opacity duration-1000`}
+      style={{ 
+        transitionDelay: `${delay}ms`,
+        transform: `translateY(${offsetY}px)`,
+      }}
+    />
+  );
+};
 
 export function Members() {
     const [sectionRef, isVisible] = useIntersectionObserver();
@@ -21,6 +73,28 @@ export function Members() {
                 backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
             }}
         >
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <svg 
+                    className="w-full h-full" 
+                    viewBox="0 0 100 100" 
+                    preserveAspectRatio="xMidYMid slice"
+                >
+                    {isVisible && (
+                        <>
+                            <Hexagon x={15} y={25} size={3} color={isDark ? '#db2777' : '#ec4899'} opacity={0.2} delay={200} parallaxSpeed={0.02} isVisible={isVisible} />
+                            <Hexagon x={45} y={35} size={4} color={isDark ? '#db2777' : '#ec4899'} opacity={0.15} delay={400} parallaxSpeed={-0.03} isVisible={isVisible} />
+                            <Hexagon x={75} y={20} size={2.5} color={isDark ? '#db2777' : '#ec4899'} opacity={0.25} delay={600} parallaxSpeed={0.04} isVisible={isVisible} />
+                            <Hexagon x={25} y={55} size={3.5} color={isDark ? '#db2777' : '#ec4899'} opacity={0.1} delay={800} parallaxSpeed={-0.02} isVisible={isVisible} />
+                            <Hexagon x={85} y={45} size={4.5} color={isDark ? '#db2777' : '#ec4899'} opacity={0.2} delay={1000} parallaxSpeed={0.03} isVisible={isVisible} />
+                            <Hexagon x={35} y={65} size={3} color={isDark ? '#db2777' : '#ec4899'} opacity={0.15} delay={1200} parallaxSpeed={-0.04} isVisible={isVisible} />
+                            <Hexagon x={65} y={75} size={3.5} color={isDark ? '#db2777' : '#ec4899'} opacity={0.2} delay={1400} parallaxSpeed={0.025} isVisible={isVisible} />
+                            <Hexagon x={55} y={85} size={4} color={isDark ? '#db2777' : '#ec4899'} opacity={0.15} delay={1600} parallaxSpeed={-0.035} isVisible={isVisible} />
+                            <Hexagon x={95} y={30} size={3} color={isDark ? '#db2777' : '#ec4899'} opacity={0.1} delay={1800} parallaxSpeed={0.045} isVisible={isVisible} />
+                        </>
+                    )}
+                </svg>
+            </div>
+
             {lines.map((line, index) => (
                 <svg
                     key={line.id}

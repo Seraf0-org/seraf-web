@@ -84,6 +84,7 @@ export function Header() {
                         transition: 'transform 600ms ease-out, opacity 800ms ease-in-out',
                         transitionDelay: isAnimating ? '0ms' : isVisible ? '600ms' : '0ms',
                         backgroundColor: !isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(255 255 255 / 0.5)',
+
                         backdropFilter: 'blur(8px)'
                     }}
                 />
@@ -98,14 +99,14 @@ export function Header() {
                     opacity: isVisible ? 1 : 0,
                     transformOrigin: 'left',
                     transition: isAnimationComplete
-                        ? 'background-color 200ms ease-out'  // アニメーション完了後はホバーの変化だけを高速に
+                        ? 'background-color 200ms ease-out'
                         : `
                             transform 600ms ease-out,
                             opacity 400ms ease-in-out,
                             background-color 200ms ease-out
                         `,
                     transitionDelay: isFirstSlideComplete ? '400ms' : '0ms',
-                    backgroundColor: isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(255 255 255 / 0.5)',
+                    backgroundColor: isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(210 210 210 / 0.5)',
                     backdropFilter: 'blur(8px)'
                 }}
             >
@@ -147,7 +148,7 @@ export function Header() {
                     >
                         <path
                             d="M0 0 L950 0 L900 96 L160 96 L130 160 L0 160"
-                            stroke={isCurrentDark 
+                            stroke={isCurrentDark
                                 ? 'rgb(6 182 212 / 0.7)' // ダークテーマ時は cyan のまま
                                 : 'rgb(236 72 153 / 0.9)' // ライトテーマ時は fuchsia-500 に変更
                             }
@@ -170,7 +171,7 @@ export function Header() {
                 </div>
 
                 <nav className="w-full overflow-x-hidden h-full">
-                    <div className="flex items-start h-full pt-2 max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
+                    <div className="flex items-start h-full pt-2 max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8">
                         <div className="flex items-start w-full pt-2">
                             <a
                                 href="#"
