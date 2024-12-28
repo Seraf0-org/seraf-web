@@ -2,7 +2,11 @@ export type Product = {
     id: number;
     name: string;
     description: string;
+    details?: string;
+    platform?: string;
+    releaseDate?: string;
     image: string;
+    link?: string;
 };
 
 export const products: Product[] = [

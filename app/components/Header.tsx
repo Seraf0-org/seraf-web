@@ -185,7 +185,7 @@ export function Header() {
                                 />
                             </a>
 
-                            <div className="hidden md:flex items-start flex-1 pt-5">
+                            <div className="hidden md:flex items-start flex-1 pt-3">
                                 {/* デスクトップメニュー */}
                                 <ul className="flex space-x-6 lg:space-x-12 ml-auto mr-40 items-center">
                                     {['about', 'news', 'products', 'members', 'contact'].map((item) => (

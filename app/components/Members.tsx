@@ -4,6 +4,7 @@ import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
+import { createPortal } from 'react-dom';
 
 const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
   x: number;
@@ -57,12 +58,130 @@ const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }
   );
 };
 
+const MemberPopup = ({ member, onClose }: { 
+  member: typeof members[0]; 
+  onClose: () => void;
+}) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 relative">
+            <div className="relative pt-[100%]">
+              <img
+                src={member.mainImage}
+                alt={member.name}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
+                style={{
+                  backgroundImage: `url(${member.subImage})`,
+                  opacity: 0,
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+                onMouseLeave={e => e.currentTarget.style.opacity = '0'}
+              />
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2 p-6 md:p-8">
+            <div className="mb-6">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                {member.name}
+              </h3>
+              <p className="text-xl text-gray-600 dark:text-gray-300">
+                {member.position}
+              </p>
+            </div>
+
+            <div className="prose dark:prose-invert max-w-none">
+              <h4 className="text-xl font-semibold mb-3">自己紹介</h4>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                {member.description || "準備中..."}
+              </p>
+
+              <h4 className="text-xl font-semibold mb-3">スキル</h4>
+              <div className="flex flex-wrap gap-2">
+                {member.skills?.map((skill, index) => (
+                  <span 
+                    key={index}
+                    className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {member.sns && (
+              <a
+                href={member.sns}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center mt-8 px-6 py-3 
+                  bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700
+                  text-white font-medium rounded-lg transition-colors duration-200
+                  shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+              >
+                <span>SNSを見る</span>
+                <svg 
+                  className="w-5 h-5 ml-2" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                  />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
 export function Members() {
     const [sectionRef, isVisible] = useIntersectionObserver();
     const [hoveredId, setHoveredId] = useState<number | null>(null);
     const { theme } = useOutletContext<OutletContext>();
     const isDark = theme === 'dark';
     const lines = useLines('fuchsia');
+    const [selectedMember, setSelectedMember] = useState<typeof members[0] | null>(null);
+
+    const handleMemberClick = (e: React.MouseEvent, member: typeof members[0]) => {
+      e.preventDefault();
+      setSelectedMember(member);
+    };
 
     return (
         <section
@@ -150,9 +269,7 @@ export function Members() {
                     {members.map((member, index) => (
                         <a
                             key={member.id}
-                            href={member.sns}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            onClick={(e) => handleMemberClick(e, member)}
                             className={`group text-center cursor-pointer transition-all duration-500 
                                 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 
                                 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
@@ -218,6 +335,13 @@ export function Members() {
                     ))}
                 </div>
             </div>
+
+            {selectedMember && (
+              <MemberPopup 
+                member={selectedMember} 
+                onClose={() => setSelectedMember(null)} 
+              />
+            )}
         </section>
     );
 }

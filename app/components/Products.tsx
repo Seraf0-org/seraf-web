@@ -4,6 +4,7 @@ import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { useEffect, useState, useCallback } from "react";
+import { createPortal } from 'react-dom';
 
 const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
   x: number;
@@ -57,14 +58,133 @@ const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }
   );
 };
 
+const ProductPopup = ({ product, onClose }: { 
+  product: typeof products[0]; 
+  onClose: () => void;
+}) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = "/images/products/product-none.jpg";
+  };
+
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2">
+            <div className="relative pt-[75%]">
+              <img
+                src={product.image || "/images/products/product-none.jpg"}
+                alt={product.name}
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={handleImageError}
+              />
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2 p-6 md:p-8">
+            <div className="mb-6">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                {product.name}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-lg">
+                {product.description}
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {product.details && (
+                <div>
+                  <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">詳細</h4>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {product.details}
+                  </p>
+                </div>
+              )}
+
+              {product.platform && (
+                <div>
+                  <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">プラットフォーム</h4>
+                  <p className="text-gray-600 dark:text-gray-300">{product.platform}</p>
+                </div>
+              )}
+
+              {product.releaseDate && (
+                <div>
+                  <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">リリース日</h4>
+                  <p className="text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
+                </div>
+              )}
+            </div>
+
+            {product.link && (
+              <a
+                href={product.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center mt-8 px-6 py-3 
+                  bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700
+                  text-white font-medium rounded-lg transition-colors duration-200
+                  shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+              >
+                <span>プレイする</span>
+                <svg 
+                  className="w-5 h-5 ml-2" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                  />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
 export function Products() {
   const [sectionRef, isVisible] = useIntersectionObserver();
   const { theme } = useOutletContext<OutletContext>();
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
+  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = "/images/products/product-none.jpg";
+  };
+
+  const handleProductClick = (product: typeof products[0]) => {
+    setSelectedProduct(product);
   };
 
   return (
@@ -153,8 +273,11 @@ export function Products() {
           {products.map((product, index) => (
             <div
               key={product.id}
-              className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
+              onClick={() => handleProductClick(product)}
+              className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
+                transition-all duration-500 transform cursor-pointer
+                hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
+                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               style={{
                 transitionDelay: `${index * 200}ms`,
                 transitionProperty: 'opacity, transform'
@@ -199,6 +322,13 @@ export function Products() {
           ))}
         </div>
       </div>
+
+      {selectedProduct && (
+        <ProductPopup 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+        />
+      )}
     </section>
   );
 }
