@@ -58,8 +58,8 @@ const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }
   );
 };
 
-const ProductPopup = ({ product, onClose }: { 
-  product: typeof products[0]; 
+const ProductPopup = ({ product, onClose }: {
+  product: typeof products[0];
   onClose: () => void;
 }) => {
   useEffect(() => {
@@ -74,11 +74,11 @@ const ProductPopup = ({ product, onClose }: {
   };
 
   return createPortal(
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={onClose}
     >
-      <div 
+      <div
         className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
         onClick={e => e.stopPropagation()}
       >
@@ -149,17 +149,17 @@ const ProductPopup = ({ product, onClose }: {
                   shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
               >
                 <span>プレイする</span>
-                <svg 
-                  className="w-5 h-5 ml-2" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-5 h-5 ml-2"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                   />
                 </svg>
               </a>
@@ -324,9 +324,9 @@ export function Products() {
       </div>
 
       {selectedProduct && (
-        <ProductPopup 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
+        <ProductPopup
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
         />
       )}
     </section>

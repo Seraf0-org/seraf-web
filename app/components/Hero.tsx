@@ -21,16 +21,36 @@ export function Hero() {
   }, [handleScroll]);
 
   const createLetterSpans = (text: string, baseDelay: number, className: string = "") => {
-    return text.split('').map((letter, index) => (
-      <span
-        key={index}
-        className={`inline-block animate-fade-in-down opacity-0 ${className}`}
-        style={{ 
-          animationDelay: `${baseDelay + (index * 0.1)}s`,
-          textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
-        }}
+    const sentences = text.split('。').filter(Boolean);
+    
+    return sentences.map((sentence, sentenceIndex) => (
+      <span 
+        key={sentenceIndex} 
+        className={`inline-block group ${className}`}
       >
-        {letter}
+        {sentence.split('').map((letter, letterIndex) => (
+          <span
+            key={letterIndex}
+            className={`inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300`}
+            style={{ 
+              animationDelay: `${baseDelay + ((sentenceIndex * sentence.length + letterIndex) * 0.1)}s`,
+              textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
+            }}
+          >
+            {letter}
+          </span>
+        ))}
+        {sentenceIndex < sentences.length - 1 && (
+          <span
+            className="inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300"
+            style={{ 
+              animationDelay: `${baseDelay + ((sentenceIndex + 1) * sentence.length * 0.1)}s`,
+              textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
+            }}
+          >
+            。
+          </span>
+        )}
       </span>
     ));
   };
@@ -64,7 +84,7 @@ export function Hero() {
             <div className="block font-mincho text-4xl md:text-6xl font-light relative mb-8">
               <div className="absolute -left-4 top-1/2 w-8 h-[1px] bg-white/30" />
               <div className="absolute -right-4 top-1/2 w-8 h-[1px] bg-white/30" />
-              {createLetterSpans(japaneseText, 0, "relative hover:text-cyan-300 transition-colors duration-300")}
+              {createLetterSpans(japaneseText, 0, "relative")}
             </div>
 
             <div className="font-mincho text-3xl md:text-4xl block font-light tracking-[.5em] relative">
