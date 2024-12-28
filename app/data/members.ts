@@ -17,7 +17,7 @@ export const members: Member[] = [
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
         description: "本スタジオのリーダー。シナリオ制作、ゲームデザインをメインに活動を引っ張っていく。",
-        skills: ["Unity(C#)", "UE5", "Python", "HTML, CSS", "TypeScript", "Blender", "After Effects"],
+        skills: ["Unity(C#)", "Web", "Blender", "After Effects"],
         sns: "https://twitter.com/KTN_PERIOD"
     },
     {
@@ -47,7 +47,7 @@ export const members: Member[] = [
         mainImage: "/images/member-4.jpg",
         subImage: "/images/member-4-sub.jpg",
         description: "準備中。",
-        skills: ["Illustrator", "After Effects"],
+        skills: ["Illustrator", "After Effects", "Web"],
         sns: "https://twitter.com/re4_2304"
     },
     {

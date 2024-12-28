@@ -22,17 +22,17 @@ export function Hero() {
 
   const createLetterSpans = (text: string, baseDelay: number, className: string = "") => {
     const sentences = text.split('。').filter(Boolean);
-    
+
     return sentences.map((sentence, sentenceIndex) => (
-      <span 
-        key={sentenceIndex} 
+      <span
+        key={sentenceIndex}
         className={`inline-block group ${className}`}
       >
         {sentence.split('').map((letter, letterIndex) => (
           <span
             key={letterIndex}
             className={`inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300`}
-            style={{ 
+            style={{
               animationDelay: `${baseDelay + ((sentenceIndex * sentence.length + letterIndex) * 0.1)}s`,
               textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
             }}
@@ -43,7 +43,7 @@ export function Hero() {
         {sentenceIndex < sentences.length - 1 && (
           <span
             className="inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300"
-            style={{ 
+            style={{
               animationDelay: `${baseDelay + ((sentenceIndex + 1) * sentence.length * 0.1)}s`,
               textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
             }}

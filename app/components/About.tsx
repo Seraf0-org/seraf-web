@@ -86,15 +86,16 @@ export function About() {
                 </svg>
               </div>
             </h1>
-            <p className={`text-xl text-gray-600 dark:text-gray-300 mb-8 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`} style={{ transitionDelay: '0.2s' }}>
-              <span className="text-3xl font-semibold">Seraf()</span>は、代表のKTNが作りたいゲームをメンバー協力のもと作り上げていくチームです。<br></br>
+            <p
+              className={`text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed transition-all duration-1000 transform 
+                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: '0.2s' }}
+            >
+              <span className="text-3xl font-semibold">Seraf()</span>
+              は、代表のKTNが作りたいゲームをメンバー協力のもと作り上げていくチームです。
+              <br className="mb-4" />
               メンバーそれぞれの得意分野や「好き」を活かして、様々なゲームを作り上げていきます。
             </p>
-            <button className={`bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`} style={{ transitionDelay: '0.4s' }}>
-              詳しく見る
-            </button>
           </div>
         </div>
       </div>
