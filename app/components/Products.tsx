@@ -77,92 +77,125 @@ const ProductPopup = ({ product, onClose }: {
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={onClose}
+      style={{
+        animation: 'fade-in 0.2s ease-out forwards'
+      }}
     >
       <div
-        className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
+        className="relative w-[90vw] max-w-[1400px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-left"
         onClick={e => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+          className="absolute top-6 right-6 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2">
-            <div className="relative pt-[75%]">
+        <div className="flex flex-col md:flex-row h-[85vh]">
+          <div className="w-full md:w-3/5 h-[40vh] md:h-full relative">
+            <div className="absolute inset-0">
               <img
                 src={product.image || "/images/products/product-none.jpg"}
                 alt={product.name}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="w-full h-full object-cover"
                 onError={handleImageError}
               />
             </div>
           </div>
 
-          <div className="w-full md:w-1/2 p-6 md:p-8">
-            <div className="mb-6">
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                {product.name}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-lg">
-                {product.description}
-              </p>
-            </div>
+          <div className="w-full md:w-2/5 p-6 md:p-8 flex flex-col">
+            <div className="flex-grow overflow-y-auto pr-4 space-y-6">
+              <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+                  {product.name}
+                </h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300">
+                  制作: {product.description}
+                </p>
+              </div>
 
-            <div className="space-y-6">
               {product.details && (
-                <div>
-                  <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">詳細</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
+                  <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">概要</h4>
+                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                     {product.details}
                   </p>
                 </div>
               )}
 
-              {product.platform && (
-                <div>
-                  <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">プラットフォーム</h4>
-                  <p className="text-gray-600 dark:text-gray-300">{product.platform}</p>
+              {product.features && (
+                <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
+                  <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">特徴</h4>
+                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {product.features}
+                  </p>
                 </div>
               )}
 
-              {product.releaseDate && (
-                <div>
-                  <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">リリース日</h4>
-                  <p className="text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
-                </div>
-              )}
+              <div className="grid grid-cols-2 gap-6 opacity-0 animate-text-appear" style={{ animationDelay: '1.0s' }}>
+                {product.genre && (
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">ジャンル</h4>
+                    <p className="text-lg text-gray-600 dark:text-gray-300">{product.genre}</p>
+                  </div>
+                )}
+
+                {product.platform && (
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">プラットフォーム</h4>
+                    <p className="text-lg text-gray-600 dark:text-gray-300">{product.platform}</p>
+                  </div>
+                )}
+
+                {product.releaseDate && (
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">リリース日</h4>
+                    <p className="text-lg text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {product.link && (
-              <a
-                href={product.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center mt-8 px-6 py-3 
-                  bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700
-                  text-white font-medium rounded-lg transition-colors duration-200
-                  shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
-              >
-                <span>プレイする</span>
-                <svg
-                  className="w-5 h-5 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                  />
-                </svg>
-              </a>
+            {(product.link || product.storeLink) && (
+              <div className="flex flex-col sm:flex-row gap-4 mt-6 sticky bottom-0 bg-white dark:bg-gray-800 pt-4 opacity-0 animate-text-appear" style={{ animationDelay: '1.2s' }}>
+                {product.link && (
+                  <a
+                    href={product.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center px-8 py-4 
+                      bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700
+                      text-white text-lg font-medium rounded-lg transition-colors duration-200
+                      shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                  >
+                    <span>プレイする</span>
+                    <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </a>
+                )}
+
+                {product.storeLink && (
+                  <a
+                    href={product.storeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center px-8 py-4 
+                      bg-fuchsia-500 dark:bg-fuchsia-600 hover:bg-fuchsia-600 dark:hover:bg-fuchsia-700
+                      text-white text-lg font-medium rounded-lg transition-colors duration-200
+                      shadow-[0_0_15px_rgba(219,39,119,0.3)] hover:shadow-[0_0_20px_rgba(219,39,119,0.5)]"
+                  >
+                    <span>購入する</span>
+                    <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                  </a>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -184,6 +217,7 @@ export function Products() {
   };
 
   const handleProductClick = (product: typeof products[0]) => {
+    if (product.name === "And more...") return;
     setSelectedProduct(product);
   };
 

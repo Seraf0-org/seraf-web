@@ -38,7 +38,7 @@ export const members: Member[] = [
         subImage: "/images/member-3-sub.jpg",
         description: "準備中。",
         skills: ["Ableton Live", "Blender"],
-        sns: "https://twitter.com/CaZ_Mossy"
+        sns: "https://x.com/Mossy_tw"
     },
     {
         id: 4,

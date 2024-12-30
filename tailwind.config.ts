@@ -26,6 +26,9 @@ export default {
         'draw-line-from-right': 'draw-line-from-right 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards',
         'clip-from-right': 'clip-from-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
         'falling-line': 'falling-line 4s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+        'fade-in': 'fade-in 0.2s ease-out forwards',
+        'clip-from-left': 'clip-from-left 0.6s cubic-bezier(0.7, 0, 0.1, 1) forwards',
+        'text-appear': 'text-appear 0.5s ease-out forwards',
       },
       keyframes: {
         'fade-in-down': {
@@ -78,6 +81,32 @@ export default {
           '100%': {
             transform: 'translateY(100%)',
             opacity: '0'
+          }
+        },
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          }
+        },
+        'clip-from-left': {
+          '0%': {
+            clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+          },
+          '100%': {
+            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+          }
+        },
+        'text-appear': {
+          '0%': {
+            transform: 'translateY(10px)',
+            opacity: '0'
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1'
           }
         },
       },

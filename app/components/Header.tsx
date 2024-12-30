@@ -69,9 +69,7 @@ export function Header() {
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 z-50 overflow-hidden"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="fixed top-0 left-0 right-0 z-50 overflow-hidden pointer-events-none"
         >
             {/* 逆色の背景レイヤー - アニメーション完了後は非表示 */}
             {!isAnimationComplete && (
@@ -90,9 +88,9 @@ export function Header() {
                 />
             )}
 
-            {/* メインの背景レイヤー */}
+            {/* メインの背景レイヤー - ここにポインターイベントを有効化 */}
             <div
-                className="relative h-40"
+                className="relative h-40 pointer-events-auto"
                 style={{
                     clipPath: 'polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)',
                     transform: `translateX(${isAnimating ? '-100%' : isFirstSlideComplete ? '0' : '-100%'})`,
@@ -109,6 +107,8 @@ export function Header() {
                     backgroundColor: isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(210 210 210 / 0.5)',
                     backdropFilter: 'blur(8px)'
                 }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
             >
                 {/* 装飾的なライン - 上部 */}
                 <div className="absolute top-[10%] left-0 w-full pointer-events-none">
