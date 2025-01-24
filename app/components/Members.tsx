@@ -281,7 +281,7 @@ export function Members() {
                             }}
                         >
                             <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg">
-                                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 group-hover:scale-110 transition-transform duration-300">
+                                <div className="w-full h-full bg-gray-200 dark:bg-gray-200 group-hover:scale-110 transition-transform duration-300">
                                     <img
                                         src={member.mainImage}
                                         alt={member.name}

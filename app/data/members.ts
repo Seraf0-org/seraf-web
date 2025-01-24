@@ -13,10 +13,10 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "ゲームデザイナー, 脚本家, エンジニア, モデラー, 映像作家",
+        position: "ゲームデザイナー, シナリオライター, エンジニア",
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
-        description: "本スタジオのリーダー。シナリオ制作、ゲームデザインをメインに活動を引っ張っていく。",
+        description: "たくさんゲームを作るます",
         skills: ["Unity(C#)", "Web", "Blender", "After Effects"],
         sns: "https://twitter.com/KTN_PERIOD"
     },
@@ -44,7 +44,7 @@ export const members: Member[] = [
         id: 4,
         name: "Jiska",
         position: "デザイナー, 映像作家",
-        mainImage: "/images/member-4.jpg",
+        mainImage: "/images/member-none.png",
         subImage: "/images/member-4-sub.jpg",
         description: "準備中。",
         skills: ["Illustrator", "After Effects", "Web"],
@@ -54,8 +54,8 @@ export const members: Member[] = [
         id: 5,
         name: "ドライバー（+）",
         position: "イラストレーター",
-        mainImage: "/images/member-5.jpg",
-        subImage: "/images/member-5-sub.jpg",
+        mainImage: "/images/member-none.png",
+        subImage: "/images/member-none.png",
         description: "準備中。",
         skills: [],
         sns: "https://twitter.com/kasha25_dr25"
@@ -64,8 +64,8 @@ export const members: Member[] = [
         id: 6,
         name: "しそ",
         position: "デザイナー",
-        mainImage: "/images/member-6.jpg",
-        subImage: "/images/member-6-sub.jpg",
+        mainImage: "/images/member-none.png",
+        subImage: "/images/member-none.png",
         description: "準備中。",
         skills: [],
         sns: "https://twitter.com/Sm_1010_"
