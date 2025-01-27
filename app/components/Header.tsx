@@ -47,7 +47,7 @@ export function Header() {
     }, []);
 
     const toggleTheme = () => {
-        setTheme((prev: Theme) => prev === 'light' ? 'dark' : 'light');
+        setTheme((prev: Theme) => (prev === 'light' ? 'dark' : 'light') as Theme);
     };
 
     const handleClick = (sectionId: string) => {
@@ -82,7 +82,6 @@ export function Header() {
                         transition: 'transform 600ms ease-out, opacity 800ms ease-in-out',
                         transitionDelay: isAnimating ? '0ms' : isVisible ? '600ms' : '0ms',
                         backgroundColor: !isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(255 255 255 / 0.5)',
-
                         backdropFilter: 'blur(8px)'
                     }}
                 />
@@ -138,9 +137,7 @@ export function Header() {
                 </div>
 
                 {/* ヘッダーのアウトライン - ホバー時のみ表示 */}
-                <div
-                    className="absolute inset-0 pointer-events-none"
-                >
+                <div className="absolute inset-0 pointer-events-none">
                     <svg
                         className="absolute inset-0 w-full h-full"
                         viewBox="0 0 1000 160"
