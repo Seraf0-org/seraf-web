@@ -53,21 +53,7 @@ export function About() {
         </svg>
       ))}
 
-      <div className="container mx-auto relative">
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 z-0">
-          <img
-            src="/images/namelogo-dark.png"
-            alt="Seraf Logo"
-            className={`w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
-              } dark:hidden`}
-          />
-          <img
-            src="/images/namelogo-light.png"
-            alt="Seraf Logo"
-            className={`w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
-              } hidden dark:block`}
-          />
-        </div>
+      <div className="container mx-auto relative flex flex-col md:flex-row">
         <div className={`container mx-auto px-4 py-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
           <div className="max-w-3xl relative z-10">
@@ -97,6 +83,20 @@ export function About() {
               メンバーそれぞれの得意分野や「好き」を活かして、様々なゲームを作り上げていきます。
             </p>
           </div>
+        </div>
+        <div className="right-8 top-1/2 z-0">
+          <img
+            src="/images/namelogo-dark.png"
+            alt="Seraf Logo"
+            className={`w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
+              } dark:hidden`}
+          />
+          <img
+            src="/images/namelogo-light.png"
+            alt="Seraf Logo"
+            className={`w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
+              } hidden dark:block`}
+          />
         </div>
       </div>
     </section>

@@ -29,6 +29,8 @@ export default {
         'fade-in': 'fade-in 0.2s ease-out forwards',
         'clip-from-left': 'clip-from-left 0.6s cubic-bezier(0.7, 0, 0.1, 1) forwards',
         'text-appear': 'text-appear 0.5s ease-out forwards',
+        'slide-from-top': 'slide-from-top 0.5s ease-out forwards',
+        'clip-from-top': 'clip-from-top 0.5s ease-out forwards',
       },
       keyframes: {
         'fade-in-down': {
@@ -108,6 +110,24 @@ export default {
             transform: 'translateY(0)',
             opacity: '1'
           }
+        },
+        'slide-from-top': {
+          '0%': {
+            transform: 'translateY(-100%)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
+        },
+        'clip-from-top': {
+          '0%': {
+            clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+          },
+          '100%': {
+            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          },
         },
       },
       clipPath: {

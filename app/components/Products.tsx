@@ -82,7 +82,7 @@ const ProductPopup = ({ product, onClose }: {
       }}
     >
       <div
-        className="relative w-[90vw] max-w-[1400px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-left"
+        className="relative w-[90vw] max-w-[1600px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
         onClick={e => e.stopPropagation()}
       >
         <button
@@ -94,7 +94,7 @@ const ProductPopup = ({ product, onClose }: {
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row h-[85vh]">
+        <div className="flex flex-col md:flex-row h-[85vh] overflow-y-auto">
           <div className="w-full md:w-3/5 h-[40vh] md:h-full relative">
             <div className="absolute inset-0">
               <img

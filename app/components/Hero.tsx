@@ -78,7 +78,7 @@ export function Hero() {
       >
         <div className="text-center">
           <h1
-            className="font-light text-white tracking-[.25em] relative font-mincho"
+            className="font-light text-white tracking-[.25em] relative font-mincho leading-loose"
             style={{ lineHeight: '2em' }}
           >
             <div className="block font-mincho text-4xl md:text-6xl font-light relative mb-8">
@@ -87,16 +87,16 @@ export function Hero() {
               {createLetterSpans(japaneseText, 0, "relative")}
             </div>
 
-            <div className="font-mincho text-3xl md:text-4xl block font-light tracking-[.5em] relative">
+            <div className="font-mincho text-3xl md:text-4xl block font-light tracking-tight md:tracking-[.25em] relative leading-loose">
               <div className="absolute left-1/2 -translate-x-1/2 -top-4 w-24 h-[1px] bg-white/30" />
               <span
-                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300"
+                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-sm md:text-3xl"
                 style={{ animationDelay: '2s' }}
               >
                 {englishText1}
               </span>
               <span
-                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300"
+                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-sm md:text-3xl"
                 style={{ animationDelay: '2.5s' }}
               >
                 {englishText2}

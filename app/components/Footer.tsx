@@ -7,10 +7,10 @@ export function Footer() {
     const [sectionRef, isVisible] = useIntersectionObserver();
     const { theme } = useOutletContext<OutletContext>();
     // isFooter を true に設定
-    const lines = useBackgroundLines(theme === 'dark', 'fuchsia', true);
+    const lines = useBackgroundLines(theme !== 'dark', 'fuchsia', true);
 
     return (
-        <footer ref={sectionRef} className="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 py-12 relative overflow-hidden">
+        <footer ref={sectionRef} className={`bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white py-12 relative overflow-hidden`}>
             {/* 背景の線 */}
             {lines.map((line, index) => (
                 <svg
@@ -51,23 +51,23 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
                         <h3 className="text-xl font-bold mb-4">Seraf()</h3>
-                        <p className="text-gray-400 dark:text-gray-600">
+                        <p className="text-gray-600 dark:text-gray-400">
                             Become anything, from being nothing.
                         </p>
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-4">リンク</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900">About</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900">News</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900">Products</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900">Members</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900">Contact</a></li>
+                            <li><a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">About</a></li>
+                            <li><a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">News</a></li>
+                            <li><a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Products</a></li>
+                            <li><a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Members</a></li>
+                            <li><a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Contact</a></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-4">お問い合わせ</h3>
-                        <p className="text-gray-400 dark:text-gray-600">
+                        <p className="text-gray-600 dark:text-gray-400">
                             january44292080@gmail.com
                         </p>
                     </div>
@@ -78,15 +78,15 @@ export function Footer() {
                                 href="https://twitter.com/seraf_dev"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900"
+                                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                             >
                                 <img
-                                    src="/images/x-logo-white.png"
+                                    src="/images/x-logo-black.png"
                                     alt="X (Twitter)"
                                     className="w-6 h-6 dark:hidden"
                                 />
                                 <img
-                                    src="/images/x-logo-black.png"
+                                    src="/images/x-logo-white.png"
                                     alt="X (Twitter)"
                                     className="w-6 h-6 hidden dark:block"
                                 />
@@ -94,8 +94,8 @@ export function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-8 pt-8 border-t border-gray-800 dark:border-gray-200 text-center text-gray-400 dark:text-gray-600">
-                    <p>&copy; 2024 Seraf(). All rights reserved.</p>
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-400">
+                    <p>&copy; 2025 Seraf(). All rights reserved.</p>
                 </div>
             </div>
         </footer>

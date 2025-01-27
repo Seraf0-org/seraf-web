@@ -151,7 +151,6 @@ export default function App() {
 
   // スムーズスクロールの実装
   useEffect(() => {
-    // グローバルスクロール状態の期化
     window.smoothScrollState = {
       currentScroll: window.scrollY,
       targetScroll: window.scrollY,

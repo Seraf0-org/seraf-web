@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// .wrangler/tmp/pages-I5tzeE/functionsWorker-0.965032850972497.mjs
+// .wrangler/tmp/pages-DWse6p/functionsWorker-0.9266619497280508.mjs
 var __create = Object.create;
 var __defProp2 = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -39,7 +39,7 @@ var __toCommonJS = /* @__PURE__ */ __name((mod) => __copyProps(__defProp2({}, "_
 var require_cookie = __commonJS({
   "../node_modules/cookie/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     exports.parse = parse2;
     exports.serialize = serialize;
     var __toString = Object.prototype.toString;
@@ -195,7 +195,7 @@ var require_cookie = __commonJS({
 var require_warnings = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/warnings.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var alreadyWarned = {};
     function warnOnce(condition, message) {
@@ -212,7 +212,7 @@ var require_warnings = __commonJS({
 var require_cookies = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/cookies.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookie = require_cookie();
     var warnings = require_warnings();
@@ -399,7 +399,7 @@ function arraysEqual(a, b) {
 __name(arraysEqual, "arraysEqual");
 var init_utils = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/utils.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     __name2(stringToArray, "stringToArray");
     __name2(arrayToString, "arrayToString");
     __name2(mergeArrays, "mergeArrays");
@@ -441,7 +441,7 @@ var EOQ;
 var QueueableStreamSearch;
 var init_search = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/search.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     init_utils();
     __name2(coerce, "coerce");
     __name2(jsmemcmp, "jsmemcmp");
@@ -855,7 +855,7 @@ var dash;
 var CRLF;
 var init_src = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/index.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     init_search();
     init_utils();
     mergeArrays2 = Function.prototype.apply.bind(mergeArrays, void 0);
@@ -871,7 +871,7 @@ var init_src = __esm({
 var require_formData = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/formData.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var multipartParser = (init_src(), __toCommonJS(src_exports));
     function composeUploadHandlers(...handlers) {
@@ -917,7 +917,7 @@ var require_formData = __commonJS({
 var require_router_cjs = __commonJS({
   "../node_modules/@remix-run/router/dist/router.cjs.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     function _extends2() {
       _extends2 = Object.assign ? Object.assign.bind() : function(target) {
@@ -5365,7 +5365,7 @@ var require_router_cjs = __commonJS({
 var require_mode = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/mode.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var ServerMode = /* @__PURE__ */ function(ServerMode2) {
       ServerMode2["Development"] = "development";
@@ -5385,7 +5385,7 @@ var require_mode = __commonJS({
 var require_errors = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/errors.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var mode2 = require_mode();
@@ -5459,7 +5459,7 @@ var require_errors = __commonJS({
 var require_responses = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/responses.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var errors = require_errors();
@@ -5568,7 +5568,7 @@ var require_responses = __commonJS({
 var require_utils = __commonJS({
   "../node_modules/turbo-stream/dist/utils.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createLineSplittingTransform = exports.Deferred = exports.TYPE_PREVIOUS_RESOLVED = exports.TYPE_URL = exports.TYPE_SYMBOL = exports.TYPE_SET = exports.TYPE_REGEXP = exports.TYPE_PROMISE = exports.TYPE_NULL_OBJECT = exports.TYPE_MAP = exports.TYPE_ERROR = exports.TYPE_DATE = exports.TYPE_BIGINT = exports.UNDEFINED = exports.POSITIVE_INFINITY = exports.NULL = exports.NEGATIVE_ZERO = exports.NEGATIVE_INFINITY = exports.NAN = exports.HOLE = void 0;
     exports.HOLE = -1;
@@ -5629,7 +5629,7 @@ var require_utils = __commonJS({
 var require_flatten = __commonJS({
   "../node_modules/turbo-stream/dist/flatten.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.flatten = void 0;
     var utils_js_1 = require_utils();
@@ -5812,7 +5812,7 @@ var require_flatten = __commonJS({
 var require_unflatten = __commonJS({
   "../node_modules/turbo-stream/dist/unflatten.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unflatten = void 0;
     var utils_js_1 = require_utils();
@@ -6053,7 +6053,7 @@ var require_unflatten = __commonJS({
 var require_turbo_stream = __commonJS({
   "../node_modules/turbo-stream/dist/turbo-stream.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.encode = exports.decode = void 0;
     var flatten_js_1 = require_flatten();
@@ -6262,7 +6262,7 @@ var require_turbo_stream = __commonJS({
 var require_set_cookie = __commonJS({
   "../node_modules/set-cookie-parser/lib/set-cookie.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     var defaultParseOptions = {
       decodeValues: true,
       map: false,
@@ -6445,7 +6445,7 @@ var require_set_cookie = __commonJS({
 var require_headers = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/headers.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var setCookieParser = require_set_cookie();
     function getDocumentHeaders(build, context) {
@@ -6521,7 +6521,7 @@ var require_headers = __commonJS({
 var require_single_fetch = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/single-fetch.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var turboStream = require_turbo_stream();
@@ -6780,7 +6780,7 @@ var require_single_fetch = __commonJS({
 var require_entry = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/entry.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     function createEntryRouteModules(manifest) {
       return Object.keys(manifest).reduce((memo, routeId) => {
@@ -6796,7 +6796,7 @@ var require_entry = __commonJS({
 var require_invariant = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/invariant.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     function invariant2(value, message) {
       if (value === false || value === null || typeof value === "undefined") {
@@ -6812,7 +6812,7 @@ var require_invariant = __commonJS({
 var require_routeMatching = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/routeMatching.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     function matchServerRoutes(routes3, pathname, basename2) {
@@ -6833,7 +6833,7 @@ var require_routeMatching = __commonJS({
 var require_data = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/data.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var responses = require_responses();
     async function callRouteAction({
@@ -6953,7 +6953,7 @@ var require_data = __commonJS({
 var require_routes = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/routes.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var data = require_data();
     function groupRoutesByParentId2(manifest) {
@@ -7025,7 +7025,7 @@ var require_routes = __commonJS({
 var require_markup = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/markup.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var ESCAPE_LOOKUP2 = {
       "&": "\\u0026",
@@ -7046,7 +7046,7 @@ var require_markup = __commonJS({
 var require_serverHandoff = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/serverHandoff.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var markup = require_markup();
     function createServerHandoffString(serverHandoff) {
@@ -7060,7 +7060,7 @@ var require_serverHandoff = __commonJS({
 var require_dev = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/dev.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     async function broadcastDevReady(build, origin) {
       origin ??= process.env.REMIX_DEV_ORIGIN;
@@ -7112,7 +7112,7 @@ var require_dev = __commonJS({
 var require_deprecations = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/deprecations.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     function resourceRouteJsonWarning(type, routeId) {
       return `\u26A0\uFE0F REMIX FUTURE CHANGE: Externally-accessed resource routes will no longer be able to return raw JavaScript objects or \`null\` in React Router v7 when Single Fetch becomes the default. You can prepare for this change at your convenience by wrapping the data returned from your \`${type}\` function in the \`${routeId}\` route with \`json()\`.  For instructions on making this change, see https://remix.run/docs/en/v2.13.1/guides/single-fetch#resource-routes`;
@@ -7125,7 +7125,7 @@ var require_deprecations = __commonJS({
 var require_server = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/server.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var entry2 = require_entry();
@@ -7579,7 +7579,7 @@ ${String(error)}`;
 var require_sessions = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/sessions.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var warnings = require_warnings();
@@ -7677,7 +7677,7 @@ var require_sessions = __commonJS({
 var require_cookieStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/sessions/cookieStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var sessions = require_sessions();
@@ -7712,7 +7712,7 @@ var require_cookieStorage = __commonJS({
 var require_memoryStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/sessions/memoryStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var createMemorySessionStorageFactory = /* @__PURE__ */ __name2((createSessionStorage) => ({
       cookie
@@ -7759,7 +7759,7 @@ var require_memoryStorage = __commonJS({
 var require_errors2 = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/upload/errors.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var MaxPartSizeExceededError = /* @__PURE__ */ __name(class extends Error {
       constructor(field, maxBytes) {
@@ -7775,7 +7775,7 @@ var require_errors2 = __commonJS({
 var require_memoryUploadHandler = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/upload/memoryUploadHandler.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var errors = require_errors2();
     function createMemoryUploadHandler({
@@ -7822,7 +7822,7 @@ var require_memoryUploadHandler = __commonJS({
 var require_dist = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var formData = require_formData();
@@ -7862,7 +7862,7 @@ var require_dist = __commonJS({
 var require_crypto = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/crypto.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var encoder = new TextEncoder();
     var sign = /* @__PURE__ */ __name2(async (value, secret) => {
@@ -7907,7 +7907,7 @@ var require_crypto = __commonJS({
 var require_implementations = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/implementations.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var serverRuntime = require_dist();
     var crypto2 = require_crypto();
@@ -7927,7 +7927,7 @@ var require_implementations = __commonJS({
 var require_workersKVStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/sessions/workersKVStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var implementations = require_implementations();
     function createWorkersKVSessionStorage({
@@ -7975,7 +7975,7 @@ var require_workersKVStorage = __commonJS({
 var require_dist2 = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var workersKVStorage = require_workersKVStorage();
     var implementations = require_implementations();
@@ -8161,7 +8161,7 @@ __name(createPagesFunctionHandler, "createPagesFunctionHandler");
 var import_cloudflare;
 var init_worker = __esm({
   "../node_modules/@remix-run/cloudflare-pages/dist/esm/worker.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     import_cloudflare = __toESM(require_dist2());
     __name2(createRequestHandler, "createRequestHandler");
     __name2(createPagesFunctionHandler, "createPagesFunctionHandler");
@@ -8169,14 +8169,14 @@ var init_worker = __esm({
 });
 var init_esm = __esm({
   "../node_modules/@remix-run/cloudflare-pages/dist/esm/index.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     init_worker();
   }
 });
 var require_react_development = __commonJS({
   "../node_modules/react/cjs/react.development.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (true) {
       (function() {
         "use strict";
@@ -10221,7 +10221,7 @@ var require_react_development = __commonJS({
 var require_react = __commonJS({
   "../node_modules/react/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (false) {
       module.exports = null;
     } else {
@@ -10232,7 +10232,7 @@ var require_react = __commonJS({
 var require_react_jsx_runtime_development = __commonJS({
   "../node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (true) {
       (function() {
         "use strict";
@@ -11204,7 +11204,7 @@ var require_react_jsx_runtime_development = __commonJS({
 var require_jsx_runtime = __commonJS({
   "../node_modules/react/jsx-runtime.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (false) {
       module.exports = null;
     } else {
@@ -11215,7 +11215,7 @@ var require_jsx_runtime = __commonJS({
 var require_scheduler_development = __commonJS({
   "../node_modules/scheduler/cjs/scheduler.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (true) {
       (function() {
         "use strict";
@@ -11716,7 +11716,7 @@ var require_scheduler_development = __commonJS({
 var require_scheduler = __commonJS({
   "../node_modules/scheduler/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (false) {
       module.exports = null;
     } else {
@@ -11727,7 +11727,7 @@ var require_scheduler = __commonJS({
 var require_react_dom_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (true) {
       (function() {
         "use strict";
@@ -34739,7 +34739,7 @@ var require_react_dom_development = __commonJS({
 var require_react_dom = __commonJS({
   "../node_modules/react-dom/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (false) {
       checkDCE();
       module.exports = null;
@@ -34750,7 +34750,7 @@ var require_react_dom = __commonJS({
 });
 var require_react_router_development = __commonJS({
   "../node_modules/react-router/dist/umd/react-router.development.js"(exports, module) {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require_react(), require_router_cjs()) : typeof define === "function" && define.amd ? define(["exports", "react", "@remix-run/router"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.ReactRouter = {}, global.React, global.RemixRouter));
     })(exports, function(exports2, React9, router) {
@@ -36120,7 +36120,7 @@ var require_react_router_development = __commonJS({
 var require_main = __commonJS({
   "../node_modules/react-router/dist/main.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (false) {
       module.exports = null;
     } else {
@@ -36130,7 +36130,7 @@ var require_main = __commonJS({
 });
 var require_react_router_dom_development = __commonJS({
   "../node_modules/react-router-dom/dist/umd/react-router-dom.development.js"(exports, module) {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require_react(), require_react_dom(), require_main(), require_router_cjs()) : typeof define === "function" && define.amd ? define(["exports", "react", "react-dom", "react-router", "@remix-run/router"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.ReactRouterDOM = {}, global.React, global.ReactDOM, global.ReactRouter, global.RemixRouter));
     })(exports, function(exports2, React9, ReactDOM, reactRouter, router) {
@@ -37745,7 +37745,7 @@ var require_react_router_dom_development = __commonJS({
 var require_main2 = __commonJS({
   "../node_modules/react-router-dom/dist/main.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (false) {
       module.exports = null;
     } else {
@@ -37770,7 +37770,7 @@ function _extends() {
 __name(_extends, "_extends");
 var init_rollupPluginBabelHelpers = __esm({
   "../node_modules/@remix-run/react/dist/esm/_virtual/_rollupPluginBabelHelpers.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     __name2(_extends, "_extends");
   }
 });
@@ -37782,7 +37782,7 @@ function invariant(value, message) {
 __name(invariant, "invariant");
 var init_invariant = __esm({
   "../node_modules/@remix-run/react/dist/esm/invariant.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     __name2(invariant, "invariant");
   }
 });
@@ -37812,7 +37812,7 @@ async function loadRouteModule(route, routeModulesCache) {
 __name(loadRouteModule, "loadRouteModule");
 var init_routeModules = __esm({
   "../node_modules/@remix-run/react/dist/esm/routeModules.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     __name2(loadRouteModule, "loadRouteModule");
   }
 });
@@ -37987,7 +37987,7 @@ __name(parsePathPatch, "parsePathPatch");
 var import_react_router_dom;
 var init_links = __esm({
   "../node_modules/@remix-run/react/dist/esm/links.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     import_react_router_dom = __toESM(require_main2());
     init_routeModules();
     __name2(getKeyedLinksForMatches, "getKeyedLinksForMatches");
@@ -38018,7 +38018,7 @@ var ESCAPE_LOOKUP;
 var ESCAPE_REGEX;
 var init_markup = __esm({
   "../node_modules/@remix-run/react/dist/esm/markup.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     ESCAPE_LOOKUP = {
       "&": "\\u0026",
       ">": "\\u003e",
@@ -38107,7 +38107,7 @@ __name(singleFetchUrl, "singleFetchUrl");
 var React;
 var init_single_fetch = __esm({
   "../node_modules/@remix-run/react/dist/esm/single-fetch.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     React = __toESM(require_react());
     init_markup();
     __name2(StreamTransfer, "StreamTransfer");
@@ -38194,7 +38194,7 @@ var import_react_router_dom2;
 var RemixErrorBoundary;
 var init_errorBoundaries = __esm({
   "../node_modules/@remix-run/react/dist/esm/errorBoundaries.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     React2 = __toESM(require_react());
     import_react_router_dom2 = __toESM(require_main2());
     init_components();
@@ -38260,7 +38260,7 @@ __name(RemixRootDefaultHydrateFallback, "RemixRootDefaultHydrateFallback");
 var React3;
 var init_fallback = __esm({
   "../node_modules/@remix-run/react/dist/esm/fallback.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     React3 = __toESM(require_react());
     init_errorBoundaries();
     __name2(RemixRootDefaultHydrateFallback, "RemixRootDefaultHydrateFallback");
@@ -38360,7 +38360,7 @@ var React4;
 var import_react_router_dom3;
 var init_routes = __esm({
   "../node_modules/@remix-run/react/dist/esm/routes.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     React4 = __toESM(require_react());
     import_react_router_dom3 = __toESM(require_main2());
     init_errorBoundaries();
@@ -38405,7 +38405,7 @@ var import_router;
 var React5;
 var init_fog_of_war = __esm({
   "../node_modules/@remix-run/react/dist/esm/fog-of-war.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     import_router = __toESM(require_router_cjs());
     React5 = __toESM(require_react());
     __name2(isFogOfWarEnabled, "isFogOfWarEnabled");
@@ -39007,7 +39007,7 @@ var isHydrated;
 var LiveReload;
 var init_components = __esm({
   "../node_modules/@remix-run/react/dist/esm/components.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     init_rollupPluginBabelHelpers();
     React6 = __toESM(require_react());
     import_react_router_dom4 = __toESM(require_main2());
@@ -39256,7 +39256,7 @@ var import_react_router_dom5;
 var STORAGE_KEY;
 var init_scroll_restoration = __esm({
   "../node_modules/@remix-run/react/dist/esm/scroll-restoration.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     init_rollupPluginBabelHelpers();
     React7 = __toESM(require_react());
     import_react_router_dom5 = __toESM(require_main2());
@@ -39268,7 +39268,7 @@ var init_scroll_restoration = __esm({
 var require_server2 = __commonJS({
   "../node_modules/react-router-dom/server.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     Object.defineProperty(exports, "__esModule", { value: true });
     var React9 = require_react();
     var router = require_router_cjs();
@@ -39653,7 +39653,7 @@ var React8;
 var import_server;
 var init_server = __esm({
   "../node_modules/@remix-run/react/dist/esm/server.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     React8 = __toESM(require_react());
     import_server = __toESM(require_server2());
     init_components();
@@ -39666,7 +39666,7 @@ var init_server = __esm({
 var import_react_router_dom6;
 var init_esm2 = __esm({
   "../node_modules/@remix-run/react/dist/esm/index.js"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     import_react_router_dom6 = __toESM(require_main2());
     init_components();
     init_scroll_restoration();
@@ -39689,7 +39689,7 @@ var naivePattern;
 var usedPattern;
 var init_isbot = __esm({
   "../node_modules/isbot/index.mjs"() {
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     fullPattern = " daum[ /]| deusu/| yadirectfetcher|(?:^| )site|(?:^|[^g])news|(?<! (?:channel/|google/))google(?!(app|/google| pixel))|(?<! cu)bot(?:[^\\w]|_|$)|(?<! ya(?:yandex)?)search|(?<!(?:lib))http|(?<![hg]m)score|@[a-z]|\\(at\\)[a-z]|\\[at\\][a-z]|^12345|^<|^[\\w \\.\\-\\(?:\\):]+(?:/v?\\d+(\\.\\d+)?(?:\\.\\d{1,10})?)?(?:,|$)|^[^ ]{50,}$|^active|^ad muncher|^amaya|^anglesharp/|^avsdevicesdk/|^bidtellect/|^biglotron|^bot|^btwebclient/|^clamav[ /]|^client/|^cobweb/|^coccoc|^custom|^ddg[_-]android|^discourse|^dispatch/\\d|^downcast/|^duckduckgo|^facebook|^fdm[ /]\\d|^getright/|^gozilla/|^hatena|^hobbit|^hotzonu|^hwcdn/|^jeode/|^jetty/|^jigsaw|^linkdex|^metauri|^microsoft bits|^movabletype|^mozilla/\\d\\.\\d \\(compatible;?\\)$|^mozilla/\\d\\.\\d \\w*$|^navermailapp|^netsurf|^nuclei|^offline explorer|^php|^postman|^postrank|^python|^rank|^read|^reed|^rest|^serf|^snapchat|^space bison|^svn|^swcd |^taringa|^thumbor/|^tumblr/|^user-agent:|^valid|^venus/fedoraplanet|^w3c|^webbandit/|^webcopier|^wget|^whatsapp|^xenu link sleuth|^yahoo|^yandex|^zdm/\\d|^zoom marketplace/|^{{.*}}$|adbeat\\.com|appinsights|archive|ask jeeves/teoma|bit\\.ly/|bluecoat drtr|browsex|burpcollaborator|capture|catch|check|chrome-lighthouse|chromeframe|classifier|cloud|crawl|cryptoapi|dareboost|datanyze|dataprovider|dejaclick|dmbrowser|download|evc-batch/|feed|firephp|freesafeip|gomezagent|headless|httrack|hubspot marketing grader|hydra|ibisbrowser|images|inspect|iplabel|ips-agent|java(?!;)|library|mail\\.ru/|manager|monitor|neustar wpm|nutch|offbyone|optimize|pageburst|parser|perl|phantom|pingdom|powermarks|preview|proxy|ptst[ /]\\d|reader|reputation|resolver|retriever|rexx;|rigor|robot|rss|scan|scrape|server|sogou|sparkler/|speedcurve|spider|splash|statuscake|stumbleupon\\.com|supercleaner|synapse|synthetic|torrent|trace|transcoder|twingly recon|url|virtuoso|wappalyzer|webglance|webkit2png|whatcms/|wordpress|zgrab";
     naivePattern = /bot|spider|crawl|http|lighthouse/i;
     __name2(isbot, "isbot");
@@ -39698,7 +39698,7 @@ var init_isbot = __esm({
 var require_react_dom_server_legacy_browser_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom-server-legacy.browser.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (true) {
       (function() {
         "use strict";
@@ -45493,7 +45493,7 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
 var require_react_dom_server_browser_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom-server.browser.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     if (true) {
       (function() {
         "use strict";
@@ -51245,7 +51245,7 @@ var require_react_dom_server_browser_development = __commonJS({
 var require_server_browser = __commonJS({
   "../node_modules/react-dom/server.browser.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     var l;
     var s;
     if (false) {
@@ -51731,184 +51731,178 @@ function Header() {
     e.preventDefault();
     smoothScrollTo(0);
   }, "handleLogoClick");
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", { className: "fixed top-0 left-0 right-0 z-50 overflow-hidden pointer-events-none", children: [
-    !isAnimationComplete && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-      "div",
-      {
-        className: "absolute top-0 left-0 w-full h-40 origin-left",
-        style: {
-          clipPath: "polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)",
-          transform: `translateX(${isAnimating ? "-100%" : "0"})`,
-          opacity: isAnimating ? 0 : isVisible ? 0 : 1,
-          transition: "transform 600ms ease-out, opacity 800ms ease-in-out",
-          transitionDelay: isAnimating ? "0ms" : isVisible ? "600ms" : "0ms",
-          backgroundColor: !isCurrentDark ? "rgb(31 41 55 / 0.5)" : "rgb(255 255 255 / 0.5)",
-          backdropFilter: "blur(8px)"
-        }
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
-      "div",
-      {
-        className: "relative h-40 pointer-events-auto",
-        style: {
-          clipPath: "polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)",
-          transform: `translateX(${isAnimating ? "-100%" : isFirstSlideComplete ? "0" : "-100%"})`,
-          opacity: isVisible ? 1 : 0,
-          transformOrigin: "left",
-          transition: isAnimationComplete ? "background-color 200ms ease-out" : `
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+    "header",
+    {
+      className: "fixed top-0 left-0 right-0 z-50 pointer-events-none",
+      children: [
+        !isAnimationComplete && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          "div",
+          {
+            className: "absolute top-0 left-0 w-full h-40 origin-left",
+            style: {
+              clipPath: "polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)",
+              transform: `translateX(${isAnimating ? "-100%" : "0"})`,
+              opacity: isAnimating ? 0 : isVisible ? 0 : 1,
+              transition: "transform 600ms ease-out, opacity 800ms ease-in-out",
+              transitionDelay: isAnimating ? "0ms" : isVisible ? "600ms" : "0ms",
+              backgroundColor: !isCurrentDark ? "rgb(31 41 55 / 0.5)" : "rgb(255 255 255 / 0.5)",
+              backdropFilter: "blur(8px)"
+            }
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+          "div",
+          {
+            className: "relative h-40 pointer-events-auto",
+            style: {
+              clipPath: "polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)",
+              transform: `translateX(${isAnimating ? "-100%" : isFirstSlideComplete ? "0" : "-100%"})`,
+              opacity: isVisible ? 1 : 0,
+              transformOrigin: "left",
+              transition: isAnimationComplete ? "background-color 200ms ease-out" : `
                             transform 600ms ease-out,
                             opacity 400ms ease-in-out,
                             background-color 200ms ease-out
                         `,
-          transitionDelay: isFirstSlideComplete ? "400ms" : "0ms",
-          backgroundColor: isCurrentDark ? "rgb(31 41 55 / 0.5)" : "rgb(210 210 210 / 0.5)",
-          backdropFilter: "blur(8px)"
-        },
-        onMouseEnter: () => setIsHovered(true),
-        onMouseLeave: () => setIsHovered(false),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-            "div",
-            {
-              className: "absolute top-0 left-0 h-full w-[15%]",
-              style: {
-                clipPath: "polygon(0 0, 100% 0, 85% 100%, 0 100%)",
-                opacity: 0.9,
-                transition: "opacity 300ms ease-in-out",
-                background: isCurrentDark ? "linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2))" : "linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2))"
-              }
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-[10%] left-0 w-full pointer-events-none", children: cyanLines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-            "svg",
-            {
-              className: "absolute will-change-transform",
-              style: {
-                top: `${line.points[0].y}%`,
-                left: 0,
-                width: "100%",
-                height: "40px",
-                overflow: "visible"
-              },
-              children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                "path",
-                {
-                  d: `M ${line.points.map((p) => `${p.x},${p.y}`).join(" L ")}`,
-                  stroke: line.color,
-                  strokeWidth: line.width,
-                  fill: "none",
-                  strokeLinecap: "round",
-                  strokeLinejoin: "round",
-                  opacity: "0.3"
-                }
-              )
+              transitionDelay: isFirstSlideComplete ? "400ms" : "0ms",
+              backgroundColor: isCurrentDark ? "rgb(31 41 55 / 0.5)" : "rgb(210 210 210 / 0.5)",
+              backdropFilter: "blur(8px)"
             },
-            line.id
-          )) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 pointer-events-none", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-            "svg",
-            {
-              className: "absolute inset-0 w-full h-full",
-              viewBox: "0 0 1000 160",
-              preserveAspectRatio: "none",
-              children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                "path",
+            onMouseEnter: () => setIsHovered(true),
+            onMouseLeave: () => setIsHovered(false),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-[10%] left-0 w-full pointer-events-none", children: cyanLines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "svg",
                 {
-                  d: "M0 0 L950 0 L900 96 L160 96 L130 160 L0 160",
-                  stroke: isCurrentDark ? "rgb(6 182 212 / 0.7)" : "rgb(236 72 153 / 0.9)",
-                  strokeWidth: 5,
-                  fill: "none",
-                  strokeLinecap: "round",
-                  strokeLinejoin: "round",
-                  pathLength: "100",
+                  className: "absolute will-change-transform",
                   style: {
-                    strokeDasharray: 100,
-                    strokeDashoffset: isHovered ? 0 : 100,
-                    transition: "stroke-dashoffset 0.6s ease-in-out",
-                    opacity: 1,
-                    filter: isCurrentDark ? "drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 8px rgba(6, 182, 212, 0.7))" : "drop-shadow(0 0 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 8px rgba(255, 0, 255, 0.7))"
-                    // 黒 + fuchsia
-                  }
-                }
-              )
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", { className: "w-full overflow-x-hidden h-full", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex items-start h-full pt-2 max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex items-start w-full pt-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                "a",
-                {
-                  href: "#",
-                  onClick: handleLogoClick,
-                  className: "flex items-center text-xl font-bold text-gray-800 dark:text-white ml-2",
+                    top: `${line.points[0].y}%`,
+                    left: 0,
+                    width: "100%",
+                    height: "40px",
+                    overflow: "visible"
+                  },
                   children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                    "img",
+                    "path",
                     {
-                      src: isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png",
-                      alt: "Logo",
-                      className: "w-28 md:w-44 h-auto"
+                      d: `M ${line.points.map((p) => `${p.x},${p.y}`).join(" L ")}`,
+                      stroke: line.color,
+                      strokeWidth: line.width,
+                      fill: "none",
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      opacity: "0.3"
+                    }
+                  )
+                },
+                line.id
+              )) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 pointer-events-none", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "svg",
+                {
+                  className: "absolute inset-0 w-full h-full",
+                  viewBox: "0 0 1000 160",
+                  preserveAspectRatio: "none",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                    "path",
+                    {
+                      d: "M0 0 L950 0 L900 96 L160 96 L130 160 L0 160",
+                      stroke: isCurrentDark ? "rgb(6 182 212 / 0.7)" : "rgb(236 72 153 / 0.9)",
+                      strokeWidth: 5,
+                      fill: "none",
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      pathLength: "100",
+                      style: {
+                        strokeDasharray: 100,
+                        strokeDashoffset: isHovered ? 0 : 100,
+                        transition: "stroke-dashoffset 0.6s ease-in-out",
+                        opacity: 1,
+                        filter: isCurrentDark ? "drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 8px rgba(6, 182, 212, 0.7))" : "drop-shadow(0 0 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 8px rgba(255, 0, 255, 0.7))"
+                        // 黒 + fuchsia
+                      }
                     }
                   )
                 }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hidden md:flex items-start flex-1 pt-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", { className: "flex space-x-6 lg:space-x-12 ml-auto mr-40 items-center", children: [
-                ["about", "news", "products", "members", "contact"].map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", { className: "w-full overflow-x-hidden h-full", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex items-start h-full pt-2 max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex items-start w-full pt-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                    "a",
+                    {
+                      href: "#",
+                      onClick: handleLogoClick,
+                      className: "flex items-center text-xl font-bold text-gray-800 dark:text-white ml-2",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                        "img",
+                        {
+                          src: isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png",
+                          alt: "Logo",
+                          className: "w-28 md:w-44 h-auto"
+                        }
+                      )
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hidden md:flex items-start flex-1 pt-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", { className: "flex space-x-6 lg:space-x-12 ml-auto mr-40 items-center", children: [
+                    ["about", "news", "products", "members", "contact"].map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "button",
+                      {
+                        onClick: () => handleClick(item),
+                        className: `text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isCurrentDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-gray-900"}`,
+                        children: item.charAt(0).toUpperCase() + item.slice(1)
+                      }
+                    ) }, item)),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "button",
+                      {
+                        onClick: toggleTheme,
+                        className: `p-2 rounded-full transition-colors duration-300 ${isHovered ? "text-gray-300 dark:text-gray-700 hover:text-white dark:hover:text-gray-900" : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"}`,
+                        "aria-label": "\u30C6\u30FC\u30DE\u5207\u308A\u66FF\u3048",
+                        children: isDark ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" }) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" }) })
+                      }
+                    ) })
+                  ] }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "md:hidden flex items-center space-x-4", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "button",
+                      {
+                        onClick: toggleTheme,
+                        className: `p-2 rounded-full transition-colors duration-300 ${isHovered ? "text-gray-800 hover:text-gray-600" : "text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"}`,
+                        "aria-label": "\u30C6\u30FC\u30DE\u5207\u308A\u66FF\u3048",
+                        children: isDark ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" }) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" }) })
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+                      "button",
+                      {
+                        onClick: () => setIsMenuOpen(!isMenuOpen),
+                        className: "p-2",
+                        "aria-label": "\u30E1\u30CB\u30E5\u30FC",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `w-6 h-0.5 mb-1.5 transition-colors duration-300 ${isHovered ? "bg-gray-800" : "bg-gray-800 dark:bg-white"}` }),
+                          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `w-6 h-0.5 mb-1.5 transition-colors duration-300 ${isHovered ? "bg-gray-800" : "bg-gray-800 dark:bg-white"}` }),
+                          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `w-6 h-0.5 transition-colors duration-300 ${isHovered ? "bg-gray-800" : "bg-gray-800 dark:bg-white"}` })
+                        ]
+                      }
+                    )
+                  ] })
+                ] }) }),
+                isMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "md:hidden fixed top-[80px] left-0 right-0 mt-2 mx-4 z-50 overflow-visible", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `${isHovered ? "bg-white/95" : "bg-white/95 dark:bg-gray-800/95"} backdrop-blur-md rounded-2xl shadow-lg p-4`, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { className: "space-y-4", children: ["about", "news", "products", "members", "contact"].map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "button",
                   {
                     onClick: () => handleClick(item),
-                    className: `text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isCurrentDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-gray-900"}`,
+                    className: `w-full text-left text-xl font-bold transition-colors duration-300 ${isHovered ? "text-gray-800 hover:text-gray-600" : "text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"}`,
                     children: item.charAt(0).toUpperCase() + item.slice(1)
                   }
-                ) }, item)),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                  "button",
-                  {
-                    onClick: toggleTheme,
-                    className: `p-2 rounded-full transition-colors duration-300 ${isHovered ? "text-gray-300 dark:text-gray-700 hover:text-white dark:hover:text-gray-900" : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"}`,
-                    "aria-label": "\u30C6\u30FC\u30DE\u5207\u308A\u66FF\u3048",
-                    children: isDark ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" }) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" }) })
-                  }
-                ) })
-              ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "md:hidden flex items-center space-x-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                  "button",
-                  {
-                    onClick: toggleTheme,
-                    className: `p-2 rounded-full transition-colors duration-300 ${isHovered ? "text-gray-800 hover:text-gray-600" : "text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"}`,
-                    "aria-label": "\u30C6\u30FC\u30DE\u5207\u308A\u66FF\u3048",
-                    children: isDark ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" }) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-6 w-6", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" }) })
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
-                  "button",
-                  {
-                    onClick: () => setIsMenuOpen(!isMenuOpen),
-                    className: "p-2",
-                    "aria-label": "\u30E1\u30CB\u30E5\u30FC",
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `w-6 h-0.5 mb-1.5 transition-colors duration-300 ${isHovered ? "bg-gray-800" : "bg-gray-800 dark:bg-white"}` }),
-                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `w-6 h-0.5 mb-1.5 transition-colors duration-300 ${isHovered ? "bg-gray-800" : "bg-gray-800 dark:bg-white"}` }),
-                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `w-6 h-0.5 transition-colors duration-300 ${isHovered ? "bg-gray-800" : "bg-gray-800 dark:bg-white"}` })
-                    ]
-                  }
-                )
+                ) }, item)) }) }) })
               ] })
-            ] }) }),
-            isMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "md:hidden fixed top-[80px] left-0 right-0 mt-2 mx-4 z-50", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `${isHovered ? "bg-white/95" : "bg-white/95 dark:bg-gray-800/95"} backdrop-blur-md rounded-2xl shadow-lg p-4`, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { className: "space-y-4", children: ["about", "news", "products", "members", "contact"].map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-              "button",
-              {
-                onClick: () => handleClick(item),
-                className: `w-full text-left text-xl font-bold transition-colors duration-300 ${isHovered ? "text-gray-800 hover:text-gray-600" : "text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"}`,
-                children: item.charAt(0).toUpperCase() + item.slice(1)
-              }
-            ) }, item)) }) }) })
-          ] })
-        ]
-      }
-    )
-  ] });
+            ]
+          }
+        )
+      ]
+    }
+  );
 }
 __name(Header, "Header");
 function Hero() {
@@ -51986,7 +51980,7 @@ function Hero() {
         children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-center", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
           "h1",
           {
-            className: "font-light text-white tracking-[.25em] relative font-mincho",
+            className: "font-light text-white tracking-[.25em] relative font-mincho leading-loose",
             style: { lineHeight: "2em" },
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "block font-mincho text-4xl md:text-6xl font-light relative mb-8", children: [
@@ -51994,12 +51988,12 @@ function Hero() {
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -right-4 top-1/2 w-8 h-[1px] bg-white/30" }),
                 createLetterSpans(japaneseText, 0, "relative")
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "font-mincho text-3xl md:text-4xl block font-light tracking-[.5em] relative", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "font-mincho text-3xl md:text-4xl block font-light tracking-tight md:tracking-[.25em] relative leading-loose", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute left-1/2 -translate-x-1/2 -top-4 w-24 h-[1px] bg-white/30" }),
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "span",
                   {
-                    className: "inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300",
+                    className: "inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-sm md:text-3xl",
                     style: { animationDelay: "2s" },
                     children: englishText1
                   }
@@ -52007,7 +52001,7 @@ function Hero() {
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "span",
                   {
-                    className: "inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300",
+                    className: "inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-sm md:text-3xl",
                     style: { animationDelay: "2.5s" },
                     children: englishText2
                   }
@@ -52099,25 +52093,7 @@ function About() {
           },
           line.id
         )),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "container mx-auto relative", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "absolute right-8 top-1/2 -translate-y-1/2 z-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-              "img",
-              {
-                src: "/images/namelogo-dark.png",
-                alt: "Seraf Logo",
-                className: `w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? "translate-x-0" : "translate-x-20"} dark:hidden`
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-              "img",
-              {
-                src: "/images/namelogo-light.png",
-                alt: "Seraf Logo",
-                className: `w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? "translate-x-0" : "translate-x-20"} hidden dark:block`
-              }
-            )
-          ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "container mx-auto relative flex flex-col md:flex-row", children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `container mx-auto px-4 py-10 transition-all duration-1000 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "max-w-3xl relative z-10", children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", { className: "text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)]", children: [
               "About",
@@ -52147,7 +52123,25 @@ function About() {
                 ]
               }
             )
-          ] }) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "right-8 top-1/2 z-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              "img",
+              {
+                src: "/images/namelogo-dark.png",
+                alt: "Seraf Logo",
+                className: `w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? "translate-x-0" : "translate-x-20"} dark:hidden`
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              "img",
+              {
+                src: "/images/namelogo-light.png",
+                alt: "Seraf Logo",
+                className: `w-auto h-[45vh] opacity-80 transition-all duration-1000 ${isVisible ? "translate-x-0" : "translate-x-20"} hidden dark:block`
+              }
+            )
+          ] })
         ] })
       ]
     }
@@ -52658,8 +52652,8 @@ __name(Members, "Members");
 function Footer() {
   const [sectionRef, isVisible] = useIntersectionObserver();
   const { theme } = (0, import_react_router_dom6.useOutletContext)();
-  const lines = useBackgroundLines(theme === "dark", "fuchsia", true);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("footer", { ref: sectionRef, className: "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 py-12 relative overflow-hidden", children: [
+  const lines = useBackgroundLines(theme !== "dark", "fuchsia", true);
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("footer", { ref: sectionRef, className: `bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white py-12 relative overflow-hidden`, children: [
     lines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
       "svg",
       {
@@ -52703,21 +52697,21 @@ function Footer() {
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-8", children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "text-xl font-bold mb-4", children: "Seraf()" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-gray-400 dark:text-gray-600", children: "Become anything, from being nothing." })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-gray-600 dark:text-gray-400", children: "Become anything, from being nothing." })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "text-xl font-bold mb-4", children: "\u30EA\u30F3\u30AF" }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", { className: "space-y-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900", children: "About" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900", children: "News" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900", children: "Products" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900", children: "Members" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900", children: "Contact" }) })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white", children: "About" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white", children: "News" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white", children: "Products" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white", children: "Members" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "#", className: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white", children: "Contact" }) })
           ] })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "text-xl font-bold mb-4", children: "\u304A\u554F\u3044\u5408\u308F\u305B" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-gray-400 dark:text-gray-600", children: "january44292080@gmail.com" })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-gray-600 dark:text-gray-400", children: "january44292080@gmail.com" })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "text-xl font-bold mb-4", children: "SNS" }),
@@ -52727,12 +52721,12 @@ function Footer() {
               href: "https://twitter.com/seraf_dev",
               target: "_blank",
               rel: "noopener noreferrer",
-              className: "text-gray-400 hover:text-white dark:text-gray-600 dark:hover:text-gray-900",
+              className: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "img",
                   {
-                    src: "/images/x-logo-white.png",
+                    src: "/images/x-logo-black.png",
                     alt: "X (Twitter)",
                     className: "w-6 h-6 dark:hidden"
                   }
@@ -52740,7 +52734,7 @@ function Footer() {
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "img",
                   {
-                    src: "/images/x-logo-black.png",
+                    src: "/images/x-logo-white.png",
                     alt: "X (Twitter)",
                     className: "w-6 h-6 hidden dark:block"
                   }
@@ -52750,7 +52744,7 @@ function Footer() {
           ) })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "mt-8 pt-8 border-t border-gray-800 dark:border-gray-200 text-center text-gray-400 dark:text-gray-600", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "\xA9 2024 Seraf(). All rights reserved." }) })
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "\xA9 2025 Seraf(). All rights reserved." }) })
     ] })
   ] });
 }
@@ -52806,7 +52800,7 @@ var routes2;
 var init_server2 = __esm({
   "../build/server/index.js"() {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
     init_esm2();
     init_isbot();
@@ -52981,7 +52975,7 @@ var init_server2 = __esm({
             children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
               "div",
               {
-                className: "relative w-[90vw] max-w-[1400px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-left",
+                className: "relative w-[90vw] max-w-[1600px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top",
                 onClick: (e) => e.stopPropagation(),
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -52992,7 +52986,7 @@ var init_server2 = __esm({
                       children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { className: "w-8 h-8", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M6 18L18 6M6 6l12 12" }) })
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex flex-col md:flex-row h-[85vh]", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex flex-col md:flex-row h-[85vh] overflow-y-auto", children: [
                     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "w-full md:w-3/5 h-[40vh] md:h-full relative", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                       "img",
                       {
@@ -53041,7 +53035,7 @@ var init_server2 = __esm({
                             href: product.link,
                             target: "_blank",
                             rel: "noopener noreferrer",
-                            className: "flex-1 inline-flex items-center justify-center px-8 py-4 \r\n                      bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700\r\n                      text-white text-lg font-medium rounded-lg transition-colors duration-200\r\n                      shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]",
+                            className: "flex-1 inline-flex items-center justify-center px-8 py-4 \n                      bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700\n                      text-white text-lg font-medium rounded-lg transition-colors duration-200\n                      shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]",
                             children: [
                               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "\u30D7\u30EC\u30A4\u3059\u308B" }),
                               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", { className: "w-6 h-6 ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: [
@@ -53057,7 +53051,7 @@ var init_server2 = __esm({
                             href: product.storeLink,
                             target: "_blank",
                             rel: "noopener noreferrer",
-                            className: "flex-1 inline-flex items-center justify-center px-8 py-4 \r\n                      bg-fuchsia-500 dark:bg-fuchsia-600 hover:bg-fuchsia-600 dark:hover:bg-fuchsia-700\r\n                      text-white text-lg font-medium rounded-lg transition-colors duration-200\r\n                      shadow-[0_0_15px_rgba(219,39,119,0.3)] hover:shadow-[0_0_20px_rgba(219,39,119,0.5)]",
+                            className: "flex-1 inline-flex items-center justify-center px-8 py-4 \n                      bg-fuchsia-500 dark:bg-fuchsia-600 hover:bg-fuchsia-600 dark:hover:bg-fuchsia-700\n                      text-white text-lg font-medium rounded-lg transition-colors duration-200\n                      shadow-[0_0_15px_rgba(219,39,119,0.3)] hover:shadow-[0_0_20px_rgba(219,39,119,0.5)]",
                             children: [
                               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "\u8CFC\u5165\u3059\u308B" }),
                               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { className: "w-6 h-6 ml-2", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" }) })
@@ -53084,7 +53078,7 @@ var init_server2 = __esm({
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
         description: "\u305F\u304F\u3055\u3093\u30B2\u30FC\u30E0\u3092\u4F5C\u308B\u307E\u3059",
-        skills: ["Unity(C#)", "Web", "Blender", "After Effects"],
+        skills: ["Unity(C#)", "Web", "Blender", "After Effects", "Illustrator"],
         sns: "https://twitter.com/KTN_PERIOD"
       },
       {
@@ -53093,8 +53087,8 @@ var init_server2 = __esm({
         position: "\u5C02\u5C5E\u30C7\u30B6\u30A4\u30CA\u30FC, \u30A4\u30E9\u30B9\u30C8\u30EC\u30FC\u30BF\u30FC, \u30E2\u30C7\u30E9\u30FC",
         mainImage: "/images/member-2.jpg",
         subImage: "/images/member-2-sub.jpg",
-        description: "\u6E96\u5099\u4E2D\u3002",
-        skills: ["Live2D", "Blender", "Clip Studio Paint"],
+        description: "\u5C02\u5C5E\u30C7\u30B6\u30A4\u30CA\u30FC\u3057\u3066\u307E\u3059\u3002\n3DCG\u306F\u80CC\u666F\u3001Live2D\u306F\u30A4\u30E9\u30B9\u30C8\u304B\u3089\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u30EA\u30B0\u3068\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u307E\u3067\u3084\u3063\u3066\u307E\u3059\u3002",
+        skills: ["Blender", "Live2D", "CLIP STUDIO PAINT", "VTuber Studio", "Substance Painter"],
         sns: "https://twitter.com/yupi_yupapa9"
       },
       {
@@ -53111,8 +53105,8 @@ var init_server2 = __esm({
         id: 4,
         name: "Jiska",
         position: "\u30C7\u30B6\u30A4\u30CA\u30FC, \u6620\u50CF\u4F5C\u5BB6",
-        mainImage: "/images/member-none.png",
-        subImage: "/images/member-4-sub.jpg",
+        mainImage: "/images/member-4.jpg",
+        subImage: "/images/member-4.jpg",
         description: "\u6E96\u5099\u4E2D\u3002",
         skills: ["Illustrator", "After Effects", "Web"],
         sns: "https://twitter.com/re4_2304"
@@ -53121,8 +53115,8 @@ var init_server2 = __esm({
         id: 5,
         name: "\u30C9\u30E9\u30A4\u30D0\u30FC\uFF08+\uFF09",
         position: "\u30A4\u30E9\u30B9\u30C8\u30EC\u30FC\u30BF\u30FC",
-        mainImage: "/images/member-none.png",
-        subImage: "/images/member-none.png",
+        mainImage: "/images/member-5.jpg",
+        subImage: "/images/member-5.jpg",
         description: "\u6E96\u5099\u4E2D\u3002",
         skills: [],
         sns: "https://twitter.com/kasha25_dr25"
@@ -53204,7 +53198,7 @@ var init_server2 = __esm({
             children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
               "div",
               {
-                className: "relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl",
+                className: "relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-auto max-h-screen overflow-y-auto animate-clip-from-top",
                 onClick: (e) => e.stopPropagation(),
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -53262,7 +53256,7 @@ var init_server2 = __esm({
                           href: member.sns,
                           target: "_blank",
                           rel: "noopener noreferrer",
-                          className: "inline-flex items-center justify-center mt-8 px-6 py-3 \r\n                  bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700\r\n                  text-white font-medium rounded-lg transition-colors duration-200\r\n                  shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]",
+                          className: "inline-flex items-center justify-center mt-8 px-6 py-3 \n                  bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700\n                  text-white font-medium rounded-lg transition-colors duration-200\n                  shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]",
                           children: [
                             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "SNS\u3092\u898B\u308B" }),
                             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -53320,7 +53314,7 @@ var init_server2 = __esm({
       default: Posts,
       loader
     }, Symbol.toStringTag, { value: "Module" }));
-    serverManifest = { "entry": { "module": "/assets/entry.client-BXKAJpz9.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-B-52gnaW.js", "/assets/components-DZHiCxAL.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-B7NFoP3p.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-B-52gnaW.js", "/assets/components-DZHiCxAL.js", "/assets/LinesContext-eByHhIeY.js"], "css": ["/assets/root-B9vgpAjv.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-ClIaqC-9.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/LinesContext-eByHhIeY.js", "/assets/index-B-52gnaW.js"], "css": [] }, "routes/posts": { "id": "routes/posts", "parentId": "root", "path": "posts", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/posts-zQg_Xen0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js"], "css": [] } }, "url": "/assets/manifest-110063c4.js", "version": "110063c4" };
+    serverManifest = { "entry": { "module": "/assets/entry.client-BXKAJpz9.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-B-52gnaW.js", "/assets/components-DZHiCxAL.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-D7u2vJZ8.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-B-52gnaW.js", "/assets/components-DZHiCxAL.js", "/assets/LinesContext-eByHhIeY.js"], "css": ["/assets/root-D0Bpjisn.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-ClxTSN1d.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/LinesContext-eByHhIeY.js", "/assets/index-B-52gnaW.js"], "css": [] }, "routes/posts": { "id": "routes/posts", "parentId": "root", "path": "posts", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/posts-zQg_Xen0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js"], "css": [] } }, "url": "/assets/manifest-70427302.js", "version": "70427302" };
     mode = "production";
     assetsBuildDirectory = "build\\client";
     basename = "/";
@@ -53360,15 +53354,15 @@ var onRequest;
 var init_path = __esm({
   "[[path]].ts"() {
     "use strict";
-    init_functionsRoutes_0_6764275098520041();
+    init_functionsRoutes_0_07751706577650119();
     init_esm();
     init_server2();
     onRequest = createPagesFunctionHandler({ build: server_exports });
   }
 });
 var routes;
-var init_functionsRoutes_0_6764275098520041 = __esm({
-  "../.wrangler/tmp/pages-I5tzeE/functionsRoutes-0.6764275098520041.mjs"() {
+var init_functionsRoutes_0_07751706577650119 = __esm({
+  "../.wrangler/tmp/pages-DWse6p/functionsRoutes-0.07751706577650119.mjs"() {
     "use strict";
     init_path();
     routes = [
@@ -53382,10 +53376,10 @@ var init_functionsRoutes_0_6764275098520041 = __esm({
     ];
   }
 });
-init_functionsRoutes_0_6764275098520041();
-init_functionsRoutes_0_6764275098520041();
-init_functionsRoutes_0_6764275098520041();
-init_functionsRoutes_0_6764275098520041();
+init_functionsRoutes_0_07751706577650119();
+init_functionsRoutes_0_07751706577650119();
+init_functionsRoutes_0_07751706577650119();
+init_functionsRoutes_0_07751706577650119();
 function lexer(str) {
   var tokens = [];
   var i = 0;
@@ -53840,7 +53834,7 @@ var cloneResponse = /* @__PURE__ */ __name2((response) => (
     response
   )
 ), "cloneResponse");
-init_functionsRoutes_0_6764275098520041();
+init_functionsRoutes_0_07751706577650119();
 var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
@@ -53857,7 +53851,7 @@ var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx
   }
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
-init_functionsRoutes_0_6764275098520041();
+init_functionsRoutes_0_07751706577650119();
 function reduceError(e) {
   return {
     name: e?.name,
@@ -53885,7 +53879,7 @@ var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = pages_template_worker_default;
-init_functionsRoutes_0_6764275098520041();
+init_functionsRoutes_0_07751706577650119();
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
   __facade_middleware__.push(...args.flat());
@@ -54049,7 +54043,7 @@ var jsonError2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx
 }, "jsonError");
 var middleware_miniflare3_json_error_default2 = jsonError2;
 
-// .wrangler/tmp/bundle-saZzsZ/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-yYdsVR/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__2 = [
   middleware_ensure_req_body_drained_default2,
   middleware_miniflare3_json_error_default2
@@ -54081,7 +54075,7 @@ function __facade_invoke__2(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__2, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-saZzsZ/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-yYdsVR/middleware-loader.entry.ts
 var __Facade_ScheduledController__2 = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
@@ -54856,4 +54850,4 @@ react-dom/cjs/react-dom-server.browser.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=functionsWorker-0.965032850972497.js.map
+//# sourceMappingURL=functionsWorker-0.9266619497280508.js.map

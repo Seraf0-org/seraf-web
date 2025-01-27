@@ -69,7 +69,7 @@ export function Header() {
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 z-50 overflow-hidden pointer-events-none"
+            className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
         >
             {/* 逆色の背景レイヤー - アニメーション完了後は非表示 */}
             {!isAnimationComplete && (
@@ -262,7 +262,7 @@ export function Header() {
 
                     {/* モバイルメニュー */}
                     {isMenuOpen && (
-                        <div className="md:hidden fixed top-[80px] left-0 right-0 mt-2 mx-4 z-50">
+                        <div className="md:hidden fixed top-[80px] left-0 right-0 mt-2 mx-4 z-50 overflow-visible">
                             <div className={`${isHovered
                                 ? 'bg-white/95'
                                 : 'bg-white/95 dark:bg-gray-800/95'

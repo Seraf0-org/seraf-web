@@ -75,7 +75,7 @@ const MemberPopup = ({ member, onClose }: {
             onClick={onClose}
         >
             <div
-                className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl"
+                className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-auto max-h-screen overflow-y-auto animate-clip-from-top"
                 onClick={e => e.stopPropagation()}
             >
                 <button
