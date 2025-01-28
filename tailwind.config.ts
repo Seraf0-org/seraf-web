@@ -142,6 +142,13 @@ export default {
       transitionDuration: {
         '400': '400ms',
       },
+      objectFit: {
+        'contain': 'contain',
+      },
+      lineHeight: {
+        'relaxed': '1.75',
+        'loose': '2',
+      },
     },
   },
   plugins: [],

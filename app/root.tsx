@@ -149,7 +149,6 @@ export default function App() {
     }
   }, [theme]);
 
-  // スムーズスクロールの実装
   useEffect(() => {
     window.smoothScrollState = {
       currentScroll: window.scrollY,
