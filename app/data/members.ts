@@ -13,10 +13,10 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "ゲームデザイナー, シナリオライター, エンジニア",
+        position: "代表, ゲームデザイナー, シナリオライター, エンジニア",
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
-        description: "たくさんゲームを作るます",
+        description: "たくさんゲームを作るます。\nゲームデザイン、シナリオ制作をメインに手広く活動していきます。",
         skills: ["Unity", "Unreal Engine", "Web", "Blender", "After Effects", "Illustrator"],
         sns: [
             { url: "https://twitter.com/KTN_PERIOD", label: "Twitter" }
@@ -25,7 +25,7 @@ export const members: Member[] = [
     {
         id: 2,
         name: "ゆぴる",
-        position: "専属デザイナー, イラストレーター, モデラー",
+        position: "代表補佐, 専属デザイナー, イラストレーター, モデラー",
         mainImage: "/images/member-2.jpg",
         subImage: "/images/member-2-sub.jpg",
         description: "専属デザイナーしてます。\n3DCGは背景、Live2Dはイラストからキャラクターリグとアニメーションまでやってます。",

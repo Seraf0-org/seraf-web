@@ -68,7 +68,7 @@ export function Footer() {
                     <div>
                         <h3 className="text-xl font-bold mb-4">お問い合わせ</h3>
                         <p className="text-gray-600 dark:text-gray-400">
-                            january44292080@gmail.com
+                            KTN44295080@Seraf0.com
                         </p>
                     </div>
                     <div>
