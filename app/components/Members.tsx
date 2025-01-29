@@ -75,7 +75,7 @@ const MemberPopup = ({ member, onClose }: {
             onClick={onClose}
         >
             <div
-                className="relative w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[55vh] overflow-y-auto animate-clip-from-top"
+                className="relative w-full max-w-5xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[70vh] md:h-[65vh] overflow-y-auto animate-clip-from-top"
                 onClick={e => e.stopPropagation()}
             >
                 <button
@@ -88,7 +88,7 @@ const MemberPopup = ({ member, onClose }: {
                 </button>
 
                 <div className="flex flex-col md:flex-row h-full">
-                    <div className="w-full md:w-1/2 relative">
+                    <div className="w-full md:w-1/2 relative h-48 md:h-full">
                         <div className="relative h-full">
                             <img
                                 src={member.mainImage}
@@ -107,20 +107,20 @@ const MemberPopup = ({ member, onClose }: {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full">
+                    <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full overflow-y-auto">
                         <div>
                             <div className="mb-6">
-                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                                     {member.name}
                                 </h3>
-                                <p className="text-xl text-gray-600 dark:text-gray-300">
+                                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
                                     {member.position}
                                 </p>
                             </div>
 
                             <div className="prose dark:prose-invert max-w-none">
-                                <h4 className="text-xl font-semibold mb-3">自己紹介</h4>
-                                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                                <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
+                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
                                     {member.description || "準備中..."}
                                 </p>
 
@@ -139,7 +139,7 @@ const MemberPopup = ({ member, onClose }: {
                         </div>
 
                         {member.sns && member.sns.length > 0 && (
-                            <div className="flex space-x-4 mt-8">
+                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8">
                                 {member.sns.map((sns, index) => (
                                     <a
                                         key={index}
