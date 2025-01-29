@@ -94,7 +94,7 @@ const ProductPopup = ({ product, onClose }: {
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row h-[85vh] overflow-y-auto">
+        <div className="flex flex-col md:flex-row h-[80vh] overflow-y-auto">
           <div className="w-full md:w-3/5 h-[40vh] md:h-full relative">
             <div className="absolute inset-0">
               <img

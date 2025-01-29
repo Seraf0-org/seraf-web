@@ -1,8 +1,8 @@
-				import worker, * as OTHER_EXPORTS from "C:\\Users\\kouty\\Desktop\\seraf-web\\.wrangler\\tmp\\pages-evAtcA\\functionsWorker-0.32267238240780527.mjs";
+				import worker, * as OTHER_EXPORTS from "C:\\Users\\kouty\\Desktop\\seraf-web\\.wrangler\\tmp\\pages-tmMbZ7\\functionsWorker-0.8284739144281834.mjs";
 				import * as __MIDDLEWARE_0__ from "C:\\Users\\kouty\\Desktop\\seraf-web\\node_modules\\wrangler\\templates\\middleware\\middleware-ensure-req-body-drained.ts";
 import * as __MIDDLEWARE_1__ from "C:\\Users\\kouty\\Desktop\\seraf-web\\node_modules\\wrangler\\templates\\middleware\\middleware-miniflare3-json-error.ts";
 
-				export * from "C:\\Users\\kouty\\Desktop\\seraf-web\\.wrangler\\tmp\\pages-evAtcA\\functionsWorker-0.32267238240780527.mjs";
+				export * from "C:\\Users\\kouty\\Desktop\\seraf-web\\.wrangler\\tmp\\pages-tmMbZ7\\functionsWorker-0.8284739144281834.mjs";
 
 				export const __INTERNAL_WRANGLER_MIDDLEWARE__ = [
 					
