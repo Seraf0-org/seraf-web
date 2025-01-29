@@ -1,36 +1,14 @@
 import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
-import { useLines } from "~/contexts/LinesContext";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
+import { useLines } from "~/contexts/LinesContext";
+import { newsItems } from "~/data/news";
 
 export function News() {
   const [sectionRef, isVisible] = useIntersectionObserver();
   const { theme } = useOutletContext<OutletContext>();
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
-  const newsItems = [
-    {
-      id: 1,
-      date: "2024.08.21",
-      title: "Reflectone配信！",
-      description: "UnityRoomにて、Reflectoneの配信を開始しました。",
-      image: "/images/news/news1.jpg"
-    },
-    {
-      id: 2,
-      date: "2024.11.23",
-      title: "デジハリ学園祭2024にて展示！",
-      description: "デジタルハリウッド大学の学園祭にて、ゲームの展示を行いました。",
-      image: "/images/news/news2.jpg"
-    },
-    {
-      id: 3,
-      date: "2024.11.24",
-      title: "Seraf()設立！",
-      description: "本チームが立ち上げられ、活動を開始しました。",
-      image: "/images/news/news3.jpg"
-    }
-  ];
 
   return (
     <section

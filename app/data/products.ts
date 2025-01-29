@@ -23,7 +23,6 @@ export const products: Product[] = [
         platform: "PC (Steam)",
         releaseDate: "開発中",
         image: "/images/products/product-1.jpg",
-        link: "https://store.steampowered.com/app/xxx"
     },
     {
         id: 2,
