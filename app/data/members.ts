@@ -17,7 +17,7 @@ export const members: Member[] = [
         mainImage: "/images/member-1.jpg",
         subImage: "/images/member-1-sub.jpg",
         description: "たくさんゲームを作るます。\nゲームデザイン、シナリオ制作をメインに手広く活動していきます。",
-        skills: ["Unity", "Unreal Engine", "Web", "Blender", "After Effects", "Illustrator"],
+        skills: ["Unity", "Unreal Engine", "Web", "Blender", "After Effects", "Game Synth", "Illustrator"],
         sns: [
             { url: "https://twitter.com/KTN_PERIOD", label: "Twitter" }
         ]
@@ -41,8 +41,8 @@ export const members: Member[] = [
         position: "サウンドクリエイター, モデラー",
         mainImage: "/images/member-3.jpg",
         subImage: "/images/member-3-sub.jpg",
-        description: "準備中。",
-        skills: ["Cubase", "Ableton Live", "Blender", "Maya"],
+        description: "Seraf()のサウンドデザイナー、モデラー。\n空間に応じたサウンドエフェクトの制作や背景、プロップのモデリングをやっています。",
+        skills: ["Ableton Live", "GameSynth", "Maya", "Substance Painter", "After Effects"],
         sns: [
             { url: "https://x.com/Mossy_tw", label: "Twitter" }
         ]
