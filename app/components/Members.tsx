@@ -140,33 +140,57 @@ const MemberPopup = ({ member, onClose }: {
 
                         {member.sns && member.sns.length > 0 && (
                             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8">
-                                {member.sns.map((sns, index) => (
-                                    <a
-                                        key={index}
-                                        href={sns.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`inline-flex items-center justify-center px-6 py-3 
-                                            ${index === 1 ? 'bg-pink-500 dark:bg-pink-600 hover:bg-pink-600 dark:hover:bg-pink-700' : 'bg-cyan-500 dark:bg-cyan-600 hover:bg-cyan-600 dark:hover:bg-cyan-700'}
-                                            text-white font-medium rounded-lg transition-colors duration-200
-                                            shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]`}
-                                    >
-                                        <span>{sns.label}</span>
-                                        <svg
-                                            className="w-5 h-5 ml-2"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                {member.sns.map((sns, index) => {
+                                    // デフォルトのカラー
+                                    const defaultColor = {
+                                        base: "6, 182, 212",
+                                        hover: "8, 145, 178"
+                                    };
+
+                                    const color = sns.color || defaultColor;
+
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={sns.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center justify-center px-6 py-3 text-white font-medium rounded-lg transition-all duration-300"
+                                            style={{
+                                                backgroundColor: `rgb(${color.base})`,
+                                                boxShadow: `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`,
+                                                '--hover-color': `rgb(${color.hover})`,
+                                                '--hover-shadow': `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`,
+                                                filter: `brightness(1.05) contrast(1.05)`
+                                            }}
+                                            onMouseEnter={e => {
+                                                e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
+                                                e.currentTarget.style.boxShadow = `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`;
+                                                e.currentTarget.style.filter = `brightness(1.1) contrast(1.1)`;
+                                            }}
+                                            onMouseLeave={e => {
+                                                e.currentTarget.style.backgroundColor = `rgb(${color.base})`;
+                                                e.currentTarget.style.boxShadow = `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`;
+                                                e.currentTarget.style.filter = `brightness(1.05) contrast(1.05)`;
+                                            }}
                                         >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                            />
-                                        </svg>
-                                    </a>
-                                ))}
+                                            <span>{sns.label}</span>
+                                            <svg
+                                                className="w-5 h-5 ml-2"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                                />
+                                            </svg>
+                                        </a>
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
@@ -175,6 +199,75 @@ const MemberPopup = ({ member, onClose }: {
         </div>,
         document.body
     );
+};
+
+// ダークモード時は色を少し濃くする（彩度は維持）
+const adjustColorForDarkMode = (color: string) => {
+    const [r, g, b] = color.split(',').map(n => parseInt(n.trim()));
+
+    // RGBからHSLに変換
+    const toHSL = (r: number, g: number, b: number) => {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        let h = 0, s, l = (max + min) / 2;
+
+        if (max === min) {
+            h = s = 0;
+        } else {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return [h * 360, s * 100, l * 100];
+    };
+
+    // HSLからRGBに変換
+    const toRGB = (h: number, s: number, l: number) => {
+        h /= 360;
+        s /= 100;
+        l /= 100;
+        let r, g, b;
+
+        if (s === 0) {
+            r = g = b = l;
+        } else {
+            const hue2rgb = (p: number, q: number, t: number) => {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1 / 6) return p + (q - p) * 6 * t;
+                if (t < 1 / 2) return q;
+                if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                return p;
+            };
+
+            const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            const p = 2 * l - q;
+            r = hue2rgb(p, q, h + 1 / 3);
+            g = hue2rgb(p, q, h);
+            b = hue2rgb(p, q, h - 1 / 3);
+        }
+
+        return [
+            Math.round(r * 255),
+            Math.round(g * 255),
+            Math.round(b * 255)
+        ];
+    };
+
+    // 色変換処理
+    const [h, s, l] = toHSL(r, g, b);
+    const newL = l * 0.75; // 明度のみ25%下げる
+    const [newR, newG, newB] = toRGB(h, s, newL);
+
+    return `${newR}, ${newG}, ${newB}`;
 };
 
 export function Members() {

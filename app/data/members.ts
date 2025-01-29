@@ -6,7 +6,16 @@ export type Member = {
     subImage: string;
     description: string;
     skills: string[];
-    sns: { url: string; label: string }[];
+    sns: SNS[];
+};
+
+type SNS = {
+    url: string;
+    label: string;
+    color?: {
+        base: string;  // "59, 130, 246" のような形式
+        hover: string; // "37, 99, 235" のような形式
+    };
 };
 
 export const members: Member[] = [
@@ -19,7 +28,22 @@ export const members: Member[] = [
         description: "たくさんゲームを作るます。\nゲームデザイン、シナリオ制作をメインに手広く活動していきます。",
         skills: ["Unity", "Unreal Engine", "Web", "Blender", "After Effects", "Game Synth", "Illustrator"],
         sns: [
-            { url: "https://twitter.com/KTN_PERIOD", label: "Twitter" }
+            {
+                url: "https://twitter.com/KTN_PERIOD",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            },
+            {
+                url: "https://github.com/KTN44295080",
+                label: "GitHub",
+                color: {
+                    base: "236, 72, 153",
+                    hover: "219, 39, 119"
+                }
+            }
         ]
     },
     {
@@ -31,8 +55,22 @@ export const members: Member[] = [
         description: "専属デザイナーしてます。\n3DCGは背景、Live2Dはイラストからキャラクターリグとアニメーションまでやってます。",
         skills: ["Blender", "Live2D", "CLIP STUDIO PAINT", "VTuber Studio", "Substance Painter"],
         sns: [
-            { url: "https://twitter.com/yupi_yupapa9", label: "Twitter(3DCG)" },
-            { url: "https://x.com/yupi_yupaLive2D", label: "Twitter(Live2D)" }
+            {
+                url: "https://twitter.com/yupi_yupapa9",
+                label: "X(旧Twitter)3DCG",
+                color: {
+                    base: "24, 200, 0",
+                    hover: "6, 170, 0"
+                }
+            },
+            {
+                url: "https://x.com/yupi_yupaLive2D",
+                label: "X(旧Twitter)Live2D",
+                color: {
+                    base: "236, 72, 153",
+                    hover: "219, 39, 119"
+                }
+            }
         ]
     },
     {
@@ -44,7 +82,14 @@ export const members: Member[] = [
         description: "Seraf()のサウンドデザイナー、モデラー。\n空間に応じたサウンドエフェクトの制作や背景、プロップのモデリングをやっています。",
         skills: ["Ableton Live", "GameSynth", "Maya", "Substance Painter", "After Effects"],
         sns: [
-            { url: "https://x.com/Mossy_tw", label: "Twitter" }
+            {
+                url: "https://x.com/Mossy_tw",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "147, 51, 234",
+                    hover: "126, 34, 206"
+                }
+            }
         ]
     },
     {
@@ -56,7 +101,14 @@ export const members: Member[] = [
         description: "準備中。",
         skills: ["Illustrator", "After Effects", "Web"],
         sns: [
-            { url: "https://twitter.com/re4_2304", label: "Twitter" }
+            {
+                url: "https://x.com/Jiska_i_i",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
         ]
     },
     {
@@ -68,7 +120,14 @@ export const members: Member[] = [
         description: "準備中。",
         skills: [],
         sns: [
-            { url: "https://twitter.com/kasha25_dr25", label: "Twitter" }
+            {
+                url: "https://twitter.com/kasha25_dr25",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
         ]
     },
     {
@@ -80,7 +139,14 @@ export const members: Member[] = [
         description: "準備中。",
         skills: ["Illustrator"],
         sns: [
-            { url: "https://twitter.com/Sm_1010_", label: "Twitter" }
+            {
+                url: "https://twitter.com/Sm_1010_",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
         ]
     },
     {
@@ -92,7 +158,14 @@ export const members: Member[] = [
         description: "準備中。",
         skills: [],
         sns: [
-            { url: "https://twitter.com/pikobi222", label: "Twitter" }
+            {
+                url: "https://twitter.com/pikobi222",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
         ]
     }
 ];
