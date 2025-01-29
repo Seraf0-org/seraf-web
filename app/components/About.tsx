@@ -13,7 +13,7 @@ export function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-20 transition-colors duration-500 overflow-hidden"
+      className="relative min-h-[120vh] py-20 transition-colors duration-500 overflow-hidden"
       style={{
         backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
       }}
@@ -53,10 +53,10 @@ export function About() {
         </svg>
       ))}
 
-      <div className="container mx-auto relative flex flex-col md:flex-row">
+      <div className="container mx-auto relative flex flex-col sm:flex-row items-center">
         <div className={`container mx-auto px-4 py-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-          <div className="max-w-4xl relative z-10">
+          <div className="max-w-4xl relative z-10 text-center md:text-left">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose">
               About
               <div className="absolute fixed-left">
@@ -86,17 +86,17 @@ export function About() {
             </p>
           </div>
         </div>
-        <div className="right-8 top-1/2 z-0 transform -translate-y-1/2 absolute">
+        <div className="mt-10">
           <img
             src="/images/namelogo-dark.png"
             alt="Seraf Logo"
-            className={`w-auto h-[50vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
+            className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
               } dark:hidden object-contain`}
           />
           <img
             src="/images/namelogo-light.png"
             alt="Seraf Logo"
-            className={`w-auto h-[50vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
+            className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
               } hidden dark:block object-contain`}
           />
         </div>

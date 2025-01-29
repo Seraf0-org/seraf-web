@@ -63,7 +63,7 @@ export function News() {
       <div className={`container mx-auto px-4 relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
         <div className="ml-auto max-w-3xl">
-          <h1 className="text-4xl md:text-6xl font-bold text-right text-gray-900 dark:text-white mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
+          <h1 className="text-3xl md:text-6xl font-bold text-right text-gray-900 dark:text-white mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
             News
             <div className="absolute fixed-right">
               <svg width="100vw" height="45" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw' }}>
@@ -107,13 +107,13 @@ export function News() {
                     }}
                   />
                   <div className="relative z-10">
-                    <p className="text-gray-400 dark:text-gray-500">
+                    <p className="text-sm md:text-base text-gray-400 dark:text-gray-500">
                       {item.date}
                     </p>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                    <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900 dark:text-white">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">
                       {item.description}
                     </p>
                   </div>
