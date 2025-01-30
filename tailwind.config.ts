@@ -180,6 +180,12 @@ export default {
       backgroundSize: {
         'grid-pattern': '40px 40px',
       },
+      colors: {
+        grid: {
+          light: '#000000',
+          dark: '#ffffff',
+        },
+      },
     },
   },
   plugins: [],

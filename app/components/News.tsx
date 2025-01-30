@@ -65,7 +65,7 @@ export function News() {
         </svg>
       ))}
 
-      <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-20" style={{ backgroundColor: isDark ? 'transparent' : 'rgb(0, 0, 0)' }}></div>
       <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 210}px)` }}>
         <img
           src="/images/news/news-bg.png"
@@ -77,7 +77,7 @@ export function News() {
       <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
         <div className="ml-auto max-w-3xl pr-2">
-          <h1 className="text-4xl md:text-7xl font-bold text-right text-gray-900 dark:text-white mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
+          <h1 className={`text-4xl md:text-7xl font-bold text-right mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] ${isDark ? 'text-white' : 'text-gray-700'}`}>
             News
             <div className="absolute fixed-right">
               <svg width="100vw" height="45" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw' }}>
@@ -137,7 +137,7 @@ export function News() {
               ))}
             </div>
           </div>
-          <div className="text-center mt-8">
+          <div className="text-center mt-12">
             <a
               href="/news"
               className="inline-block bg-cyan-500 text-white font-semibold py-3 px-6 text-lg md:text-xl rounded-lg shadow-2xl hover:shadow-3xl transition-colors duration-300 hover:bg-cyan-600"

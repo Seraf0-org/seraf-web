@@ -410,7 +410,7 @@ export function Members() {
 
             <div className={`container mx-auto transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}>
-                <h2 className="text-6xl font-bold text-center mb-20 text-gray-900 dark:text-white relative drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)]">
+                <h2 className="text-6xl font-bold text-center mb-20 text-gray-700 dark:text-white relative drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)]">
                     Members
                     <div className="absolute top-24 fixed-left">
                         <svg width="100vw" height="80" viewBox="0 0 1000 20" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
