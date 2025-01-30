@@ -161,7 +161,8 @@ const MemberPopup = ({ member, onClose }: {
                                                 boxShadow: `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`,
                                                 '--hover-color': `rgb(${color.hover})`,
                                                 '--hover-shadow': `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`,
-                                                filter: `brightness(1.05) contrast(1.05)`
+                                                filter: `brightness(1.05) contrast(1.05)`,
+                                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
                                             }}
                                             onMouseEnter={e => {
                                                 e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
@@ -180,6 +181,9 @@ const MemberPopup = ({ member, onClose }: {
                                                 fill="none"
                                                 stroke="currentColor"
                                                 viewBox="0 0 24 24"
+                                                style={{
+                                                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+                                                }}
                                             >
                                                 <path
                                                     strokeLinecap="round"

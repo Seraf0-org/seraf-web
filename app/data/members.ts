@@ -40,8 +40,8 @@ export const members: Member[] = [
                 url: "https://github.com/KTN44295080",
                 label: "GitHub",
                 color: {
-                    base: "236, 72, 153",
-                    hover: "219, 39, 119"
+                    base: "34, 210, 54",
+                    hover: "22, 172, 32"
                 }
             }
         ]
@@ -59,8 +59,8 @@ export const members: Member[] = [
                 url: "https://twitter.com/yupi_yupapa9",
                 label: "X(旧Twitter)3DCG",
                 color: {
-                    base: "24, 200, 0",
-                    hover: "6, 170, 0"
+                    base: "34, 210, 54",
+                    hover: "22, 172, 32"
                 }
             },
             {
@@ -105,8 +105,8 @@ export const members: Member[] = [
                 url: "https://x.com/Jiska_i_i",
                 label: "X(旧Twitter)",
                 color: {
-                    base: "6, 182, 212",
-                    hover: "8, 145, 178"
+                    base: "59, 130, 246",
+                    hover: "37, 99, 235"
                 }
             }
         ]
@@ -124,8 +124,8 @@ export const members: Member[] = [
                 url: "https://twitter.com/kasha25_dr25",
                 label: "X(旧Twitter)",
                 color: {
-                    base: "6, 182, 212",
-                    hover: "8, 145, 178"
+                    base: "22, 163, 74",
+                    hover: "16, 122, 57"
                 }
             }
         ]
@@ -143,8 +143,8 @@ export const members: Member[] = [
                 url: "https://twitter.com/Sm_1010_",
                 label: "X(旧Twitter)",
                 color: {
-                    base: "6, 182, 212",
-                    hover: "8, 145, 178"
+                    base: "147, 51, 234",  // 紫色
+                    hover: "126, 34, 206"  // 紫色のホバー
                 }
             }
         ]
