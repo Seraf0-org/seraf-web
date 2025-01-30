@@ -3,12 +3,24 @@ import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { newsItems } from "~/data/news";
+import { useEffect, useState } from "react";
 
 export function News() {
   const [sectionRef, isVisible] = useIntersectionObserver();
   const { theme } = useOutletContext<OutletContext>();
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY * 0.12;
+      setParallaxOffset(offset);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section
@@ -53,16 +65,18 @@ export function News() {
         </svg>
       ))}
 
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 z-0">
+      <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 250}px)` }}>
         <img
-          src="/images/news/mertis.png"
+          src="/images/news/news-bg.png"
           alt="News Background"
-          className="w-auto h-auto opacity-80"
+          className="w-3/4 h-auto"
+          style={{ transform: 'scaleX(-1)' }}
         />
       </div>
-      <div className={`container mx-auto px-4 relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-        <div className="ml-auto max-w-3xl">
+        <div className="ml-auto max-w-3xl pr-2">
           <h1 className="text-3xl md:text-6xl font-bold text-right text-gray-900 dark:text-white mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
             News
             <div className="absolute fixed-right">

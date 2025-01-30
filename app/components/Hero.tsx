@@ -20,6 +20,11 @@ export function Hero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
+  const parallaxTransform = {
+    background: `scale(1.1) translate3d(0, ${scrollY * 1}px, 0)`,
+    content: `translate3d(0, ${scrollY * 0.5}px, 0)`
+  };
+
   const createLetterSpans = (text: string, baseDelay: number, className: string = "") => {
     const sentences = text.split('。').filter(Boolean);
 
@@ -64,7 +69,7 @@ export function Hero() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          transform: `scale(1.1) translate3d(0, ${scrollY * 0.5}px, 0)`,
+          transform: parallaxTransform.background,
         }}
       >
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/50' : 'bg-black/30'} transition-colors duration-200`} />
@@ -73,7 +78,7 @@ export function Hero() {
       <div
         className="relative z-10 h-full flex items-center justify-center will-change-transform"
         style={{
-          transform: `translate3d(0, ${scrollY * 0.2}px, 0)`,
+          transform: parallaxTransform.content,
         }}
       >
         <div className="text-center">

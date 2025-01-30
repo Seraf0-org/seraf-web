@@ -219,13 +219,17 @@ export function Products() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.05; // 視差効果の強さを調整
+      const offset = window.scrollY * 0.05;
       setParallaxOffset(offset);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const parallaxTransform = {
+    text: `translateY(calc(-65% + ${parallaxOffset * 1.5}px))`
+  };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = "/images/products/product-none.jpg";
@@ -269,7 +273,7 @@ export function Products() {
 
       <div
         className="absolute right-14 top-1/2 transform pointer-events-none"
-        style={{ transform: `translateY(calc(-60% + ${parallaxOffset}px))` }}
+        style={{ transform: parallaxTransform.text }}
       >
         <svg width="200" height="900" viewBox="0 0 200 900" preserveAspectRatio="xMidYMid meet">
           <text

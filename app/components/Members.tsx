@@ -73,7 +73,7 @@ const MemberPopup = ({ member, onClose }: {
 
     const handleClose = () => {
         setIsClosing(true);
-        setTimeout(onClose, 300); // フェードアウトの時間に合わせて遅延
+        setTimeout(onClose, 300);
     };
 
     return createPortal(
@@ -273,9 +273,8 @@ const adjustColorForDarkMode = (color: string) => {
         ];
     };
 
-    // 色変換処理
     const [h, s, l] = toHSL(r, g, b);
-    const newL = l * 0.75; // 明度のみ25%下げる
+    const newL = l * 0.75;
     const [newR, newG, newB] = toRGB(h, s, newL);
 
     return `${newR}, ${newG}, ${newB}`;
@@ -299,6 +298,10 @@ export function Members() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    const parallaxTransform = {
+        text: `translateY(calc(-70% + ${parallaxOffset * 1.5}px))`
+    };
 
     const handleMemberClick = (e: React.MouseEvent, member: typeof members[0]) => {
         e.preventDefault();
@@ -339,7 +342,7 @@ export function Members() {
             {/* 縦書きの「Members」 */}
             <div
                 className="absolute left-14 top-1/2 transform pointer-events-none"
-                style={{ transform: `translateY(calc(-60% + ${parallaxOffset}px))` }}
+                style={{ transform: parallaxTransform.text }}
             >
                 <svg width="200" height="900" viewBox="0 0 200 900" preserveAspectRatio="xMidYMid meet">
                     <text

@@ -169,6 +169,12 @@ export default {
         'relaxed': '1.75',
         'loose': '2',
       },
+      backgroundImage: {
+        'grid-pattern': 'linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px)',
+      },
+      backgroundSize: {
+        'grid-pattern': '20px 20px',
+      },
     },
   },
   plugins: [],
