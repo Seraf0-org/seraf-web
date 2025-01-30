@@ -30,8 +30,10 @@ export default {
         'clip-from-left': 'clip-from-left 0.6s cubic-bezier(0.7, 0, 0.1, 1) forwards',
         'text-appear': 'text-appear 0.5s ease-out forwards',
         'slide-from-top': 'slide-from-top 0.5s ease-out forwards',
-        'clip-from-top': 'clip-from-top 0.5s ease-out forwards',
+        'clip-from-top': 'clipFromTop 0.5s ease-out forwards',
         'draw-line-from-left': 'drawLineFromLeft 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards',
+        'draw-letter': 'draw-letter 0.5s forwards',
+        'draw-path': 'draw-path 2s ease forwards',
       },
       keyframes: {
         'fade-in-down': {
@@ -122,7 +124,7 @@ export default {
             opacity: '1',
           },
         },
-        'clip-from-top': {
+        clipFromTop: {
           '0%': {
             clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
           },
@@ -135,6 +137,15 @@ export default {
             strokeDashoffset: '1000',
           },
           to: {
+            strokeDashoffset: '0',
+          },
+        },
+
+        'draw-path': {
+          '0%': {
+            strokeDashoffset: '1000',
+          },
+          '100%': {
             strokeDashoffset: '0',
           },
         },

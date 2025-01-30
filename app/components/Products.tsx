@@ -62,6 +62,8 @@ const ProductPopup = ({ product, onClose }: {
   product: typeof products[0];
   onClose: () => void;
 }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -69,24 +71,26 @@ const ProductPopup = ({ product, onClose }: {
     };
   }, []);
 
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(onClose, 300); // フェードアウトの時間に合わせて遅延
+  };
+
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = "/images/products/product-none.jpg";
   };
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-      onClick={onClose}
-      style={{
-        animation: 'fade-in 0.2s ease-out forwards'
-      }}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+      onClick={handleClose}
     >
       <div
         className="relative w-[90vw] max-w-[1600px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
         onClick={e => e.stopPropagation()}
       >
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-6 right-6 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,6 +215,17 @@ export function Products() {
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY * 0.05; // 視差効果の強さを調整
+      setParallaxOffset(offset);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = "/images/products/product-none.jpg";
@@ -249,6 +264,40 @@ export function Products() {
               <Hexagon x={60} y={25} size={3} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.1} delay={1800} parallaxSpeed={0.045} isVisible={isVisible} />
             </>
           )}
+        </svg>
+      </div>
+
+      <div
+        className="absolute right-14 top-1/2 transform pointer-events-none"
+        style={{ transform: `translateY(calc(-60% + ${parallaxOffset}px))` }}
+      >
+        <svg width="200" height="900" viewBox="0 0 200 900" preserveAspectRatio="xMidYMid meet">
+          <text
+            x="100"
+            y="450"
+            fill="none"
+            stroke={isDark ? '#ffffff' : '#000000'}
+            strokeWidth="1"
+            strokeOpacity="0.4"
+            fontSize="100"
+            fontWeight="bold"
+            textAnchor="middle"
+            transform="rotate(90, 100, 450)"
+            style={{ letterSpacing: '0.3em' }}
+          >
+            {Array.from("Products").map((letter, index) => (
+              <tspan
+                key={index}
+                className="animate-draw-path"
+                style={{
+                  animationDelay: `${index * 0.2}s`,
+                  textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                }}
+              >
+                {letter}
+              </tspan>
+            ))}
+          </text>
         </svg>
       </div>
 

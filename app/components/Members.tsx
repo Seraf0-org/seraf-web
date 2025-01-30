@@ -62,6 +62,8 @@ const MemberPopup = ({ member, onClose }: {
     member: typeof members[0];
     onClose: () => void;
 }) => {
+    const [isClosing, setIsClosing] = useState(false);
+
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => {
@@ -69,17 +71,22 @@ const MemberPopup = ({ member, onClose }: {
         };
     }, []);
 
+    const handleClose = () => {
+        setIsClosing(true);
+        setTimeout(onClose, 300); // フェードアウトの時間に合わせて遅延
+    };
+
     return createPortal(
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            onClick={onClose}
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+            onClick={handleClose}
         >
             <div
                 className="relative w-full max-w-5xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[80vh] md:h-[65vh] overflow-y-auto animate-clip-from-top"
                 onClick={e => e.stopPropagation()}
             >
                 <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,27 +116,27 @@ const MemberPopup = ({ member, onClose }: {
 
                     <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full overflow-y-auto">
                         <div>
-                            <div className="mb-6">
-                                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                            <div className="mb-6 opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
+                                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                                     {member.name}
                                 </h3>
-                                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                                <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
                                     {member.position}
                                 </p>
                             </div>
 
-                            <div className="prose dark:prose-invert max-w-none">
-                                <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
-                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
+                            <div className="prose dark:prose-invert max-w-none opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
+                                <h4 className="text-xl md:text-2xl font-semibold mb-3">自己紹介</h4>
+                                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6">
                                     {member.description || "準備中..."}
                                 </p>
 
-                                <h4 className="text-xl font-semibold mb-3">スキル</h4>
+                                <h4 className="text-xl md:text-2xl font-semibold mb-3">スキル</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {member.skills?.map((skill, index) => (
                                         <span
                                             key={index}
-                                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
+                                            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-full text-lg text-gray-700 dark:text-gray-300"
                                         >
                                             {skill}
                                         </span>
@@ -139,7 +146,7 @@ const MemberPopup = ({ member, onClose }: {
                         </div>
 
                         {member.sns && member.sns.length > 0 && (
-                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8">
+                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8 opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
                                 {member.sns.map((sns, index) => {
                                     // デフォルトのカラー
                                     const defaultColor = {
@@ -281,6 +288,17 @@ export function Members() {
     const isDark = theme === 'dark';
     const lines = useLines('fuchsia');
     const [selectedMember, setSelectedMember] = useState<typeof members[0] | null>(null);
+    const [parallaxOffset, setParallaxOffset] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const offset = window.scrollY * 0.05;
+            setParallaxOffset(offset);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     const handleMemberClick = (e: React.MouseEvent, member: typeof members[0]) => {
         e.preventDefault();
@@ -315,6 +333,41 @@ export function Members() {
                             <Hexagon x={95} y={30} size={3} color={isDark ? '#db2777' : '#ec4899'} opacity={0.1} delay={1800} parallaxSpeed={0.045} isVisible={isVisible} />
                         </>
                     )}
+                </svg>
+            </div>
+
+            {/* 縦書きの「Members」 */}
+            <div
+                className="absolute left-14 top-1/2 transform pointer-events-none"
+                style={{ transform: `translateY(calc(-60% + ${parallaxOffset}px))` }}
+            >
+                <svg width="200" height="900" viewBox="0 0 200 900" preserveAspectRatio="xMidYMid meet">
+                    <text
+                        x="100"
+                        y="450"
+                        fill="none"
+                        stroke={isDark ? '#ffffff' : '#000000'}
+                        strokeWidth="1"
+                        strokeOpacity="0.4"
+                        fontSize="100"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        transform="rotate(90, 100, 450)"
+                        style={{ letterSpacing: '0.3em' }}
+                    >
+                        {Array.from("Members").map((letter, index) => (
+                            <tspan
+                                key={index}
+                                className="animate-draw-path"
+                                style={{
+                                    animationDelay: `${index * 0.2}s`,
+                                    textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                                }}
+                            >
+                                {letter}
+                            </tspan>
+                        ))}
+                    </text>
                 </svg>
             </div>
 

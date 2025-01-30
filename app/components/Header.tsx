@@ -268,7 +268,8 @@ export function Header() {
                     <div className={`${isHovered
                         ? 'bg-white/95'
                         : 'bg-white/95 dark:bg-gray-800/95'
-                        } backdrop-blur-md rounded-2xl shadow-lg p-4`}>
+                        } backdrop-blur-md rounded-2xl shadow-lg p-4 animate-clip-from-top`}
+                    >
                         <ul className="space-y-4">
                             {['about', 'news', 'products', 'members', 'contact'].map((item) => (
                                 <li key={item}>

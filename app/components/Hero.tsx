@@ -58,13 +58,13 @@ export function Hero() {
   return (
     <section className="relative h-screen overflow-hidden">
       <div
-        className="absolute inset-0 z-0 scale-110 will-change-transform"
+        className="absolute inset-0 z-0 will-change-transform"
         style={{
           backgroundImage: "url('/images/hero-bg.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          transform: `translate3d(0, ${scrollY * 0.5}px, 0)`,
+          transform: `scale(1.1) translate3d(0, ${scrollY * 0.5}px, 0)`,
         }}
       >
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/50' : 'bg-black/30'} transition-colors duration-200`} />
