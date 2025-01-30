@@ -291,7 +291,7 @@ export function Products() {
                 className="animate-draw-path"
                 style={{
                   animationDelay: `${index * 0.2}s`,
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                  textShadow: '0 0 10px rgba(6, 182, 212, 0.8)',
                 }}
               >
                 {letter}

@@ -82,7 +82,7 @@ const MemberPopup = ({ member, onClose }: {
             onClick={handleClose}
         >
             <div
-                className="relative w-full max-w-5xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[80vh] md:h-[65vh] overflow-y-auto animate-clip-from-top"
+                className="relative w-full max-w-6xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[80vh] md:h-[65vh] overflow-y-auto animate-clip-from-top"
                 onClick={e => e.stopPropagation()}
             >
                 <button
@@ -117,26 +117,26 @@ const MemberPopup = ({ member, onClose }: {
                     <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full overflow-y-auto">
                         <div>
                             <div className="mb-6 opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
-                                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                                     {member.name}
                                 </h3>
-                                <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+                                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
                                     {member.position}
                                 </p>
                             </div>
 
                             <div className="prose dark:prose-invert max-w-none opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
-                                <h4 className="text-xl md:text-2xl font-semibold mb-3">自己紹介</h4>
-                                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6">
+                                <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
+                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
                                     {member.description || "準備中..."}
                                 </p>
 
-                                <h4 className="text-xl md:text-2xl font-semibold mb-3">スキル</h4>
+                                <h4 className="text-xl font-semibold mb-3">スキル</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {member.skills?.map((skill, index) => (
                                         <span
                                             key={index}
-                                            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-full text-lg text-gray-700 dark:text-gray-300"
+                                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
                                         >
                                             {skill}
                                         </span>
@@ -361,7 +361,7 @@ export function Members() {
                                 className="animate-draw-path"
                                 style={{
                                     animationDelay: `${index * 0.2}s`,
-                                    textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                                    textShadow: '0 0 10px rgba(219, 39, 119, 0.8)',
                                 }}
                             >
                                 {letter}
