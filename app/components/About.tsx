@@ -13,7 +13,7 @@ export function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative min-h-[120vh] py-20 transition-colors duration-500 overflow-hidden"
+      className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
       style={{
         backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
       }}
