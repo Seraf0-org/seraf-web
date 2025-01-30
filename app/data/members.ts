@@ -120,7 +120,7 @@ export const members: Member[] = [
         description: "準備中。",
         skills: [],
         sns: [
-            {
+            /*{
                 url: "https://twitter.com/kasha25_dr25",
                 label: "X(旧Twitter)",
                 color: {
@@ -128,6 +128,7 @@ export const members: Member[] = [
                     hover: "16, 122, 57"
                 }
             }
+            */
         ]
     },
     {
@@ -139,14 +140,14 @@ export const members: Member[] = [
         description: "準備中。",
         skills: ["Illustrator"],
         sns: [
-            {
+            /*{
                 url: "https://twitter.com/Sm_1010_",
                 label: "X(旧Twitter)",
                 color: {
                     base: "147, 51, 234",  // 紫色
                     hover: "126, 34, 206"  // 紫色のホバー
                 }
-            }
+            }*/
         ]
     },
     {
