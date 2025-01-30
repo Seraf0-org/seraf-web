@@ -228,7 +228,7 @@ export function Products() {
   }, []);
 
   const parallaxTransform = {
-    text: `translateY(calc(-65% + ${parallaxOffset * 1.4}px))`
+    text: `translateY(calc(-60% + ${parallaxOffset * 1.4}px))`
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {

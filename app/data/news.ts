@@ -21,7 +21,6 @@ export const newsItems: NewsItem[] = [
         description: "デジタルハリウッド大学の学園祭にて、ゲームの展示を行いました。",
         image: "/images/news/news-2.jpg"
     },
-
     {
         id: 3,
         date: "2024.08.21",
@@ -29,4 +28,8 @@ export const newsItems: NewsItem[] = [
         description: "UnityRoomにて、Reflectoneの配信を開始しました。",
         image: "/images/news/news-3.jpg"
     },
-]; 
+];
+
+export const getNewsItems = () => {
+    return newsItems;
+}; 

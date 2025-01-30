@@ -37,7 +37,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var require_cookie = __commonJS({
   "../node_modules/cookie/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     exports.parse = parse2;
     exports.serialize = serialize;
     var __toString = Object.prototype.toString;
@@ -189,7 +189,7 @@ var require_cookie = __commonJS({
 var require_warnings = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/warnings.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var alreadyWarned = {};
     function warnOnce(condition, message) {
@@ -207,7 +207,7 @@ var require_warnings = __commonJS({
 var require_cookies = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/cookies.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookie = require_cookie();
     var warnings = require_warnings();
@@ -384,7 +384,7 @@ function arraysEqual(a, b) {
 }
 var init_utils = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/utils.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     __name(stringToArray, "stringToArray");
     __name(arrayToString, "arrayToString");
     __name(mergeArrays, "mergeArrays");
@@ -421,7 +421,7 @@ function createOccurenceTable(s) {
 var MATCH, StreamSearch, ReadableStreamSearch, EOQ, QueueableStreamSearch;
 var init_search = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/search.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     init_utils();
     __name(coerce, "coerce");
     __name(jsmemcmp, "jsmemcmp");
@@ -828,7 +828,7 @@ async function* iterateMultipart(body, boundary) {
 var mergeArrays2, dash, CRLF;
 var init_src = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/index.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     init_search();
     init_utils();
     mergeArrays2 = Function.prototype.apply.bind(mergeArrays, void 0);
@@ -846,7 +846,7 @@ var init_src = __esm({
 var require_formData = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/formData.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var multipartParser = (init_src(), __toCommonJS(src_exports));
     function composeUploadHandlers(...handlers) {
@@ -892,7 +892,7 @@ var require_formData = __commonJS({
 var require_router_cjs = __commonJS({
   "../node_modules/@remix-run/router/dist/router.cjs.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     function _extends2() {
       _extends2 = Object.assign ? Object.assign.bind() : function(target) {
@@ -5181,7 +5181,7 @@ var require_router_cjs = __commonJS({
 var require_mode = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/mode.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var ServerMode = /* @__PURE__ */ function(ServerMode2) {
       ServerMode2["Development"] = "development";
@@ -5202,7 +5202,7 @@ var require_mode = __commonJS({
 var require_errors = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/errors.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var mode2 = require_mode();
@@ -5274,7 +5274,7 @@ var require_errors = __commonJS({
 var require_responses = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/responses.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var errors = require_errors();
@@ -5378,7 +5378,7 @@ var require_responses = __commonJS({
 var require_utils = __commonJS({
   "../node_modules/turbo-stream/dist/utils.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createLineSplittingTransform = exports.Deferred = exports.TYPE_PREVIOUS_RESOLVED = exports.TYPE_URL = exports.TYPE_SYMBOL = exports.TYPE_SET = exports.TYPE_REGEXP = exports.TYPE_PROMISE = exports.TYPE_NULL_OBJECT = exports.TYPE_MAP = exports.TYPE_ERROR = exports.TYPE_DATE = exports.TYPE_BIGINT = exports.UNDEFINED = exports.POSITIVE_INFINITY = exports.NULL = exports.NEGATIVE_ZERO = exports.NEGATIVE_INFINITY = exports.NAN = exports.HOLE = void 0;
     exports.HOLE = -1;
@@ -5440,7 +5440,7 @@ var require_utils = __commonJS({
 var require_flatten = __commonJS({
   "../node_modules/turbo-stream/dist/flatten.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.flatten = void 0;
     var utils_js_1 = require_utils();
@@ -5622,7 +5622,7 @@ var require_flatten = __commonJS({
 var require_unflatten = __commonJS({
   "../node_modules/turbo-stream/dist/unflatten.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unflatten = void 0;
     var utils_js_1 = require_utils();
@@ -5863,7 +5863,7 @@ var require_unflatten = __commonJS({
 var require_turbo_stream = __commonJS({
   "../node_modules/turbo-stream/dist/turbo-stream.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.encode = exports.decode = void 0;
     var flatten_js_1 = require_flatten();
@@ -6069,7 +6069,7 @@ var require_turbo_stream = __commonJS({
 var require_set_cookie = __commonJS({
   "../node_modules/set-cookie-parser/lib/set-cookie.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     var defaultParseOptions = {
       decodeValues: true,
       map: false,
@@ -6247,7 +6247,7 @@ var require_set_cookie = __commonJS({
 var require_headers = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/headers.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var setCookieParser = require_set_cookie();
     function getDocumentHeaders(build, context) {
@@ -6323,7 +6323,7 @@ var require_headers = __commonJS({
 var require_single_fetch = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/single-fetch.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var turboStream = require_turbo_stream();
@@ -6578,7 +6578,7 @@ var require_single_fetch = __commonJS({
 var require_entry = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/entry.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     function createEntryRouteModules(manifest) {
       return Object.keys(manifest).reduce((memo, routeId) => {
@@ -6595,7 +6595,7 @@ var require_entry = __commonJS({
 var require_invariant = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/invariant.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     function invariant2(value, message) {
       if (value === false || value === null || typeof value === "undefined") {
@@ -6612,7 +6612,7 @@ var require_invariant = __commonJS({
 var require_routeMatching = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/routeMatching.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     function matchServerRoutes(routes3, pathname, basename2) {
@@ -6634,7 +6634,7 @@ var require_routeMatching = __commonJS({
 var require_data = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/data.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var responses = require_responses();
     async function callRouteAction({
@@ -6751,7 +6751,7 @@ var require_data = __commonJS({
 var require_routes = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/routes.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var data = require_data();
     function groupRoutesByParentId2(manifest) {
@@ -6822,7 +6822,7 @@ var require_routes = __commonJS({
 var require_markup = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/markup.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var ESCAPE_LOOKUP2 = {
       "&": "\\u0026",
@@ -6844,7 +6844,7 @@ var require_markup = __commonJS({
 var require_serverHandoff = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/serverHandoff.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var markup = require_markup();
     function createServerHandoffString(serverHandoff) {
@@ -6859,7 +6859,7 @@ var require_serverHandoff = __commonJS({
 var require_dev = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/dev.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     async function broadcastDevReady(build, origin) {
       origin ??= process.env.REMIX_DEV_ORIGIN;
@@ -6909,7 +6909,7 @@ var require_dev = __commonJS({
 var require_deprecations = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/deprecations.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     function resourceRouteJsonWarning(type, routeId) {
       return `\u26A0\uFE0F REMIX FUTURE CHANGE: Externally-accessed resource routes will no longer be able to return raw JavaScript objects or \`null\` in React Router v7 when Single Fetch becomes the default. You can prepare for this change at your convenience by wrapping the data returned from your \`${type}\` function in the \`${routeId}\` route with \`json()\`.  For instructions on making this change, see https://remix.run/docs/en/v2.13.1/guides/single-fetch#resource-routes`;
@@ -6923,7 +6923,7 @@ var require_deprecations = __commonJS({
 var require_server = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/server.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var entry2 = require_entry();
@@ -7368,7 +7368,7 @@ ${String(error)}`;
 var require_sessions = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/sessions.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var warnings = require_warnings();
@@ -7466,7 +7466,7 @@ var require_sessions = __commonJS({
 var require_cookieStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/sessions/cookieStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var sessions = require_sessions();
@@ -7503,7 +7503,7 @@ var require_cookieStorage = __commonJS({
 var require_memoryStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/sessions/memoryStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var createMemorySessionStorageFactory = /* @__PURE__ */ __name((createSessionStorage) => ({
       cookie
@@ -7552,7 +7552,7 @@ var require_memoryStorage = __commonJS({
 var require_errors2 = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/upload/errors.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var MaxPartSizeExceededError = class extends Error {
       constructor(field, maxBytes) {
@@ -7570,7 +7570,7 @@ var require_errors2 = __commonJS({
 var require_memoryUploadHandler = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/upload/memoryUploadHandler.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var errors = require_errors2();
     function createMemoryUploadHandler({
@@ -7618,7 +7618,7 @@ var require_memoryUploadHandler = __commonJS({
 var require_dist = __commonJS({
   "../node_modules/@remix-run/cloudflare/node_modules/@remix-run/server-runtime/dist/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var formData = require_formData();
@@ -7660,7 +7660,7 @@ var require_dist = __commonJS({
 var require_crypto = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/crypto.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var encoder = new TextEncoder();
     var sign = /* @__PURE__ */ __name(async (value, secret) => {
@@ -7705,7 +7705,7 @@ var require_crypto = __commonJS({
 var require_implementations = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/implementations.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var serverRuntime = require_dist();
     var crypto2 = require_crypto();
@@ -7727,7 +7727,7 @@ var require_implementations = __commonJS({
 var require_workersKVStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/sessions/workersKVStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var implementations = require_implementations();
     function createWorkersKVSessionStorage({
@@ -7776,7 +7776,7 @@ var require_workersKVStorage = __commonJS({
 var require_dist2 = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var workersKVStorage = require_workersKVStorage();
     var implementations = require_implementations();
@@ -7962,7 +7962,7 @@ function createPagesFunctionHandler({
 var import_cloudflare;
 var init_worker = __esm({
   "../node_modules/@remix-run/cloudflare-pages/dist/esm/worker.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     import_cloudflare = __toESM(require_dist2());
     __name(createRequestHandler, "createRequestHandler");
     __name(createPagesFunctionHandler, "createPagesFunctionHandler");
@@ -7972,7 +7972,7 @@ var init_worker = __esm({
 // ../node_modules/@remix-run/cloudflare-pages/dist/esm/index.js
 var init_esm = __esm({
   "../node_modules/@remix-run/cloudflare-pages/dist/esm/index.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     init_worker();
   }
 });
@@ -7981,7 +7981,7 @@ var init_esm = __esm({
 var require_react_development = __commonJS({
   "../node_modules/react/cjs/react.development.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (true) {
       (function() {
         "use strict";
@@ -9942,7 +9942,7 @@ var require_react_development = __commonJS({
 var require_react = __commonJS({
   "../node_modules/react/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (false) {
       module.exports = null;
     } else {
@@ -9955,7 +9955,7 @@ var require_react = __commonJS({
 var require_react_jsx_runtime_development = __commonJS({
   "../node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (true) {
       (function() {
         "use strict";
@@ -10889,7 +10889,7 @@ var require_react_jsx_runtime_development = __commonJS({
 var require_jsx_runtime = __commonJS({
   "../node_modules/react/jsx-runtime.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (false) {
       module.exports = null;
     } else {
@@ -10902,7 +10902,7 @@ var require_jsx_runtime = __commonJS({
 var require_scheduler_development = __commonJS({
   "../node_modules/scheduler/cjs/scheduler.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (true) {
       (function() {
         "use strict";
@@ -11379,7 +11379,7 @@ var require_scheduler_development = __commonJS({
 var require_scheduler = __commonJS({
   "../node_modules/scheduler/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (false) {
       module.exports = null;
     } else {
@@ -11392,7 +11392,7 @@ var require_scheduler = __commonJS({
 var require_react_dom_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (true) {
       (function() {
         "use strict";
@@ -33467,7 +33467,7 @@ var require_react_dom_development = __commonJS({
 var require_react_dom = __commonJS({
   "../node_modules/react-dom/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (false) {
       checkDCE();
       module.exports = null;
@@ -33480,7 +33480,7 @@ var require_react_dom = __commonJS({
 // ../node_modules/react-router/dist/umd/react-router.development.js
 var require_react_router_development = __commonJS({
   "../node_modules/react-router/dist/umd/react-router.development.js"(exports, module) {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require_react(), require_router_cjs()) : typeof define === "function" && define.amd ? define(["exports", "react", "@remix-run/router"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.ReactRouter = {}, global.React, global.RemixRouter));
     })(exports, function(exports2, React9, router) {
@@ -34797,7 +34797,7 @@ var require_react_router_development = __commonJS({
 var require_main = __commonJS({
   "../node_modules/react-router/dist/main.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (false) {
       module.exports = null;
     } else {
@@ -34809,7 +34809,7 @@ var require_main = __commonJS({
 // ../node_modules/react-router-dom/dist/umd/react-router-dom.development.js
 var require_react_router_dom_development = __commonJS({
   "../node_modules/react-router-dom/dist/umd/react-router-dom.development.js"(exports, module) {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require_react(), require_react_dom(), require_main(), require_router_cjs()) : typeof define === "function" && define.amd ? define(["exports", "react", "react-dom", "react-router", "@remix-run/router"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.ReactRouterDOM = {}, global.React, global.ReactDOM, global.ReactRouter, global.RemixRouter));
     })(exports, function(exports2, React9, ReactDOM, reactRouter, router) {
@@ -36383,7 +36383,7 @@ var require_react_router_dom_development = __commonJS({
 var require_main2 = __commonJS({
   "../node_modules/react-router-dom/dist/main.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (false) {
       module.exports = null;
     } else {
@@ -36409,7 +36409,7 @@ function _extends() {
 }
 var init_rollupPluginBabelHelpers = __esm({
   "../node_modules/@remix-run/react/dist/esm/_virtual/_rollupPluginBabelHelpers.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     __name(_extends, "_extends");
   }
 });
@@ -36422,7 +36422,7 @@ function invariant(value, message) {
 }
 var init_invariant = __esm({
   "../node_modules/@remix-run/react/dist/esm/invariant.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     __name(invariant, "invariant");
   }
 });
@@ -36453,7 +36453,7 @@ async function loadRouteModule(route, routeModulesCache) {
 }
 var init_routeModules = __esm({
   "../node_modules/@remix-run/react/dist/esm/routeModules.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     __name(loadRouteModule, "loadRouteModule");
   }
 });
@@ -36618,7 +36618,7 @@ function parsePathPatch(href) {
 var import_react_router_dom;
 var init_links = __esm({
   "../node_modules/@remix-run/react/dist/esm/links.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     import_react_router_dom = __toESM(require_main2());
     init_routeModules();
     __name(getKeyedLinksForMatches, "getKeyedLinksForMatches");
@@ -36648,7 +36648,7 @@ function createHtml(html) {
 var ESCAPE_LOOKUP, ESCAPE_REGEX;
 var init_markup = __esm({
   "../node_modules/@remix-run/react/dist/esm/markup.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     ESCAPE_LOOKUP = {
       "&": "\\u0026",
       ">": "\\u003e",
@@ -36737,7 +36737,7 @@ function singleFetchUrl(reqUrl) {
 var React;
 var init_single_fetch = __esm({
   "../node_modules/@remix-run/react/dist/esm/single-fetch.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     React = __toESM(require_react());
     init_markup();
     __name(StreamTransfer, "StreamTransfer");
@@ -36822,7 +36822,7 @@ function BoundaryShell({
 var React2, import_react_router_dom2, RemixErrorBoundary;
 var init_errorBoundaries = __esm({
   "../node_modules/@remix-run/react/dist/esm/errorBoundaries.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     React2 = __toESM(require_react());
     import_react_router_dom2 = __toESM(require_main2());
     init_components();
@@ -36889,7 +36889,7 @@ function RemixRootDefaultHydrateFallback() {
 var React3;
 var init_fallback = __esm({
   "../node_modules/@remix-run/react/dist/esm/fallback.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     React3 = __toESM(require_react());
     init_errorBoundaries();
     __name(RemixRootDefaultHydrateFallback, "RemixRootDefaultHydrateFallback");
@@ -36985,7 +36985,7 @@ function shouldHydrateRouteLoader(route, routeModule, isSpaMode2) {
 var React4, import_react_router_dom3;
 var init_routes = __esm({
   "../node_modules/@remix-run/react/dist/esm/routes.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     React4 = __toESM(require_react());
     import_react_router_dom3 = __toESM(require_main2());
     init_errorBoundaries();
@@ -37029,7 +37029,7 @@ function getPartialManifest(manifest, router) {
 var import_router, React5;
 var init_fog_of_war = __esm({
   "../node_modules/@remix-run/react/dist/esm/fog-of-war.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     import_router = __toESM(require_router_cjs());
     React5 = __toESM(require_react());
     __name(isFogOfWarEnabled, "isFogOfWarEnabled");
@@ -37592,6 +37592,9 @@ function ErrorDeferredHydrationScript({
 function dedupe(array) {
   return [...new Set(array)];
 }
+function useLoaderData2() {
+  return (0, import_react_router_dom4.useLoaderData)();
+}
 function mergeRefs(...refs) {
   return (value) => {
     refs.forEach((ref) => {
@@ -37606,7 +37609,7 @@ function mergeRefs(...refs) {
 var React6, import_react_router_dom4, RemixContext, ABSOLUTE_URL_REGEX, NavLink, Link, Form, isHydrated, LiveReload;
 var init_components = __esm({
   "../node_modules/@remix-run/react/dist/esm/components.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     init_rollupPluginBabelHelpers();
     React6 = __toESM(require_react());
     import_react_router_dom4 = __toESM(require_main2());
@@ -37684,6 +37687,7 @@ var init_components = __esm({
     __name(DeferredHydrationScript, "DeferredHydrationScript");
     __name(ErrorDeferredHydrationScript, "ErrorDeferredHydrationScript");
     __name(dedupe, "dedupe");
+    __name(useLoaderData2, "useLoaderData");
     LiveReload = // Dead Code Elimination magic for production builds.
     // This way devs don't have to worry about doing the NODE_ENV check themselves.
     true ? () => null : /* @__PURE__ */ __name(function LiveReload2({
@@ -37854,7 +37858,7 @@ function ScrollRestoration({
 var React7, import_react_router_dom5, STORAGE_KEY;
 var init_scroll_restoration = __esm({
   "../node_modules/@remix-run/react/dist/esm/scroll-restoration.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     init_rollupPluginBabelHelpers();
     React7 = __toESM(require_react());
     import_react_router_dom5 = __toESM(require_main2());
@@ -37868,7 +37872,7 @@ var init_scroll_restoration = __esm({
 var require_server2 = __commonJS({
   "../node_modules/react-router-dom/server.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     Object.defineProperty(exports, "__esModule", { value: true });
     var React9 = require_react();
     var router = require_router_cjs();
@@ -38242,7 +38246,7 @@ function RemixServer({
 var React8, import_server;
 var init_server = __esm({
   "../node_modules/@remix-run/react/dist/esm/server.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     React8 = __toESM(require_react());
     import_server = __toESM(require_server2());
     init_components();
@@ -38257,7 +38261,7 @@ var init_server = __esm({
 var import_react_router_dom6;
 var init_esm2 = __esm({
   "../node_modules/@remix-run/react/dist/esm/index.js"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     import_react_router_dom6 = __toESM(require_main2());
     init_components();
     init_scroll_restoration();
@@ -38279,7 +38283,7 @@ function isbot(userAgent) {
 var fullPattern, naivePattern, usedPattern;
 var init_isbot = __esm({
   "../node_modules/isbot/index.mjs"() {
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     fullPattern = " daum[ /]| deusu/| yadirectfetcher|(?:^| )site|(?:^|[^g])news|(?<! (?:channel/|google/))google(?!(app|/google| pixel))|(?<! cu)bot(?:[^\\w]|_|$)|(?<! ya(?:yandex)?)search|(?<!(?:lib))http|(?<![hg]m)score|@[a-z]|\\(at\\)[a-z]|\\[at\\][a-z]|^12345|^<|^[\\w \\.\\-\\(?:\\):]+(?:/v?\\d+(\\.\\d+)?(?:\\.\\d{1,10})?)?(?:,|$)|^[^ ]{50,}$|^active|^ad muncher|^amaya|^anglesharp/|^avsdevicesdk/|^bidtellect/|^biglotron|^bot|^btwebclient/|^clamav[ /]|^client/|^cobweb/|^coccoc|^custom|^ddg[_-]android|^discourse|^dispatch/\\d|^downcast/|^duckduckgo|^facebook|^fdm[ /]\\d|^getright/|^gozilla/|^hatena|^hobbit|^hotzonu|^hwcdn/|^jeode/|^jetty/|^jigsaw|^linkdex|^metauri|^microsoft bits|^movabletype|^mozilla/\\d\\.\\d \\(compatible;?\\)$|^mozilla/\\d\\.\\d \\w*$|^navermailapp|^netsurf|^nuclei|^offline explorer|^php|^postman|^postrank|^python|^rank|^read|^reed|^rest|^serf|^snapchat|^space bison|^svn|^swcd |^taringa|^thumbor/|^tumblr/|^user-agent:|^valid|^venus/fedoraplanet|^w3c|^webbandit/|^webcopier|^wget|^whatsapp|^xenu link sleuth|^yahoo|^yandex|^zdm/\\d|^zoom marketplace/|^{{.*}}$|adbeat\\.com|appinsights|archive|ask jeeves/teoma|bit\\.ly/|bluecoat drtr|browsex|burpcollaborator|capture|catch|check|chrome-lighthouse|chromeframe|classifier|cloud|crawl|cryptoapi|dareboost|datanyze|dataprovider|dejaclick|dmbrowser|download|evc-batch/|feed|firephp|freesafeip|gomezagent|headless|httrack|hubspot marketing grader|hydra|ibisbrowser|images|inspect|iplabel|ips-agent|java(?!;)|library|mail\\.ru/|manager|monitor|neustar wpm|nutch|offbyone|optimize|pageburst|parser|perl|phantom|pingdom|powermarks|preview|proxy|ptst[ /]\\d|reader|reputation|resolver|retriever|rexx;|rigor|robot|rss|scan|scrape|server|sogou|sparkler/|speedcurve|spider|splash|statuscake|stumbleupon\\.com|supercleaner|synapse|synthetic|torrent|trace|transcoder|twingly recon|url|virtuoso|wappalyzer|webglance|webkit2png|whatcms/|wordpress|zgrab";
     naivePattern = /bot|spider|crawl|http|lighthouse/i;
     __name(isbot, "isbot");
@@ -38290,7 +38294,7 @@ var init_isbot = __esm({
 var require_react_dom_server_legacy_browser_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom-server-legacy.browser.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (true) {
       (function() {
         "use strict";
@@ -43870,7 +43874,7 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
 var require_react_dom_server_browser_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom-server.browser.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     if (true) {
       (function() {
         "use strict";
@@ -49418,7 +49422,7 @@ var require_react_dom_server_browser_development = __commonJS({
 var require_server_browser = __commonJS({
   "../node_modules/react-dom/server.browser.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     var l;
     var s;
     if (false) {
@@ -50385,17 +50389,17 @@ function News() {
           line.id
         )),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-grid-pattern opacity-20" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute left-0 top-0 -translate-y-1/2 z-0", style: { transform: `translateY(${parallaxOffset - 200}px)` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute left-0 top-0 -translate-y-1/2 z-0", style: { transform: `translateY(${parallaxOffset - 210}px)` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           "img",
           {
             src: "/images/news/news-bg.png",
             alt: "News Background",
-            className: "w-5/6 h-auto",
+            className: "w-6/7 h-auto",
             style: { transform: "scaleX(-1)" }
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "ml-auto max-w-3xl pr-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", { className: "text-3xl md:text-6xl font-bold text-right text-gray-900 dark:text-white mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", { className: "text-4xl md:text-7xl font-bold text-right text-gray-900 dark:text-white mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]", children: [
             "News",
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute fixed-right", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { width: "100vw", height: "45", viewBox: "0 0 1000 10", preserveAspectRatio: "none", style: { marginLeft: "calc(-50vw" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
               "path",
@@ -50409,16 +50413,16 @@ function News() {
               }
             ) }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex flex-col space-y-6", children: [...newsItems].reverse().map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "overflow-hidden h-[65vh]", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex flex-col space-y-6 animate-vertical-scroll", style: { animationDelay: "1s" }, children: [...newsItems, ...newsItems].map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
             "div",
             {
               className: `bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden flex 
-                    shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
-                    hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]
-                    transition-all duration-300 ${isVisible ? "animate-clip-from-right" : ""}`,
+                      shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
+                      hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]
+                      transition-all duration-300 ${isVisible ? "animate-clip-from-right" : ""}`,
               style: {
                 animationDelay: `${index * 200}ms`,
-                clipPath: isVisible ? void 0 : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)"
+                clipPath: isVisible ? void 0 : "polygon(100% 0, 100% 0, 100% 100%, 0 100%)"
               },
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "w-1/3 relative", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "relative pt-[75%]", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -50440,15 +50444,47 @@ function News() {
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "relative z-10", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-sm md:text-base text-gray-400 dark:text-gray-500", children: item.date }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "text-lg md:text-xl font-semibold mb-2 text-gray-900 dark:text-white", children: item.title }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-sm md:text-base text-gray-600 dark:text-gray-300", children: item.description })
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-base md:text-lg text-gray-400 dark:text-gray-500", children: item.date }),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "text-xl md:text-2xl font-semibold mb-2 text-gray-900 dark:text-white", children: item.title }),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-base md:text-lg text-gray-600 dark:text-gray-300", children: item.description })
                   ] })
                 ] })
               ]
             },
-            item.id
-          )) })
+            `${item.id}-${index}`
+          )) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-center mt-8", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            "a",
+            {
+              href: "/news",
+              className: "inline-block bg-cyan-500 text-white font-semibold py-3 px-6 text-lg md:text-xl rounded-lg shadow-2xl hover:shadow-3xl transition-colors duration-300 hover:bg-cyan-600",
+              style: {
+                boxShadow: "0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3)"
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { className: "flex items-center justify-center", children: [
+                "View All News",
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                  "svg",
+                  {
+                    className: "w-5 h-5 ml-2",
+                    fill: "none",
+                    stroke: "currentColor",
+                    viewBox: "0 0 24 24",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                      "path",
+                      {
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round",
+                        strokeWidth: 2,
+                        d: "M14 5l7 7m0 0l-7 7m7-7H3"
+                      }
+                    )
+                  }
+                )
+              ] })
+            }
+          ) })
         ] }) })
       ]
     }
@@ -50470,7 +50506,7 @@ function Products() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   const parallaxTransform = {
-    text: `translateY(calc(-65% + ${parallaxOffset * 1.4}px))`
+    text: `translateY(calc(-60% + ${parallaxOffset * 1.4}px))`
   };
   const handleImageError = /* @__PURE__ */ __name((e) => {
     e.currentTarget.src = "/images/products/product-none.jpg";
@@ -51018,11 +51054,62 @@ function Posts() {
     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: post.excerpt })
   ] }, post.id)) });
 }
-var import_jsx_runtime, import_server3, import_react2, import_react_dom, entryServer, LinesContext, links, meta$1, route0, newsItems, products, Hexagon$1, ProductPopup, members, Hexagon, MemberPopup, meta, route1, loader, route2, serverManifest, mode, assetsBuildDirectory, basename, future, isSpaMode, publicPath, entry, routes2;
+function NewsPage() {
+  const { newsItems: newsItems2 } = useLoaderData2();
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", { className: "container mx-auto py-10", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { className: "text-4xl font-bold mb-8", children: "All News" }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: newsItems2.reverse().map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow-md p-6", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        "img",
+        {
+          src: item.image,
+          alt: item.title,
+          className: "w-full h-48 object-cover rounded-t-lg mb-4"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { className: "text-2xl font-semibold mb-2", children: item.title }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-gray-600 dark:text-gray-300", children: item.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-sm text-gray-400 dark:text-gray-500", children: item.date })
+    ] }, item.id)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-center mt-8", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      "a",
+      {
+        href: "/",
+        className: "inline-block bg-cyan-500 text-white font-semibold py-3 px-6 text-lg md:text-xl rounded-lg shadow-2xl hover:shadow-3xl transition-colors duration-300 hover:bg-cyan-600",
+        style: {
+          boxShadow: "0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3)"
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { className: "flex items-center justify-center", children: [
+          "Back to Home",
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            "svg",
+            {
+              className: "w-5 h-5 ml-2",
+              fill: "none",
+              stroke: "currentColor",
+              viewBox: "0 0 24 24",
+              xmlns: "http://www.w3.org/2000/svg",
+              children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "path",
+                {
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeWidth: 2,
+                  d: "M14 5l7 7m0 0l-7 7m7-7H3"
+                }
+              )
+            }
+          )
+        ] })
+      }
+    ) })
+  ] });
+}
+var import_jsx_runtime, import_server3, import_react2, import_react_dom, entryServer, LinesContext, links, meta$1, route0, newsItems, getNewsItems, products, Hexagon$1, ProductPopup, members, Hexagon, MemberPopup, meta, route1, loader$1, route2, loader, route3, serverManifest, mode, assetsBuildDirectory, basename, future, isSpaMode, publicPath, entry, routes2;
 var init_server2 = __esm({
   "../build/server/index.js"() {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
     init_esm2();
     init_isbot();
@@ -51093,6 +51180,9 @@ var init_server2 = __esm({
         image: "/images/news/news-3.jpg"
       }
     ];
+    getNewsItems = /* @__PURE__ */ __name(() => {
+      return newsItems;
+    }, "getNewsItems");
     __name(News, "News");
     products = [
       {
@@ -51588,31 +51678,16 @@ var init_server2 = __esm({
                           base: "6, 182, 212",
                           hover: "8, 145, 178"
                         };
-                        const color = sns.color || defaultColor;
+                        sns.color || defaultColor;
                         return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
                           "a",
                           {
                             href: sns.url,
                             target: "_blank",
                             rel: "noopener noreferrer",
-                            className: "inline-flex items-center justify-center px-6 py-3 text-white font-medium rounded-lg transition-all duration-300",
+                            className: "inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded-full shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:bg-blue-600",
                             style: {
-                              backgroundColor: `rgb(${color.base})`,
-                              boxShadow: `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`,
-                              "--hover-color": `rgb(${color.hover})`,
-                              "--hover-shadow": `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`,
-                              filter: `brightness(1.05) contrast(1.05)`,
-                              textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)"
-                            },
-                            onMouseEnter: (e) => {
-                              e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
-                              e.currentTarget.style.boxShadow = `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`;
-                              e.currentTarget.style.filter = `brightness(1.1) contrast(1.1)`;
-                            },
-                            onMouseLeave: (e) => {
-                              e.currentTarget.style.backgroundColor = `rgb(${color.base})`;
-                              e.currentTarget.style.boxShadow = `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`;
-                              e.currentTarget.style.filter = `brightness(1.05) contrast(1.05)`;
+                              boxShadow: "0 0 10px rgba(0, 0, 255, 0.5), 0 0 20px rgba(0, 0, 255, 0.3)"
                             },
                             children: [
                               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: sns.label }),
@@ -51666,17 +51741,27 @@ var init_server2 = __esm({
       default: Index,
       meta
     }, Symbol.toStringTag, { value: "Module" }));
-    loader = /* @__PURE__ */ __name(async () => {
+    loader$1 = /* @__PURE__ */ __name(async () => {
       const posts = await getPosts();
       return json({ posts });
-    }, "loader");
+    }, "loader$1");
     __name(Posts, "Posts");
     route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
       default: Posts,
+      loader: loader$1
+    }, Symbol.toStringTag, { value: "Module" }));
+    loader = /* @__PURE__ */ __name(async () => {
+      const newsItems2 = await getNewsItems();
+      return { newsItems: newsItems2 };
+    }, "loader");
+    __name(NewsPage, "NewsPage");
+    route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+      __proto__: null,
+      default: NewsPage,
       loader
     }, Symbol.toStringTag, { value: "Module" }));
-    serverManifest = { "entry": { "module": "/assets/entry.client-BXKAJpz9.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-B-52gnaW.js", "/assets/components-DZHiCxAL.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-DfXuYMp8.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-B-52gnaW.js", "/assets/components-DZHiCxAL.js", "/assets/LinesContext-eByHhIeY.js"], "css": ["/assets/root-Crkcmke6.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-D3fheXqz.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/LinesContext-eByHhIeY.js", "/assets/index-B-52gnaW.js"], "css": [] }, "routes/posts": { "id": "routes/posts", "parentId": "root", "path": "posts", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/posts-zQg_Xen0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js"], "css": [] } }, "url": "/assets/manifest-f92a70e6.js", "version": "f92a70e6" };
+    serverManifest = { "entry": { "module": "/assets/entry.client-Ky4W2yVm.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-CSqMUOt5.js", "/assets/components-CtTl0yfT.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-CvtgwY8p.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-CSqMUOt5.js", "/assets/components-CtTl0yfT.js", "/assets/LinesContext-eByHhIeY.js"], "css": ["/assets/root-CGD-3yiW.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-BHxpBQ3y.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/LinesContext-eByHhIeY.js", "/assets/index-CSqMUOt5.js"], "css": [] }, "routes/posts": { "id": "routes/posts", "parentId": "root", "path": "posts", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/posts-zQg_Xen0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js"], "css": [] }, "routes/news": { "id": "routes/news", "parentId": "root", "path": "news", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/news-CyrM4pw0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/components-CtTl0yfT.js", "/assets/index-CSqMUOt5.js"], "css": [] } }, "url": "/assets/manifest-7ef89686.js", "version": "7ef89686" };
     mode = "production";
     assetsBuildDirectory = "build\\client";
     basename = "/";
@@ -51708,6 +51793,14 @@ var init_server2 = __esm({
         index: void 0,
         caseSensitive: void 0,
         module: route2
+      },
+      "routes/news": {
+        id: "routes/news",
+        parentId: "root",
+        path: "news",
+        index: void 0,
+        caseSensitive: void 0,
+        module: route3
       }
     };
   }
@@ -51718,17 +51811,17 @@ var onRequest;
 var init_path = __esm({
   "[[path]].ts"() {
     "use strict";
-    init_functionsRoutes_0_5415783142114621();
+    init_functionsRoutes_0_7027309673900743();
     init_esm();
     init_server2();
     onRequest = createPagesFunctionHandler({ build: server_exports });
   }
 });
 
-// ../.wrangler/tmp/pages-0onIe8/functionsRoutes-0.5415783142114621.mjs
+// ../.wrangler/tmp/pages-fHbsxW/functionsRoutes-0.7027309673900743.mjs
 var routes;
-var init_functionsRoutes_0_5415783142114621 = __esm({
-  "../.wrangler/tmp/pages-0onIe8/functionsRoutes-0.5415783142114621.mjs"() {
+var init_functionsRoutes_0_7027309673900743 = __esm({
+  "../.wrangler/tmp/pages-fHbsxW/functionsRoutes-0.7027309673900743.mjs"() {
     "use strict";
     init_path();
     routes = [
@@ -51743,17 +51836,17 @@ var init_functionsRoutes_0_5415783142114621 = __esm({
   }
 });
 
-// ../.wrangler/tmp/bundle-9c0akF/middleware-loader.entry.ts
-init_functionsRoutes_0_5415783142114621();
+// ../.wrangler/tmp/bundle-vCl9hR/middleware-loader.entry.ts
+init_functionsRoutes_0_7027309673900743();
 
-// ../.wrangler/tmp/bundle-9c0akF/middleware-insertion-facade.js
-init_functionsRoutes_0_5415783142114621();
+// ../.wrangler/tmp/bundle-vCl9hR/middleware-insertion-facade.js
+init_functionsRoutes_0_7027309673900743();
 
 // ../node_modules/wrangler/templates/pages-template-worker.ts
-init_functionsRoutes_0_5415783142114621();
+init_functionsRoutes_0_7027309673900743();
 
 // ../node_modules/wrangler/node_modules/path-to-regexp/dist.es2015/index.js
-init_functionsRoutes_0_5415783142114621();
+init_functionsRoutes_0_7027309673900743();
 function lexer(str) {
   var tokens = [];
   var i = 0;
@@ -52200,7 +52293,7 @@ var cloneResponse = /* @__PURE__ */ __name((response) => (
 ), "cloneResponse");
 
 // ../node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
-init_functionsRoutes_0_5415783142114621();
+init_functionsRoutes_0_7027309673900743();
 var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
@@ -52219,7 +52312,7 @@ var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 var middleware_ensure_req_body_drained_default = drainBody;
 
 // ../node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
-init_functionsRoutes_0_5415783142114621();
+init_functionsRoutes_0_7027309673900743();
 function reduceError(e) {
   return {
     name: e?.name,
@@ -52242,7 +52335,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-9c0akF/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-vCl9hR/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -52250,7 +52343,7 @@ var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
 var middleware_insertion_facade_default = pages_template_worker_default;
 
 // ../node_modules/wrangler/templates/middleware/common.ts
-init_functionsRoutes_0_5415783142114621();
+init_functionsRoutes_0_7027309673900743();
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
   __facade_middleware__.push(...args.flat());
@@ -52275,7 +52368,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-9c0akF/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-vCl9hR/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
@@ -53050,4 +53143,4 @@ react-dom/cjs/react-dom-server.browser.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=functionsWorker-0.7155111080374785.mjs.map
+//# sourceMappingURL=functionsWorker-0.04255905769540558.mjs.map

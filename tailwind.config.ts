@@ -34,6 +34,7 @@ export default {
         'draw-line-from-left': 'drawLineFromLeft 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards',
         'draw-letter': 'draw-letter 0.5s forwards',
         'draw-path': 'draw-path 2s ease forwards',
+        'vertical-scroll': 'vertical-scroll 40s linear infinite',
       },
       keyframes: {
         'fade-in-down': {
@@ -148,6 +149,10 @@ export default {
           '100%': {
             strokeDashoffset: '0',
           },
+        },
+        'vertical-scroll': {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(-50%)' },
         },
       },
       clipPath: {
