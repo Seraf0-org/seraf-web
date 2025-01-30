@@ -173,7 +173,7 @@ export default {
         'grid-pattern': 'linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px)',
       },
       backgroundSize: {
-        'grid-pattern': '20px 20px',
+        'grid-pattern': '40px 40px',
       },
     },
   },
