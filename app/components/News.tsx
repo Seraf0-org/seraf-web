@@ -66,11 +66,11 @@ export function News() {
       ))}
 
       <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 250}px)` }}>
+      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 200}px)` }}>
         <img
           src="/images/news/news-bg.png"
           alt="News Background"
-          className="w-3/4 h-auto"
+          className="w-5/6 h-auto"
           style={{ transform: 'scaleX(-1)' }}
         />
       </div>
