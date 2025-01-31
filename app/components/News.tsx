@@ -15,7 +15,7 @@ export function News() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.05;
+      const offset = window.scrollY * 0.08;
       setParallaxOffset(offset);
     };
 
@@ -35,7 +35,7 @@ export function News() {
       {/* 横書きの「News」 */}
       <div
         className="absolute top-[90%] transform pointer-events-none z-20"
-        style={{ transform: `translateY(calc(-70% + ${parallaxOffset}px))`, right: '-20px' }}
+        style={{ transform: `translateY(calc(-90% + ${parallaxOffset}px))`, right: '-20px' }}
       >
         <svg width="900" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
           <text
@@ -127,14 +127,14 @@ export function News() {
             : 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
         }}
       ></div>
-      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 190}px)` }}>
+      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 170}px)` }}>
         {!videoError ? (
           <video
             src="/videos/news-bg.webm"
             autoPlay
             loop
             muted
-            className="w-full h-auto"
+            className="w-6/7 h-auto"
             onError={() => setVideoError(true)}
             style={{ transform: 'scaleX(-1)' }}
           />
