@@ -22,7 +22,7 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "代表, ゲームデザイナー, シナリオライター, エンジニア",
+        position: "代表, ゲームデザイナー, シナリオライター, エンジニア, モデラー",
         mainImage: "/images/members/member-1.jpg",
         subImage: "/images/members/member-1-sub.jpg",
         description: "たくさんゲームを作るます。\nゲームデザイン、シナリオ制作をメインに手広く活動していきます。",

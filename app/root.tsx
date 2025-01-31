@@ -48,7 +48,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
 
   // スムーズスクロール関数を修正
   const smoothScrollTo: ScrollFunction = (targetPosition: number, duration: number = 500) => {
