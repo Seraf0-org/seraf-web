@@ -3,7 +3,7 @@ import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { newsItems } from "~/data/news";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export function News() {
   const [sectionRef, isVisible] = useIntersectionObserver();
@@ -11,6 +11,9 @@ export function News() {
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +24,12 @@ export function News() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (videoRef.current && !isIOS && isVisible) {
+      videoRef.current.play();
+    }
+  }, [isVisible, isIOS]);
 
   return (
     <section
@@ -127,22 +136,26 @@ export function News() {
         }}
       ></div>
       <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 170}px)` }}>
-        <video
-          autoPlay
-          loop
-          muted
-          className="w-6/7 h-auto"
-          style={{ transform: 'scaleX(-1)' }}
-        >
-          <source src="/videos/news-bg.mov" type="video/quicktime" />
-          <source src="/videos/news-bg.webm" type="video/webm" />
+        {isIOS ? (
           <img
             src="/images/news/news-bg.png"
             alt="News Background"
             className="w-full h-auto"
             style={{ transform: 'scaleX(-1)' }}
           />
-        </video>
+        ) : (
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            className="w-6/7 h-auto"
+            style={{ transform: 'scaleX(-1)' }}
+          >
+            {/*<source src="/videos/news-bg.mov" type="video/quicktime" />*/}
+            <source src="/videos/news-bg.webm" type="video/webm" />
+          </video>
+        )}
       </div>
       <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>

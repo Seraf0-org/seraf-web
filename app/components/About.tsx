@@ -12,6 +12,8 @@ export function About() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY * 0.05;
@@ -23,11 +25,10 @@ export function About() {
   }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.src = isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm";
+    if (videoRef.current && !isIOS && isVisible) {
       videoRef.current.play();
     }
-  }, [isDark]);
+  }, [isDark, isIOS, isVisible]);
 
   return (
     <section
@@ -140,26 +141,29 @@ export function About() {
             </p>
           </div>
           <div className="mt-10">
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              className="w-auto h-[40vh] md:h-[60vh]"
-              style={{
-                transform: 'scale(1.1)',
-                objectFit: 'cover',
-              }}
-            >
-              <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />
-              <source src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"} type="video/webm" />
+            {isIOS ? (
               <img
                 src={isDark ? "/images/namelogo-light.png" : "/images/namelogo-dark.png"}
                 alt="Seraf Logo"
                 className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
                   } object-contain`}
               />
-            </video>
+            ) : (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                className="w-auto h-[40vh] md:h-[60vh]"
+                style={{
+                  transform: 'scale(1.1)',
+                  objectFit: 'cover',
+                }}
+              >
+                <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />
+                <source src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"} type="video/webm" />
+              </video>
+            )}
           </div>
         </div>
       </div>
