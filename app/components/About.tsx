@@ -9,7 +9,6 @@ export function About() {
   const { theme } = useOutletContext<OutletContext>();
   const lines = useLines('fuchsia');
   const isDark = theme === 'dark';
-  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
@@ -148,7 +147,7 @@ export function About() {
               playsInline
               className="w-auto h-[40vh] md:h-[60vh]"
               style={{
-                transform: 'scale(1.13)',
+                transform: 'scale(1.1)',
                 objectFit: 'cover',
               }}
             >

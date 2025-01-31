@@ -11,7 +11,6 @@ export function News() {
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
   const [parallaxOffset, setParallaxOffset] = useState(0);
-  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
