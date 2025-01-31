@@ -2,7 +2,7 @@ import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export function About() {
   const [sectionRef, isVisible] = useIntersectionObserver();
@@ -10,6 +10,24 @@ export function About() {
   const lines = useLines('fuchsia');
   const isDark = theme === 'dark';
   const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY * 0.05;
+      setParallaxOffset(offset);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isVisible && videoRef.current) {
+      videoRef.current.play();
+    }
+  }, [isVisible]);
 
   return (
     <section
@@ -20,6 +38,40 @@ export function About() {
         backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
       }}
     >
+      {/* 横書きの「About」 */}
+      <div
+        className="absolute left-14 top-[90%] transform pointer-events-none"
+        style={{ transform: `translateY(calc(-50% + ${parallaxOffset}px))` }}
+      >
+        <svg width="900" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
+          <text
+            x="450"
+            y="100"
+            fill="none"
+            stroke={isDark ? '#ffffff' : '#000000'}
+            strokeWidth="1"
+            strokeOpacity="0.4"
+            fontSize="100"
+            fontWeight="bold"
+            textAnchor="middle"
+            style={{ letterSpacing: '0.3em' }}
+          >
+            {Array.from("About").map((letter, index) => (
+              <tspan
+                key={index}
+                className="animate-draw-path"
+                style={{
+                  animationDelay: `${index * 0.2}s`,
+                  textShadow: '0 0 10px rgba(255, 0, 255, 0.8)',
+                }}
+              >
+                {letter}
+              </tspan>
+            ))}
+          </text>
+        </svg>
+      </div>
+
       {/* 背景の線 */}
       {lines.map((line, index) => (
         <svg
@@ -90,6 +142,7 @@ export function About() {
           <div className="mt-10">
             {!videoError ? (
               <video
+                ref={videoRef}
                 src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"}
                 type="video/webm"
                 autoPlay

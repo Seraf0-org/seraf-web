@@ -14,7 +14,7 @@ export function News() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.11;
+      const offset = window.scrollY * 0.05;
       setParallaxOffset(offset);
     };
 
@@ -31,6 +31,40 @@ export function News() {
         backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
       }}
     >
+      {/* 横書きの「News」 */}
+      <div
+        className="absolute top-[90%] transform pointer-events-none z-20"
+        style={{ transform: `translateY(calc(-50% + ${parallaxOffset}px))`, right: '-20px' }}
+      >
+        <svg width="900" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
+          <text
+            x="450"
+            y="100"
+            fill="none"
+            stroke={isDark ? '#ffffff' : '#000000'}
+            strokeWidth="1"
+            strokeOpacity="0.4"
+            fontSize="100"
+            fontWeight="bold"
+            textAnchor="middle"
+            style={{ letterSpacing: '0.3em' }}
+          >
+            {Array.from("News").map((letter, index) => (
+              <tspan
+                key={index}
+                className="animate-draw-path"
+                style={{
+                  animationDelay: `${index * 0.2}s`,
+                  textShadow: '0 0 10px rgba(0, 255, 255, 0.8)',
+                }}
+              >
+                {letter}
+              </tspan>
+            ))}
+          </text>
+        </svg>
+      </div>
+
       {lines.map((line, index) => (
         <svg
           key={line.id}
