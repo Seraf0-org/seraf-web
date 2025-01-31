@@ -41,7 +41,7 @@ export function About() {
       {/* 横書きの「About」 */}
       <div
         className="absolute left-14 top-[90%] transform pointer-events-none"
-        style={{ transform: `translateY(calc(-50% + ${parallaxOffset}px))` }}
+        style={{ transform: `translateY(calc(-55% + ${parallaxOffset}px))` }}
       >
         <svg width="900" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
           <text

@@ -15,7 +15,7 @@ export function News() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.11;
+      const offset = window.scrollY * 0.05;
       setParallaxOffset(offset);
     };
 
@@ -35,7 +35,7 @@ export function News() {
       {/* 横書きの「News」 */}
       <div
         className="absolute top-[90%] transform pointer-events-none z-20"
-        style={{ transform: `translateY(calc(-50% + ${parallaxOffset}px))`, right: '-20px' }}
+        style={{ transform: `translateY(calc(-70% + ${parallaxOffset}px))`, right: '-20px' }}
       >
         <svg width="900" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
           <text
