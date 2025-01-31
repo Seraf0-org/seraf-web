@@ -135,7 +135,14 @@ export function News() {
             loop
             muted
             className="w-6/7 h-auto"
-            onError={() => setVideoError(true)}
+            onError={() => {
+              setVideoError(true);
+              const videoElement = document.querySelector('video');
+              if (videoElement) {
+                videoElement.src = "/videos/news-bg.mov";
+                videoElement.play();
+              }
+            }}
             style={{ transform: 'scaleX(-1)' }}
           />
         ) : (

@@ -148,7 +148,13 @@ export function About() {
                 autoPlay
                 muted
                 className="w-auto h-[40vh] md:h-[60vh]"
-                onError={() => setVideoError(true)}
+                onError={() => {
+                  setVideoError(true);
+                  if (videoRef.current) {
+                    videoRef.current.src = isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov";
+                    videoRef.current.play();
+                  }
+                }}
                 style={{
                   transform: 'scale(1.13)',
                 }}
