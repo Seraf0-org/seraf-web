@@ -28,6 +28,13 @@ export const newsItems: NewsItem[] = [
         description: "UnityRoomにて、Reflectoneの配信を開始しました。",
         image: "/images/news/news-3.jpg"
     },
+    {
+        id: 4,
+        date: "2025.1.31",
+        title: "Webサイトを公開！",
+        description: "Seraf()のWebサイトを公開しました。",
+        image: "/images/news/news-1.jpg"
+    }
 ];
 
 export const getNewsItems = () => {
