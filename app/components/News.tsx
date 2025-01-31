@@ -128,31 +128,22 @@ export function News() {
         }}
       ></div>
       <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 170}px)` }}>
-        {!videoError ? (
-          <video
-            src="/videos/news-bg.webm"
-            autoPlay
-            loop
-            muted
-            className="w-6/7 h-auto"
-            onError={() => {
-              setVideoError(true);
-              const videoElement = document.querySelector('video');
-              if (videoElement) {
-                videoElement.src = "/videos/news-bg.mov";
-                videoElement.play();
-              }
-            }}
-            style={{ transform: 'scaleX(-1)' }}
-          />
-        ) : (
+        <video
+          autoPlay
+          loop
+          muted
+          className="w-6/7 h-auto"
+          style={{ transform: 'scaleX(-1)' }}
+        >
+          <source src="/videos/news-bg.mov" type="video/quicktime" />
+          <source src="/videos/news-bg.webm" type="video/webm" />
           <img
             src="/images/news/news-bg.png"
             alt="News Background"
             className="w-full h-auto"
             style={{ transform: 'scaleX(-1)' }}
           />
-        )}
+        </video>
       </div>
       <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
