@@ -240,6 +240,7 @@ export function News() {
           preserveAspectRatio="xMidYMid slice"
         >
           <polygon
+            points="50,0 100,0 100,100 75,100"
             fill={isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'}
             style={{
               filter: 'drop-shadow(0 0 3px rgba(64, 200, 200, 0.7))',
