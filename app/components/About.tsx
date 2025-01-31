@@ -24,10 +24,11 @@ export function About() {
   }, []);
 
   useEffect(() => {
-    if (isVisible && videoRef.current) {
+    if (videoRef.current) {
+      videoRef.current.src = isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm";
       videoRef.current.play();
     }
-  }, [isVisible]);
+  }, [isDark]);
 
   return (
     <section
@@ -140,33 +141,24 @@ export function About() {
             </p>
           </div>
           <div className="mt-10">
-            {!videoError ? (
-              <video
-                ref={videoRef}
-                src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"}
-                type="video/webm"
-                autoPlay
-                muted
-                className="w-auto h-[40vh] md:h-[60vh]"
-                onError={() => {
-                  setVideoError(true);
-                  if (videoRef.current) {
-                    videoRef.current.src = isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov";
-                    videoRef.current.play();
-                  }
-                }}
-                style={{
-                  transform: 'scale(1.13)',
-                }}
-              />
-            ) : (
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              className="w-auto h-[40vh] md:h-[60vh]"
+              style={{
+                transform: 'scale(1.13)',
+              }}
+            >
+              <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />
+              <source src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"} type="video/webm" />
               <img
                 src={isDark ? "/images/namelogo-light.png" : "/images/namelogo-dark.png"}
                 alt="Seraf Logo"
                 className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
                   } object-contain`}
               />
-            )}
+            </video>
           </div>
         </div>
       </div>
