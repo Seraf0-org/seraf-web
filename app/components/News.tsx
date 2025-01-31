@@ -236,6 +236,7 @@ export function News() {
               filter: 'drop-shadow(0 0 3px rgba(64, 200, 200, 0.7))',
             }}
           />
+          {/*
           <line
             x1="0"
             y1="24.15"
@@ -252,6 +253,8 @@ export function News() {
             stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
             strokeWidth="0.2"
           />
+          */}
+
           <line
             x1="50"
             y1="10"
