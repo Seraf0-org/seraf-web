@@ -145,9 +145,11 @@ export function About() {
               ref={videoRef}
               autoPlay
               muted
+              playsInline
               className="w-auto h-[40vh] md:h-[60vh]"
               style={{
                 transform: 'scale(1.13)',
+                objectFit: 'cover',
               }}
             >
               <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />
