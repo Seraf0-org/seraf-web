@@ -17,8 +17,8 @@ export const newsItems: NewsItem[] = [
     {
         id: 2,
         date: "2024.11.24",
-        title: "デジハリ学園祭2024にて展示！",
-        description: "デジタルハリウッド大学の学園祭にて、ゲームの展示を行いました。",
+        title: "DHU学園祭に展示！",
+        description: "デジタルハリウッド大学の2024年度学園祭にて、ゲームの展示を行いました。",
         image: "/images/news/news-2.jpg"
     },
     {

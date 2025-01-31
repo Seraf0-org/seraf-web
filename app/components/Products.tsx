@@ -339,7 +339,7 @@ export function Products() {
         </svg>
       ))}
 
-      <div className={`container mx-auto px-4 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      <div className={`container mx-auto px-6 md:px-6 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
         <h1 className="text-4xl md:text-6xl font-bold text-center text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
           Products
@@ -370,13 +370,15 @@ export function Products() {
                 transitionProperty: 'opacity, transform'
               }}
             >
-              <div className="relative pt-[56.25%] overflow-hidden">
-                <img
-                  src={product.image || "/images/products/product-none.jpg"}
-                  alt={product.name}
-                  onError={handleImageError}
-                  className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
+              <div className="relative overflow-hidden">
+                <div className="pt-[56.25%] md:pt-[50%]">
+                  <img
+                    src={product.image || "/images/products/product-none.jpg"}
+                    alt={product.name}
+                    onError={handleImageError}
+                    className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
               </div>
               <div className="p-6 relative">
                 <div className="absolute bottom-0 right-0 w-full h-full bg-gray-50 dark:bg-gray-900"

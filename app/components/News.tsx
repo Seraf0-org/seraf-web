@@ -175,7 +175,7 @@ export function News() {
               </svg>
             </div>
           </h1>
-          <div className="overflow-hidden h-[65vh]">
+          <div className="overflow-hidden h-[65vh] px-4 md:px-0">
             <div className="flex flex-col space-y-6 animate-vertical-scroll" style={{ animationDelay: '1s' }}>
               {[...newsItems, ...newsItems].map((item, index) => (
                 <div
@@ -186,11 +186,12 @@ export function News() {
                       transition-all duration-300 ${isVisible ? 'animate-clip-from-right' : ''}`}
                   style={{
                     animationDelay: `${index * 200}ms`,
-                    clipPath: isVisible ? undefined : 'polygon(100% 0, 100% 0, 100% 100%, 0 100%)'
+                    clipPath: isVisible ? undefined : 'polygon(100% 0, 100% 0, 100% 100%, 0 100%)',
+                    height: '20vh'
                   }}
                 >
                   <div className="w-1/3 relative">
-                    <div className="relative pt-[75%]">
+                    <div className="relative h-full">
                       <img
                         src={item.image}
                         alt={item.title}
@@ -198,20 +199,20 @@ export function News() {
                       />
                     </div>
                   </div>
-                  <div className="w-2/3 p-6 relative">
+                  <div className="w-2/3 p-4 md:p-6 relative">
                     <div className="absolute bottom-0 right-0 w-full h-full bg-white dark:bg-gray-900"
                       style={{
                         clipPath: 'polygon(100% 50%, 100% 100%, 87% 100%)'
                       }}
                     />
                     <div className="relative z-10">
-                      <p className="text-base md:text-lg text-gray-400 dark:text-gray-500">
+                      <p className="text-sm md:text-lg text-gray-400 dark:text-gray-500">
                         {item.date}
                       </p>
-                      <h3 className="text-xl md:text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
+                      <h3 className="text-lg md:text-2xl font-semibold mb-2 text-gray-900 dark:text-white" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {item.title}
                       </h3>
-                      <p className="text-base md:text-lg text-gray-600 dark:text-gray-300">
+                      <p className="text-sm md:text-lg text-gray-600 dark:text-gray-300">
                         {item.description}
                       </p>
                     </div>
