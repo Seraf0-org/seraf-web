@@ -63,6 +63,24 @@ export function News() {
               </tspan>
             ))}
           </text>
+          {/* 上部のライン */}
+          <line
+            x1="0"
+            y1="0"
+            x2="100"
+            y2="0"
+            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
+            strokeWidth="0.2"
+          />
+          {/* 下部のライン */}
+          <line
+            x1="0"
+            y1="100"
+            x2="100"
+            y2="100"
+            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
+            strokeWidth="0.2"
+          />
         </svg>
       </div>
 
@@ -101,14 +119,15 @@ export function News() {
       ))}
 
       <div
-        className="absolute inset-0 bg-grid-pattern opacity-20"
+        className="absolute inset-0 bg-grid-pattern"
         style={{
+          opacity: 0.3,
           backgroundImage: isDark
-            ? 'linear-gradient(to right, rgba(255, 255, 255, 0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 1px, transparent 1px)'
-            : 'linear-gradient(to right, rgba(0, 0, 0, 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1px, transparent 1px)',
+            ? 'linear-gradient(to right, rgba(255, 255, 255, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 1px, transparent 1px)'
+            : 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
         }}
       ></div>
-      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 220}px)` }}>
+      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 190}px)` }}>
         {!videoError ? (
           <video
             src="/videos/news-bg.webm"
@@ -219,17 +238,17 @@ export function News() {
           />
           <line
             x1="0"
-            y1="24.6"
+            y1="24.15"
             x2="100"
-            y2="24.6"
+            y2="24.15"
             stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
             strokeWidth="0.2"
           />
           <line
             x1="0"
-            y1="75.4"
+            y1="75.85"
             x2="100"
-            y2="75.4"
+            y2="75.85"
             stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
             strokeWidth="0.2"
           />

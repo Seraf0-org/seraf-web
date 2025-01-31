@@ -178,7 +178,7 @@ export default {
         'grid-pattern': 'linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px)',
       },
       backgroundSize: {
-        'grid-pattern': '40px 40px',
+        'grid-pattern': '50px 50px',
       },
       colors: {
         grid: {

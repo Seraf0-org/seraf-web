@@ -221,7 +221,7 @@ export function Header() {
                                 </div>
 
                                 {/* モバイルメニュータン */}
-                                <div className="md:hidden flex items-center space-x-4 ml-auto mr-8">
+                                <div className="md:hidden flex items-center space-x-4 ml-auto mr-8 mt-4">
                                     {/* テーマ切り替えボタン（モバイル） */}
                                     <button
                                         onClick={toggleTheme}
