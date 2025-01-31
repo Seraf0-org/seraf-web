@@ -11,10 +11,11 @@ export function News() {
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.05;
+      const offset = window.scrollY * 0.11;
       setParallaxOffset(offset);
     };
 
@@ -108,12 +109,24 @@ export function News() {
         }}
       ></div>
       <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 220}px)` }}>
-        <img
-          src="/images/news/news-bg.png"
-          alt="News Background"
-          className="w-6/7 h-auto"
-          style={{ transform: 'scaleX(-1)' }}
-        />
+        {!videoError ? (
+          <video
+            src="/videos/news-bg.webm"
+            autoPlay
+            loop
+            muted
+            className="w-full h-auto"
+            onError={() => setVideoError(true)}
+            style={{ transform: 'scaleX(-1)' }}
+          />
+        ) : (
+          <img
+            src="/images/news/news-bg.png"
+            alt="News Background"
+            className="w-full h-auto"
+            style={{ transform: 'scaleX(-1)' }}
+          />
+        )}
       </div>
       <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
