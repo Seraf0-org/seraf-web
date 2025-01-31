@@ -25,8 +25,22 @@ export function About() {
   }, []);
 
   useEffect(() => {
+    if (videoRef.current) {
+      const videoElement = videoRef.current;
+      const sources = videoElement.getElementsByTagName('source');
+      const darkVideoSrc = "/images/logo-anim-dark";
+      const lightVideoSrc = "/images/logo-anim-light";
+
+      sources[0].src = isDark ? `${darkVideoSrc}.mov` : `${lightVideoSrc}.mov`;
+      sources[1].src = isDark ? `${darkVideoSrc}.webm` : `${lightVideoSrc}.webm`;
+
+      videoElement.load(); // ソースを変更した後に動画を再読み込み
+    }
+
     if (videoRef.current && !isIOS && isVisible) {
       videoRef.current.play();
+    } else if (videoRef.current) {
+      videoRef.current.pause();
     }
   }, [isDark, isIOS, isVisible]);
 
@@ -151,7 +165,6 @@ export function About() {
             ) : (
               <video
                 ref={videoRef}
-                autoPlay
                 muted
                 playsInline
                 className="w-auto h-[40vh] md:h-[60vh]"
