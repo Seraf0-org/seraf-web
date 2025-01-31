@@ -2,12 +2,14 @@ import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
+import { useState } from "react";
 
 export function About() {
   const [sectionRef, isVisible] = useIntersectionObserver();
   const { theme } = useOutletContext<OutletContext>();
   const lines = useLines('fuchsia');
   const isDark = theme === 'dark';
+  const [videoError, setVideoError] = useState(false);
 
   return (
     <section
@@ -55,8 +57,8 @@ export function About() {
 
       <div className="container mx-auto relative flex flex-col sm:flex-row items-center">
         <div className={`container mx-auto px-4 py-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-          <div className="max-w-4xl relative z-10 text-center md:text-left">
+          } flex flex-col md:flex-row items-center`}>
+          <div className="max-w-4xl text-center md:text-left md:mr-8">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose">
               About
               <div className="absolute fixed-left">
@@ -85,20 +87,28 @@ export function About() {
               最新鋭の技術や各々の得意や好きを余すことなく活かし、個性をぶつかり合わせて生まれるオリジナリティ溢れる作品の数々をお楽しみあれ。
             </p>
           </div>
-        </div>
-        <div className="mt-10">
-          <img
-            src="/images/namelogo-dark.png"
-            alt="Seraf Logo"
-            className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
-              } dark:hidden object-contain`}
-          />
-          <img
-            src="/images/namelogo-light.png"
-            alt="Seraf Logo"
-            className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
-              } hidden dark:block object-contain`}
-          />
+          <div className="mt-10">
+            {!videoError ? (
+              <video
+                src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"}
+                type="video/webm"
+                autoPlay
+                muted
+                className="w-auto h-[40vh] md:h-[60vh]"
+                onError={() => setVideoError(true)}
+                style={{
+                  transform: 'scale(1.13)',
+                }}
+              />
+            ) : (
+              <img
+                src={isDark ? "/images/namelogo-light.png" : "/images/namelogo-dark.png"}
+                alt="Seraf Logo"
+                className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
+                  } object-contain`}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>

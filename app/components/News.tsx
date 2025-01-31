@@ -14,7 +14,7 @@ export function News() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.12;
+      const offset = window.scrollY * 0.11;
       setParallaxOffset(offset);
     };
 
@@ -65,8 +65,15 @@ export function News() {
         </svg>
       ))}
 
-      <div className="absolute inset-0 bg-grid-pattern opacity-20" style={{ backgroundColor: isDark ? 'transparent' : 'rgb(0, 0, 0)' }}></div>
-      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 210}px)` }}>
+      <div
+        className="absolute inset-0 bg-grid-pattern opacity-20"
+        style={{
+          backgroundImage: isDark
+            ? 'linear-gradient(to right, rgba(255, 255, 255, 0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 1px, transparent 1px)'
+            : 'linear-gradient(to right, rgba(0, 0, 0, 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1px, transparent 1px)',
+        }}
+      ></div>
+      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 220}px)` }}>
         <img
           src="/images/news/news-bg.png"
           alt="News Background"
@@ -149,6 +156,45 @@ export function News() {
             </a>
           </div>
         </div>
+      </div>
+      <div className="absolute inset-0 z-5 pointer-events-none">
+        <svg
+          className="w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <polygon
+            points="50,10 100,10 100,90 75,90"
+            fill={isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'}
+            style={{
+              filter: 'drop-shadow(0 0 3px rgba(64, 200, 200, 0.7))',
+            }}
+          />
+          <line
+            x1="0"
+            y1="24.6"
+            x2="100"
+            y2="24.6"
+            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
+            strokeWidth="0.2"
+          />
+          <line
+            x1="0"
+            y1="75.4"
+            x2="100"
+            y2="75.4"
+            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
+            strokeWidth="0.2"
+          />
+          <line
+            x1="50"
+            y1="10"
+            x2="75"
+            y2="90"
+            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
+            strokeWidth="0.2"
+          />
+        </svg>
       </div>
     </section>
   );
