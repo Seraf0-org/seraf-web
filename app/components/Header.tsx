@@ -177,7 +177,7 @@ export function Header() {
                                     <img
                                         src={isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png"}
                                         alt="Logo"
-                                        className="w-28 md:w-44 h-auto"
+                                        className="w-20 md:w-28 lg:w-44 h-auto"
                                     />
                                 </a>
 
