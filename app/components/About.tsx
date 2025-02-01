@@ -58,9 +58,9 @@ export function About() {
         className="absolute left-14 top-[90%] transform pointer-events-none"
         style={{ transform: `translateY(calc(-55% + ${parallaxOffset}px))` }}
       >
-        <svg width="900" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
+        <svg width="100%" height="200" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
           <text
-            x="450"
+            x="50%"
             y="100"
             fill="none"
             stroke={isDark ? '#ffffff' : '#000000'}
@@ -167,10 +167,10 @@ export function About() {
                 ref={videoRef}
                 muted
                 playsInline
-                className="w-auto h-[40vh] md:h-[60vh]"
+                className="w-full md:w-auto max-w-xs md:max-w-xl h-auto"
                 style={{
                   transform: 'scale(1.1)',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                 }}
               >
                 <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />

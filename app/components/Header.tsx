@@ -242,18 +242,16 @@ export function Header() {
                                         )}
                                     </button>
 
-                                    {/* 既存のハンバーガーボタン */}
+                                    {/* ハンバーガーメニューアイコン */}
                                     <button
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                         className="p-2"
                                         aria-label="メニュー"
                                     >
-                                        <div className={`w-6 h-0.5 mb-1.5 transition-colors duration-300 ${isHovered ? 'bg-gray-800' : 'bg-gray-800 dark:bg-white'
-                                            }`}></div>
-                                        <div className={`w-6 h-0.5 mb-1.5 transition-colors duration-300 ${isHovered ? 'bg-gray-800' : 'bg-gray-800 dark:bg-white'
-                                            }`}></div>
-                                        <div className={`w-6 h-0.5 transition-colors duration-300 ${isHovered ? 'bg-gray-800' : 'bg-gray-800 dark:bg-white'
-                                            }`}></div>
+                                        <div className="relative w-6 h-6">
+                                            <div className={`absolute w-full h-0.5 bg-gray-800 dark:bg-white transition-transform duration-300 ${isMenuOpen ? 'rotate-45 top-1.5' : 'top-0'}`}></div>
+                                            <div className={`absolute w-full h-0.5 bg-gray-800 dark:bg-white transition-transform duration-300 ${isMenuOpen ? '-rotate-45 top-1.5' : 'bottom-1.5'}`}></div>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
