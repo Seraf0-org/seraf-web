@@ -135,13 +135,13 @@ export function News() {
             : 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
         }}
       ></div>
-      <div className="absolute left-0 top-0 -translate-y-1/2 z-0" style={{ transform: `translateY(${parallaxOffset - 170}px)` }}>
+      <div className="absolute left-0 top-0 -translate-y-1/2 z-0 w-full h-full md:w-full md:h-auto" style={{ transform: `translateY(${parallaxOffset - 170}px)` }}>
         {isIOS ? (
           <img
             src="/images/news/news-bg.png"
             alt="News Background"
-            className="w-full h-auto"
-            style={{ transform: 'scaleX(-1)' }}
+            className="w-auto h-full md:h-full md:w-6/7"
+            style={{ transform: 'scaleX(-1)', maxWidth: 'none' }}
           />
         ) : (
           <video
@@ -149,10 +149,9 @@ export function News() {
             autoPlay
             loop
             muted
-            className="w-6/7 h-auto"
-            style={{ transform: 'scaleX(-1)' }}
+            className="w-auto h-[90vh] md:w-6/7 md:h-auto"
+            style={{ transform: 'scaleX(-1)', maxWidth: 'none' }}
           >
-            {/*<source src="/videos/news-bg.mov" type="video/quicktime" />*/}
             <source src="/videos/news-bg.webm" type="video/webm" />
           </video>
         )}
@@ -247,25 +246,6 @@ export function News() {
               filter: 'drop-shadow(0 0 3px rgba(64, 200, 200, 0.7))',
             }}
           />
-          {/*
-          <line
-            x1="0"
-            y1="24.15"
-            x2="100"
-            y2="24.15"
-            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
-            strokeWidth="0.2"
-          />
-          <line
-            x1="0"
-            y1="75.85"
-            x2="100"
-            y2="75.85"
-            stroke={isDark ? 'rgb(210, 255, 255)' : 'rgb(0, 192, 192)'}
-            strokeWidth="0.2"
-          />
-          */}
-
           <line
             x1="50"
             y1="0"
