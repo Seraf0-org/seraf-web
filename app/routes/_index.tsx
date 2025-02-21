@@ -11,6 +11,11 @@ export const meta: MetaFunction = () => {
   return [
     { title: "Seraf()" },
     { name: "description", content: "We are Seraf()" },
+    { property: "og:title", content: "Seraf()" },
+    { property: "og:description", content: "We are Seraf(), a creative studio focused on game development." },
+    { property: "og:image", content: "https://example.com/path/to/namelogo-light.png" },
+    { property: "og:url", content: "https://Seraf0.com" },
+    { property: "og:type", content: "website" },
   ];
 };
 

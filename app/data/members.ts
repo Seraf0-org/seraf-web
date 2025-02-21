@@ -64,10 +64,10 @@ export const members: Member[] = [
                 }
             },
             {
-                url: "https://x.com/yupi_yupaLive2D",
+                url: "https://x.com/yupi_yupaLemon9",
                 label: "X(旧Twitter)Live2D",
                 color: {
-                    base: "236, 72, 153",
+                    base: "255, 0, 157",
                     hover: "219, 39, 119"
                 }
             }
