@@ -149,8 +149,12 @@ export function News() {
             autoPlay
             loop
             muted
-            className="w-auto h-[90vh] md:w-6/7 md:h-auto"
-            style={{ transform: 'scaleX(-1)', maxWidth: 'none' }}
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen"
+            onContextMenu={(e) => e.preventDefault()}
+            onDragStart={(e) => e.preventDefault()}
+            className="w-auto h-[90vh] md:w-6/7 md:h-auto pointer-events-none"
+            style={{ transform: 'scaleX(-1)', maxWidth: 'none', userSelect: 'none' }}
           >
             <source src="/videos/news-bg.webm" type="video/webm" />
           </video>
@@ -158,7 +162,7 @@ export function News() {
       </div>
       <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-        <div className="ml-auto max-w-3xl pr-2">
+        <div className="ml-auto max-w-3xl pr-6 md:pr-2">
           <h1 className={`text-4xl md:text-7xl font-bold text-right mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] ${isDark ? 'text-white' : 'text-gray-700'}`}>
             News
             <div className="absolute fixed-right">
