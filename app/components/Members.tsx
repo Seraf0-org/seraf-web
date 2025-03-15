@@ -127,7 +127,7 @@ const MemberPopup = ({ member, onClose }: {
 
                             <div className="prose dark:prose-invert max-w-none opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
                                 <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
-                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6" style={{ whiteSpace: 'pre-line' }}>
+                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
                                     {member.description || "準備中..."}
                                 </p>
 
@@ -425,13 +425,13 @@ export function Members() {
                         </svg>
                     </div>
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 max-w-7xl mx-auto px-4 md:px-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-12 max-w-7xl mx-auto px-4 md:px-8">
                     {members.map((member, index) => (
                         <a
                             key={member.id}
                             onClick={(e) => handleMemberClick(e, member)}
                             className={`group text-center cursor-pointer transition-all duration-500 
-                                bg-gray-100 dark:bg-gray-800 rounded-xl p-4 pt-6
+                                bg-gray-100 dark:bg-gray-800 rounded-xl p-4 pt-10 
                                 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
                                 hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
                                 relative
@@ -442,9 +442,9 @@ export function Members() {
                             }}
                         >
                             {/* 名札の穴部分 */}
-                            <div className="absolute top-3.5 left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner border border-fuchsia-500/50 dark:border-fuchsia-400/50" style={{ boxShadow: '0 0 5px rgba(219, 39, 119, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2)' }}></div>
+                            <div className="absolute top-4 md:top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 md:w-6 md:h-6 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner border border-fuchsia-500/50 dark:border-fuchsia-400/50" style={{ boxShadow: '0 0 5px rgba(219, 39, 119, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2)' }}></div>
 
-                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg mt-8">
+                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg mt-3 md:mt-6">
                                 <div className="w-full h-full bg-gray-200 dark:bg-gray-200 group-hover:scale-110 transition-transform duration-300">
                                     <img
                                         src={member.mainImage}
