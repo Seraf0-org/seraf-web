@@ -179,16 +179,14 @@ export function Partnership() {
                 <h2 className="text-4xl md:text-6xl font-bold text-center mb-16 text-gray-700 dark:text-white drop-shadow-[0_0_8px_rgba(22,172,32,0.5)] dark:drop-shadow-[0_0_8px_rgba(34,210,54,0.5)]">
                     Partners
                     <div className="relative">
-                        <svg width="100vw" height="40" viewBox="0 0 3000 10" preserveAspectRatio="none" style={{ marginTop: '20px', marginLeft: '-25vw', width: '150vw' }}>
+                        <svg width="100vw" height="40" viewBox="0 0 800 10" preserveAspectRatio="none" style={{ marginLeft: '-25vw', width: '150vw' }}>
                             <path
-                                d="M-500 0 L780 0 L800 10 L3000 10"
+                                d="M0 0 L195 0 L210 10 L390 10 L405 0 L800 0"
                                 stroke="#99ff99"
                                 strokeWidth="3"
                                 fill="none"
                                 className={`${isVisible ? 'animate-draw-line-from-left' : ''}`}
-                                style={{
-                                    filter: 'drop-shadow(0 0 5px rgba(153, 255, 153, 0.5))'
-                                }}
+                                strokeDasharray="800"
                             />
                         </svg>
                     </div>

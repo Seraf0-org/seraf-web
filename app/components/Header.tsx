@@ -183,12 +183,12 @@ export function Header() {
 
                                 <div className="hidden md:flex items-start flex-1 pt-3">
                                     {/* デスクトップメニュー */}
-                                    <ul className="flex space-x-6 lg:space-x-12 ml-auto mr-40 items-center">
+                                    <ul className="flex space-x-4 lg:space-x-10 ml-auto mr-40 items-center">
                                         {['about', 'news', 'products', 'members', 'partners', 'contact'].map((item) => (
                                             <li key={item}>
                                                 <button
                                                     onClick={() => handleClick(item)}
-                                                    className={`text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isCurrentDark
+                                                    className={`text-base xl:text-lg 2xl:text-xl font-bold transition-colors duration-300 ${isCurrentDark
                                                         ? 'text-gray-300 hover:text-white'
                                                         : 'text-gray-700 hover:text-gray-900'
                                                         }`}

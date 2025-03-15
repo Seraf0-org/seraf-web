@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// .wrangler/tmp/pages-gaNC3l/functionsWorker-0.816480278697558.mjs
+// .wrangler/tmp/pages-2nyYG4/functionsWorker-0.6871890155539722.mjs
 var __create = Object.create;
 var __defProp2 = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -23,7 +23,7 @@ var __copyProps = /* @__PURE__ */ __name((to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
       if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp2(to, key, { get: /* @__PURE__ */ __name(() => from[key], "get"), enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
   }
   return to;
 }, "__copyProps");
@@ -39,7 +39,7 @@ var __toCommonJS = /* @__PURE__ */ __name((mod) => __copyProps(__defProp2({}, "_
 var require_cookie = __commonJS({
   "../node_modules/cookie/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     exports.parse = parse2;
     exports.serialize = serialize;
     var __toString = Object.prototype.toString;
@@ -195,7 +195,7 @@ var require_cookie = __commonJS({
 var require_warnings = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/warnings.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var alreadyWarned = {};
     function warnOnce(condition, message) {
@@ -212,7 +212,7 @@ var require_warnings = __commonJS({
 var require_cookies = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/cookies.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookie = require_cookie();
     var warnings = require_warnings();
@@ -240,7 +240,8 @@ var require_cookies = __commonJS({
           return typeof options.maxAge !== "undefined" ? new Date(Date.now() + options.maxAge * 1e3) : options.expires;
         },
         async parse(cookieHeader, parseOptions) {
-          if (!cookieHeader) return null;
+          if (!cookieHeader)
+            return null;
           let cookies = cookie.parse(cookieHeader, {
             ...options,
             ...parseOptions
@@ -319,7 +320,8 @@ var require_cookies = __commonJS({
     __name2(myEscape, "myEscape");
     function hex(code, length) {
       let result = code.toString(16);
-      while (result.length < length) result = "0" + result;
+      while (result.length < length)
+        result = "0" + result;
       return result;
     }
     __name(hex, "hex");
@@ -397,7 +399,7 @@ function arraysEqual(a, b) {
 __name(arraysEqual, "arraysEqual");
 var init_utils = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/utils.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     __name2(stringToArray, "stringToArray");
     __name2(arrayToString, "arrayToString");
     __name2(mergeArrays, "mergeArrays");
@@ -436,21 +438,16 @@ var MATCH;
 var StreamSearch;
 var ReadableStreamSearch;
 var EOQ;
+var QueueableStreamSearch;
 var init_search = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/search.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     init_utils();
     __name2(coerce, "coerce");
     __name2(jsmemcmp, "jsmemcmp");
     __name2(createOccurenceTable, "createOccurenceTable");
     MATCH = Symbol("Match");
-    StreamSearch = class {
-      static {
-        __name(this, "StreamSearch");
-      }
-      static {
-        __name2(this, "StreamSearch");
-      }
+    StreamSearch = /* @__PURE__ */ __name(class {
       constructor(needle) {
         this._lookbehind = new Uint8Array();
         if (typeof needle === "string") {
@@ -559,14 +556,9 @@ var init_search = __esm({
       _memcmp(data, pos, len) {
         return jsmemcmp(this._charAt.bind(this, data), pos, this._needle, 0, len);
       }
-    };
-    ReadableStreamSearch = class {
-      static {
-        __name(this, "ReadableStreamSearch");
-      }
-      static {
-        __name2(this, "ReadableStreamSearch");
-      }
+    }, "StreamSearch");
+    __name2(StreamSearch, "StreamSearch");
+    ReadableStreamSearch = /* @__PURE__ */ __name(class {
       constructor(needle, _readableStream) {
         this._readableStream = _readableStream;
         this._search = new StreamSearch(needle);
@@ -589,14 +581,59 @@ var init_search = __esm({
           reader.releaseLock();
         }
       }
-    };
+    }, "ReadableStreamSearch");
+    __name2(ReadableStreamSearch, "ReadableStreamSearch");
     EOQ = Symbol("End of Queue");
+    QueueableStreamSearch = /* @__PURE__ */ __name(class {
+      constructor(needle) {
+        this._chunksQueue = [];
+        this._closed = false;
+        this._search = new StreamSearch(needle);
+      }
+      push(...chunks) {
+        if (this._closed) {
+          throw new Error("cannot call push after close");
+        }
+        this._chunksQueue.push(...chunks);
+        if (this._notify) {
+          this._notify();
+        }
+      }
+      close() {
+        if (this._closed) {
+          throw new Error("close was already called");
+        }
+        this._closed = true;
+        this._chunksQueue.push(EOQ);
+        if (this._notify) {
+          this._notify();
+        }
+      }
+      async *[Symbol.asyncIterator]() {
+        while (true) {
+          let chunk;
+          while (!(chunk = this._chunksQueue.shift())) {
+            await new Promise((resolve) => this._notify = resolve);
+            this._notify = void 0;
+          }
+          if (chunk === EOQ) {
+            break;
+          }
+          yield* this._search.feed(chunk);
+        }
+        const tail = this._search.end();
+        if (tail.length) {
+          yield tail;
+        }
+      }
+    }, "QueueableStreamSearch");
+    __name2(QueueableStreamSearch, "QueueableStreamSearch");
   }
 });
 var src_exports = {};
 __export(src_exports, {
-  iterateMultipart: /* @__PURE__ */ __name(() => iterateMultipart, "iterateMultipart"),
-  streamMultipart: /* @__PURE__ */ __name(() => streamMultipart, "streamMultipart")
+  iterateMultipart: () => iterateMultipart,
+  streamMultipart: () => streamMultipart
 });
 function parseContentDisposition(header) {
   const parts = header.split(";").map((part) => part.trim());
@@ -818,7 +855,7 @@ var dash;
 var CRLF;
 var init_src = __esm({
   "../node_modules/@web3-storage/multipart-parser/esm/src/index.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     init_search();
     init_utils();
     mergeArrays2 = Function.prototype.apply.bind(mergeArrays, void 0);
@@ -834,7 +871,7 @@ var init_src = __esm({
 var require_formData = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/formData.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var multipartParser = (init_src(), __toCommonJS(src_exports));
     function composeUploadHandlers(...handlers) {
@@ -859,7 +896,8 @@ var require_formData = __commonJS({
       let formData = new FormData();
       let parts = multipartParser.streamMultipart(request.body, boundary);
       for await (let part of parts) {
-        if (part.done) break;
+        if (part.done)
+          break;
         if (typeof part.filename === "string") {
           part.filename = part.filename.split(/[/\\]/).pop();
         }
@@ -879,7 +917,7 @@ var require_formData = __commonJS({
 var require_router_cjs = __commonJS({
   "../node_modules/@remix-run/router/dist/router.cjs.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     function _extends2() {
       _extends2 = Object.assign ? Object.assign.bind() : function(target) {
@@ -1104,7 +1142,8 @@ var require_router_cjs = __commonJS({
     __name2(invariant2, "invariant");
     function warning(cond, message) {
       if (!cond) {
-        if (typeof console !== "undefined") console.warn(message);
+        if (typeof console !== "undefined")
+          console.warn(message);
         try {
           throw new Error(message);
         } catch (e) {
@@ -1153,8 +1192,10 @@ var require_router_cjs = __commonJS({
         search = "",
         hash = ""
       } = _ref;
-      if (search && search !== "?") pathname += search.charAt(0) === "?" ? search : "?" + search;
-      if (hash && hash !== "#") pathname += hash.charAt(0) === "#" ? hash : "#" + hash;
+      if (search && search !== "?")
+        pathname += search.charAt(0) === "?" ? search : "?" + search;
+      if (hash && hash !== "#")
+        pathname += hash.charAt(0) === "#" ? hash : "#" + hash;
       return pathname;
     }
     __name(createPath2, "createPath2");
@@ -1224,7 +1265,8 @@ var require_router_cjs = __commonJS({
       function push(to, state) {
         action = Action.Push;
         let location = createLocation(history.location, to, state);
-        if (validateLocation) validateLocation(location, to);
+        if (validateLocation)
+          validateLocation(location, to);
         index = getIndex() + 1;
         let historyState = getHistoryState(location, index);
         let url = history.createHref(location);
@@ -1249,7 +1291,8 @@ var require_router_cjs = __commonJS({
       function replace2(to, state) {
         action = Action.Replace;
         let location = createLocation(history.location, to, state);
-        if (validateLocation) validateLocation(location, to);
+        if (validateLocation)
+          validateLocation(location, to);
         index = getIndex();
         let historyState = getHistoryState(location, index);
         let url = history.createHref(location);
@@ -1457,7 +1500,8 @@ var require_router_cjs = __commonJS({
     __name2(flattenRoutes, "flattenRoutes");
     function explodeOptionalSegments(path) {
       let segments = path.split("/");
-      if (segments.length === 0) return [];
+      if (segments.length === 0)
+        return [];
       let [first, ...rest] = segments;
       let isOptional = first.endsWith("?");
       let required = first.replace(/\?$/, "");
@@ -1601,7 +1645,8 @@ var require_router_cjs = __commonJS({
       }
       let [matcher, compiledParams] = compilePath(pattern.path, pattern.caseSensitive, pattern.end);
       let match2 = pathname.match(matcher);
-      if (!match2) return null;
+      if (!match2)
+        return null;
       let matchedPathname = match2[0];
       let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
       let captureGroups = match2.slice(1);
@@ -1656,7 +1701,8 @@ var require_router_cjs = __commonJS({
         regexpSource += "\\/*$";
       } else if (path !== "" && path !== "/") {
         regexpSource += "(?:(?=\\/|$))";
-      } else ;
+      } else
+        ;
       let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
       return [matcher, params];
     }
@@ -1673,7 +1719,8 @@ var require_router_cjs = __commonJS({
     __name(decodePath, "decodePath");
     __name2(decodePath, "decodePath");
     function stripBasename(pathname, basename2) {
-      if (basename2 === "/") return pathname;
+      if (basename2 === "/")
+        return pathname;
       if (!pathname.toLowerCase().startsWith(basename2.toLowerCase())) {
         return null;
       }
@@ -1709,7 +1756,8 @@ var require_router_cjs = __commonJS({
       let relativeSegments = relativePath.split("/");
       relativeSegments.forEach((segment) => {
         if (segment === "..") {
-          if (segments.length > 1) segments.pop();
+          if (segments.length > 1)
+            segments.pop();
         } else if (segment !== ".") {
           segments.push(segment);
         }
@@ -1801,19 +1849,14 @@ var require_router_cjs = __commonJS({
         headers
       }));
     }, "json3"), "json");
-    var DataWithResponseInit = class {
-      static {
-        __name(this, "DataWithResponseInit");
-      }
-      static {
-        __name2(this, "DataWithResponseInit");
-      }
+    var DataWithResponseInit = /* @__PURE__ */ __name(class {
       constructor(data2, init) {
         this.type = "DataWithResponseInit";
         this.data = data2;
         this.init = init || null;
       }
-    };
+    }, "DataWithResponseInit");
+    __name2(DataWithResponseInit, "DataWithResponseInit");
     function data(data2, init) {
       return new DataWithResponseInit(data2, typeof init === "number" ? {
         status: init
@@ -1821,21 +1864,10 @@ var require_router_cjs = __commonJS({
     }
     __name(data, "data");
     __name2(data, "data");
-    var AbortedDeferredError = class extends Error {
-      static {
-        __name(this, "AbortedDeferredError");
-      }
-      static {
-        __name2(this, "AbortedDeferredError");
-      }
-    };
-    var DeferredData = class {
-      static {
-        __name(this, "DeferredData");
-      }
-      static {
-        __name2(this, "DeferredData");
-      }
+    var AbortedDeferredError = /* @__PURE__ */ __name(class extends Error {
+    }, "AbortedDeferredError");
+    __name2(AbortedDeferredError, "AbortedDeferredError");
+    var DeferredData = /* @__PURE__ */ __name(class {
       constructor(data2, responseInit) {
         this.pendingKeysSet = /* @__PURE__ */ new Set();
         this.subscribers = /* @__PURE__ */ new Set();
@@ -1868,7 +1900,7 @@ var require_router_cjs = __commonJS({
         promise.catch(() => {
         });
         Object.defineProperty(promise, "_tracked", {
-          get: /* @__PURE__ */ __name2(() => true, "get")
+          get: () => true
         });
         return promise;
       }
@@ -1876,7 +1908,7 @@ var require_router_cjs = __commonJS({
         if (this.controller.signal.aborted && error instanceof AbortedDeferredError) {
           this.unlistenAbortSignal();
           Object.defineProperty(promise, "_error", {
-            get: /* @__PURE__ */ __name2(() => error, "get")
+            get: () => error
           });
           return Promise.reject(error);
         }
@@ -1887,20 +1919,20 @@ var require_router_cjs = __commonJS({
         if (error === void 0 && data2 === void 0) {
           let undefinedError = new Error('Deferred data for key "' + key + '" resolved/rejected with `undefined`, you must resolve/reject with a value or `null`.');
           Object.defineProperty(promise, "_error", {
-            get: /* @__PURE__ */ __name2(() => undefinedError, "get")
+            get: () => undefinedError
           });
           this.emit(false, key);
           return Promise.reject(undefinedError);
         }
         if (data2 === void 0) {
           Object.defineProperty(promise, "_error", {
-            get: /* @__PURE__ */ __name2(() => error, "get")
+            get: () => error
           });
           this.emit(false, key);
           return Promise.reject(error);
         }
         Object.defineProperty(promise, "_data", {
-          get: /* @__PURE__ */ __name2(() => data2, "get")
+          get: () => data2
         });
         this.emit(false, key);
         return data2;
@@ -1948,7 +1980,8 @@ var require_router_cjs = __commonJS({
       get pendingKeys() {
         return Array.from(this.pendingKeysSet);
       }
-    };
+    }, "DeferredData");
+    __name2(DeferredData, "DeferredData");
     function isTrackedPromise(value) {
       return value instanceof Promise && value._tracked === true;
     }
@@ -2002,13 +2035,7 @@ var require_router_cjs = __commonJS({
       response.headers.set("X-Remix-Replace", "true");
       return response;
     }, "replace");
-    var ErrorResponseImpl = class {
-      static {
-        __name(this, "ErrorResponseImpl");
-      }
-      static {
-        __name2(this, "ErrorResponseImpl");
-      }
+    var ErrorResponseImpl = /* @__PURE__ */ __name(class {
       constructor(status, statusText, data2, internal) {
         if (internal === void 0) {
           internal = false;
@@ -2023,7 +2050,8 @@ var require_router_cjs = __commonJS({
           this.data = data2;
         }
       }
-    };
+    }, "ErrorResponseImpl");
+    __name2(ErrorResponseImpl, "ErrorResponseImpl");
     function isRouteErrorResponse3(error) {
       return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
     }
@@ -2337,8 +2365,10 @@ var require_router_cjs = __commonJS({
           dataRoutes = inFlightDataRoutes;
           inFlightDataRoutes = void 0;
         }
-        if (isUninterruptedRevalidation) ;
-        else if (pendingAction === Action.Pop) ;
+        if (isUninterruptedRevalidation)
+          ;
+        else if (pendingAction === Action.Pop)
+          ;
         else if (pendingAction === Action.Push) {
           init.history.push(location, location.state);
         } else if (pendingAction === Action.Replace) {
@@ -2414,7 +2444,8 @@ var require_router_cjs = __commonJS({
         let historyAction = Action.Push;
         if (userReplace === true) {
           historyAction = Action.Replace;
-        } else if (userReplace === false) ;
+        } else if (userReplace === false)
+          ;
         else if (submission != null && isMutationMethod(submission.formMethod) && submission.formAction === state.location.pathname + state.location.search) {
           historyAction = Action.Replace;
         }
@@ -3587,10 +3618,11 @@ var require_router_cjs = __commonJS({
               signal,
               path: pathname,
               matches: partialMatches,
-              patch: /* @__PURE__ */ __name2((routeId, children) => {
-                if (signal.aborted) return;
+              patch: (routeId, children) => {
+                if (signal.aborted)
+                  return;
                 patchRoutesImpl(routeId, children, routesToUse, localManifest, mapRouteProperties);
-              }, "patch")
+              }
             });
           } catch (e) {
             return {
@@ -3668,8 +3700,8 @@ var require_router_cjs = __commonJS({
         revalidate,
         // Passthrough to history-aware createHref used by useHref so we get proper
         // hash-aware URLs in DOM paths
-        createHref: /* @__PURE__ */ __name2((to) => init.history.createHref(to), "createHref"),
-        encodeLocation: /* @__PURE__ */ __name2((to) => init.history.encodeLocation(to), "encodeLocation"),
+        createHref: (to) => init.history.createHref(to),
+        encodeLocation: (to) => init.history.encodeLocation(to),
         getFetcher,
         deleteFetcher: deleteFetcherAndUpdateState,
         dispose,
@@ -5351,7 +5383,7 @@ var require_router_cjs = __commonJS({
 var require_mode = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/mode.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var ServerMode = /* @__PURE__ */ function(ServerMode2) {
       ServerMode2["Development"] = "development";
@@ -5371,7 +5403,7 @@ var require_mode = __commonJS({
 var require_errors = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/errors.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var mode2 = require_mode();
@@ -5404,7 +5436,8 @@ var require_errors = __commonJS({
     __name(serializeError, "serializeError");
     __name2(serializeError, "serializeError");
     function serializeErrors(errors, serverMode) {
-      if (!errors) return null;
+      if (!errors)
+        return null;
       let entries = Object.entries(errors);
       let serialized = {};
       for (let [key, val] of entries) {
@@ -5444,7 +5477,7 @@ var require_errors = __commonJS({
 var require_responses = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/responses.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var errors = require_errors();
@@ -5553,7 +5586,7 @@ var require_responses = __commonJS({
 var require_utils = __commonJS({
   "../node_modules/turbo-stream/dist/utils.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createLineSplittingTransform = exports.Deferred = exports.TYPE_PREVIOUS_RESOLVED = exports.TYPE_URL = exports.TYPE_SYMBOL = exports.TYPE_SET = exports.TYPE_REGEXP = exports.TYPE_PROMISE = exports.TYPE_NULL_OBJECT = exports.TYPE_MAP = exports.TYPE_ERROR = exports.TYPE_DATE = exports.TYPE_BIGINT = exports.UNDEFINED = exports.POSITIVE_INFINITY = exports.NULL = exports.NEGATIVE_ZERO = exports.NEGATIVE_INFINITY = exports.NAN = exports.HOLE = void 0;
     exports.HOLE = -1;
@@ -5574,13 +5607,7 @@ var require_utils = __commonJS({
     exports.TYPE_SYMBOL = "Y";
     exports.TYPE_URL = "U";
     exports.TYPE_PREVIOUS_RESOLVED = "Z";
-    var Deferred = class {
-      static {
-        __name(this, "Deferred");
-      }
-      static {
-        __name2(this, "Deferred");
-      }
+    var Deferred = /* @__PURE__ */ __name(class {
       promise;
       resolve;
       reject;
@@ -5590,7 +5617,8 @@ var require_utils = __commonJS({
           this.reject = reject;
         });
       }
-    };
+    }, "Deferred");
+    __name2(Deferred, "Deferred");
     exports.Deferred = Deferred;
     function createLineSplittingTransform() {
       const decoder = new TextDecoder();
@@ -5619,7 +5647,7 @@ var require_utils = __commonJS({
 var require_flatten = __commonJS({
   "../node_modules/turbo-stream/dist/flatten.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.flatten = void 0;
     var utils_js_1 = require_utils();
@@ -5802,7 +5830,7 @@ var require_flatten = __commonJS({
 var require_unflatten = __commonJS({
   "../node_modules/turbo-stream/dist/unflatten.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unflatten = void 0;
     var utils_js_1 = require_utils();
@@ -6043,7 +6071,7 @@ var require_unflatten = __commonJS({
 var require_turbo_stream = __commonJS({
   "../node_modules/turbo-stream/dist/turbo-stream.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.encode = exports.decode = void 0;
     var flatten_js_1 = require_flatten();
@@ -6252,7 +6280,7 @@ var require_turbo_stream = __commonJS({
 var require_set_cookie = __commonJS({
   "../node_modules/set-cookie-parser/lib/set-cookie.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     var defaultParseOptions = {
       decodeValues: true,
       map: false,
@@ -6435,7 +6463,7 @@ var require_set_cookie = __commonJS({
 var require_headers = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/headers.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var setCookieParser = require_set_cookie();
     function getDocumentHeaders(build, context) {
@@ -6515,7 +6543,7 @@ var require_headers = __commonJS({
 var require_single_fetch = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/single-fetch.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var turboStream = require_turbo_stream();
@@ -6746,8 +6774,10 @@ var require_single_fetch = __commonJS({
           }
         }],
         postPlugins: [(value) => {
-          if (!value) return;
-          if (typeof value !== "object") return;
+          if (!value)
+            return;
+          if (typeof value !== "object")
+            return;
           return ["SingleFetchClassInstance", Object.fromEntries(Object.entries(value))];
         }, () => ["SingleFetchFallback"]]
       });
@@ -6772,7 +6802,7 @@ var require_single_fetch = __commonJS({
 var require_entry = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/entry.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     function createEntryRouteModules(manifest) {
       return Object.keys(manifest).reduce((memo, routeId) => {
@@ -6788,7 +6818,7 @@ var require_entry = __commonJS({
 var require_invariant = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/invariant.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     function invariant2(value, message) {
       if (value === false || value === null || typeof value === "undefined") {
@@ -6804,12 +6834,13 @@ var require_invariant = __commonJS({
 var require_routeMatching = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/routeMatching.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     function matchServerRoutes(routes3, pathname, basename2) {
       let matches = router.matchRoutes(routes3, pathname, basename2);
-      if (!matches) return null;
+      if (!matches)
+        return null;
       return matches.map((match2) => ({
         params: match2.params,
         pathname: match2.pathname,
@@ -6824,7 +6855,7 @@ var require_routeMatching = __commonJS({
 var require_data = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/data.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var responses = require_responses();
     async function callRouteAction({
@@ -6944,7 +6975,7 @@ var require_data = __commonJS({
 var require_routes = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/routes.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var data = require_data();
     function groupRoutesByParentId2(manifest) {
@@ -7016,7 +7047,7 @@ var require_routes = __commonJS({
 var require_markup = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/markup.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var ESCAPE_LOOKUP2 = {
       "&": "\\u0026",
@@ -7037,7 +7068,7 @@ var require_markup = __commonJS({
 var require_serverHandoff = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/serverHandoff.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var markup = require_markup();
     function createServerHandoffString(serverHandoff) {
@@ -7051,11 +7082,12 @@ var require_serverHandoff = __commonJS({
 var require_dev = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/dev.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     async function broadcastDevReady(build, origin) {
       origin ??= process.env.REMIX_DEV_ORIGIN;
-      if (!origin) throw Error("Dev server origin not set");
+      if (!origin)
+        throw Error("Dev server origin not set");
       let url = new URL(origin);
       url.pathname = "ping";
       let response = await fetch(url.href, {
@@ -7102,7 +7134,7 @@ var require_dev = __commonJS({
 var require_deprecations = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/deprecations.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     function resourceRouteJsonWarning(type, routeId) {
       return `\u26A0\uFE0F REMIX FUTURE CHANGE: Externally-accessed resource routes will no longer be able to return raw JavaScript objects or \`null\` in React Router v7 when Single Fetch becomes the default. You can prepare for this change at your convenience by wrapping the data returned from your \`${type}\` function in the \`${routeId}\` route with \`json()\`.  For instructions on making this change, see https://remix.run/docs/en/v2.13.1/guides/single-fetch#resource-routes`;
@@ -7115,7 +7147,7 @@ var require_deprecations = __commonJS({
 var require_server = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/server.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var router = require_router_cjs();
     var entry2 = require_entry();
@@ -7417,7 +7449,7 @@ var require_server = __commonJS({
         } : null,
         future: build.future,
         isSpaMode: build.isSpaMode,
-        serializeError: /* @__PURE__ */ __name2((err) => errors.serializeError(err, serverMode), "serializeError")
+        serializeError: (err) => errors.serializeError(err, serverMode)
       };
       let handleDocumentRequestFunction = build.entry.module.default;
       try {
@@ -7570,7 +7602,7 @@ ${String(error)}`;
 var require_sessions = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/sessions.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var warnings = require_warnings();
@@ -7592,7 +7624,8 @@ var require_sessions = __commonJS({
           return map.has(name) || map.has(flash(name));
         },
         get(name) {
-          if (map.has(name)) return map.get(name);
+          if (map.has(name))
+            return map.get(name);
           let flashName = flash(name);
           if (map.has(flashName)) {
             let value = map.get(flashName);
@@ -7667,7 +7700,7 @@ var require_sessions = __commonJS({
 var require_cookieStorage = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/sessions/cookieStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var sessions = require_sessions();
@@ -7702,7 +7735,7 @@ var require_cookieStorage = __commonJS({
 var require_memoryStorage = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/sessions/memoryStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var createMemorySessionStorageFactory = /* @__PURE__ */ __name2((createSessionStorage) => ({
       cookie
@@ -7727,7 +7760,8 @@ var require_memoryStorage = __commonJS({
             if (!expires || expires > /* @__PURE__ */ new Date()) {
               return data;
             }
-            if (expires) map.delete(id);
+            if (expires)
+              map.delete(id);
           }
           return null;
         },
@@ -7748,28 +7782,23 @@ var require_memoryStorage = __commonJS({
 var require_errors2 = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/upload/errors.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MaxPartSizeExceededError = class extends Error {
-      static {
-        __name(this, "MaxPartSizeExceededError");
-      }
-      static {
-        __name2(this, "MaxPartSizeExceededError");
-      }
+    var MaxPartSizeExceededError = /* @__PURE__ */ __name(class extends Error {
       constructor(field, maxBytes) {
         super(`Field "${field}" exceeded upload size of ${maxBytes} bytes.`);
         this.field = field;
         this.maxBytes = maxBytes;
       }
-    };
+    }, "MaxPartSizeExceededError");
+    __name2(MaxPartSizeExceededError, "MaxPartSizeExceededError");
     exports.MaxPartSizeExceededError = MaxPartSizeExceededError;
   }
 });
 var require_memoryUploadHandler = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/upload/memoryUploadHandler.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var errors = require_errors2();
     function createMemoryUploadHandler({
@@ -7816,7 +7845,7 @@ var require_memoryUploadHandler = __commonJS({
 var require_dist = __commonJS({
   "../node_modules/@remix-run/server-runtime/dist/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var cookies = require_cookies();
     var formData = require_formData();
@@ -7856,7 +7885,7 @@ var require_dist = __commonJS({
 var require_crypto = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/crypto.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var encoder = new TextEncoder();
     var sign = /* @__PURE__ */ __name2(async (value, secret) => {
@@ -7901,7 +7930,7 @@ var require_crypto = __commonJS({
 var require_implementations = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/implementations.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var serverRuntime = require_dist();
     var crypto2 = require_crypto();
@@ -7921,7 +7950,7 @@ var require_implementations = __commonJS({
 var require_workersKVStorage = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/sessions/workersKVStorage.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var implementations = require_implementations();
     function createWorkersKVSessionStorage({
@@ -7969,7 +7998,7 @@ var require_workersKVStorage = __commonJS({
 var require_dist2 = __commonJS({
   "../node_modules/@remix-run/cloudflare/dist/index.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var workersKVStorage = require_workersKVStorage();
     var implementations = require_implementations();
@@ -7981,99 +8010,99 @@ var require_dist2 = __commonJS({
     exports.createSessionStorage = implementations.createSessionStorage;
     Object.defineProperty(exports, "MaxPartSizeExceededError", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.MaxPartSizeExceededError;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "broadcastDevReady", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.broadcastDevReady;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "createRequestHandler", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.createRequestHandler;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "createSession", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.createSession;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "data", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.data;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "defer", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.defer;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "isCookie", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.isCookie;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "isSession", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.isSession;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "json", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.json;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "logDevReady", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.logDevReady;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "redirect", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.redirect;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "redirectDocument", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.redirectDocument;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "replace", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.replace;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "unstable_composeUploadHandlers", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.unstable_composeUploadHandlers;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "unstable_createMemoryUploadHandler", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.unstable_createMemoryUploadHandler;
-      }, "get")
+      }
     });
     Object.defineProperty(exports, "unstable_parseMultipartFormData", {
       enumerable: true,
-      get: /* @__PURE__ */ __name2(function() {
+      get: function() {
         return serverRuntime.unstable_parseMultipartFormData;
-      }, "get")
+      }
     });
   }
 });
@@ -8155,7 +8184,7 @@ __name(createPagesFunctionHandler, "createPagesFunctionHandler");
 var import_cloudflare;
 var init_worker = __esm({
   "../node_modules/@remix-run/cloudflare-pages/dist/esm/worker.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     import_cloudflare = __toESM(require_dist2());
     __name2(createRequestHandler, "createRequestHandler");
     __name2(createPagesFunctionHandler, "createPagesFunctionHandler");
@@ -8163,14 +8192,14 @@ var init_worker = __esm({
 });
 var init_esm = __esm({
   "../node_modules/@remix-run/cloudflare-pages/dist/esm/index.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     init_worker();
   }
 });
 var require_react_development = __commonJS({
   "../node_modules/react/cjs/react.development.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (true) {
       (function() {
         "use strict";
@@ -8334,9 +8363,9 @@ var require_react_development = __commonJS({
            * @protected
            * @final
            */
-          isMounted: /* @__PURE__ */ __name2(function(publicInstance) {
+          isMounted: function(publicInstance) {
             return false;
-          }, "isMounted"),
+          },
           /**
            * Forces an update. This should only be invoked when it is known with
            * certainty that we are **not** in a DOM transaction.
@@ -8352,9 +8381,9 @@ var require_react_development = __commonJS({
            * @param {?string} callerName name of the calling function in the public API.
            * @internal
            */
-          enqueueForceUpdate: /* @__PURE__ */ __name2(function(publicInstance, callback, callerName) {
+          enqueueForceUpdate: function(publicInstance, callback, callerName) {
             warnNoop(publicInstance, "forceUpdate");
-          }, "enqueueForceUpdate"),
+          },
           /**
            * Replaces all of the state. Always use this or `setState` to mutate state.
            * You should treat `this.state` as immutable.
@@ -8368,9 +8397,9 @@ var require_react_development = __commonJS({
            * @param {?string} callerName name of the calling function in the public API.
            * @internal
            */
-          enqueueReplaceState: /* @__PURE__ */ __name2(function(publicInstance, completeState, callback, callerName) {
+          enqueueReplaceState: function(publicInstance, completeState, callback, callerName) {
             warnNoop(publicInstance, "replaceState");
-          }, "enqueueReplaceState"),
+          },
           /**
            * Sets a subset of the state. This only exists because _pendingState is
            * internal. This provides a merging strategy that is not available to deep
@@ -8383,9 +8412,9 @@ var require_react_development = __commonJS({
            * @param {?string} Name of the calling function in the public API.
            * @internal
            */
-          enqueueSetState: /* @__PURE__ */ __name2(function(publicInstance, partialState, callback, callerName) {
+          enqueueSetState: function(publicInstance, partialState, callback, callerName) {
             warnNoop(publicInstance, "setState");
-          }, "enqueueSetState")
+          }
         };
         var assign = Object.assign;
         var emptyObject = {};
@@ -8417,10 +8446,10 @@ var require_react_development = __commonJS({
           };
           var defineDeprecationWarning = /* @__PURE__ */ __name2(function(methodName, info) {
             Object.defineProperty(Component2.prototype, methodName, {
-              get: /* @__PURE__ */ __name2(function() {
+              get: function() {
                 warn("%s(...) is deprecated in plain JavaScript React classes. %s", info[0], info[1]);
                 return void 0;
-              }, "get")
+              }
             });
           }, "defineDeprecationWarning");
           for (var fnName in deprecatedAPIs) {
@@ -9032,60 +9061,60 @@ var require_react_development = __commonJS({
             };
             Object.defineProperties(Consumer, {
               Provider: {
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   if (!hasWarnedAboutUsingConsumerProvider) {
                     hasWarnedAboutUsingConsumerProvider = true;
                     error("Rendering <Context.Consumer.Provider> is not supported and will be removed in a future major release. Did you mean to render <Context.Provider> instead?");
                   }
                   return context.Provider;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(_Provider) {
+                },
+                set: function(_Provider) {
                   context.Provider = _Provider;
-                }, "set")
+                }
               },
               _currentValue: {
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return context._currentValue;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(_currentValue) {
+                },
+                set: function(_currentValue) {
                   context._currentValue = _currentValue;
-                }, "set")
+                }
               },
               _currentValue2: {
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return context._currentValue2;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(_currentValue2) {
+                },
+                set: function(_currentValue2) {
                   context._currentValue2 = _currentValue2;
-                }, "set")
+                }
               },
               _threadCount: {
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return context._threadCount;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(_threadCount) {
+                },
+                set: function(_threadCount) {
                   context._threadCount = _threadCount;
-                }, "set")
+                }
               },
               Consumer: {
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   if (!hasWarnedAboutUsingNestedContextConsumers) {
                     hasWarnedAboutUsingNestedContextConsumers = true;
                     error("Rendering <Context.Consumer.Consumer> is not supported and will be removed in a future major release. Did you mean to render <Context.Consumer> instead?");
                   }
                   return context.Consumer;
-                }, "get")
+                }
               },
               displayName: {
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return context.displayName;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(displayName) {
+                },
+                set: function(displayName) {
                   if (!hasWarnedAboutDisplayNameOnConsumer) {
                     warn("Setting `displayName` on Context.Consumer has no effect. You should set it directly on the context with Context.displayName = '%s'.", displayName);
                     hasWarnedAboutDisplayNameOnConsumer = true;
                   }
-                }, "set")
+                }
               }
             });
             context.Consumer = Consumer;
@@ -9161,29 +9190,29 @@ var require_react_development = __commonJS({
             Object.defineProperties(lazyType, {
               defaultProps: {
                 configurable: true,
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return defaultProps;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(newDefaultProps) {
+                },
+                set: function(newDefaultProps) {
                   error("React.lazy(...): It is not supported to assign `defaultProps` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
                   defaultProps = newDefaultProps;
                   Object.defineProperty(lazyType, "defaultProps", {
                     enumerable: true
                   });
-                }, "set")
+                }
               },
               propTypes: {
                 configurable: true,
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return propTypes;
-                }, "get"),
-                set: /* @__PURE__ */ __name2(function(newPropTypes) {
+                },
+                set: function(newPropTypes) {
                   error("React.lazy(...): It is not supported to assign `propTypes` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
                   propTypes = newPropTypes;
                   Object.defineProperty(lazyType, "propTypes", {
                     enumerable: true
                   });
-                }, "set")
+                }
               }
             });
           }
@@ -9217,15 +9246,15 @@ var require_react_development = __commonJS({
             Object.defineProperty(elementType, "displayName", {
               enumerable: false,
               configurable: true,
-              get: /* @__PURE__ */ __name2(function() {
+              get: function() {
                 return ownName;
-              }, "get"),
-              set: /* @__PURE__ */ __name2(function(name) {
+              },
+              set: function(name) {
                 ownName = name;
                 if (!render.name && !render.displayName) {
                   render.displayName = name;
                 }
-              }, "set")
+              }
             });
           }
           return elementType;
@@ -9272,15 +9301,15 @@ var require_react_development = __commonJS({
             Object.defineProperty(elementType, "displayName", {
               enumerable: false,
               configurable: true,
-              get: /* @__PURE__ */ __name2(function() {
+              get: function() {
                 return ownName;
-              }, "get"),
-              set: /* @__PURE__ */ __name2(function(name) {
+              },
+              set: function(name) {
                 ownName = name;
                 if (!type.name && !type.displayName) {
                   type.displayName = name;
                 }
-              }, "set")
+              }
             });
           }
           return elementType;
@@ -9533,9 +9562,9 @@ var require_react_development = __commonJS({
                 throw Error();
               }, "Fake");
               Object.defineProperty(Fake.prototype, "props", {
-                set: /* @__PURE__ */ __name2(function() {
+                set: function() {
                   throw Error();
-                }, "set")
+                }
               });
               if (typeof Reflect === "object" && Reflect.construct) {
                 try {
@@ -9934,13 +9963,13 @@ var require_react_development = __commonJS({
             }
             Object.defineProperty(validatedFactory, "type", {
               enumerable: false,
-              get: /* @__PURE__ */ __name2(function() {
+              get: function() {
                 warn("Factory.type is deprecated. Access the class directly before passing it to createFactory.");
                 Object.defineProperty(this, "type", {
                   value: type
                 });
                 return type;
-              }, "get")
+              }
             });
           }
           return validatedFactory;
@@ -10040,7 +10069,7 @@ var require_react_development = __commonJS({
               var thenableResult = result;
               var wasAwaited = false;
               var thenable = {
-                then: /* @__PURE__ */ __name2(function(resolve, reject) {
+                then: function(resolve, reject) {
                   wasAwaited = true;
                   thenableResult.then(function(returnValue2) {
                     popActScope(prevActScopeDepth);
@@ -10053,7 +10082,7 @@ var require_react_development = __commonJS({
                     popActScope(prevActScopeDepth);
                     reject(error2);
                   });
-                }, "then")
+                }
               };
               {
                 if (!didWarnNoAwaitAct && typeof Promise !== "undefined") {
@@ -10077,21 +10106,21 @@ var require_react_development = __commonJS({
                   ReactCurrentActQueue.current = null;
                 }
                 var _thenable = {
-                  then: /* @__PURE__ */ __name2(function(resolve, reject) {
+                  then: function(resolve, reject) {
                     if (ReactCurrentActQueue.current === null) {
                       ReactCurrentActQueue.current = [];
                       recursivelyFlushAsyncActWork(returnValue, resolve, reject);
                     } else {
                       resolve(returnValue);
                     }
-                  }, "then")
+                  }
                 };
                 return _thenable;
               } else {
                 var _thenable2 = {
-                  then: /* @__PURE__ */ __name2(function(resolve, reject) {
+                  then: function(resolve, reject) {
                     resolve(returnValue);
-                  }, "then")
+                  }
                 };
                 return _thenable2;
               }
@@ -10215,7 +10244,7 @@ var require_react_development = __commonJS({
 var require_react = __commonJS({
   "../node_modules/react/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (false) {
       module.exports = null;
     } else {
@@ -10226,7 +10255,7 @@ var require_react = __commonJS({
 var require_react_jsx_runtime_development = __commonJS({
   "../node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (true) {
       (function() {
         "use strict";
@@ -10527,9 +10556,9 @@ var require_react_jsx_runtime_development = __commonJS({
                 throw Error();
               }, "Fake");
               Object.defineProperty(Fake.prototype, "props", {
-                set: /* @__PURE__ */ __name2(function() {
+                set: function() {
                   throw Error();
-                }, "set")
+                }
               });
               if (typeof Reflect === "object" && Reflect.construct) {
                 try {
@@ -11198,7 +11227,7 @@ var require_react_jsx_runtime_development = __commonJS({
 var require_jsx_runtime = __commonJS({
   "../node_modules/react/jsx-runtime.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (false) {
       module.exports = null;
     } else {
@@ -11209,7 +11238,7 @@ var require_jsx_runtime = __commonJS({
 var require_scheduler_development = __commonJS({
   "../node_modules/scheduler/cjs/scheduler.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (true) {
       (function() {
         "use strict";
@@ -11710,7 +11739,7 @@ var require_scheduler_development = __commonJS({
 var require_scheduler = __commonJS({
   "../node_modules/scheduler/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (false) {
       module.exports = null;
     } else {
@@ -11721,7 +11750,7 @@ var require_scheduler = __commonJS({
 var require_react_dom_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (true) {
       (function() {
         "use strict";
@@ -11984,7 +12013,6 @@ var require_react_dom_development = __commonJS({
           }
           switch (typeof value) {
             case "function":
-            // $FlowIssue symbol is perfectly valid here
             case "symbol":
               return true;
             case "boolean": {
@@ -12739,9 +12767,9 @@ var require_react_dom_development = __commonJS({
                 throw Error();
               }, "Fake");
               Object.defineProperty(Fake.prototype, "props", {
-                set: /* @__PURE__ */ __name2(function() {
+                set: function() {
                   throw Error();
-                }, "set")
+                }
               });
               if (typeof Reflect === "object" && Reflect.construct) {
                 try {
@@ -13049,7 +13077,6 @@ var require_react_dom_development = __commonJS({
               return "SuspenseList";
             case TracingMarkerComponent:
               return "TracingMarker";
-            // The display name for this tags come from the user-provided type:
             case ClassComponent:
             case FunctionComponent:
             case IncompleteClassComponent:
@@ -13215,34 +13242,34 @@ var require_react_dom_development = __commonJS({
           var get2 = descriptor.get, set2 = descriptor.set;
           Object.defineProperty(node, valueField, {
             configurable: true,
-            get: /* @__PURE__ */ __name2(function() {
+            get: function() {
               return get2.call(this);
-            }, "get"),
-            set: /* @__PURE__ */ __name2(function(value) {
+            },
+            set: function(value) {
               {
                 checkFormFieldValueStringCoercion(value);
               }
               currentValue = "" + value;
               set2.call(this, value);
-            }, "set")
+            }
           });
           Object.defineProperty(node, valueField, {
             enumerable: descriptor.enumerable
           });
           var tracker = {
-            getValue: /* @__PURE__ */ __name2(function() {
+            getValue: function() {
               return currentValue;
-            }, "getValue"),
-            setValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            setValue: function(value) {
               {
                 checkFormFieldValueStringCoercion(value);
               }
               currentValue = "" + value;
-            }, "setValue"),
-            stopTracking: /* @__PURE__ */ __name2(function() {
+            },
+            stopTracking: function() {
               detachTracker(node);
               delete node[valueField];
-            }, "stopTracking")
+            }
           };
           return tracker;
         }
@@ -14155,10 +14182,6 @@ var require_react_dom_development = __commonJS({
             return typeof props.is === "string";
           }
           switch (tagName) {
-            // These are reserved SVG and MathML elements.
-            // We don't mind this list too much because we expect it to never grow.
-            // The alternative is to track the namespace in a few places which is convoluted.
-            // https://w3c.github.io/webcomponents/spec/custom/#custom-elements-core-concepts
             case "annotation-xml":
             case "color-profile":
             case "font-face":
@@ -15121,9 +15144,9 @@ var require_react_dom_development = __commonJS({
           try {
             var options = {};
             Object.defineProperty(options, "passive", {
-              get: /* @__PURE__ */ __name2(function() {
+              get: function() {
                 passiveBrowserEventsSupported = true;
-              }, "get")
+              }
             });
             window.addEventListener("test", options, options);
             window.removeEventListener("test", options, options);
@@ -15221,10 +15244,10 @@ var require_react_dom_development = __commonJS({
         var hasRethrowError = false;
         var rethrowError = null;
         var reporter = {
-          onError: /* @__PURE__ */ __name2(function(error2) {
+          onError: function(error2) {
             hasError = true;
             caughtError = error2;
-          }, "onError")
+          }
         };
         function invokeGuardedCallback(name, func, context, a, b, c, d, e, f) {
           hasError = false;
@@ -17288,7 +17311,6 @@ var require_react_dom_development = __commonJS({
         __name2(findInstanceBlockingEvent, "findInstanceBlockingEvent");
         function getEventPriority(domEventName) {
           switch (domEventName) {
-            // Used by SimpleEventPlugin:
             case "cancel":
             case "click":
             case "close":
@@ -17324,20 +17346,14 @@ var require_react_dom_development = __commonJS({
             case "touchend":
             case "touchstart":
             case "volumechange":
-            // Used by polyfills:
-            // eslint-disable-next-line no-fallthrough
             case "change":
             case "selectionchange":
             case "textInput":
             case "compositionstart":
             case "compositionend":
             case "compositionupdate":
-            // Only enableCreateEventHandleAPI:
-            // eslint-disable-next-line no-fallthrough
             case "beforeblur":
             case "afterblur":
-            // Not used by React but could be by user code:
-            // eslint-disable-next-line no-fallthrough
             case "beforeinput":
             case "blur":
             case "fullscreenchange":
@@ -17362,8 +17378,6 @@ var require_react_dom_development = __commonJS({
             case "toggle":
             case "touchmove":
             case "wheel":
-            // Not used by React but could be by user code:
-            // eslint-disable-next-line no-fallthrough
             case "mouseenter":
             case "mouseleave":
             case "pointerenter":
@@ -17534,7 +17548,7 @@ var require_react_dom_development = __commonJS({
           __name(SyntheticBaseEvent, "SyntheticBaseEvent");
           __name2(SyntheticBaseEvent, "SyntheticBaseEvent");
           assign(SyntheticBaseEvent.prototype, {
-            preventDefault: /* @__PURE__ */ __name2(function() {
+            preventDefault: function() {
               this.defaultPrevented = true;
               var event = this.nativeEvent;
               if (!event) {
@@ -17546,8 +17560,8 @@ var require_react_dom_development = __commonJS({
                 event.returnValue = false;
               }
               this.isDefaultPrevented = functionThatReturnsTrue;
-            }, "preventDefault"),
-            stopPropagation: /* @__PURE__ */ __name2(function() {
+            },
+            stopPropagation: function() {
               var event = this.nativeEvent;
               if (!event) {
                 return;
@@ -17558,14 +17572,14 @@ var require_react_dom_development = __commonJS({
                 event.cancelBubble = true;
               }
               this.isPropagationStopped = functionThatReturnsTrue;
-            }, "stopPropagation"),
+            },
             /**
              * We release all dispatched `SyntheticEvent`s after each event loop, adding
              * them back into the pool. This allows a way to hold onto a reference that
              * won't be added back into the pool.
              */
-            persist: /* @__PURE__ */ __name2(function() {
-            }, "persist"),
+            persist: function() {
+            },
             /**
              * Checks if this event should be released back into the pool.
              *
@@ -17581,9 +17595,9 @@ var require_react_dom_development = __commonJS({
           eventPhase: 0,
           bubbles: 0,
           cancelable: 0,
-          timeStamp: /* @__PURE__ */ __name2(function(event) {
+          timeStamp: function(event) {
             return event.timeStamp || Date.now();
-          }, "timeStamp"),
+          },
           defaultPrevented: 0,
           isTrusted: 0
         };
@@ -17624,23 +17638,24 @@ var require_react_dom_development = __commonJS({
           getModifierState: getEventModifierState,
           button: 0,
           buttons: 0,
-          relatedTarget: /* @__PURE__ */ __name2(function(event) {
-            if (event.relatedTarget === void 0) return event.fromElement === event.srcElement ? event.toElement : event.fromElement;
+          relatedTarget: function(event) {
+            if (event.relatedTarget === void 0)
+              return event.fromElement === event.srcElement ? event.toElement : event.fromElement;
             return event.relatedTarget;
-          }, "relatedTarget"),
-          movementX: /* @__PURE__ */ __name2(function(event) {
+          },
+          movementX: function(event) {
             if ("movementX" in event) {
               return event.movementX;
             }
             updateMouseMovementPolyfillState(event);
             return lastMovementX;
-          }, "movementX"),
-          movementY: /* @__PURE__ */ __name2(function(event) {
+          },
+          movementY: function(event) {
             if ("movementY" in event) {
               return event.movementY;
             }
             return lastMovementY;
-          }, "movementY")
+          }
         });
         var SyntheticMouseEvent = createSyntheticEvent(MouseEventInterface);
         var DragEventInterface = assign({}, MouseEventInterface, {
@@ -17658,9 +17673,9 @@ var require_react_dom_development = __commonJS({
         });
         var SyntheticAnimationEvent = createSyntheticEvent(AnimationEventInterface);
         var ClipboardEventInterface = assign({}, EventInterface, {
-          clipboardData: /* @__PURE__ */ __name2(function(event) {
+          clipboardData: function(event) {
             return "clipboardData" in event ? event.clipboardData : window.clipboardData;
-          }, "clipboardData")
+          }
         });
         var SyntheticClipboardEvent = createSyntheticEvent(ClipboardEventInterface);
         var CompositionEventInterface = assign({}, EventInterface, {
@@ -17772,19 +17787,19 @@ var require_react_dom_development = __commonJS({
           locale: 0,
           getModifierState: getEventModifierState,
           // Legacy Interface
-          charCode: /* @__PURE__ */ __name2(function(event) {
+          charCode: function(event) {
             if (event.type === "keypress") {
               return getEventCharCode(event);
             }
             return 0;
-          }, "charCode"),
-          keyCode: /* @__PURE__ */ __name2(function(event) {
+          },
+          keyCode: function(event) {
             if (event.type === "keydown" || event.type === "keyup") {
               return event.keyCode;
             }
             return 0;
-          }, "keyCode"),
-          which: /* @__PURE__ */ __name2(function(event) {
+          },
+          which: function(event) {
             if (event.type === "keypress") {
               return getEventCharCode(event);
             }
@@ -17792,7 +17807,7 @@ var require_react_dom_development = __commonJS({
               return event.keyCode;
             }
             return 0;
-          }, "which")
+          }
         });
         var SyntheticKeyboardEvent = createSyntheticEvent(KeyboardEventInterface);
         var PointerEventInterface = assign({}, MouseEventInterface, {
@@ -17826,13 +17841,13 @@ var require_react_dom_development = __commonJS({
         });
         var SyntheticTransitionEvent = createSyntheticEvent(TransitionEventInterface);
         var WheelEventInterface = assign({}, MouseEventInterface, {
-          deltaX: /* @__PURE__ */ __name2(function(event) {
+          deltaX: function(event) {
             return "deltaX" in event ? event.deltaX : (
               // Fallback to `wheelDeltaX` for Webkit and normalize (right is positive).
               "wheelDeltaX" in event ? -event.wheelDeltaX : 0
             );
-          }, "deltaX"),
-          deltaY: /* @__PURE__ */ __name2(function(event) {
+          },
+          deltaY: function(event) {
             return "deltaY" in event ? event.deltaY : (
               // Fallback to `wheelDeltaY` for Webkit and normalize (down is positive).
               "wheelDeltaY" in event ? -event.wheelDeltaY : (
@@ -17840,7 +17855,7 @@ var require_react_dom_development = __commonJS({
                 "wheelDelta" in event ? -event.wheelDelta : 0
               )
             );
-          }, "deltaY"),
+          },
           deltaZ: 0,
           // Browsers without "deltaMode" is reporting in raw wheel delta where one
           // notch on the scroll is always +/- 120, roughly equivalent to pixels.
@@ -18425,42 +18440,43 @@ var require_react_dom_development = __commonJS({
           var indexWithinFocus = 0;
           var node = outerNode;
           var parentNode = null;
-          outer: while (true) {
-            var next = null;
+          outer:
             while (true) {
-              if (node === anchorNode && (anchorOffset === 0 || node.nodeType === TEXT_NODE)) {
-                start = length + anchorOffset;
+              var next = null;
+              while (true) {
+                if (node === anchorNode && (anchorOffset === 0 || node.nodeType === TEXT_NODE)) {
+                  start = length + anchorOffset;
+                }
+                if (node === focusNode && (focusOffset === 0 || node.nodeType === TEXT_NODE)) {
+                  end = length + focusOffset;
+                }
+                if (node.nodeType === TEXT_NODE) {
+                  length += node.nodeValue.length;
+                }
+                if ((next = node.firstChild) === null) {
+                  break;
+                }
+                parentNode = node;
+                node = next;
               }
-              if (node === focusNode && (focusOffset === 0 || node.nodeType === TEXT_NODE)) {
-                end = length + focusOffset;
+              while (true) {
+                if (node === outerNode) {
+                  break outer;
+                }
+                if (parentNode === anchorNode && ++indexWithinAnchor === anchorOffset) {
+                  start = length;
+                }
+                if (parentNode === focusNode && ++indexWithinFocus === focusOffset) {
+                  end = length;
+                }
+                if ((next = node.nextSibling) !== null) {
+                  break;
+                }
+                node = parentNode;
+                parentNode = node.parentNode;
               }
-              if (node.nodeType === TEXT_NODE) {
-                length += node.nodeValue.length;
-              }
-              if ((next = node.firstChild) === null) {
-                break;
-              }
-              parentNode = node;
               node = next;
             }
-            while (true) {
-              if (node === outerNode) {
-                break outer;
-              }
-              if (parentNode === anchorNode && ++indexWithinAnchor === anchorOffset) {
-                start = length;
-              }
-              if (parentNode === focusNode && ++indexWithinFocus === focusOffset) {
-                end = length;
-              }
-              if ((next = node.nextSibling) !== null) {
-                break;
-              }
-              node = parentNode;
-              parentNode = node.parentNode;
-            }
-            node = next;
-          }
           if (start === -1 || end === -1) {
             return null;
           }
@@ -18695,7 +18711,6 @@ var require_react_dom_development = __commonJS({
         function extractEvents$3(dispatchQueue, domEventName, targetInst, nativeEvent, nativeEventTarget, eventSystemFlags, targetContainer) {
           var targetNode = targetInst ? getNodeFromInstance(targetInst) : window;
           switch (domEventName) {
-            // Track the input node that has focus.
             case "focusin":
               if (isTextInputElement(targetNode) || targetNode.contentEditable === "true") {
                 activeElement$1 = targetNode;
@@ -18708,8 +18723,6 @@ var require_react_dom_development = __commonJS({
               activeElementInst$1 = null;
               lastSelection = null;
               break;
-            // Don't fire the event while the user is dragging. This matches the
-            // semantics of the native select event.
             case "mousedown":
               mouseDown = true;
               break;
@@ -18719,20 +18732,10 @@ var require_react_dom_development = __commonJS({
               mouseDown = false;
               constructSelectEvent(dispatchQueue, nativeEvent, nativeEventTarget);
               break;
-            // Chrome and IE fire non-standard event when selection is changed (and
-            // sometimes when it hasn't). IE's event fires out of order with respect
-            // to key and input events on deletion, so we discard it.
-            //
-            // Firefox doesn't support selectionchange, so check selection status
-            // after each key entry. The selection changes after keydown and before
-            // keyup, but we check on keydown as well in the case of holding down a
-            // key, when multiple keydown events are fired but only one keyup is.
-            // This is also our approach for IE handling, for the reason above.
             case "selectionchange":
               if (skipSelectionChangeEvent) {
                 break;
               }
-            // falls through
             case "keydown":
             case "keyup":
               constructSelectEvent(dispatchQueue, nativeEvent, nativeEventTarget);
@@ -18825,7 +18828,6 @@ var require_react_dom_development = __commonJS({
               if (getEventCharCode(nativeEvent) === 0) {
                 return;
               }
-            /* falls through */
             case "keydown":
             case "keyup":
               SyntheticEventCtor = SyntheticKeyboardEvent;
@@ -18846,14 +18848,11 @@ var require_react_dom_development = __commonJS({
               if (nativeEvent.button === 2) {
                 return;
               }
-            /* falls through */
             case "auxclick":
             case "dblclick":
             case "mousedown":
             case "mousemove":
             case "mouseup":
-            // TODO: Disabled elements should not respond to mouse events
-            /* falls through */
             case "mouseout":
             case "mouseover":
             case "contextmenu":
@@ -19083,44 +19082,45 @@ var require_react_dom_development = __commonJS({
             var targetContainerNode = targetContainer;
             if (targetInst !== null) {
               var node = targetInst;
-              mainLoop: while (true) {
-                if (node === null) {
-                  return;
-                }
-                var nodeTag = node.tag;
-                if (nodeTag === HostRoot || nodeTag === HostPortal) {
-                  var container = node.stateNode.containerInfo;
-                  if (isMatchingRootContainer(container, targetContainerNode)) {
-                    break;
+              mainLoop:
+                while (true) {
+                  if (node === null) {
+                    return;
                   }
-                  if (nodeTag === HostPortal) {
-                    var grandNode = node.return;
-                    while (grandNode !== null) {
-                      var grandTag = grandNode.tag;
-                      if (grandTag === HostRoot || grandTag === HostPortal) {
-                        var grandContainer = grandNode.stateNode.containerInfo;
-                        if (isMatchingRootContainer(grandContainer, targetContainerNode)) {
-                          return;
+                  var nodeTag = node.tag;
+                  if (nodeTag === HostRoot || nodeTag === HostPortal) {
+                    var container = node.stateNode.containerInfo;
+                    if (isMatchingRootContainer(container, targetContainerNode)) {
+                      break;
+                    }
+                    if (nodeTag === HostPortal) {
+                      var grandNode = node.return;
+                      while (grandNode !== null) {
+                        var grandTag = grandNode.tag;
+                        if (grandTag === HostRoot || grandTag === HostPortal) {
+                          var grandContainer = grandNode.stateNode.containerInfo;
+                          if (isMatchingRootContainer(grandContainer, targetContainerNode)) {
+                            return;
+                          }
                         }
+                        grandNode = grandNode.return;
                       }
-                      grandNode = grandNode.return;
+                    }
+                    while (container !== null) {
+                      var parentNode = getClosestInstanceFromNode(container);
+                      if (parentNode === null) {
+                        return;
+                      }
+                      var parentTag = parentNode.tag;
+                      if (parentTag === HostComponent || parentTag === HostText) {
+                        node = ancestorInst = parentNode;
+                        continue mainLoop;
+                      }
+                      container = container.parentNode;
                     }
                   }
-                  while (container !== null) {
-                    var parentNode = getClosestInstanceFromNode(container);
-                    if (parentNode === null) {
-                      return;
-                    }
-                    var parentTag = parentNode.tag;
-                    if (parentTag === HostComponent || parentTag === HostText) {
-                      node = ancestorInst = parentNode;
-                      continue mainLoop;
-                    }
-                    container = container.parentNode;
-                  }
+                  node = node.return;
                 }
-                node = node.return;
-              }
             }
           }
           batchedUpdates(function() {
@@ -19428,8 +19428,10 @@ var require_react_dom_development = __commonJS({
               } else if (typeof nextProp === "number") {
                 setTextContent(domElement, "" + nextProp);
               }
-            } else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING) ;
-            else if (propKey === AUTOFOCUS) ;
+            } else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING)
+              ;
+            else if (propKey === AUTOFOCUS)
+              ;
             else if (registrationNameDependencies.hasOwnProperty(propKey)) {
               if (nextProp != null) {
                 if (typeof nextProp !== "function") {
@@ -19655,9 +19657,12 @@ var require_react_dom_development = __commonJS({
                   styleUpdates[styleName] = "";
                 }
               }
-            } else if (propKey === DANGEROUSLY_SET_INNER_HTML || propKey === CHILDREN) ;
-            else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING) ;
-            else if (propKey === AUTOFOCUS) ;
+            } else if (propKey === DANGEROUSLY_SET_INNER_HTML || propKey === CHILDREN)
+              ;
+            else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING)
+              ;
+            else if (propKey === AUTOFOCUS)
+              ;
             else if (registrationNameDependencies.hasOwnProperty(propKey)) {
               if (!updatePayload) {
                 updatePayload = [];
@@ -19716,7 +19721,8 @@ var require_react_dom_development = __commonJS({
               if (typeof nextProp === "string" || typeof nextProp === "number") {
                 (updatePayload = updatePayload || []).push(propKey, "" + nextProp);
               }
-            } else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING) ;
+            } else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING)
+              ;
             else if (registrationNameDependencies.hasOwnProperty(propKey)) {
               if (nextProp != null) {
                 if (typeof nextProp !== "function") {
@@ -19833,8 +19839,6 @@ var require_react_dom_development = __commonJS({
             for (var _i = 0; _i < attributes.length; _i++) {
               var name = attributes[_i].name.toLowerCase();
               switch (name) {
-                // Controlled attributes are not validated
-                // TODO: Only ignore them on controlled tags.
                 case "value":
                   break;
                 case "checked":
@@ -19881,10 +19885,12 @@ var require_react_dom_development = __commonJS({
             typeof isCustomComponentTag === "boolean") {
               var serverValue = void 0;
               var propertyInfo = isCustomComponentTag && enableCustomElementPropertySupport ? null : getPropertyInfo(propKey);
-              if (rawProps[SUPPRESS_HYDRATION_WARNING] === true) ;
+              if (rawProps[SUPPRESS_HYDRATION_WARNING] === true)
+                ;
               else if (propKey === SUPPRESS_CONTENT_EDITABLE_WARNING || propKey === SUPPRESS_HYDRATION_WARNING || // Controlled attributes are not validated
               // TODO: Only ignore them on controlled tags.
-              propKey === "value" || propKey === "checked" || propKey === "selected") ;
+              propKey === "value" || propKey === "checked" || propKey === "selected")
+                ;
               else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
                 var serverHTML = domElement.innerHTML;
                 var nextHtml = nextProp ? nextProp[HTML$1] : void 0;
@@ -20116,37 +20122,24 @@ var require_react_dom_development = __commonJS({
           }, "updatedAncestorInfo");
           var isTagValidWithParent = /* @__PURE__ */ __name2(function(tag, parentTag) {
             switch (parentTag) {
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inselect
               case "select":
                 return tag === "option" || tag === "optgroup" || tag === "#text";
               case "optgroup":
                 return tag === "option" || tag === "#text";
-              // Strictly speaking, seeing an <option> doesn't mean we're in a <select>
-              // but
               case "option":
                 return tag === "#text";
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intd
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incaption
-              // No special behavior since these rules fall back to "in body" mode for
-              // all except special table nodes which cause bad parsing behavior anyway.
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intr
               case "tr":
                 return tag === "th" || tag === "td" || tag === "style" || tag === "script" || tag === "template";
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intbody
               case "tbody":
               case "thead":
               case "tfoot":
                 return tag === "tr" || tag === "style" || tag === "script" || tag === "template";
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incolgroup
               case "colgroup":
                 return tag === "col" || tag === "template";
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intable
               case "table":
                 return tag === "caption" || tag === "colgroup" || tag === "tbody" || tag === "tfoot" || tag === "thead" || tag === "style" || tag === "script" || tag === "template";
-              // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inhead
               case "head":
                 return tag === "base" || tag === "basefont" || tag === "bgsound" || tag === "link" || tag === "meta" || tag === "title" || tag === "noscript" || tag === "noframes" || tag === "style" || tag === "script" || tag === "template";
-              // https://html.spec.whatwg.org/multipage/semantics.html#the-html-element
               case "html":
                 return tag === "head" || tag === "body" || tag === "frameset";
               case "frameset":
@@ -20811,7 +20804,8 @@ var require_react_dom_development = __commonJS({
           {
             if (instance.nodeType === ELEMENT_NODE) {
               warnForDeletedHydratableElement(parentContainer, instance);
-            } else if (instance.nodeType === COMMENT_NODE) ;
+            } else if (instance.nodeType === COMMENT_NODE)
+              ;
             else {
               warnForDeletedHydratableText(parentContainer, instance);
             }
@@ -20825,7 +20819,8 @@ var require_react_dom_development = __commonJS({
             if (parentNode !== null) {
               if (instance.nodeType === ELEMENT_NODE) {
                 warnForDeletedHydratableElement(parentNode, instance);
-              } else if (instance.nodeType === COMMENT_NODE) ;
+              } else if (instance.nodeType === COMMENT_NODE)
+                ;
               else {
                 warnForDeletedHydratableText(parentNode, instance);
               }
@@ -20839,7 +20834,8 @@ var require_react_dom_development = __commonJS({
             if (isConcurrentMode || parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
               if (instance.nodeType === ELEMENT_NODE) {
                 warnForDeletedHydratableElement(parentInstance, instance);
-              } else if (instance.nodeType === COMMENT_NODE) ;
+              } else if (instance.nodeType === COMMENT_NODE)
+                ;
               else {
                 warnForDeletedHydratableText(parentInstance, instance);
               }
@@ -20865,7 +20861,8 @@ var require_react_dom_development = __commonJS({
         function didNotFindHydratableInstanceWithinSuspenseInstance(parentInstance, type, props) {
           {
             var parentNode = parentInstance.parentNode;
-            if (parentNode !== null) warnForInsertedHydratedElement(parentNode, type);
+            if (parentNode !== null)
+              warnForInsertedHydratedElement(parentNode, type);
           }
         }
         __name(didNotFindHydratableInstanceWithinSuspenseInstance, "didNotFindHydratableInstanceWithinSuspenseInstance");
@@ -20873,7 +20870,8 @@ var require_react_dom_development = __commonJS({
         function didNotFindHydratableTextInstanceWithinSuspenseInstance(parentInstance, text) {
           {
             var parentNode = parentInstance.parentNode;
-            if (parentNode !== null) warnForInsertedHydratedText(parentNode, text);
+            if (parentNode !== null)
+              warnForInsertedHydratedText(parentNode, text);
           }
         }
         __name(didNotFindHydratableTextInstanceWithinSuspenseInstance, "didNotFindHydratableTextInstanceWithinSuspenseInstance");
@@ -21568,7 +21566,8 @@ var require_react_dom_development = __commonJS({
               }
               case SuspenseComponent: {
                 var suspenseState = returnFiber.memoizedState;
-                if (suspenseState.dehydrated !== null) didNotHydrateInstanceWithinSuspenseInstance(suspenseState.dehydrated, instance);
+                if (suspenseState.dehydrated !== null)
+                  didNotHydrateInstanceWithinSuspenseInstance(suspenseState.dehydrated, instance);
                 break;
               }
             }
@@ -21651,17 +21650,18 @@ var require_react_dom_development = __commonJS({
               case SuspenseComponent: {
                 var suspenseState = returnFiber.memoizedState;
                 var _parentInstance = suspenseState.dehydrated;
-                if (_parentInstance !== null) switch (fiber.tag) {
-                  case HostComponent:
-                    var _type2 = fiber.type;
-                    var _props2 = fiber.pendingProps;
-                    didNotFindHydratableInstanceWithinSuspenseInstance(_parentInstance, _type2);
-                    break;
-                  case HostText:
-                    var _text2 = fiber.pendingProps;
-                    didNotFindHydratableTextInstanceWithinSuspenseInstance(_parentInstance, _text2);
-                    break;
-                }
+                if (_parentInstance !== null)
+                  switch (fiber.tag) {
+                    case HostComponent:
+                      var _type2 = fiber.type;
+                      var _props2 = fiber.pendingProps;
+                      didNotFindHydratableInstanceWithinSuspenseInstance(_parentInstance, _type2);
+                      break;
+                    case HostText:
+                      var _text2 = fiber.pendingProps;
+                      didNotFindHydratableTextInstanceWithinSuspenseInstance(_parentInstance, _text2);
+                      break;
+                  }
                 break;
               }
               default:
@@ -21939,16 +21939,16 @@ var require_react_dom_development = __commonJS({
         __name(requestCurrentTransition, "requestCurrentTransition");
         __name2(requestCurrentTransition, "requestCurrentTransition");
         var ReactStrictModeWarnings = {
-          recordUnsafeLifecycleWarnings: /* @__PURE__ */ __name2(function(fiber, instance) {
-          }, "recordUnsafeLifecycleWarnings"),
-          flushPendingUnsafeLifecycleWarnings: /* @__PURE__ */ __name2(function() {
-          }, "flushPendingUnsafeLifecycleWarnings"),
-          recordLegacyContextWarning: /* @__PURE__ */ __name2(function(fiber, instance) {
-          }, "recordLegacyContextWarning"),
-          flushLegacyContextWarning: /* @__PURE__ */ __name2(function() {
-          }, "flushLegacyContextWarning"),
-          discardPendingWarnings: /* @__PURE__ */ __name2(function() {
-          }, "discardPendingWarnings")
+          recordUnsafeLifecycleWarnings: function(fiber, instance) {
+          },
+          flushPendingUnsafeLifecycleWarnings: function() {
+          },
+          recordLegacyContextWarning: function(fiber, instance) {
+          },
+          flushLegacyContextWarning: function() {
+          },
+          discardPendingWarnings: function() {
+          }
         };
         {
           var findStrictRoot = /* @__PURE__ */ __name2(function(fiber) {
@@ -23058,7 +23058,8 @@ var require_react_dom_development = __commonJS({
                     var update = createUpdate(NoTimestamp, lane);
                     update.tag = ForceUpdate;
                     var updateQueue = fiber.updateQueue;
-                    if (updateQueue === null) ;
+                    if (updateQueue === null)
+                      ;
                     else {
                       var sharedQueue = updateQueue.shared;
                       var pending = sharedQueue.pending;
@@ -23148,7 +23149,8 @@ var require_react_dom_development = __commonJS({
             }
           }
           var value = context._currentValue;
-          if (lastFullyObservedContext === context) ;
+          if (lastFullyObservedContext === context)
+            ;
           else {
             var contextItem = {
               context,
@@ -23473,7 +23475,6 @@ var require_react_dom_development = __commonJS({
             case CaptureUpdate: {
               workInProgress2.flags = workInProgress2.flags & ~ShouldCapture | DidCapture;
             }
-            // Intentional fallthrough
             case UpdateState: {
               var _payload = update.payload;
               var partialState;
@@ -25041,45 +25042,45 @@ var require_react_dom_development = __commonJS({
             error("Do not call Hooks inside useEffect(...), useMemo(...), or other built-in Hooks. You can only call Hooks at the top level of your React function. For more information, see https://reactjs.org/link/rules-of-hooks");
           }, "warnInvalidHookAccess");
           HooksDispatcherOnMountInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               mountHookTypesDev();
               checkDepsAreArrayDev(deps);
               return mountCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               mountHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               mountHookTypesDev();
               checkDepsAreArrayDev(deps);
               return mountEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               mountHookTypesDev();
               checkDepsAreArrayDev(deps);
               return mountImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               mountHookTypesDev();
               checkDepsAreArrayDev(deps);
               return mountInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               mountHookTypesDev();
               checkDepsAreArrayDev(deps);
               return mountLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               mountHookTypesDev();
               checkDepsAreArrayDev(deps);
@@ -25090,8 +25091,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               mountHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25101,13 +25102,13 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               mountHookTypesDev();
               return mountRef(initialValue);
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               mountHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25117,74 +25118,74 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               mountHookTypesDev();
               return mountDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               mountHookTypesDev();
               return mountDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               mountHookTypesDev();
               return mountTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               mountHookTypesDev();
               return mountMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               mountHookTypesDev();
               return mountSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               mountHookTypesDev();
               return mountId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
           HooksDispatcherOnMountWithHookTypesInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               updateHookTypesDev();
               return mountCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               updateHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               updateHookTypesDev();
               return mountEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               updateHookTypesDev();
               return mountImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               updateHookTypesDev();
               return mountInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               updateHookTypesDev();
               return mountLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25194,8 +25195,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25205,13 +25206,13 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               updateHookTypesDev();
               return mountRef(initialValue);
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25221,74 +25222,74 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               updateHookTypesDev();
               return mountDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               updateHookTypesDev();
               return mountDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               updateHookTypesDev();
               return mountTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               updateHookTypesDev();
               return mountMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               updateHookTypesDev();
               return mountSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               updateHookTypesDev();
               return mountId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
           HooksDispatcherOnUpdateInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               updateHookTypesDev();
               return updateCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               updateHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               updateHookTypesDev();
               return updateEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               updateHookTypesDev();
               return updateImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               updateHookTypesDev();
               return updateInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               updateHookTypesDev();
               return updateLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25298,8 +25299,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25309,13 +25310,13 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               updateHookTypesDev();
               return updateRef();
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25325,74 +25326,74 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               updateHookTypesDev();
               return updateDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               updateHookTypesDev();
               return updateDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               updateHookTypesDev();
               return updateTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               updateHookTypesDev();
               return updateMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               updateHookTypesDev();
               return updateSyncExternalStore(subscribe, getSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               updateHookTypesDev();
               return updateId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
           HooksDispatcherOnRerenderInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               updateHookTypesDev();
               return updateCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               updateHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               updateHookTypesDev();
               return updateEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               updateHookTypesDev();
               return updateImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               updateHookTypesDev();
               return updateInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               updateHookTypesDev();
               return updateLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25402,8 +25403,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25413,13 +25414,13 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               updateHookTypesDev();
               return updateRef();
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               updateHookTypesDev();
               var prevDispatcher = ReactCurrentDispatcher$1.current;
@@ -25429,81 +25430,81 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               updateHookTypesDev();
               return updateDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               updateHookTypesDev();
               return rerenderDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               updateHookTypesDev();
               return rerenderTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               updateHookTypesDev();
               return updateMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               updateHookTypesDev();
               return updateSyncExternalStore(subscribe, getSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               updateHookTypesDev();
               return updateId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
           InvalidNestedHooksDispatcherOnMountInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               warnInvalidContextAccess();
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               warnInvalidHookAccess();
               mountHookTypesDev();
@@ -25514,8 +25515,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               warnInvalidHookAccess();
               mountHookTypesDev();
@@ -25526,14 +25527,14 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountRef(initialValue);
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               warnInvalidHookAccess();
               mountHookTypesDev();
@@ -25544,87 +25545,87 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               warnInvalidHookAccess();
               mountHookTypesDev();
               return mountId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
           InvalidNestedHooksDispatcherOnUpdateInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               warnInvalidContextAccess();
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               warnInvalidHookAccess();
               updateHookTypesDev();
@@ -25635,8 +25636,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               warnInvalidHookAccess();
               updateHookTypesDev();
@@ -25647,14 +25648,14 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateRef();
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               warnInvalidHookAccess();
               updateHookTypesDev();
@@ -25665,87 +25666,87 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateSyncExternalStore(subscribe, getSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
           InvalidNestedHooksDispatcherOnRerenderInDEV = {
-            readContext: /* @__PURE__ */ __name2(function(context) {
+            readContext: function(context) {
               warnInvalidContextAccess();
               return readContext(context);
-            }, "readContext"),
-            useCallback: /* @__PURE__ */ __name2(function(callback, deps) {
+            },
+            useCallback: function(callback, deps) {
               currentHookNameInDev = "useCallback";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateCallback(callback, deps);
-            }, "useCallback"),
-            useContext: /* @__PURE__ */ __name2(function(context) {
+            },
+            useContext: function(context) {
               currentHookNameInDev = "useContext";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return readContext(context);
-            }, "useContext"),
-            useEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useEffect: function(create, deps) {
               currentHookNameInDev = "useEffect";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateEffect(create, deps);
-            }, "useEffect"),
-            useImperativeHandle: /* @__PURE__ */ __name2(function(ref, create, deps) {
+            },
+            useImperativeHandle: function(ref, create, deps) {
               currentHookNameInDev = "useImperativeHandle";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateImperativeHandle(ref, create, deps);
-            }, "useImperativeHandle"),
-            useInsertionEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useInsertionEffect: function(create, deps) {
               currentHookNameInDev = "useInsertionEffect";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateInsertionEffect(create, deps);
-            }, "useInsertionEffect"),
-            useLayoutEffect: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useLayoutEffect: function(create, deps) {
               currentHookNameInDev = "useLayoutEffect";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateLayoutEffect(create, deps);
-            }, "useLayoutEffect"),
-            useMemo: /* @__PURE__ */ __name2(function(create, deps) {
+            },
+            useMemo: function(create, deps) {
               currentHookNameInDev = "useMemo";
               warnInvalidHookAccess();
               updateHookTypesDev();
@@ -25756,8 +25757,8 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useMemo"),
-            useReducer: /* @__PURE__ */ __name2(function(reducer, initialArg, init) {
+            },
+            useReducer: function(reducer, initialArg, init) {
               currentHookNameInDev = "useReducer";
               warnInvalidHookAccess();
               updateHookTypesDev();
@@ -25768,14 +25769,14 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useReducer"),
-            useRef: /* @__PURE__ */ __name2(function(initialValue) {
+            },
+            useRef: function(initialValue) {
               currentHookNameInDev = "useRef";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateRef();
-            }, "useRef"),
-            useState: /* @__PURE__ */ __name2(function(initialState) {
+            },
+            useState: function(initialState) {
               currentHookNameInDev = "useState";
               warnInvalidHookAccess();
               updateHookTypesDev();
@@ -25786,43 +25787,43 @@ var require_react_dom_development = __commonJS({
               } finally {
                 ReactCurrentDispatcher$1.current = prevDispatcher;
               }
-            }, "useState"),
-            useDebugValue: /* @__PURE__ */ __name2(function(value, formatterFn) {
+            },
+            useDebugValue: function(value, formatterFn) {
               currentHookNameInDev = "useDebugValue";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateDebugValue();
-            }, "useDebugValue"),
-            useDeferredValue: /* @__PURE__ */ __name2(function(value) {
+            },
+            useDeferredValue: function(value) {
               currentHookNameInDev = "useDeferredValue";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return rerenderDeferredValue(value);
-            }, "useDeferredValue"),
-            useTransition: /* @__PURE__ */ __name2(function() {
+            },
+            useTransition: function() {
               currentHookNameInDev = "useTransition";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return rerenderTransition();
-            }, "useTransition"),
-            useMutableSource: /* @__PURE__ */ __name2(function(source, getSnapshot, subscribe) {
+            },
+            useMutableSource: function(source, getSnapshot, subscribe) {
               currentHookNameInDev = "useMutableSource";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateMutableSource();
-            }, "useMutableSource"),
-            useSyncExternalStore: /* @__PURE__ */ __name2(function(subscribe, getSnapshot, getServerSnapshot) {
+            },
+            useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
               currentHookNameInDev = "useSyncExternalStore";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateSyncExternalStore(subscribe, getSnapshot);
-            }, "useSyncExternalStore"),
-            useId: /* @__PURE__ */ __name2(function() {
+            },
+            useId: function() {
               currentHookNameInDev = "useId";
               warnInvalidHookAccess();
               updateHookTypesDev();
               return updateId();
-            }, "useId"),
+            },
             unstable_isNewReconciler: enableNewReconciler
           };
         }
@@ -26022,9 +26023,9 @@ var require_react_dom_development = __commonJS({
           }, "warnOnUndefinedDerivedState");
           Object.defineProperty(fakeInternalInstance, "_processChildContext", {
             enumerable: false,
-            value: /* @__PURE__ */ __name2(function() {
+            value: function() {
               throw new Error("_processChildContext is not available in React 16+. This likely means you have multiple copies of React and are attempting to nest a React 15 tree inside a React 16 tree using unstable_renderSubtreeIntoContainer, which isn't supported. Try to make sure you have only one copy of React (and ideally, switch to ReactDOM.createPortal).");
-            }, "value")
+            }
           });
           Object.freeze(fakeInternalInstance);
         }
@@ -26053,7 +26054,7 @@ var require_react_dom_development = __commonJS({
         __name2(applyDerivedStateFromProps, "applyDerivedStateFromProps");
         var classComponentUpdater = {
           isMounted,
-          enqueueSetState: /* @__PURE__ */ __name2(function(inst, payload, callback) {
+          enqueueSetState: function(inst, payload, callback) {
             var fiber = get(inst);
             var eventTime = requestEventTime();
             var lane = requestUpdateLane(fiber);
@@ -26073,8 +26074,8 @@ var require_react_dom_development = __commonJS({
             {
               markStateUpdateScheduled(fiber, lane);
             }
-          }, "enqueueSetState"),
-          enqueueReplaceState: /* @__PURE__ */ __name2(function(inst, payload, callback) {
+          },
+          enqueueReplaceState: function(inst, payload, callback) {
             var fiber = get(inst);
             var eventTime = requestEventTime();
             var lane = requestUpdateLane(fiber);
@@ -26095,8 +26096,8 @@ var require_react_dom_development = __commonJS({
             {
               markStateUpdateScheduled(fiber, lane);
             }
-          }, "enqueueReplaceState"),
-          enqueueForceUpdate: /* @__PURE__ */ __name2(function(inst, callback) {
+          },
+          enqueueForceUpdate: function(inst, callback) {
             var fiber = get(inst);
             var eventTime = requestEventTime();
             var lane = requestUpdateLane(fiber);
@@ -26116,7 +26117,7 @@ var require_react_dom_development = __commonJS({
             {
               markForceUpdateScheduled(fiber, lane);
             }
-          }, "enqueueForceUpdate")
+          }
         };
         function checkShouldComponentUpdate(workInProgress2, ctor, oldProps, newProps, oldState, newState, nextContext) {
           var instance = workInProgress2.stateNode;
@@ -28779,7 +28780,8 @@ var require_react_dom_development = __commonJS({
             while (node !== null) {
               if (node.tag === HostComponent || node.tag === HostText) {
                 appendInitialChild(parent, node.stateNode);
-              } else if (node.tag === HostPortal) ;
+              } else if (node.tag === HostPortal)
+                ;
               else if (node.child !== null) {
                 node.child.return = node;
                 node = node.child;
@@ -29771,19 +29773,20 @@ var require_react_dom_development = __commonJS({
                     onPostCommit(id, phase, passiveEffectDuration, commitTime2);
                   }
                   var parentFiber = finishedWork.return;
-                  outer: while (parentFiber !== null) {
-                    switch (parentFiber.tag) {
-                      case HostRoot:
-                        var root2 = parentFiber.stateNode;
-                        root2.passiveEffectDuration += passiveEffectDuration;
-                        break outer;
-                      case Profiler:
-                        var parentStateNode = parentFiber.stateNode;
-                        parentStateNode.passiveEffectDuration += passiveEffectDuration;
-                        break outer;
+                  outer:
+                    while (parentFiber !== null) {
+                      switch (parentFiber.tag) {
+                        case HostRoot:
+                          var root2 = parentFiber.stateNode;
+                          root2.passiveEffectDuration += passiveEffectDuration;
+                          break outer;
+                        case Profiler:
+                          var parentStateNode = parentFiber.stateNode;
+                          parentStateNode.passiveEffectDuration += passiveEffectDuration;
+                          break outer;
+                      }
+                      parentFiber = parentFiber.return;
                     }
-                    parentFiber = parentFiber.return;
-                  }
                   break;
                 }
               }
@@ -29932,19 +29935,20 @@ var require_react_dom_development = __commonJS({
                     }
                     enqueuePendingPassiveProfilerEffect(finishedWork);
                     var parentFiber = finishedWork.return;
-                    outer: while (parentFiber !== null) {
-                      switch (parentFiber.tag) {
-                        case HostRoot:
-                          var root2 = parentFiber.stateNode;
-                          root2.effectDuration += effectDuration;
-                          break outer;
-                        case Profiler:
-                          var parentStateNode = parentFiber.stateNode;
-                          parentStateNode.effectDuration += effectDuration;
-                          break outer;
+                    outer:
+                      while (parentFiber !== null) {
+                        switch (parentFiber.tag) {
+                          case HostRoot:
+                            var root2 = parentFiber.stateNode;
+                            root2.effectDuration += effectDuration;
+                            break outer;
+                          case Profiler:
+                            var parentStateNode = parentFiber.stateNode;
+                            parentStateNode.effectDuration += effectDuration;
+                            break outer;
+                        }
+                        parentFiber = parentFiber.return;
                       }
-                      parentFiber = parentFiber.return;
-                    }
                   }
                 }
                 break;
@@ -30040,7 +30044,8 @@ var require_react_dom_development = __commonJS({
                     captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                   }
                 }
-              } else if ((node.tag === OffscreenComponent || node.tag === LegacyHiddenComponent) && node.memoizedState !== null && node !== finishedWork) ;
+              } else if ((node.tag === OffscreenComponent || node.tag === LegacyHiddenComponent) && node.memoizedState !== null && node !== finishedWork)
+                ;
               else if (node.child !== null) {
                 node.child.return = node;
                 node = node.child;
@@ -30170,30 +30175,31 @@ var require_react_dom_development = __commonJS({
         __name2(isHostParent, "isHostParent");
         function getHostSibling(fiber) {
           var node = fiber;
-          siblings: while (true) {
-            while (node.sibling === null) {
-              if (node.return === null || isHostParent(node.return)) {
-                return null;
+          siblings:
+            while (true) {
+              while (node.sibling === null) {
+                if (node.return === null || isHostParent(node.return)) {
+                  return null;
+                }
+                node = node.return;
               }
-              node = node.return;
-            }
-            node.sibling.return = node.return;
-            node = node.sibling;
-            while (node.tag !== HostComponent && node.tag !== HostText && node.tag !== DehydratedFragment) {
-              if (node.flags & Placement) {
-                continue siblings;
+              node.sibling.return = node.return;
+              node = node.sibling;
+              while (node.tag !== HostComponent && node.tag !== HostText && node.tag !== DehydratedFragment) {
+                if (node.flags & Placement) {
+                  continue siblings;
+                }
+                if (node.child === null || node.tag === HostPortal) {
+                  continue siblings;
+                } else {
+                  node.child.return = node;
+                  node = node.child;
+                }
               }
-              if (node.child === null || node.tag === HostPortal) {
-                continue siblings;
-              } else {
-                node.child.return = node;
-                node = node.child;
+              if (!(node.flags & Placement)) {
+                return node.stateNode;
               }
             }
-            if (!(node.flags & Placement)) {
-              return node.stateNode;
-            }
-          }
         }
         __name(getHostSibling, "getHostSibling");
         __name2(getHostSibling, "getHostSibling");
@@ -30217,7 +30223,6 @@ var require_react_dom_development = __commonJS({
               insertOrAppendPlacementNodeIntoContainer(finishedWork, _before, _parent);
               break;
             }
-            // eslint-disable-next-line-no-fallthrough
             default:
               throw new Error("Invalid host parent fiber. This error is likely caused by a bug in React. Please file an issue.");
           }
@@ -30234,7 +30239,8 @@ var require_react_dom_development = __commonJS({
             } else {
               appendChildToContainer(parent, stateNode);
             }
-          } else if (tag === HostPortal) ;
+          } else if (tag === HostPortal)
+            ;
           else {
             var child = node.child;
             if (child !== null) {
@@ -30259,7 +30265,8 @@ var require_react_dom_development = __commonJS({
             } else {
               appendChild(parent, stateNode);
             }
-          } else if (tag === HostPortal) ;
+          } else if (tag === HostPortal)
+            ;
           else {
             var child = node.child;
             if (child !== null) {
@@ -30279,26 +30286,27 @@ var require_react_dom_development = __commonJS({
         function commitDeletionEffects(root2, returnFiber, deletedFiber) {
           {
             var parent = returnFiber;
-            findParent: while (parent !== null) {
-              switch (parent.tag) {
-                case HostComponent: {
-                  hostParent = parent.stateNode;
-                  hostParentIsContainer = false;
-                  break findParent;
+            findParent:
+              while (parent !== null) {
+                switch (parent.tag) {
+                  case HostComponent: {
+                    hostParent = parent.stateNode;
+                    hostParentIsContainer = false;
+                    break findParent;
+                  }
+                  case HostRoot: {
+                    hostParent = parent.stateNode.containerInfo;
+                    hostParentIsContainer = true;
+                    break findParent;
+                  }
+                  case HostPortal: {
+                    hostParent = parent.stateNode.containerInfo;
+                    hostParentIsContainer = true;
+                    break findParent;
+                  }
                 }
-                case HostRoot: {
-                  hostParent = parent.stateNode.containerInfo;
-                  hostParentIsContainer = true;
-                  break findParent;
-                }
-                case HostPortal: {
-                  hostParent = parent.stateNode.containerInfo;
-                  hostParentIsContainer = true;
-                  break findParent;
-                }
+                parent = parent.return;
               }
-              parent = parent.return;
-            }
             if (hostParent === null) {
               throw new Error("Expected to find a host parent. This error is likely caused by a bug in React. Please file an issue.");
             }
@@ -30327,7 +30335,6 @@ var require_react_dom_development = __commonJS({
                 safelyDetachRef(deletedFiber, nearestMountedAncestor);
               }
             }
-            // eslint-disable-next-line-no-fallthrough
             case HostText: {
               {
                 var prevHostParent = hostParent;
@@ -31681,9 +31688,6 @@ var require_react_dom_development = __commonJS({
             case RootFatalErrored: {
               throw new Error("Root did not complete. This is a bug in React.");
             }
-            // Flow knows about invariant, so it complains if I add a break
-            // statement, but eslint doesn't know about invariant, so it complains
-            // if I do. eslint-disable-next-line no-fallthrough
             case RootErrored: {
               commitRoot(root2, workInProgressRootRecoverableErrors, workInProgressTransitions);
               break;
@@ -33452,71 +33456,67 @@ var require_react_dom_development = __commonJS({
           } else if (typeof type === "string") {
             fiberTag = HostComponent;
           } else {
-            getTag: switch (type) {
-              case REACT_FRAGMENT_TYPE:
-                return createFiberFromFragment(pendingProps.children, mode2, lanes, key);
-              case REACT_STRICT_MODE_TYPE:
-                fiberTag = Mode;
-                mode2 |= StrictLegacyMode;
-                if ((mode2 & ConcurrentMode) !== NoMode) {
-                  mode2 |= StrictEffectsMode;
-                }
-                break;
-              case REACT_PROFILER_TYPE:
-                return createFiberFromProfiler(pendingProps, mode2, lanes, key);
-              case REACT_SUSPENSE_TYPE:
-                return createFiberFromSuspense(pendingProps, mode2, lanes, key);
-              case REACT_SUSPENSE_LIST_TYPE:
-                return createFiberFromSuspenseList(pendingProps, mode2, lanes, key);
-              case REACT_OFFSCREEN_TYPE:
-                return createFiberFromOffscreen(pendingProps, mode2, lanes, key);
-              case REACT_LEGACY_HIDDEN_TYPE:
-              // eslint-disable-next-line no-fallthrough
-              case REACT_SCOPE_TYPE:
-              // eslint-disable-next-line no-fallthrough
-              case REACT_CACHE_TYPE:
-              // eslint-disable-next-line no-fallthrough
-              case REACT_TRACING_MARKER_TYPE:
-              // eslint-disable-next-line no-fallthrough
-              case REACT_DEBUG_TRACING_MODE_TYPE:
-              // eslint-disable-next-line no-fallthrough
-              default: {
-                if (typeof type === "object" && type !== null) {
-                  switch (type.$$typeof) {
-                    case REACT_PROVIDER_TYPE:
-                      fiberTag = ContextProvider;
-                      break getTag;
-                    case REACT_CONTEXT_TYPE:
-                      fiberTag = ContextConsumer;
-                      break getTag;
-                    case REACT_FORWARD_REF_TYPE:
-                      fiberTag = ForwardRef;
-                      {
-                        resolvedType = resolveForwardRefForHotReloading(resolvedType);
-                      }
-                      break getTag;
-                    case REACT_MEMO_TYPE:
-                      fiberTag = MemoComponent;
-                      break getTag;
-                    case REACT_LAZY_TYPE:
-                      fiberTag = LazyComponent;
-                      resolvedType = null;
-                      break getTag;
+            getTag:
+              switch (type) {
+                case REACT_FRAGMENT_TYPE:
+                  return createFiberFromFragment(pendingProps.children, mode2, lanes, key);
+                case REACT_STRICT_MODE_TYPE:
+                  fiberTag = Mode;
+                  mode2 |= StrictLegacyMode;
+                  if ((mode2 & ConcurrentMode) !== NoMode) {
+                    mode2 |= StrictEffectsMode;
                   }
-                }
-                var info = "";
-                {
-                  if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
-                    info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+                  break;
+                case REACT_PROFILER_TYPE:
+                  return createFiberFromProfiler(pendingProps, mode2, lanes, key);
+                case REACT_SUSPENSE_TYPE:
+                  return createFiberFromSuspense(pendingProps, mode2, lanes, key);
+                case REACT_SUSPENSE_LIST_TYPE:
+                  return createFiberFromSuspenseList(pendingProps, mode2, lanes, key);
+                case REACT_OFFSCREEN_TYPE:
+                  return createFiberFromOffscreen(pendingProps, mode2, lanes, key);
+                case REACT_LEGACY_HIDDEN_TYPE:
+                case REACT_SCOPE_TYPE:
+                case REACT_CACHE_TYPE:
+                case REACT_TRACING_MARKER_TYPE:
+                case REACT_DEBUG_TRACING_MODE_TYPE:
+                default: {
+                  if (typeof type === "object" && type !== null) {
+                    switch (type.$$typeof) {
+                      case REACT_PROVIDER_TYPE:
+                        fiberTag = ContextProvider;
+                        break getTag;
+                      case REACT_CONTEXT_TYPE:
+                        fiberTag = ContextConsumer;
+                        break getTag;
+                      case REACT_FORWARD_REF_TYPE:
+                        fiberTag = ForwardRef;
+                        {
+                          resolvedType = resolveForwardRefForHotReloading(resolvedType);
+                        }
+                        break getTag;
+                      case REACT_MEMO_TYPE:
+                        fiberTag = MemoComponent;
+                        break getTag;
+                      case REACT_LAZY_TYPE:
+                        fiberTag = LazyComponent;
+                        resolvedType = null;
+                        break getTag;
+                    }
                   }
-                  var ownerName = owner ? getComponentNameFromFiber(owner) : null;
-                  if (ownerName) {
-                    info += "\n\nCheck the render method of `" + ownerName + "`.";
+                  var info = "";
+                  {
+                    if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
+                      info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+                    }
+                    var ownerName = owner ? getComponentNameFromFiber(owner) : null;
+                    if (ownerName) {
+                      info += "\n\nCheck the render method of `" + ownerName + "`.";
+                    }
                   }
+                  throw new Error("Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) " + ("but got: " + (type == null ? type : typeof type) + "." + info));
                 }
-                throw new Error("Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) " + ("but got: " + (type == null ? type : typeof type) + "." + info));
               }
-            }
           }
           var fiber = createFiber(fiberTag, pendingProps, key, mode2);
           fiber.elementType = type;
@@ -34762,7 +34762,7 @@ var require_react_dom_development = __commonJS({
 var require_react_dom = __commonJS({
   "../node_modules/react-dom/index.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (false) {
       checkDCE();
       module.exports = null;
@@ -34773,13 +34773,14 @@ var require_react_dom = __commonJS({
 });
 var require_react_router_development = __commonJS({
   "../node_modules/react-router/dist/umd/react-router.development.js"(exports, module) {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require_react(), require_router_cjs()) : typeof define === "function" && define.amd ? define(["exports", "react", "@remix-run/router"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.ReactRouter = {}, global.React, global.RemixRouter));
     })(exports, function(exports2, React9, router) {
       "use strict";
       function _interopNamespace(e) {
-        if (e && e.__esModule) return e;
+        if (e && e.__esModule)
+          return e;
         var n = /* @__PURE__ */ Object.create(null);
         if (e) {
           Object.keys(e).forEach(function(k) {
@@ -34787,9 +34788,9 @@ var require_react_router_development = __commonJS({
               var d = Object.getOwnPropertyDescriptor(e, k);
               Object.defineProperty(n, k, d.get ? d : {
                 enumerable: true,
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return e[k];
-                }, "get")
+                }
               });
             }
           });
@@ -34962,7 +34963,8 @@ var require_react_router_development = __commonJS({
             options = {};
           }
           router.UNSAFE_warning(activeRef.current, navigateEffectWarning);
-          if (!activeRef.current) return;
+          if (!activeRef.current)
+            return;
           if (typeof to === "number") {
             navigator2.go(to);
             return;
@@ -35140,12 +35142,6 @@ var require_react_router_development = __commonJS({
       __name2(DefaultErrorComponent, "DefaultErrorComponent");
       const defaultErrorElement = /* @__PURE__ */ React__namespace.createElement(DefaultErrorComponent, null);
       class RenderErrorBoundary extends React__namespace.Component {
-        static {
-          __name(this, "RenderErrorBoundary");
-        }
-        static {
-          __name2(this, "RenderErrorBoundary");
-        }
         constructor(props) {
           super(props);
           this.state = {
@@ -35185,6 +35181,8 @@ var require_react_router_development = __commonJS({
           })) : this.props.children;
         }
       }
+      __name(RenderErrorBoundary, "RenderErrorBoundary");
+      __name2(RenderErrorBoundary, "RenderErrorBoundary");
       function RenderedRoute(_ref) {
         let {
           routeContext,
@@ -35506,7 +35504,8 @@ var require_react_router_development = __commonJS({
             options = {};
           }
           router.UNSAFE_warning(activeRef.current, navigateEffectWarning);
-          if (!activeRef.current) return;
+          if (!activeRef.current)
+            return;
           if (typeof to === "number") {
             router$1.navigate(to);
           } else {
@@ -35589,16 +35588,16 @@ var require_react_router_development = __commonJS({
           return {
             createHref: router$1.createHref,
             encodeLocation: router$1.encodeLocation,
-            go: /* @__PURE__ */ __name2((n) => router$1.navigate(n), "go"),
-            push: /* @__PURE__ */ __name2((to, state2, opts) => router$1.navigate(to, {
+            go: (n) => router$1.navigate(n),
+            push: (to, state2, opts) => router$1.navigate(to, {
               state: state2,
               preventScrollReset: opts == null ? void 0 : opts.preventScrollReset
-            }), "push"),
-            replace: /* @__PURE__ */ __name2((to, state2, opts) => router$1.navigate(to, {
+            }),
+            replace: (to, state2, opts) => router$1.navigate(to, {
               replace: true,
               state: state2,
               preventScrollReset: opts == null ? void 0 : opts.preventScrollReset
-            }), "replace")
+            })
           };
         }, [router$1]);
         let basename2 = router$1.basename || "/";
@@ -35815,12 +35814,6 @@ var require_react_router_development = __commonJS({
       const neverSettledPromise = new Promise(() => {
       });
       class AwaitErrorBoundary extends React__namespace.Component {
-        static {
-          __name(this, "AwaitErrorBoundary");
-        }
-        static {
-          __name2(this, "AwaitErrorBoundary");
-        }
         constructor(props) {
           super(props);
           this.state = {
@@ -35847,10 +35840,10 @@ var require_react_router_development = __commonJS({
             status = AwaitRenderStatus.success;
             promise = Promise.resolve();
             Object.defineProperty(promise, "_tracked", {
-              get: /* @__PURE__ */ __name2(() => true, "get")
+              get: () => true
             });
             Object.defineProperty(promise, "_data", {
-              get: /* @__PURE__ */ __name2(() => resolve, "get")
+              get: () => resolve
             });
           } else if (this.state.error) {
             status = AwaitRenderStatus.error;
@@ -35858,10 +35851,10 @@ var require_react_router_development = __commonJS({
             promise = Promise.reject().catch(() => {
             });
             Object.defineProperty(promise, "_tracked", {
-              get: /* @__PURE__ */ __name2(() => true, "get")
+              get: () => true
             });
             Object.defineProperty(promise, "_error", {
-              get: /* @__PURE__ */ __name2(() => renderError, "get")
+              get: () => renderError
             });
           } else if (resolve._tracked) {
             promise = resolve;
@@ -35869,12 +35862,12 @@ var require_react_router_development = __commonJS({
           } else {
             status = AwaitRenderStatus.pending;
             Object.defineProperty(resolve, "_tracked", {
-              get: /* @__PURE__ */ __name2(() => true, "get")
+              get: () => true
             });
             promise = resolve.then((data) => Object.defineProperty(resolve, "_data", {
-              get: /* @__PURE__ */ __name2(() => data, "get")
+              get: () => data
             }), (error) => Object.defineProperty(resolve, "_error", {
-              get: /* @__PURE__ */ __name2(() => error, "get")
+              get: () => error
             }));
           }
           if (status === AwaitRenderStatus.error && promise._error instanceof router.AbortedDeferredError) {
@@ -35898,6 +35891,8 @@ var require_react_router_development = __commonJS({
           throw promise;
         }
       }
+      __name(AwaitErrorBoundary, "AwaitErrorBoundary");
+      __name2(AwaitErrorBoundary, "AwaitErrorBoundary");
       function ResolveAwait(_ref8) {
         let {
           children
@@ -36018,87 +36013,87 @@ var require_react_router_development = __commonJS({
       __name2(createMemoryRouter, "createMemoryRouter");
       Object.defineProperty(exports2, "AbortedDeferredError", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.AbortedDeferredError;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "NavigationType", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.Action;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "createPath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.createPath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "defer", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.defer;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "generatePath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.generatePath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "isRouteErrorResponse", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.isRouteErrorResponse;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "json", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.json;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "matchPath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.matchPath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "matchRoutes", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.matchRoutes;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "parsePath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.parsePath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "redirect", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.redirect;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "redirectDocument", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.redirectDocument;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "replace", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.replace;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "resolvePath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.resolvePath;
-        }, "get")
+        }
       });
       exports2.Await = Await2;
       exports2.MemoryRouter = MemoryRouter;
@@ -36149,7 +36144,7 @@ var require_react_router_development = __commonJS({
 var require_main = __commonJS({
   "../node_modules/react-router/dist/main.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (false) {
       module.exports = null;
     } else {
@@ -36159,13 +36154,14 @@ var require_main = __commonJS({
 });
 var require_react_router_dom_development = __commonJS({
   "../node_modules/react-router-dom/dist/umd/react-router-dom.development.js"(exports, module) {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     (function(global, factory) {
       typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require_react(), require_react_dom(), require_main(), require_router_cjs()) : typeof define === "function" && define.amd ? define(["exports", "react", "react-dom", "react-router", "@remix-run/router"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.ReactRouterDOM = {}, global.React, global.ReactDOM, global.ReactRouter, global.RemixRouter));
     })(exports, function(exports2, React9, ReactDOM, reactRouter, router) {
       "use strict";
       function _interopNamespace(e) {
-        if (e && e.__esModule) return e;
+        if (e && e.__esModule)
+          return e;
         var n = /* @__PURE__ */ Object.create(null);
         if (e) {
           Object.keys(e).forEach(function(k) {
@@ -36173,9 +36169,9 @@ var require_react_router_dom_development = __commonJS({
               var d = Object.getOwnPropertyDescriptor(e, k);
               Object.defineProperty(n, k, d.get ? d : {
                 enumerable: true,
-                get: /* @__PURE__ */ __name2(function() {
+                get: function() {
                   return e[k];
-                }, "get")
+                }
               });
             }
           });
@@ -36204,13 +36200,15 @@ var require_react_router_dom_development = __commonJS({
       __name(_extends2, "_extends2");
       __name2(_extends2, "_extends");
       function _objectWithoutPropertiesLoose(source, excluded) {
-        if (source == null) return {};
+        if (source == null)
+          return {};
         var target = {};
         var sourceKeys = Object.keys(source);
         var key, i;
         for (i = 0; i < sourceKeys.length; i++) {
           key = sourceKeys[i];
-          if (excluded.indexOf(key) >= 0) continue;
+          if (excluded.indexOf(key) >= 0)
+            continue;
           target[key] = source[key];
         }
         return target;
@@ -36420,7 +36418,8 @@ var require_react_router_dom_development = __commonJS({
       __name(parseHydrationData, "parseHydrationData");
       __name2(parseHydrationData, "parseHydrationData");
       function deserializeErrors(errors) {
-        if (!errors) return null;
+        if (!errors)
+          return null;
         let entries = Object.entries(errors);
         let serialized = {};
         for (let [key, val] of entries) {
@@ -36486,12 +36485,6 @@ var require_react_router_dom_development = __commonJS({
       __name(flushSyncSafe, "flushSyncSafe");
       __name2(flushSyncSafe, "flushSyncSafe");
       class Deferred {
-        static {
-          __name(this, "Deferred");
-        }
-        static {
-          __name2(this, "Deferred");
-        }
         // @ts-expect-error - no initializer
         // @ts-expect-error - no initializer
         constructor() {
@@ -36512,6 +36505,8 @@ var require_react_router_dom_development = __commonJS({
           });
         }
       }
+      __name(Deferred, "Deferred");
+      __name2(Deferred, "Deferred");
       function RouterProvider(_ref) {
         let {
           fallbackElement,
@@ -36654,16 +36649,16 @@ var require_react_router_dom_development = __commonJS({
           return {
             createHref: router$1.createHref,
             encodeLocation: router$1.encodeLocation,
-            go: /* @__PURE__ */ __name2((n) => router$1.navigate(n), "go"),
-            push: /* @__PURE__ */ __name2((to, state2, opts) => router$1.navigate(to, {
+            go: (n) => router$1.navigate(n),
+            push: (to, state2, opts) => router$1.navigate(to, {
               state: state2,
               preventScrollReset: opts == null ? void 0 : opts.preventScrollReset
-            }), "push"),
-            replace: /* @__PURE__ */ __name2((to, state2, opts) => router$1.navigate(to, {
+            }),
+            replace: (to, state2, opts) => router$1.navigate(to, {
               replace: true,
               state: state2,
               preventScrollReset: opts == null ? void 0 : opts.preventScrollReset
-            }), "replace")
+            })
           };
         }, [router$1]);
         let basename2 = router$1.basename || "/";
@@ -36867,7 +36862,8 @@ var require_react_router_dom_development = __commonJS({
           viewTransition
         });
         function handleClick(event) {
-          if (onClick) onClick(event);
+          if (onClick)
+            onClick(event);
           if (!event.defaultPrevented) {
             internalOnClick(event);
           }
@@ -36970,7 +36966,8 @@ var require_react_router_dom_development = __commonJS({
         let formMethod = method.toLowerCase() === "get" ? "get" : "post";
         let submitHandler = /* @__PURE__ */ __name2((event) => {
           onSubmit && onSubmit(event);
-          if (event.defaultPrevented) return;
+          if (event.defaultPrevented)
+            return;
           event.preventDefault();
           let submitter = event.nativeEvent.submitter;
           let submitMethod = (submitter == null ? void 0 : submitter.getAttribute("formmethod")) || method;
@@ -37426,321 +37423,321 @@ var require_react_router_dom_development = __commonJS({
       __name2(useViewTransitionState2, "useViewTransitionState");
       Object.defineProperty(exports2, "AbortedDeferredError", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.AbortedDeferredError;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "Await", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.Await;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "MemoryRouter", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.MemoryRouter;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "Navigate", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.Navigate;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "NavigationType", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.NavigationType;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "Outlet", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.Outlet;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "Route", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.Route;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "Router", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.Router;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "Routes", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.Routes;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_DataRouterContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.UNSAFE_DataRouterContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_DataRouterStateContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.UNSAFE_DataRouterStateContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_LocationContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.UNSAFE_LocationContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_NavigationContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.UNSAFE_NavigationContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_RouteContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.UNSAFE_RouteContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_useRouteId", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.UNSAFE_useRouteId;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "createMemoryRouter", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.createMemoryRouter;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "createPath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.createPath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "createRoutesFromChildren", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.createRoutesFromChildren;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "createRoutesFromElements", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.createRoutesFromElements;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "defer", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.defer;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "generatePath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.generatePath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "isRouteErrorResponse", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.isRouteErrorResponse;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "json", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.json;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "matchPath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.matchPath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "matchRoutes", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.matchRoutes;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "parsePath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.parsePath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "redirect", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.redirect;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "redirectDocument", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.redirectDocument;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "renderMatches", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.renderMatches;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "replace", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.replace;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "resolvePath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.resolvePath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useActionData", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useActionData;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useAsyncError", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useAsyncError;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useAsyncValue", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useAsyncValue;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useBlocker", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useBlocker;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useHref", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useHref;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useInRouterContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useInRouterContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useLoaderData", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useLoaderData;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useLocation", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useLocation;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useMatch", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useMatch;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useMatches", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useMatches;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useNavigate", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useNavigate;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useNavigation", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useNavigation;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useNavigationType", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useNavigationType;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useOutlet", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useOutlet;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useOutletContext", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useOutletContext;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useParams", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useParams;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useResolvedPath", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useResolvedPath;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useRevalidator", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useRevalidator;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useRouteError", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useRouteError;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useRouteLoaderData", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useRouteLoaderData;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "useRoutes", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return reactRouter.useRoutes;
-        }, "get")
+        }
       });
       Object.defineProperty(exports2, "UNSAFE_ErrorResponseImpl", {
         enumerable: true,
-        get: /* @__PURE__ */ __name2(function() {
+        get: function() {
           return router.UNSAFE_ErrorResponseImpl;
-        }, "get")
+        }
       });
       exports2.BrowserRouter = BrowserRouter;
       exports2.Form = Form2;
@@ -37772,7 +37769,7 @@ var require_react_router_dom_development = __commonJS({
 var require_main2 = __commonJS({
   "../node_modules/react-router-dom/dist/main.js"(exports, module) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (false) {
       module.exports = null;
     } else {
@@ -37797,7 +37794,7 @@ function _extends() {
 __name(_extends, "_extends");
 var init_rollupPluginBabelHelpers = __esm({
   "../node_modules/@remix-run/react/dist/esm/_virtual/_rollupPluginBabelHelpers.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     __name2(_extends, "_extends");
   }
 });
@@ -37809,7 +37806,7 @@ function invariant(value, message) {
 __name(invariant, "invariant");
 var init_invariant = __esm({
   "../node_modules/@remix-run/react/dist/esm/invariant.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     __name2(invariant, "invariant");
   }
 });
@@ -37839,7 +37836,7 @@ async function loadRouteModule(route, routeModulesCache) {
 __name(loadRouteModule, "loadRouteModule");
 var init_routeModules = __esm({
   "../node_modules/@remix-run/react/dist/esm/routeModules.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     __name2(loadRouteModule, "loadRouteModule");
   }
 });
@@ -37889,7 +37886,8 @@ __name(getKeyedPrefetchLinks, "getKeyedPrefetchLinks");
 function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location, future2, mode2) {
   let path = parsePathPatch(page);
   let isNew = /* @__PURE__ */ __name2((match2, index) => {
-    if (!currentMatches[index]) return true;
+    if (!currentMatches[index])
+      return true;
     return match2.route.id !== currentMatches[index].route.id;
   }, "isNew");
   let matchPathChanged = /* @__PURE__ */ __name2((match2, index) => {
@@ -38005,14 +38003,15 @@ function dedupeLinkDescriptors(descriptors, preloads) {
 __name(dedupeLinkDescriptors, "dedupeLinkDescriptors");
 function parsePathPatch(href) {
   let path = (0, import_react_router_dom.parsePath)(href);
-  if (path.search === void 0) path.search = "";
+  if (path.search === void 0)
+    path.search = "";
   return path;
 }
 __name(parsePathPatch, "parsePathPatch");
 var import_react_router_dom;
 var init_links = __esm({
   "../node_modules/@remix-run/react/dist/esm/links.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     import_react_router_dom = __toESM(require_main2());
     init_routeModules();
     __name2(getKeyedLinksForMatches, "getKeyedLinksForMatches");
@@ -38043,7 +38042,7 @@ var ESCAPE_LOOKUP;
 var ESCAPE_REGEX;
 var init_markup = __esm({
   "../node_modules/@remix-run/react/dist/esm/markup.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     ESCAPE_LOOKUP = {
       "&": "\\u0026",
       ">": "\\u003e",
@@ -38132,7 +38131,7 @@ __name(singleFetchUrl, "singleFetchUrl");
 var React;
 var init_single_fetch = __esm({
   "../node_modules/@remix-run/react/dist/esm/single-fetch.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     React = __toESM(require_react());
     init_markup();
     __name2(StreamTransfer, "StreamTransfer");
@@ -38219,17 +38218,11 @@ var import_react_router_dom2;
 var RemixErrorBoundary;
 var init_errorBoundaries = __esm({
   "../node_modules/@remix-run/react/dist/esm/errorBoundaries.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     React2 = __toESM(require_react());
     import_react_router_dom2 = __toESM(require_main2());
     init_components();
-    RemixErrorBoundary = class extends React2.Component {
-      static {
-        __name(this, "RemixErrorBoundary");
-      }
-      static {
-        __name2(this, "RemixErrorBoundary");
-      }
+    RemixErrorBoundary = /* @__PURE__ */ __name(class extends React2.Component {
       constructor(props) {
         super(props);
         this.state = {
@@ -38264,7 +38257,8 @@ var init_errorBoundaries = __esm({
           return this.props.children;
         }
       }
-    };
+    }, "RemixErrorBoundary");
+    __name2(RemixErrorBoundary, "RemixErrorBoundary");
     __name2(RemixRootDefaultErrorBoundary, "RemixRootDefaultErrorBoundary");
     __name2(BoundaryShell, "BoundaryShell");
   }
@@ -38290,7 +38284,7 @@ __name(RemixRootDefaultHydrateFallback, "RemixRootDefaultHydrateFallback");
 var React3;
 var init_fallback = __esm({
   "../node_modules/@remix-run/react/dist/esm/fallback.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     React3 = __toESM(require_react());
     init_errorBoundaries();
     __name2(RemixRootDefaultHydrateFallback, "RemixRootDefaultHydrateFallback");
@@ -38341,7 +38335,7 @@ function getRouteComponents(route, routeModule, isSpaMode2) {
 }
 __name(getRouteComponents, "getRouteComponents");
 function createServerRoutes(manifest, routeModules, future2, isSpaMode2, parentId = "", routesByParentId = groupRoutesByParentId(manifest), spaModeLazyPromise = Promise.resolve({
-  Component: /* @__PURE__ */ __name2(() => null, "Component")
+  Component: () => null
 })) {
   return (routesByParentId[parentId] || []).map((route) => {
     let routeModule = routeModules[route.id];
@@ -38367,13 +38361,15 @@ function createServerRoutes(manifest, routeModules, future2, isSpaMode2, parentI
       // for a static render
     };
     let children = createServerRoutes(manifest, routeModules, future2, isSpaMode2, route.id, routesByParentId, spaModeLazyPromise);
-    if (children.length > 0) dataRoute.children = children;
+    if (children.length > 0)
+      dataRoute.children = children;
     return dataRoute;
   });
 }
 __name(createServerRoutes, "createServerRoutes");
 function getRouteModuleComponent(routeModule) {
-  if (routeModule.default == null) return void 0;
+  if (routeModule.default == null)
+    return void 0;
   let isEmptyObject = typeof routeModule.default === "object" && Object.keys(routeModule.default).length === 0;
   if (!isEmptyObject) {
     return routeModule.default;
@@ -38388,7 +38384,7 @@ var React4;
 var import_react_router_dom3;
 var init_routes = __esm({
   "../node_modules/@remix-run/react/dist/esm/routes.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     React4 = __toESM(require_react());
     import_react_router_dom3 = __toESM(require_main2());
     init_errorBoundaries();
@@ -38433,7 +38429,7 @@ var import_router;
 var React5;
 var init_fog_of_war = __esm({
   "../node_modules/@remix-run/react/dist/esm/fog-of-war.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     import_router = __toESM(require_router_cjs());
     React5 = __toESM(require_react());
     __name2(isFogOfWarEnabled, "isFogOfWarEnabled");
@@ -38482,7 +38478,8 @@ function usePrefetchBehavior(prefetch, theirElementProps) {
       let observer = new IntersectionObserver(callback, {
         threshold: 0.5
       });
-      if (ref.current) observer.observe(ref.current);
+      if (ref.current)
+        observer.observe(ref.current);
       return () => {
         observer.disconnect();
       };
@@ -38974,7 +38971,7 @@ function DeferredHydrationScript({
       scriptProps,
       serializeError
     }),
-    children: /* @__PURE__ */ __name2((data) => {
+    children: (data) => {
       return /* @__PURE__ */ React6.createElement("script", _extends({}, scriptProps, {
         async: true,
         suppressHydrationWarning: true,
@@ -38982,7 +38979,7 @@ function DeferredHydrationScript({
           __html: serializeData(routeId, dataKey, data)
         }
       }));
-    }, "children")
+    }
   }) : /* @__PURE__ */ React6.createElement("script", _extends({}, scriptProps, {
     async: true,
     suppressHydrationWarning: true,
@@ -39038,7 +39035,7 @@ var isHydrated;
 var LiveReload;
 var init_components = __esm({
   "../node_modules/@remix-run/react/dist/esm/components.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     init_rollupPluginBabelHelpers();
     React6 = __toESM(require_react());
     import_react_router_dom4 = __toESM(require_main2());
@@ -39245,7 +39242,8 @@ function ScrollRestoration({
   });
   let key = React7.useMemo(
     () => {
-      if (!getKey) return null;
+      if (!getKey)
+        return null;
       let userKey = getKey(location, matches);
       return userKey !== location.key ? userKey : null;
     },
@@ -39287,7 +39285,7 @@ var import_react_router_dom5;
 var STORAGE_KEY;
 var init_scroll_restoration = __esm({
   "../node_modules/@remix-run/react/dist/esm/scroll-restoration.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     init_rollupPluginBabelHelpers();
     React7 = __toESM(require_react());
     import_react_router_dom5 = __toESM(require_main2());
@@ -39299,14 +39297,15 @@ var init_scroll_restoration = __esm({
 var require_server2 = __commonJS({
   "../node_modules/react-router-dom/server.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     Object.defineProperty(exports, "__esModule", { value: true });
     var React9 = require_react();
     var router = require_router_cjs();
     var reactRouter = require_main();
     var reactRouterDom = require_main2();
     function _interopNamespace(e) {
-      if (e && e.__esModule) return e;
+      if (e && e.__esModule)
+        return e;
       var n = /* @__PURE__ */ Object.create(null);
       if (e) {
         Object.keys(e).forEach(function(k) {
@@ -39314,9 +39313,9 @@ var require_server2 = __commonJS({
             var d = Object.getOwnPropertyDescriptor(e, k);
             Object.defineProperty(n, k, d.get ? d : {
               enumerable: true,
-              get: /* @__PURE__ */ __name2(function() {
+              get: function() {
                 return e[k];
-              }, "get")
+              }
             });
           }
         });
@@ -39428,7 +39427,8 @@ var require_server2 = __commonJS({
     __name(DataRoutes, "DataRoutes");
     __name2(DataRoutes, "DataRoutes");
     function serializeErrors(errors) {
-      if (!errors) return null;
+      if (!errors)
+        return null;
       let entries = Object.entries(errors);
       let serialized = {};
       for (let [key, val] of entries) {
@@ -39682,7 +39682,7 @@ var React8;
 var import_server;
 var init_server = __esm({
   "../node_modules/@remix-run/react/dist/esm/server.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     React8 = __toESM(require_react());
     import_server = __toESM(require_server2());
     init_components();
@@ -39695,7 +39695,7 @@ var init_server = __esm({
 var import_react_router_dom6;
 var init_esm2 = __esm({
   "../node_modules/@remix-run/react/dist/esm/index.js"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     import_react_router_dom6 = __toESM(require_main2());
     init_components();
     init_scroll_restoration();
@@ -39718,7 +39718,7 @@ var naivePattern;
 var usedPattern;
 var init_isbot = __esm({
   "../node_modules/isbot/index.mjs"() {
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     fullPattern = " daum[ /]| deusu/| yadirectfetcher|(?:^| )site|(?:^|[^g])news|(?<! (?:channel/|google/))google(?!(app|/google| pixel))|(?<! cu)bot(?:[^\\w]|_|$)|(?<! ya(?:yandex)?)search|(?<!(?:lib))http|(?<![hg]m)score|@[a-z]|\\(at\\)[a-z]|\\[at\\][a-z]|^12345|^<|^[\\w \\.\\-\\(?:\\):]+(?:/v?\\d+(\\.\\d+)?(?:\\.\\d{1,10})?)?(?:,|$)|^[^ ]{50,}$|^active|^ad muncher|^amaya|^anglesharp/|^avsdevicesdk/|^bidtellect/|^biglotron|^bot|^btwebclient/|^clamav[ /]|^client/|^cobweb/|^coccoc|^custom|^ddg[_-]android|^discourse|^dispatch/\\d|^downcast/|^duckduckgo|^facebook|^fdm[ /]\\d|^getright/|^gozilla/|^hatena|^hobbit|^hotzonu|^hwcdn/|^jeode/|^jetty/|^jigsaw|^linkdex|^metauri|^microsoft bits|^movabletype|^mozilla/\\d\\.\\d \\(compatible;?\\)$|^mozilla/\\d\\.\\d \\w*$|^navermailapp|^netsurf|^nuclei|^offline explorer|^php|^postman|^postrank|^python|^rank|^read|^reed|^rest|^serf|^snapchat|^space bison|^svn|^swcd |^taringa|^thumbor/|^tumblr/|^user-agent:|^valid|^venus/fedoraplanet|^w3c|^webbandit/|^webcopier|^wget|^whatsapp|^xenu link sleuth|^yahoo|^yandex|^zdm/\\d|^zoom marketplace/|^{{.*}}$|adbeat\\.com|appinsights|archive|ask jeeves/teoma|bit\\.ly/|bluecoat drtr|browsex|burpcollaborator|capture|catch|check|chrome-lighthouse|chromeframe|classifier|cloud|crawl|cryptoapi|dareboost|datanyze|dataprovider|dejaclick|dmbrowser|download|evc-batch/|feed|firephp|freesafeip|gomezagent|headless|httrack|hubspot marketing grader|hydra|ibisbrowser|images|inspect|iplabel|ips-agent|java(?!;)|library|mail\\.ru/|manager|monitor|neustar wpm|nutch|offbyone|optimize|pageburst|parser|perl|phantom|pingdom|powermarks|preview|proxy|ptst[ /]\\d|reader|reputation|resolver|retriever|rexx;|rigor|robot|rss|scan|scrape|server|sogou|sparkler/|speedcurve|spider|splash|statuscake|stumbleupon\\.com|supercleaner|synapse|synthetic|torrent|trace|transcoder|twingly recon|url|virtuoso|wappalyzer|webglance|webkit2png|whatcms/|wordpress|zgrab";
     naivePattern = /bot|spider|crawl|http|lighthouse/i;
     __name2(isbot, "isbot");
@@ -39727,7 +39727,7 @@ var init_isbot = __esm({
 var require_react_dom_server_legacy_browser_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom-server-legacy.browser.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (true) {
       (function() {
         "use strict";
@@ -39912,7 +39912,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
           }
           switch (typeof value) {
             case "function":
-            // $FlowIssue symbol is perfectly valid here
             case "symbol":
               return true;
             case "boolean": {
@@ -40416,10 +40415,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             return typeof props.is === "string";
           }
           switch (tagName) {
-            // These are reserved SVG and MathML elements.
-            // We don't mind this list too much because we expect it to never grow.
-            // The alternative is to track the namespace in a few places which is convoluted.
-            // https://w3c.github.io/webcomponents/spec/custom/#custom-elements-core-concepts
             case "annotation-xml":
             case "color-profile":
             case "font-face":
@@ -41427,8 +41422,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
               return createFormatContext(MATHML_MODE, null);
             case "foreignObject":
               return createFormatContext(HTML_MODE, null);
-            // Table parents are special in that their children can only be created at all if they're
-            // wrapped in a table parent. So we need to encode that we're entering this mode.
             case "table":
               return createFormatContext(HTML_TABLE_MODE, null);
             case "thead":
@@ -41572,9 +41565,7 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             }
             case "defaultValue":
             case "defaultChecked":
-            // These shouldn't be set as attributes on generic HTML elements.
             case "innerHTML":
-            // Must use dangerouslySetInnerHTML instead.
             case "suppressContentEditableWarning":
             case "suppressHydrationWarning":
               return;
@@ -41590,7 +41581,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
           if (propertyInfo !== null) {
             switch (typeof value) {
               case "function":
-              // $FlowIssue symbol is perfectly valid here
               case "symbol":
                 return;
               case "boolean": {
@@ -41610,7 +41600,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
               case OVERLOADED_BOOLEAN:
                 if (value === true) {
                   target.push(attributeSeparator, attributeNameChunk, attributeEmptyString);
-                } else if (value === false) ;
+                } else if (value === false)
+                  ;
                 else {
                   target.push(attributeSeparator, attributeNameChunk, attributeAssign, stringToChunk(escapeTextForBrowser(value)), attributeEnd);
                 }
@@ -41638,7 +41629,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
           } else if (isAttributeNameSafe(name)) {
             switch (typeof value) {
               case "function":
-              // $FlowIssue symbol is perfectly valid here
               case "symbol":
                 return;
               case "boolean": {
@@ -41785,11 +41775,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 case "dangerouslySetInnerHTML":
                   innerHTML = propValue;
                   break;
-                // eslint-disable-next-line-no-fallthrough
                 case "value":
                   value = propValue;
-                // We intentionally fallthrough to also set the attribute on the node.
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -41869,7 +41856,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 case "children":
                 case "dangerouslySetInnerHTML":
                   throw new Error("input is a self-closing tag and must neither have `children` nor use `dangerouslySetInnerHTML`.");
-                // eslint-disable-next-line-no-fallthrough
                 case "defaultChecked":
                   defaultChecked = propValue;
                   break;
@@ -41933,7 +41919,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                   break;
                 case "dangerouslySetInnerHTML":
                   throw new Error("`dangerouslySetInnerHTML` does not make sense on <textarea>.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -41990,7 +41975,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 case "children":
                 case "dangerouslySetInnerHTML":
                   throw new Error(tag + " is a self-closing tag and must neither have `children` nor use `dangerouslySetInnerHTML`.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -42014,7 +41998,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 case "children":
                 case "dangerouslySetInnerHTML":
                   throw new Error("menuitems cannot have `children` nor `dangerouslySetInnerHTML`.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -42041,7 +42024,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                   break;
                 case "dangerouslySetInnerHTML":
                   throw new Error("`dangerouslySetInnerHTML` does not make sense on <title>.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -42215,7 +42197,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             }
           }
           switch (type) {
-            // Special tags
             case "select":
               return pushStartSelect(target, props, responseState);
             case "option":
@@ -42228,12 +42209,10 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
               return pushStartMenuItem(target, props, responseState);
             case "title":
               return pushStartTitle(target, props, responseState);
-            // Newline eating tags
             case "listing":
             case "pre": {
               return pushStartPreformattedElement(target, props, type, responseState);
             }
-            // Omitted close tags
             case "area":
             case "base":
             case "br":
@@ -42250,8 +42229,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             case "wbr": {
               return pushSelfClosing(target, props, type, responseState);
             }
-            // These are reserved SVG and MathML elements, that are never custom elements.
-            // https://w3c.github.io/webcomponents/spec/custom/#custom-elements-core-concepts
             case "annotation-xml":
             case "color-profile":
             case "font-face":
@@ -42283,9 +42260,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
         var endTag2 = stringToPrecomputedChunk(">");
         function pushEndInstance(target, type, props) {
           switch (type) {
-            // Omitted close tags
-            // TODO: Instead of repeating this switch we could try to pass a flag from above.
-            // That would require returning a tuple. Which might be ok if it gets inlined.
             case "area":
             case "base":
             case "br":
@@ -42449,10 +42423,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
               writeChunk(destination, stringToChunk(id.toString(16)));
               return writeChunkAndReturn(destination, startSegmentTable2);
             }
-            // TODO: For the rest of these, there will be extra wrapper nodes that never
-            // get deleted from the document. We need to delete the table too as part
-            // of the injected scripts. They are invisible though so it's not too terrible
-            // and it's kind of an edge case to suspend in a table. Totally supported though.
             case HTML_TABLE_BODY_MODE: {
               writeChunk(destination, startSegmentTableBody);
               writeChunk(destination, responseState.segmentPrefix);
@@ -42597,7 +42567,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
           var escaped = JSON.stringify(input);
           return escaped.replace(regexForJSStringsInScripts, function(match2) {
             switch (match2) {
-              // santizing breaking out of strings and script tags
               case "<":
                 return "\\u003c";
               case "\u2028":
@@ -42932,9 +42901,9 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 throw Error();
               }, "Fake");
               Object.defineProperty(Fake.prototype, "props", {
-                set: /* @__PURE__ */ __name2(function() {
+                set: function() {
                   throw Error();
-                }, "set")
+                }
               });
               if (typeof Reflect === "object" && Reflect.construct) {
                 try {
@@ -43193,7 +43162,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
         __name(pushNode, "pushNode");
         __name2(pushNode, "pushNode");
         function popToNearestCommonAncestor(prev, next) {
-          if (prev === next) ;
+          if (prev === next)
+            ;
           else {
             popNode(prev);
             var parentPrev = prev.parent;
@@ -43408,10 +43378,10 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
         __name(warnNoop, "warnNoop");
         __name2(warnNoop, "warnNoop");
         var classComponentUpdater = {
-          isMounted: /* @__PURE__ */ __name2(function(inst) {
+          isMounted: function(inst) {
             return false;
-          }, "isMounted"),
-          enqueueSetState: /* @__PURE__ */ __name2(function(inst, payload, callback) {
+          },
+          enqueueSetState: function(inst, payload, callback) {
             var internals = get(inst);
             if (internals.queue === null) {
               warnNoop(inst, "setState");
@@ -43423,8 +43393,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 }
               }
             }
-          }, "enqueueSetState"),
-          enqueueReplaceState: /* @__PURE__ */ __name2(function(inst, payload, callback) {
+          },
+          enqueueReplaceState: function(inst, payload, callback) {
             var internals = get(inst);
             internals.replace = true;
             internals.queue = [payload];
@@ -43433,8 +43403,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 warnOnInvalidCallback(callback, "setState");
               }
             }
-          }, "enqueueReplaceState"),
-          enqueueForceUpdate: /* @__PURE__ */ __name2(function(inst, callback) {
+          },
+          enqueueForceUpdate: function(inst, callback) {
             var internals = get(inst);
             if (internals.queue === null) {
               warnNoop(inst, "forceUpdate");
@@ -43445,7 +43415,7 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
                 }
               }
             }
-          }, "enqueueForceUpdate")
+          }
         };
         function applyDerivedStateFromProps(instance, ctor, getDerivedStateFromProps, prevState, nextProps) {
           var partialState = getDerivedStateFromProps(nextProps, prevState);
@@ -44287,9 +44257,9 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
           }
           var task = {
             node,
-            ping: /* @__PURE__ */ __name2(function() {
+            ping: function() {
               return pingTask(request, task);
-            }, "ping"),
+            },
             blockedBoundary,
             blockedSegment,
             abortSet,
@@ -44760,14 +44730,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             return;
           }
           switch (type) {
-            // TODO: LegacyHidden acts the same as a fragment. This only works
-            // because we currently assume that every instance of LegacyHidden is
-            // accompanied by a host component wrapper. In the hidden mode, the host
-            // component is given a `hidden` attribute, which ensures that the
-            // initial HTML is not visible. To support the use of LegacyHidden as a
-            // true fragment, without an extra DOM node, we would have to hide the
-            // initial HTML in some other way.
-            // TODO: Add REACT_OFFSCREEN_TYPE here too with the same capability.
             case REACT_LEGACY_HIDDEN_TYPE:
             case REACT_DEBUG_TRACING_MODE_TYPE:
             case REACT_STRICT_MODE_TYPE:
@@ -44785,7 +44747,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             case REACT_SCOPE_TYPE: {
               throw new Error("ReactDOMServer does not yet support scope components.");
             }
-            // eslint-disable-next-line-no-fallthrough
             case REACT_SUSPENSE_TYPE: {
               {
                 renderSuspenseBoundary(request, task, props);
@@ -44851,7 +44812,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             try {
               return renderNodeDestructiveImpl(request, task, node);
             } catch (x) {
-              if (typeof x === "object" && x !== null && typeof x.then === "function") ;
+              if (typeof x === "object" && x !== null && typeof x.then === "function")
+                ;
               else {
                 lastBoundaryErrorComponentStackDev = lastBoundaryErrorComponentStackDev !== null ? lastBoundaryErrorComponentStackDev : getCurrentStackInDEV();
               }
@@ -44875,7 +44837,6 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
               }
               case REACT_PORTAL_TYPE:
                 throw new Error("Portals are not currently supported by the server renderer. Render them conditionally so that they only appear on the client render.");
-              // eslint-disable-next-line-no-fallthrough
               case REACT_LAZY_TYPE: {
                 var lazyNode = node;
                 var payload = lazyNode._payload;
@@ -45131,7 +45092,8 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
             }
           } else {
             boundary.pendingTasks--;
-            if (boundary.forceClientRender) ;
+            if (boundary.forceClientRender)
+              ;
             else if (boundary.pendingTasks === 0) {
               if (segment.parentFlushed) {
                 if (segment.status === COMPLETED) {
@@ -45497,16 +45459,16 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
           var fatalError2 = null;
           var result = "";
           var destination = {
-            push: /* @__PURE__ */ __name2(function(chunk) {
+            push: function(chunk) {
               if (chunk !== null) {
                 result += chunk;
               }
               return true;
-            }, "push"),
-            destroy: /* @__PURE__ */ __name2(function(error2) {
+            },
+            destroy: function(error2) {
               didFatal = true;
               fatalError2 = error2;
-            }, "destroy")
+            }
           };
           var readyToStream = false;
           function onShellReady() {
@@ -45560,7 +45522,7 @@ var require_react_dom_server_legacy_browser_development = __commonJS({
 var require_react_dom_server_browser_development = __commonJS({
   "../node_modules/react-dom/cjs/react-dom-server.browser.development.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     if (true) {
       (function() {
         "use strict";
@@ -45787,7 +45749,6 @@ var require_react_dom_server_browser_development = __commonJS({
           }
           switch (typeof value) {
             case "function":
-            // $FlowIssue symbol is perfectly valid here
             case "symbol":
               return true;
             case "boolean": {
@@ -46291,10 +46252,6 @@ var require_react_dom_server_browser_development = __commonJS({
             return typeof props.is === "string";
           }
           switch (tagName) {
-            // These are reserved SVG and MathML elements.
-            // We don't mind this list too much because we expect it to never grow.
-            // The alternative is to track the namespace in a few places which is convoluted.
-            // https://w3c.github.io/webcomponents/spec/custom/#custom-elements-core-concepts
             case "annotation-xml":
             case "color-profile":
             case "font-face":
@@ -47308,8 +47265,6 @@ var require_react_dom_server_browser_development = __commonJS({
               return createFormatContext(MATHML_MODE, null);
             case "foreignObject":
               return createFormatContext(HTML_MODE, null);
-            // Table parents are special in that their children can only be created at all if they're
-            // wrapped in a table parent. So we need to encode that we're entering this mode.
             case "table":
               return createFormatContext(HTML_TABLE_MODE, null);
             case "thead":
@@ -47453,9 +47408,7 @@ var require_react_dom_server_browser_development = __commonJS({
             }
             case "defaultValue":
             case "defaultChecked":
-            // These shouldn't be set as attributes on generic HTML elements.
             case "innerHTML":
-            // Must use dangerouslySetInnerHTML instead.
             case "suppressContentEditableWarning":
             case "suppressHydrationWarning":
               return;
@@ -47471,7 +47424,6 @@ var require_react_dom_server_browser_development = __commonJS({
           if (propertyInfo !== null) {
             switch (typeof value) {
               case "function":
-              // $FlowIssue symbol is perfectly valid here
               case "symbol":
                 return;
               case "boolean": {
@@ -47491,7 +47443,8 @@ var require_react_dom_server_browser_development = __commonJS({
               case OVERLOADED_BOOLEAN:
                 if (value === true) {
                   target.push(attributeSeparator, attributeNameChunk, attributeEmptyString);
-                } else if (value === false) ;
+                } else if (value === false)
+                  ;
                 else {
                   target.push(attributeSeparator, attributeNameChunk, attributeAssign, stringToChunk(escapeTextForBrowser(value)), attributeEnd);
                 }
@@ -47519,7 +47472,6 @@ var require_react_dom_server_browser_development = __commonJS({
           } else if (isAttributeNameSafe(name)) {
             switch (typeof value) {
               case "function":
-              // $FlowIssue symbol is perfectly valid here
               case "symbol":
                 return;
               case "boolean": {
@@ -47666,11 +47618,8 @@ var require_react_dom_server_browser_development = __commonJS({
                 case "dangerouslySetInnerHTML":
                   innerHTML = propValue;
                   break;
-                // eslint-disable-next-line-no-fallthrough
                 case "value":
                   value = propValue;
-                // We intentionally fallthrough to also set the attribute on the node.
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -47750,7 +47699,6 @@ var require_react_dom_server_browser_development = __commonJS({
                 case "children":
                 case "dangerouslySetInnerHTML":
                   throw new Error("input is a self-closing tag and must neither have `children` nor use `dangerouslySetInnerHTML`.");
-                // eslint-disable-next-line-no-fallthrough
                 case "defaultChecked":
                   defaultChecked = propValue;
                   break;
@@ -47814,7 +47762,6 @@ var require_react_dom_server_browser_development = __commonJS({
                   break;
                 case "dangerouslySetInnerHTML":
                   throw new Error("`dangerouslySetInnerHTML` does not make sense on <textarea>.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -47871,7 +47818,6 @@ var require_react_dom_server_browser_development = __commonJS({
                 case "children":
                 case "dangerouslySetInnerHTML":
                   throw new Error(tag + " is a self-closing tag and must neither have `children` nor use `dangerouslySetInnerHTML`.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -47895,7 +47841,6 @@ var require_react_dom_server_browser_development = __commonJS({
                 case "children":
                 case "dangerouslySetInnerHTML":
                   throw new Error("menuitems cannot have `children` nor `dangerouslySetInnerHTML`.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -47922,7 +47867,6 @@ var require_react_dom_server_browser_development = __commonJS({
                   break;
                 case "dangerouslySetInnerHTML":
                   throw new Error("`dangerouslySetInnerHTML` does not make sense on <title>.");
-                // eslint-disable-next-line-no-fallthrough
                 default:
                   pushAttribute(target, responseState, propKey, propValue);
                   break;
@@ -48096,7 +48040,6 @@ var require_react_dom_server_browser_development = __commonJS({
             }
           }
           switch (type) {
-            // Special tags
             case "select":
               return pushStartSelect(target, props, responseState);
             case "option":
@@ -48109,12 +48052,10 @@ var require_react_dom_server_browser_development = __commonJS({
               return pushStartMenuItem(target, props, responseState);
             case "title":
               return pushStartTitle(target, props, responseState);
-            // Newline eating tags
             case "listing":
             case "pre": {
               return pushStartPreformattedElement(target, props, type, responseState);
             }
-            // Omitted close tags
             case "area":
             case "base":
             case "br":
@@ -48131,8 +48072,6 @@ var require_react_dom_server_browser_development = __commonJS({
             case "wbr": {
               return pushSelfClosing(target, props, type, responseState);
             }
-            // These are reserved SVG and MathML elements, that are never custom elements.
-            // https://w3c.github.io/webcomponents/spec/custom/#custom-elements-core-concepts
             case "annotation-xml":
             case "color-profile":
             case "font-face":
@@ -48164,9 +48103,6 @@ var require_react_dom_server_browser_development = __commonJS({
         var endTag2 = stringToPrecomputedChunk(">");
         function pushEndInstance(target, type, props) {
           switch (type) {
-            // Omitted close tags
-            // TODO: Instead of repeating this switch we could try to pass a flag from above.
-            // That would require returning a tuple. Which might be ok if it gets inlined.
             case "area":
             case "base":
             case "br":
@@ -48330,10 +48266,6 @@ var require_react_dom_server_browser_development = __commonJS({
               writeChunk(destination, stringToChunk(id.toString(16)));
               return writeChunkAndReturn(destination, startSegmentTable2);
             }
-            // TODO: For the rest of these, there will be extra wrapper nodes that never
-            // get deleted from the document. We need to delete the table too as part
-            // of the injected scripts. They are invisible though so it's not too terrible
-            // and it's kind of an edge case to suspend in a table. Totally supported though.
             case HTML_TABLE_BODY_MODE: {
               writeChunk(destination, startSegmentTableBody);
               writeChunk(destination, responseState.segmentPrefix);
@@ -48478,7 +48410,6 @@ var require_react_dom_server_browser_development = __commonJS({
           var escaped = JSON.stringify(input);
           return escaped.replace(regexForJSStringsInScripts, function(match2) {
             switch (match2) {
-              // santizing breaking out of strings and script tags
               case "<":
                 return "\\u003c";
               case "\u2028":
@@ -48733,9 +48664,9 @@ var require_react_dom_server_browser_development = __commonJS({
                 throw Error();
               }, "Fake");
               Object.defineProperty(Fake.prototype, "props", {
-                set: /* @__PURE__ */ __name2(function() {
+                set: function() {
                   throw Error();
-                }, "set")
+                }
               });
               if (typeof Reflect === "object" && Reflect.construct) {
                 try {
@@ -48994,7 +48925,8 @@ var require_react_dom_server_browser_development = __commonJS({
         __name(pushNode, "pushNode");
         __name2(pushNode, "pushNode");
         function popToNearestCommonAncestor(prev, next) {
-          if (prev === next) ;
+          if (prev === next)
+            ;
           else {
             popNode(prev);
             var parentPrev = prev.parent;
@@ -49209,10 +49141,10 @@ var require_react_dom_server_browser_development = __commonJS({
         __name(warnNoop, "warnNoop");
         __name2(warnNoop, "warnNoop");
         var classComponentUpdater = {
-          isMounted: /* @__PURE__ */ __name2(function(inst) {
+          isMounted: function(inst) {
             return false;
-          }, "isMounted"),
-          enqueueSetState: /* @__PURE__ */ __name2(function(inst, payload, callback) {
+          },
+          enqueueSetState: function(inst, payload, callback) {
             var internals = get(inst);
             if (internals.queue === null) {
               warnNoop(inst, "setState");
@@ -49224,8 +49156,8 @@ var require_react_dom_server_browser_development = __commonJS({
                 }
               }
             }
-          }, "enqueueSetState"),
-          enqueueReplaceState: /* @__PURE__ */ __name2(function(inst, payload, callback) {
+          },
+          enqueueReplaceState: function(inst, payload, callback) {
             var internals = get(inst);
             internals.replace = true;
             internals.queue = [payload];
@@ -49234,8 +49166,8 @@ var require_react_dom_server_browser_development = __commonJS({
                 warnOnInvalidCallback(callback, "setState");
               }
             }
-          }, "enqueueReplaceState"),
-          enqueueForceUpdate: /* @__PURE__ */ __name2(function(inst, callback) {
+          },
+          enqueueForceUpdate: function(inst, callback) {
             var internals = get(inst);
             if (internals.queue === null) {
               warnNoop(inst, "forceUpdate");
@@ -49246,7 +49178,7 @@ var require_react_dom_server_browser_development = __commonJS({
                 }
               }
             }
-          }, "enqueueForceUpdate")
+          }
         };
         function applyDerivedStateFromProps(instance, ctor, getDerivedStateFromProps, prevState, nextProps) {
           var partialState = getDerivedStateFromProps(nextProps, prevState);
@@ -50088,9 +50020,9 @@ var require_react_dom_server_browser_development = __commonJS({
           }
           var task = {
             node,
-            ping: /* @__PURE__ */ __name2(function() {
+            ping: function() {
               return pingTask(request, task);
-            }, "ping"),
+            },
             blockedBoundary,
             blockedSegment,
             abortSet,
@@ -50561,14 +50493,6 @@ var require_react_dom_server_browser_development = __commonJS({
             return;
           }
           switch (type) {
-            // TODO: LegacyHidden acts the same as a fragment. This only works
-            // because we currently assume that every instance of LegacyHidden is
-            // accompanied by a host component wrapper. In the hidden mode, the host
-            // component is given a `hidden` attribute, which ensures that the
-            // initial HTML is not visible. To support the use of LegacyHidden as a
-            // true fragment, without an extra DOM node, we would have to hide the
-            // initial HTML in some other way.
-            // TODO: Add REACT_OFFSCREEN_TYPE here too with the same capability.
             case REACT_LEGACY_HIDDEN_TYPE:
             case REACT_DEBUG_TRACING_MODE_TYPE:
             case REACT_STRICT_MODE_TYPE:
@@ -50586,7 +50510,6 @@ var require_react_dom_server_browser_development = __commonJS({
             case REACT_SCOPE_TYPE: {
               throw new Error("ReactDOMServer does not yet support scope components.");
             }
-            // eslint-disable-next-line-no-fallthrough
             case REACT_SUSPENSE_TYPE: {
               {
                 renderSuspenseBoundary(request, task, props);
@@ -50652,7 +50575,8 @@ var require_react_dom_server_browser_development = __commonJS({
             try {
               return renderNodeDestructiveImpl(request, task, node);
             } catch (x) {
-              if (typeof x === "object" && x !== null && typeof x.then === "function") ;
+              if (typeof x === "object" && x !== null && typeof x.then === "function")
+                ;
               else {
                 lastBoundaryErrorComponentStackDev = lastBoundaryErrorComponentStackDev !== null ? lastBoundaryErrorComponentStackDev : getCurrentStackInDEV();
               }
@@ -50676,7 +50600,6 @@ var require_react_dom_server_browser_development = __commonJS({
               }
               case REACT_PORTAL_TYPE:
                 throw new Error("Portals are not currently supported by the server renderer. Render them conditionally so that they only appear on the client render.");
-              // eslint-disable-next-line-no-fallthrough
               case REACT_LAZY_TYPE: {
                 var lazyNode = node;
                 var payload = lazyNode._payload;
@@ -50932,7 +50855,8 @@ var require_react_dom_server_browser_development = __commonJS({
             }
           } else {
             boundary.pendingTasks--;
-            if (boundary.forceClientRender) ;
+            if (boundary.forceClientRender)
+              ;
             else if (boundary.pendingTasks === 0) {
               if (segment.parentFlushed) {
                 if (segment.status === COMPLETED) {
@@ -51303,12 +51227,12 @@ var require_react_dom_server_browser_development = __commonJS({
               var stream = new ReadableStream(
                 {
                   type: "bytes",
-                  pull: /* @__PURE__ */ __name2(function(controller) {
+                  pull: function(controller) {
                     startFlowing(request, controller);
-                  }, "pull"),
-                  cancel: /* @__PURE__ */ __name2(function(reason) {
+                  },
+                  cancel: function(reason) {
                     abort(request);
-                  }, "cancel")
+                  }
                 },
                 // $FlowFixMe size() methods are not allowed on byte streams.
                 {
@@ -51350,7 +51274,7 @@ var require_react_dom_server_browser_development = __commonJS({
 var require_server_browser = __commonJS({
   "../node_modules/react-dom/server.browser.js"(exports) {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     var l;
     var s;
     if (false) {
@@ -51370,15 +51294,15 @@ var require_server_browser = __commonJS({
 });
 var server_exports = {};
 __export(server_exports, {
-  assets: /* @__PURE__ */ __name(() => serverManifest, "assets"),
-  assetsBuildDirectory: /* @__PURE__ */ __name(() => assetsBuildDirectory, "assetsBuildDirectory"),
-  basename: /* @__PURE__ */ __name(() => basename, "basename"),
-  entry: /* @__PURE__ */ __name(() => entry, "entry"),
-  future: /* @__PURE__ */ __name(() => future, "future"),
-  isSpaMode: /* @__PURE__ */ __name(() => isSpaMode, "isSpaMode"),
-  mode: /* @__PURE__ */ __name(() => mode, "mode"),
-  publicPath: /* @__PURE__ */ __name(() => publicPath, "publicPath"),
-  routes: /* @__PURE__ */ __name(() => routes2, "routes")
+  assets: () => serverManifest,
+  assetsBuildDirectory: () => assetsBuildDirectory,
+  basename: () => basename,
+  entry: () => entry,
+  future: () => future,
+  isSpaMode: () => isSpaMode,
+  mode: () => mode,
+  publicPath: () => publicPath,
+  routes: () => routes2
 });
 async function handleRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext) {
   const body = await (0, import_server3.renderToReadableStream)(
@@ -51424,7 +51348,8 @@ function useBackgroundLines(baseColor, direction = "vertical", isDark, isHovered
           const isFarEnough = existingLines2.every(
             (line) => Math.abs(line.left - position) > minDistance
           );
-          if (isFarEnough || attempts > 10) return position;
+          if (isFarEnough || attempts > 10)
+            return position;
           attempts++;
         } while (true);
       }, "getValidPosition");
@@ -51621,7 +51546,8 @@ function App() {
         cancelAnimationFrame(animationFrameId);
         return;
       }
-      if (startTime === null) startTime = currentTime;
+      if (startTime === null)
+        startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
       currentPosition = startPosition + distance * easeInOutQuad(progress);
@@ -51702,7 +51628,8 @@ function App() {
     }
     const smoothScroll = /* @__PURE__ */ __name2((currentTime) => {
       const state = window.smoothScrollState;
-      if (!state) return;
+      if (!state)
+        return;
       state.lastTime || currentTime;
       state.lastTime = currentTime;
       const difference = state.targetScroll - state.currentScroll;
@@ -51725,7 +51652,8 @@ function App() {
     const handleWheel = /* @__PURE__ */ __name2((e) => {
       e.preventDefault();
       const state = window.smoothScrollState;
-      if (!state) return;
+      if (!state)
+        return;
       const scrollMultiplier = 1.5;
       const deltaY = e.deltaMode === 1 ? e.deltaY * 20 : e.deltaY;
       state.targetScroll = Math.max(
@@ -51772,7 +51700,7 @@ function App() {
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
         ScrollRestoration,
         {
-          getKey: /* @__PURE__ */ __name2((location) => location.pathname + (/* @__PURE__ */ new Date()).getTime(), "getKey")
+          getKey: (location) => location.pathname + (/* @__PURE__ */ new Date()).getTime()
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Scripts, {}),
@@ -51868,8 +51796,8 @@ function Header() {
             backgroundColor: isCurrentDark ? "rgb(31 41 55 / 0.5)" : "rgb(210 210 210 / 0.5)",
             backdropFilter: "blur(8px)"
           },
-          onMouseEnter: /* @__PURE__ */ __name2(() => setIsHovered(true), "onMouseEnter"),
-          onMouseLeave: /* @__PURE__ */ __name2(() => setIsHovered(false), "onMouseLeave"),
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-[10%] left-0 w-full pointer-events-none", children: cyanLines.map((line, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
               "svg",
@@ -51942,12 +51870,12 @@ function Header() {
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hidden md:flex items-start flex-1 pt-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", { className: "flex space-x-6 lg:space-x-12 ml-auto mr-40 items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hidden md:flex items-start flex-1 pt-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", { className: "flex space-x-4 lg:space-x-10 ml-auto mr-40 items-center", children: [
                 ["about", "news", "products", "members", "partners", "contact"].map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "button",
                   {
-                    onClick: /* @__PURE__ */ __name2(() => handleClick(item), "onClick"),
-                    className: `text-lg xl:text-xl 2xl:text-2xl font-bold transition-colors duration-300 ${isCurrentDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-gray-900"}`,
+                    onClick: () => handleClick(item),
+                    className: `text-base xl:text-lg 2xl:text-xl font-bold transition-colors duration-300 ${isCurrentDark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-gray-900"}`,
                     children: item.charAt(0).toUpperCase() + item.slice(1)
                   }
                 ) }, item)),
@@ -51974,7 +51902,7 @@ function Header() {
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "button",
                   {
-                    onClick: /* @__PURE__ */ __name2(() => setIsMenuOpen(!isMenuOpen), "onClick"),
+                    onClick: () => setIsMenuOpen(!isMenuOpen),
                     className: "p-2",
                     "aria-label": "\u30E1\u30CB\u30E5\u30FC",
                     children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "relative w-6 h-6", children: [
@@ -51996,7 +51924,7 @@ function Header() {
         children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { className: "space-y-4", children: ["about", "news", "products", "members", "partners", "contact"].map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           "button",
           {
-            onClick: /* @__PURE__ */ __name2(() => handleClick(item), "onClick"),
+            onClick: () => handleClick(item),
             className: `w-full text-left text-xl font-bold transition-colors duration-300 ${isHovered ? "text-gray-800 hover:text-gray-600" : "text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"}`,
             children: item.charAt(0).toUpperCase() + item.slice(1)
           }
@@ -52611,7 +52539,8 @@ function Products() {
     e.currentTarget.src = "/images/products/product-none.jpg";
   }, "handleImageError");
   const handleProductClick = /* @__PURE__ */ __name2((product) => {
-    if (product.name === "And more...") return;
+    if (product.name === "And more...")
+      return;
     setSelectedProduct(product);
   }, "handleProductClick");
   return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
@@ -52720,10 +52649,10 @@ function Products() {
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: `container mx-auto px-6 md:px-6 transition-all duration-1000 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", { className: "text-4xl md:text-6xl font-bold text-center text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]", children: [
             "Products",
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-24 fixed-left", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { width: "100vw", height: "80", viewBox: "0 0 1000 20", preserveAspectRatio: "none", style: { marginLeft: "calc(-50vw + 75%)" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-24 fixed-left", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { width: "100vw", height: "60", viewBox: "0 0 1000 20", preserveAspectRatio: "none", style: { marginLeft: "calc(-50vw + 75%)" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
               "path",
               {
-                d: "M220 0 L930 0 950 20 L1000 20",
+                d: "M220 0 L920 0 940 20 L1000 20",
                 stroke: "currentColor",
                 strokeWidth: "3",
                 fill: "none",
@@ -52735,7 +52664,7 @@ function Products() {
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: products.map((product, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
             "div",
             {
-              onClick: /* @__PURE__ */ __name2(() => handleProductClick(product), "onClick"),
+              onClick: () => handleProductClick(product),
               className: `group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
                 transition-all duration-500 transform cursor-pointer
                 hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
@@ -52799,7 +52728,7 @@ function Products() {
           ProductPopup,
           {
             product: selectedProduct,
-            onClose: /* @__PURE__ */ __name2(() => setSelectedProduct(null), "onClose")
+            onClose: () => setSelectedProduct(null)
           }
         )
       ]
@@ -52944,14 +52873,14 @@ function Members() {
                 strokeWidth: "3",
                 fill: "none",
                 className: `text-fuchsia-500 dark:text-fuchsia-400 ${isVisible ? "animate-draw-line-from-left" : ""}`,
-                strokeDasharray: "800"
+                strokeDasharray: "1000"
               }
             ) }) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 max-w-7xl mx-auto px-4 md:px-8", children: members.map((member, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
             "a",
             {
-              onClick: /* @__PURE__ */ __name2((e) => handleMemberClick(e, member), "onClick"),
+              onClick: (e) => handleMemberClick(e, member),
               className: `group text-center cursor-pointer transition-all duration-500 
                                 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 pt-6
                                 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
@@ -52992,8 +52921,8 @@ function Members() {
                             backgroundSize: "cover",
                             backgroundPosition: "center"
                           },
-                          onMouseEnter: /* @__PURE__ */ __name2(() => setHoveredId(member.id), "onMouseEnter"),
-                          onMouseLeave: /* @__PURE__ */ __name2(() => setHoveredId(null), "onMouseLeave")
+                          onMouseEnter: () => setHoveredId(member.id),
+                          onMouseLeave: () => setHoveredId(null)
                         }
                       )
                     }
@@ -53014,7 +52943,7 @@ function Members() {
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                   "p",
                   {
-                    className: `text-gray-600 dark:text-gray-300 w-11/12 md:w-5/6 mx-auto transition-all duration-500 transform
+                    className: `text-sm md:text-base text-gray-600 dark:text-gray-300 w-11/12 md:w-5/6 mx-auto transition-all duration-500 transform
                                     ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`,
                     style: {
                       transitionDelay: `${index * 200 + 400}ms`,
@@ -53032,7 +52961,7 @@ function Members() {
           MemberPopup,
           {
             member: selectedMember,
-            onClose: /* @__PURE__ */ __name2(() => setSelectedMember(null), "onClose")
+            onClose: () => setSelectedMember(null)
           }
         )
       ]
@@ -53133,17 +53062,15 @@ function Partnership() {
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "max-w-7xl mx-auto px-4 md:px-8", children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", { className: "text-4xl md:text-6xl font-bold text-center mb-16 text-gray-700 dark:text-white drop-shadow-[0_0_8px_rgba(22,172,32,0.5)] dark:drop-shadow-[0_0_8px_rgba(34,210,54,0.5)]", children: [
             "Partners",
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { width: "100vw", height: "40", viewBox: "0 0 3000 10", preserveAspectRatio: "none", style: { marginTop: "20px", marginLeft: "-25vw", width: "150vw" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { width: "100vw", height: "40", viewBox: "0 0 800 10", preserveAspectRatio: "none", style: { marginLeft: "-25vw", width: "150vw" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
               "path",
               {
-                d: "M-500 0 L780 0 L800 10 L3000 10",
+                d: "M0 0 L195 0 L210 10 L390 10 L405 0 L800 0",
                 stroke: "#99ff99",
                 strokeWidth: "3",
                 fill: "none",
                 className: `${isVisible ? "animate-draw-line-from-left" : ""}`,
-                style: {
-                  filter: "drop-shadow(0 0 5px rgba(153, 255, 153, 0.5))"
-                }
+                strokeDasharray: "800"
               }
             ) }) })
           ] }),
@@ -53455,7 +53382,7 @@ var routes2;
 var init_server2 = __esm({
   "../build/server/index.js"() {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
     init_esm2();
     init_isbot();
@@ -53609,7 +53536,8 @@ var init_server2 = __esm({
       const [offsetY, setOffsetY] = (0, import_react2.useState)(0);
       const [startScrollY, setStartScrollY] = (0, import_react2.useState)(0);
       const handleScroll = (0, import_react2.useCallback)(() => {
-        if (!isVisible) return;
+        if (!isVisible)
+          return;
         requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
           const relativeScroll = currentScrollY - startScrollY;
@@ -53668,7 +53596,7 @@ var init_server2 = __esm({
               "div",
               {
                 className: "relative w-[90vw] max-w-[1600px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top",
-                onClick: /* @__PURE__ */ __name2((e) => e.stopPropagation(), "onClick"),
+                onClick: (e) => e.stopPropagation(),
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                     "button",
@@ -53937,7 +53865,8 @@ var init_server2 = __esm({
       const [offsetY, setOffsetY] = (0, import_react2.useState)(0);
       const [startScrollY, setStartScrollY] = (0, import_react2.useState)(0);
       const handleScroll = (0, import_react2.useCallback)(() => {
-        if (!isVisible) return;
+        if (!isVisible)
+          return;
         requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
           const relativeScroll = currentScrollY - startScrollY;
@@ -53994,7 +53923,7 @@ var init_server2 = __esm({
               "div",
               {
                 className: "relative w-full max-w-6xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[80vh] md:h-[65vh] overflow-y-auto animate-clip-from-top",
-                onClick: /* @__PURE__ */ __name2((e) => e.stopPropagation(), "onClick"),
+                onClick: (e) => e.stopPropagation(),
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
                     "button",
@@ -54022,8 +53951,8 @@ var init_server2 = __esm({
                             backgroundImage: `url(${member.subImage})`,
                             opacity: 0
                           },
-                          onMouseEnter: /* @__PURE__ */ __name2((e) => e.currentTarget.style.opacity = "1", "onMouseEnter"),
-                          onMouseLeave: /* @__PURE__ */ __name2((e) => e.currentTarget.style.opacity = "0", "onMouseLeave")
+                          onMouseEnter: (e) => e.currentTarget.style.opacity = "1",
+                          onMouseLeave: (e) => e.currentTarget.style.opacity = "0"
                         }
                       )
                     ] }) }),
@@ -54068,16 +53997,16 @@ var init_server2 = __esm({
                               filter: `brightness(1.05) contrast(1.05)`,
                               textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)"
                             },
-                            onMouseEnter: /* @__PURE__ */ __name2((e) => {
+                            onMouseEnter: (e) => {
                               e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
                               e.currentTarget.style.boxShadow = `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`;
                               e.currentTarget.style.filter = `brightness(1.1) contrast(1.1)`;
-                            }, "onMouseEnter"),
-                            onMouseLeave: /* @__PURE__ */ __name2((e) => {
+                            },
+                            onMouseLeave: (e) => {
                               e.currentTarget.style.backgroundColor = `rgb(${color.base})`;
                               e.currentTarget.style.boxShadow = `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`;
                               e.currentTarget.style.filter = `brightness(1.05) contrast(1.05)`;
-                            }, "onMouseLeave"),
+                            },
                             children: [
                               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: sns.label }),
                               /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -54142,7 +54071,8 @@ var init_server2 = __esm({
       const [offsetY, setOffsetY] = (0, import_react2.useState)(0);
       const [startScrollY, setStartScrollY] = (0, import_react2.useState)(0);
       const handleScroll = (0, import_react2.useCallback)(() => {
-        if (!isVisible) return;
+        if (!isVisible)
+          return;
         requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
           const relativeScroll = currentScrollY - startScrollY;
@@ -54215,7 +54145,7 @@ var init_server2 = __esm({
       default: NewsPage,
       loader
     }, Symbol.toStringTag, { value: "Module" }));
-    serverManifest = { "entry": { "module": "/assets/entry.client-C5eURZ3x.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-Bn_En_V_.js", "/assets/components-Zy923bQL.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-D7Lceb_3.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-Bn_En_V_.js", "/assets/components-Zy923bQL.js", "/assets/LinesContext-eByHhIeY.js"], "css": ["/assets/root-t7WLKVIv.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CSUqCnvY.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/LinesContext-eByHhIeY.js", "/assets/index-Bn_En_V_.js"], "css": [] }, "routes/posts": { "id": "routes/posts", "parentId": "root", "path": "posts", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/posts-zQg_Xen0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js"], "css": [] }, "routes/news": { "id": "routes/news", "parentId": "root", "path": "news", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/news-oGwVymcj.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/components-Zy923bQL.js", "/assets/index-Bn_En_V_.js"], "css": [] } }, "url": "/assets/manifest-b6ff4cdf.js", "version": "b6ff4cdf" };
+    serverManifest = { "entry": { "module": "/assets/entry.client-C5eURZ3x.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-Bn_En_V_.js", "/assets/components-Zy923bQL.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-B3Do5TZj.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/index-Bn_En_V_.js", "/assets/components-Zy923bQL.js", "/assets/LinesContext-eByHhIeY.js"], "css": ["/assets/root-DicukOKq.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-BuAeiwba.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/LinesContext-eByHhIeY.js", "/assets/index-Bn_En_V_.js"], "css": [] }, "routes/posts": { "id": "routes/posts", "parentId": "root", "path": "posts", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/posts-zQg_Xen0.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js"], "css": [] }, "routes/news": { "id": "routes/news", "parentId": "root", "path": "news", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/news-oGwVymcj.js", "imports": ["/assets/jsx-runtime-56DGgGmo.js", "/assets/components-Zy923bQL.js", "/assets/index-Bn_En_V_.js"], "css": [] } }, "url": "/assets/manifest-d9d312fd.js", "version": "d9d312fd" };
     mode = "production";
     assetsBuildDirectory = "build\\client";
     basename = "/";
@@ -54263,15 +54193,15 @@ var onRequest;
 var init_path = __esm({
   "[[path]].ts"() {
     "use strict";
-    init_functionsRoutes_0_8770949955831682();
+    init_functionsRoutes_0_9127561387194583();
     init_esm();
     init_server2();
     onRequest = createPagesFunctionHandler({ build: server_exports });
   }
 });
 var routes;
-var init_functionsRoutes_0_8770949955831682 = __esm({
-  "../.wrangler/tmp/pages-gaNC3l/functionsRoutes-0.8770949955831682.mjs"() {
+var init_functionsRoutes_0_9127561387194583 = __esm({
+  "../.wrangler/tmp/pages-2nyYG4/functionsRoutes-0.9127561387194583.mjs"() {
     "use strict";
     init_path();
     routes = [
@@ -54285,10 +54215,10 @@ var init_functionsRoutes_0_8770949955831682 = __esm({
     ];
   }
 });
-init_functionsRoutes_0_8770949955831682();
-init_functionsRoutes_0_8770949955831682();
-init_functionsRoutes_0_8770949955831682();
-init_functionsRoutes_0_8770949955831682();
+init_functionsRoutes_0_9127561387194583();
+init_functionsRoutes_0_9127561387194583();
+init_functionsRoutes_0_9127561387194583();
+init_functionsRoutes_0_9127561387194583();
 function lexer(str) {
   var tokens = [];
   var i = 0;
@@ -54708,9 +54638,9 @@ var pages_template_worker_default = {
           },
           env,
           waitUntil: workerContext.waitUntil.bind(workerContext),
-          passThroughOnException: /* @__PURE__ */ __name2(() => {
+          passThroughOnException: () => {
             isFailOpen = true;
-          }, "passThroughOnException")
+          }
         };
         const response = await handler(context);
         if (!(response instanceof Response)) {
@@ -54743,7 +54673,7 @@ var cloneResponse = /* @__PURE__ */ __name2((response) => (
     response
   )
 ), "cloneResponse");
-init_functionsRoutes_0_8770949955831682();
+init_functionsRoutes_0_9127561387194583();
 var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
@@ -54760,7 +54690,7 @@ var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx
   }
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
-init_functionsRoutes_0_8770949955831682();
+init_functionsRoutes_0_9127561387194583();
 function reduceError(e) {
   return {
     name: e?.name,
@@ -54788,7 +54718,7 @@ var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = pages_template_worker_default;
-init_functionsRoutes_0_8770949955831682();
+init_functionsRoutes_0_9127561387194583();
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
   __facade_middleware__.push(...args.flat());
@@ -54815,26 +54745,21 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 __name2(__facade_invoke__, "__facade_invoke__");
-var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
-  static {
-    __name(this, "___Facade_ScheduledController__");
-  }
+var __Facade_ScheduledController__ = /* @__PURE__ */ __name(class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
     this.cron = cron;
     this.#noRetry = noRetry;
   }
-  static {
-    __name2(this, "__Facade_ScheduledController__");
-  }
   #noRetry;
   noRetry() {
-    if (!(this instanceof ___Facade_ScheduledController__)) {
+    if (!(this instanceof __Facade_ScheduledController__)) {
       throw new TypeError("Illegal invocation");
     }
     this.#noRetry();
   }
-};
+}, "__Facade_ScheduledController__");
+__name2(__Facade_ScheduledController__, "__Facade_ScheduledController__");
 function wrapExportedHandler(worker) {
   if (__INTERNAL_WRANGLER_MIDDLEWARE__ === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__.length === 0) {
     return worker;
@@ -54876,15 +54801,15 @@ function wrapWorkerEntrypoint(klass) {
     __facade_register__(middleware);
   }
   return class extends klass {
-    #fetchDispatcher = /* @__PURE__ */ __name2((request, env, ctx) => {
+    #fetchDispatcher = (request, env, ctx) => {
       this.env = env;
       this.ctx = ctx;
       if (super.fetch === void 0) {
         throw new Error("Entrypoint class does not define a fetch() function.");
       }
       return super.fetch(request);
-    }, "#fetchDispatcher");
-    #dispatcher = /* @__PURE__ */ __name2((type, init) => {
+    };
+    #dispatcher = (type, init) => {
       if (type === "scheduled" && super.scheduled !== void 0) {
         const controller = new __Facade_ScheduledController__(
           Date.now(),
@@ -54894,7 +54819,7 @@ function wrapWorkerEntrypoint(klass) {
         );
         return super.scheduled(controller);
       }
-    }, "#dispatcher");
+    };
     fetch(request) {
       return __facade_invoke__(
         request,
@@ -54957,7 +54882,7 @@ var jsonError2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx
 }, "jsonError");
 var middleware_miniflare3_json_error_default2 = jsonError2;
 
-// .wrangler/tmp/bundle-JziG8D/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-RLyzHN/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__2 = [
   middleware_ensure_req_body_drained_default2,
   middleware_miniflare3_json_error_default2
@@ -54989,24 +54914,22 @@ function __facade_invoke__2(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__2, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-JziG8D/middleware-loader.entry.ts
-var __Facade_ScheduledController__2 = class ___Facade_ScheduledController__2 {
+// .wrangler/tmp/bundle-RLyzHN/middleware-loader.entry.ts
+var __Facade_ScheduledController__2 = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
     this.cron = cron;
     this.#noRetry = noRetry;
   }
-  static {
-    __name(this, "__Facade_ScheduledController__");
-  }
   #noRetry;
   noRetry() {
-    if (!(this instanceof ___Facade_ScheduledController__2)) {
+    if (!(this instanceof __Facade_ScheduledController__2)) {
       throw new TypeError("Illegal invocation");
     }
     this.#noRetry();
   }
 };
+__name(__Facade_ScheduledController__2, "__Facade_ScheduledController__");
 function wrapExportedHandler2(worker) {
   if (__INTERNAL_WRANGLER_MIDDLEWARE__2 === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__2.length === 0) {
     return worker;
@@ -55047,15 +54970,15 @@ function wrapWorkerEntrypoint2(klass) {
     __facade_register__2(middleware);
   }
   return class extends klass {
-    #fetchDispatcher = /* @__PURE__ */ __name((request, env, ctx) => {
+    #fetchDispatcher = (request, env, ctx) => {
       this.env = env;
       this.ctx = ctx;
       if (super.fetch === void 0) {
         throw new Error("Entrypoint class does not define a fetch() function.");
       }
       return super.fetch(request);
-    }, "#fetchDispatcher");
-    #dispatcher = /* @__PURE__ */ __name((type, init) => {
+    };
+    #dispatcher = (type, init) => {
       if (type === "scheduled" && super.scheduled !== void 0) {
         const controller = new __Facade_ScheduledController__2(
           Date.now(),
@@ -55065,7 +54988,7 @@ function wrapWorkerEntrypoint2(klass) {
         );
         return super.scheduled(controller);
       }
-    }, "#dispatcher");
+    };
     fetch(request) {
       return __facade_invoke__2(
         request,
@@ -55766,4 +55689,4 @@ react-dom/cjs/react-dom-server.browser.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=functionsWorker-0.816480278697558.js.map
+//# sourceMappingURL=functionsWorker-0.6871890155539722.js.map
