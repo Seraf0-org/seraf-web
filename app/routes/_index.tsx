@@ -5,6 +5,7 @@ import { About } from "~/components/About";
 import { News } from "~/components/News";
 import { Products } from "~/components/Products";
 import { Members } from "~/components/Members";
+import { Partnership } from "~/components/Partnership";
 import { Footer } from "~/components/Footer";
 
 export const meta: MetaFunction = () => {
@@ -13,7 +14,7 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "We are Seraf()" },
     { property: "og:title", content: "Seraf()" },
     { property: "og:description", content: "We are Seraf(), a creative studio focused on game development." },
-    { property: "og:image", content: "https://example.com/path/to/namelogo-light.png" },
+    { property: "og:image", content: "https://Seraf0.com/images/namelogo-light.png" },
     { property: "og:url", content: "https://Seraf0.com" },
     { property: "og:type", content: "website" },
   ];
@@ -35,6 +36,9 @@ export default function Index() {
       </section>
       <section id="members">
         <Members />
+      </section>
+      <section id="partnership">
+        <Partnership />
       </section>
       <section id="contact">
         <Footer />

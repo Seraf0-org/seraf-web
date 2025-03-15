@@ -223,7 +223,7 @@ export function News() {
           <div className="text-center mt-12">
             <a
               href="/news"
-              className="inline-block bg-cyan-500 text-white font-semibold py-3 px-6 text-lg md:text-xl rounded-lg shadow-2xl hover:shadow-3xl transition-colors duration-300 hover:bg-cyan-600"
+              className="inline-block bg-cyan-500 text-white font-semibold py-3 px-6 text-lg md:text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-colors duration-300 hover:bg-cyan-600"
               style={{
                 boxShadow: '0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3)',
               }}

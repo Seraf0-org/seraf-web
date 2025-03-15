@@ -31,7 +31,6 @@ export default {
         'text-appear': 'text-appear 0.5s ease-out forwards',
         'slide-from-top': 'slide-from-top 0.5s ease-out forwards',
         'clip-from-top': 'clipFromTop 0.5s ease-out forwards',
-        'draw-line-from-left': 'drawLineFromLeft 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards',
         'draw-letter': 'draw-letter 0.5s forwards',
         'draw-path': 'draw-path 2s ease forwards',
         'vertical-scroll': 'vertical-scroll 40s linear infinite',
@@ -133,15 +132,6 @@ export default {
             clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
           },
         },
-        drawLineFromLeft: {
-          from: {
-            strokeDashoffset: '1000',
-          },
-          to: {
-            strokeDashoffset: '0',
-          },
-        },
-
         'draw-path': {
           '0%': {
             strokeDashoffset: '1000',

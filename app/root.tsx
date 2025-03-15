@@ -153,7 +153,8 @@ export default function App() {
     window.smoothScrollState = {
       currentScroll: window.scrollY,
       targetScroll: window.scrollY,
-      velocity: 0
+      velocity: 0,
+      isAutoScrolling: false
     };
 
     let globalRequestId: number | null = null;
@@ -170,7 +171,8 @@ export default function App() {
       const state = window.smoothScrollState;
       if (!state) return;
 
-      const deltaTime = Math.min((currentTime - state.lastTime) / 1000, 0.1);
+      const lastTime = state.lastTime || currentTime;
+      const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.1);
       state.lastTime = currentTime;
 
       const difference = state.targetScroll - state.currentScroll;

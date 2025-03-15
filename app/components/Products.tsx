@@ -116,7 +116,7 @@ const ProductPopup = ({ product, onClose }: {
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                   {product.name}
                 </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
+                <p className="text-lg text-gray-600 dark:text-gray-300" style={{ whiteSpace: 'pre-line' }}>
                   制作: {product.description}
                 </p>
               </div>
@@ -124,7 +124,7 @@ const ProductPopup = ({ product, onClose }: {
               {product.details && (
                 <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
                   <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">概要</h4>
-                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
                     {product.details}
                   </p>
                 </div>
@@ -133,7 +133,7 @@ const ProductPopup = ({ product, onClose }: {
               {product.features && (
                 <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
                   <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">特徴</h4>
-                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
                     {product.features}
                   </p>
                 </div>
@@ -305,7 +305,7 @@ export function Products() {
         </svg>
       </div>
 
-      {lines.map((line, index) => (
+      {lines.map((line: any) => (
         <svg
           key={line.id}
           className="absolute will-change-transform pointer-events-none"
@@ -318,17 +318,17 @@ export function Products() {
           }}
         >
           <path
-            d={`M ${line.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+            d={`M ${line.points.map((p: any) => `${p.x},${p.y}`).join(' L ')}`}
             stroke={line.color}
             strokeWidth={line.width}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {line.branches.map((branch, i) => (
+          {line.branches.map((branch: any, i: number) => (
             <path
               key={`${line.id}-${i}`}
-              d={`M ${branch.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+              d={`M ${branch.points.map((p: any) => `${p.x},${p.y}`).join(' L ')}`}
               stroke={branch.color}
               strokeWidth={branch.width}
               fill="none"
@@ -400,7 +400,8 @@ export function Products() {
                     className={`text-gray-600 dark:text-gray-300 transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
                     style={{
                       transitionDelay: `${(products.length * 200) + 400}ms`,
-                      transitionProperty: 'opacity, transform'
+                      transitionProperty: 'opacity, transform',
+                      whiteSpace: 'pre-line'
                     }}
                   >
                     {product.description}

@@ -4,6 +4,27 @@ import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { useState, useRef, useEffect } from "react";
 
+// 型定義を追加
+interface Point {
+  x: number;
+  y: number;
+}
+
+interface Branch {
+  points: Point[];
+  color: string;
+  width: number;
+}
+
+interface Line {
+  id: string;
+  left: number;
+  points: Point[];
+  color: string;
+  width: number;
+  branches: Branch[];
+}
+
 export function About() {
   const [sectionRef, isVisible] = useIntersectionObserver();
   const { theme } = useOutletContext<OutletContext>();
@@ -12,6 +33,7 @@ export function About() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
+  // @ts-ignore - MSStreamはIEの判定に使用されるが、型定義にはない
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
   useEffect(() => {
@@ -88,7 +110,7 @@ export function About() {
       </div>
 
       {/* 背景の線 */}
-      {lines.map((line, index) => (
+      {lines.map((line: Line) => (
         <svg
           key={line.id}
           className="absolute will-change-transform pointer-events-none"
@@ -101,17 +123,17 @@ export function About() {
           }}
         >
           <path
-            d={`M ${line.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+            d={`M ${line.points.map((p: Point) => `${p.x},${p.y}`).join(' L ')}`}
             stroke={line.color}
             strokeWidth={line.width}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {line.branches.map((branch, i) => (
+          {line.branches.map((branch: Branch, i: number) => (
             <path
               key={`${line.id}-${i}`}
-              d={`M ${branch.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+              d={`M ${branch.points.map((p: Point) => `${p.x},${p.y}`).join(' L ')}`}
               stroke={branch.color}
               strokeWidth={branch.width}
               fill="none"

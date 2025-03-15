@@ -47,7 +47,7 @@ export function Header() {
     }, []);
 
     const toggleTheme = () => {
-        setTheme((prev: Theme) => (prev === 'light' ? 'dark' : 'light') as Theme);
+        setTheme(theme === 'light' ? 'dark' : 'light');
     };
 
     const handleClick = (sectionId: string) => {
@@ -184,7 +184,7 @@ export function Header() {
                                 <div className="hidden md:flex items-start flex-1 pt-3">
                                     {/* デスクトップメニュー */}
                                     <ul className="flex space-x-6 lg:space-x-12 ml-auto mr-40 items-center">
-                                        {['about', 'news', 'products', 'members', 'contact'].map((item) => (
+                                        {['about', 'news', 'products', 'members', 'partners', 'contact'].map((item) => (
                                             <li key={item}>
                                                 <button
                                                     onClick={() => handleClick(item)}
@@ -269,7 +269,7 @@ export function Header() {
                         } backdrop-blur-md rounded-2xl shadow-lg p-4 animate-clip-from-top`}
                     >
                         <ul className="space-y-4">
-                            {['about', 'news', 'products', 'members', 'contact'].map((item) => (
+                            {['about', 'news', 'products', 'members', 'partners', 'contact'].map((item) => (
                                 <li key={item}>
                                     <button
                                         onClick={() => handleClick(item)}

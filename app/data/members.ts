@@ -168,5 +168,24 @@ export const members: Member[] = [
                 }
             }
         ]
+    },
+    {
+        id: 8,
+        name: "rapid",
+        position: "モデラー",
+        mainImage: "/images/members/member-8.jpg",
+        subImage: "/images/members/member-8.jpg",
+        description: "準備中。",
+        skills: ["Blender", "Substance Painter"],
+        sns: [
+            {
+                url: "https://x.com/pasuta023593",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ]
     }
 ];
