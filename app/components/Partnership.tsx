@@ -181,7 +181,7 @@ export function Partnership() {
                     <div className="relative">
                         <svg width="100vw" height="40" viewBox="0 0 800 10" preserveAspectRatio="none" style={{ marginLeft: '-25vw', width: '150vw' }}>
                             <path
-                                d="M0 0 L195 0 L210 10 L390 10 L405 0 L800 0"
+                                d="M0 0 L200 0 L210 10 L390 10 L400 0 L800 0"
                                 stroke="#99ff99"
                                 strokeWidth="3"
                                 fill="none"

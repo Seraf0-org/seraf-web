@@ -476,7 +476,7 @@ export function Members() {
                                 </div>
                             </div>
                             <h3
-                                className={`text-lg font-semibold text-gray-900 dark:text-white transition-all duration-500 transform
+                                className={`text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 transition-all duration-500 transform
                                     ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
                                 style={{
                                     transitionDelay: `${(index * 200) + 300}ms`,
@@ -486,7 +486,7 @@ export function Members() {
                                 {member.name}
                             </h3>
                             <p
-                                className={`text-sm md:text-base text-gray-600 dark:text-gray-300 w-11/12 md:w-5/6 mx-auto transition-all duration-500 transform
+                                className={`text-xs md:text-base text-gray-600 dark:text-gray-300 w-11/12 mx-auto transition-all duration-500 transform
                                     ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
                                 style={{
                                     transitionDelay: `${(index * 200) + 400}ms`,
