@@ -5,7 +5,7 @@ import type { OutletContext } from "~/root";
 export function Hero() {
   const japaneseText = "何者にもなれる。何者でもないから。";
   const englishText1 = "Become anything,";
-  const englishText2 = "　from being nothing.";
+  const englishText2 = "from being nothing.";
   const [scrollY, setScrollY] = useState(0);
   const { theme } = useOutletContext<OutletContext>();
 
@@ -33,21 +33,26 @@ export function Hero() {
         key={sentenceIndex}
         className={`inline-block group ${className}`}
       >
-        {sentence.split('').map((letter, letterIndex) => (
-          <span
-            key={letterIndex}
-            className={`inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300`}
-            style={{
-              animationDelay: `${baseDelay + ((sentenceIndex * sentence.length + letterIndex) * 0.1)}s`,
-              textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
-            }}
-          >
-            {letter}
-          </span>
-        ))}
+        {sentence.split('').map((letter, letterIndex) => {
+          // 「何者」の部分は通常サイズ、それ以外のひらがなは小さく
+          const isKanji = sentenceIndex === 0 && letterIndex < 2 || sentenceIndex === 1 && letterIndex < 2;
+
+          return (
+            <span
+              key={letterIndex}
+              className={`inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300 ${!isKanji ? 'text-[85%]' : ''}`}
+              style={{
+                animationDelay: `${baseDelay + ((sentenceIndex * sentence.length + letterIndex) * 0.1)}s`,
+                textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
+              }}
+            >
+              {letter}
+            </span>
+          );
+        })}
         {sentenceIndex < sentences.length - 1 && (
           <span
-            className="inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300"
+            className="inline-block animate-fade-in-down opacity-0 group-hover:text-cyan-300 transition-colors duration-300 text-[85%]"
             style={{
               animationDelay: `${baseDelay + ((sentenceIndex + 1) * sentence.length * 0.1)}s`,
               textShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
@@ -83,17 +88,17 @@ export function Hero() {
       >
         <div className="text-center">
           <h1
-            className="font-light text-white tracking-[.25em] relative font-mincho leading-loose"
-            style={{ lineHeight: '2em' }}
+            className="font-light text-white tracking-[.25em] relative font-mincho leading-loose px-4"
+            style={{ lineHeight: '1.8em' }}
           >
-            <div className="block font-mincho text-4xl md:text-6xl font-light relative mb-8">
+            <div className="block font-mincho text-4xl md:text-6xl font-light relative mb-3 md:mb-8">
               <div className="absolute -left-4 top-1/2 w-8 h-[1px] bg-white/30" />
               <div className="absolute -right-4 top-1/2 w-8 h-[1px] bg-white/30" />
-              <span className="block md:hidden leading-relaxed">{createLetterSpans(japaneseText, 0, "relative")}</span>
+              <span className="block md:hidden leading-snug">{createLetterSpans(japaneseText, 0, "relative")}</span>
               <span className="hidden md:block">{createLetterSpans(japaneseText, 0, "relative")}</span>
             </div>
 
-            <div className="font-mincho text-3xl md:text-4xl block font-light tracking-tight md:tracking-[.25em] relative leading-loose">
+            <div className="font-mincho text-3xl md:text-4xl block font-light tracking-tight md:tracking-[.25em] relative leading-normal md:leading-loose">
               <div className="absolute left-1/2 -translate-x-1/2 -top-4 w-24 h-[1px] bg-white/30" />
               <span
                 className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-lg md:text-3xl"
@@ -102,7 +107,7 @@ export function Hero() {
                 {englishText1}
               </span>
               <span
-                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-lg md:text-3xl"
+                className="inline-block animate-fade-in-down opacity-0 hover:text-fuchsia-300 transition-colors duration-300 text-lg md:text-3xl ml-1 md:ml-2"
                 style={{ animationDelay: '2.5s' }}
               >
                 {englishText2}
