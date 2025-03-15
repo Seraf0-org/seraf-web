@@ -444,7 +444,7 @@ export function Members() {
                             {/* 名札の穴部分 */}
                             <div className="absolute top-4 md:top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 md:w-6 md:h-6 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner border border-fuchsia-500/50 dark:border-fuchsia-400/50" style={{ boxShadow: '0 0 5px rgba(219, 39, 119, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2)' }}></div>
 
-                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg mt-3 md:mt-6">
+                            <div className="relative w-full aspect-square mx-auto mb-3 overflow-hidden rounded-lg mt-2 md:mt-6">
                                 <div className="w-full h-full bg-gray-200 dark:bg-gray-200 group-hover:scale-110 transition-transform duration-300">
                                     <img
                                         src={member.mainImage}

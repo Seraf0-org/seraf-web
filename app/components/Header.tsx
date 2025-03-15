@@ -73,7 +73,7 @@ export function Header() {
                 {/* 逆色の背景レイヤー - アニメーション完了後は非表示 */}
                 {!isAnimationComplete && (
                     <div
-                        className="absolute top-0 left-0 w-full h-40 origin-left"
+                        className="absolute top-0 left-0 w-full h-28 md:h-40 origin-left"
                         style={{
                             clipPath: 'polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)',
                             transform: `translateX(${isAnimating ? '-100%' : '0'})`,
@@ -88,7 +88,7 @@ export function Header() {
 
                 {/* ナビゲーションコンテンツ - クリップパスの影響を受けない */}
                 <div
-                    className="relative h-40 pointer-events-auto"
+                    className="relative h-28 md:h-40 pointer-events-auto"
                     style={{
                         clipPath: 'polygon(0 0, 95% 0, 90% 60%, 16% 60%, 13% 100%, 0 100%)',
                         transform: `translateX(${isAnimating ? '-100%' : isFirstSlideComplete ? '0' : '-100%'})`,
@@ -167,8 +167,8 @@ export function Header() {
                     </div>
 
                     <nav className="w-full overflow-x-hidden h-full">
-                        <div className="flex items-start h-full pt-2 max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8">
-                            <div className="flex items-start w-full pt-2">
+                        <div className="flex items-start h-full pt-1 md:pt-2 max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8">
+                            <div className="flex items-start w-full pt-1 md:pt-2">
                                 <a
                                     href="#"
                                     onClick={handleLogoClick}
@@ -177,7 +177,7 @@ export function Header() {
                                     <img
                                         src={isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png"}
                                         alt="Logo"
-                                        className="w-20 md:w-28 lg:w-44 h-auto"
+                                        className="w-16 md:w-28 lg:w-44 h-auto"
                                     />
                                 </a>
 
@@ -221,7 +221,7 @@ export function Header() {
                                 </div>
 
                                 {/* モバイルメニュータン */}
-                                <div className="md:hidden flex items-center space-x-4 ml-auto mr-8 mt-4">
+                                <div className="md:hidden flex items-center space-x-4 ml-auto mr-8 mt-2">
                                     {/* テーマ切り替えボタン（モバイル） */}
                                     <button
                                         onClick={toggleTheme}
@@ -262,7 +262,7 @@ export function Header() {
 
             {/* モバイルメニューをヘッダーの外に完全に移動 */}
             {isMenuOpen && (
-                <div className="md:hidden fixed top-[80px] left-0 right-0 mt-2 mx-4 z-50 overflow-visible pointer-events-auto">
+                <div className="md:hidden fixed top-[70px] left-0 right-0 mt-2 mx-4 z-50 overflow-visible pointer-events-auto">
                     <div className={`${isHovered
                         ? 'bg-white/95'
                         : 'bg-white/95 dark:bg-gray-800/95'
