@@ -425,7 +425,7 @@ export function Members() {
                         </svg>
                     </div>
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-12 max-w-7xl mx-auto px-4 md:px-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-12 max-w-7xl mx-auto px-4 md:px-8">
                     {members.map((member, index) => (
                         <a
                             key={member.id}
@@ -486,7 +486,7 @@ export function Members() {
                                 {member.name}
                             </h3>
                             <p
-                                className={`text-xs md:text-base text-gray-600 dark:text-gray-300 w-11/12 mx-auto transition-all duration-500 transform
+                                className={`text-xs md:text-base text-gray-600 dark:text-gray-300 w-12/13 md:w-11/12 mx-auto transition-all duration-500 transform
                                     ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
                                 style={{
                                     transitionDelay: `${(index * 200) + 400}ms`,
