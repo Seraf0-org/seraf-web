@@ -135,8 +135,8 @@ export const members: Member[] = [
         id: 6,
         name: "しそ",
         position: "デザイナー",
-        mainImage: "/images/members/member-none.png",
-        subImage: "/images/members/member-none.png",
+        mainImage: "/images/members/member-6.jpg",
+        subImage: "/images/members/member-6.jpg",
         description: "準備中。",
         skills: ["Illustrator"],
         sns: [
