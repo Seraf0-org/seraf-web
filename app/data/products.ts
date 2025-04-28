@@ -31,7 +31,7 @@ export const products: Product[] = [
         details: "数多の弾丸を一気に塗り替えて敵を一掃しろ。",
         features: "Unity1Weekにて「かえす」のテーマにて作成。敵の弾を塗り替えて自弾としてかえすことができる。ヴァンサバライクなトップダウンシューティング。",
         genre: "トップダウンシューティングゲーム",
-        platform: "PC (Browser) / iOS / Android",
+        platform: "PC(Web) / iOS / Android",
         releaseDate: "2024年8月21日",
         image: "/images/products/product-2.jpg",
         link: "https://unityroom.com/games/reflectone"
@@ -51,8 +51,8 @@ export const products: Product[] = [
         id: 4,
         name: "ヴォイドライブ",
         description: "KTN, しそ, ドライバー（+）",
-        details: "？？？。", /*"デッキが切れても負けじゃない。表面と裏面を操り勝利を掴め。",*/
-        features: "？？？。", /*"デッキ切れ=負けなカードゲームとは一風変わったシステム。デッキが切れるとデッキと墓地、そしてフィールドを裏返して続行する。カードの効果やルールすらも異なる裏面を上手く使い、ゲームを有利に進めよう。",*/
+        details: "デッキが切れても負けじゃない。表面と裏面を操り勝利を掴め。",
+        features: "デッキ切れ=負けなカードゲームとは一風変わったシステム。デッキが切れるとデッキと墓地、そしてフィールドを裏返して続行する。カードの効果やルールすらも異なる裏面を上手く使い、ゲームを有利に進めよう。",
         genre: "カードゲーム",
         platform: "アナログ",
         releaseDate: "2025年春予定",
@@ -68,6 +68,18 @@ export const products: Product[] = [
         platform: "PC / Console",
         releaseDate: "2025年秋予定",
         image: "/images/products/product-5.jpg"
+    },
+    {
+        id: 6,
+        name: "アイノイロ",
+        description: "KTN, 前田ネイト",
+        details: "これは、アイを知る物語。",
+        features: "とある隔絶された病院の中。ここには目に重大な疾患を持った子供達が閉じ込められていた。外の世界に憧れを持ちながらも、将来への不安を隠せない少年ハジメ。しかし、謎の少女ユキとの出会いから、彼の世界は開かれていく──────。",
+        genre: "ビジュアルノベルゲーム",
+        platform: "PC(Web) / スマートフォン",
+        releaseDate: "2025年4月20日",
+        image: "/images/products/product-6.jpg",
+        link: "https://unityroom.com/games/skiey"
     },
     {
         id: 10,

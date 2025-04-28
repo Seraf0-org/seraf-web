@@ -34,7 +34,22 @@ export const newsItems: NewsItem[] = [
         title: "Webサイトを公開！",
         description: "Seraf()のWebサイトを公開しました。",
         image: "/images/news/news-1.jpg"
-    }
+    },
+    {
+        id: 5,
+        date: "2025.4.20",
+        title: "アイノイロ配信！",
+        description: "UnityRoomにて、アイノイロの配信を開始しました。",
+        image: "/images/news/news-5.jpg"
+    },
+    {
+        id: 6,
+        date: "2025.4.25",
+        title: "DHU新入生歓迎会2025にて展示！",
+        description: "デジタルハリウッド大学の新入生歓迎会2025にて、ゲームの展示を行いました。",
+        image: "/images/news/news-6.jpg"
+    },
+
 ];
 
 export const getNewsItems = () => {
