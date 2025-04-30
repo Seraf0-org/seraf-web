@@ -61,7 +61,7 @@ export const products: Product[] = [
     {
         id: 5,
         name: "Vanishment",
-        description: "KTN, Mossy, rapid",
+        description: "KTN, Mossy, rapid, Kaz, ゆぴる",
         details: "？？？。", /*"空間を意のままに操り、敵を翻弄しろ。",*/
         features: "？？？。", /*"空間を伸縮させる能力を駆使して、戦闘や探索を有利に進めよう。メトロイドヴァニアライクな2Dアクションゲーム",*/
         genre: "2Dアクションゲーム",
