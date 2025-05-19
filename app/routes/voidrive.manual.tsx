@@ -105,7 +105,7 @@ export default function ManualPage() {
                 {/* カード紹介：Manaの例 */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-xl mb-4">
                             <img src="/images/voidrive/driver-front.jpg" alt="ドライバーカード（表）" className="rounded-lg shadow-lg w-full" />
                             <img src="/images/voidrive/driver-back.jpg" alt="ドライバーカード（裏）" className="rounded-lg shadow-lg w-full" />
                         </div>
@@ -128,7 +128,7 @@ export default function ManualPage() {
                 {/* エージェント紹介サンプル */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-xl mb-4">
                             <img src="/images/voidrive/agent.jpg" alt="エージェントカード（表）" className="rounded-lg shadow-lg w-full" />
                             <img src="/images/voidrive/back.jpg" alt="エージェントカード（裏）" className="rounded-lg shadow-lg w-full" />
                         </div>
@@ -150,7 +150,7 @@ export default function ManualPage() {
                 {/* キャスト紹介サンプル */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-xl mb-4">
                             <img src="/images/voidrive/cast.jpg" alt="キャストカード（表）" className="rounded-lg shadow-lg w-full" />
                             <img src="/images/voidrive/back.jpg" alt="キャストカード（裏）" className="rounded-lg shadow-lg w-full" />
                         </div>
