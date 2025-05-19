@@ -248,64 +248,6 @@ export default function ManualPage() {
                 </div>
             </div>
 
-            {/* 用語説明 */}
-            <div id="terms" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
-                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">カード内用語説明</h2>
-                <div className="space-y-4">
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">《顕現》</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            手札からコストを支払って場に出した時に発動する能力。
-                            カードの効果や、カウンターで場に出た場合は発動しません。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">《破壊》</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            破壊された時に発動する能力。
-                            この効果の処理中は場に残っているものとし、この効果処理が終わったあとに墓地に送られます。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">《攻撃》</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            攻撃した際に発動する能力です。
-                            戦闘を行う前に発動し、この効果処理が終わったら戦闘を行います。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">《即行》</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            場に出したターンから攻撃できる能力です。
-                            初めから横向き(タップ状態)ではなく、縦向き(アンタップ状態)で場に出ます。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">《カウンター》</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            プロテクターから発動した場合に処理される能力です。
-                            カウンターとして発動した場合、この《カウンター》以下に書かれた文章から処理します。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">《挑発》</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            相手は、この効果を持つエージェントしか攻撃対象に選べなくなる能力です。
-                            速度の値に関係なく、相手は攻撃する場合このエージェントしか選べません。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">ダイブ</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            デッキが切れた状態でカードを引こうとしたときに強制発動する処理。<br />
-                            自身のデッキと墓地を入れ替えて、ドライバーのカードを裏返してゲームを続行します。<br />
-                            カードを引く効果の処理中だった場合、キャンセルせずに続行します。<br />
-                            <span className="block mt-2 text-xs text-gray-400">例：デッキが残り1枚の状態でカードを2枚引く効果を発動→１枚引いてダイブ→ダイブ後にもう1枚引く</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             {/* エーテルについて */}
             <div id="ether" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">エーテルについて</h2>
@@ -325,6 +267,7 @@ export default function ManualPage() {
                         <b>エージェントの場合</b>
                         <p>自分の場のエージェントエリアに基本的に横向き(タップ状態)で出します。<br />
                             《即行》と書かれたエージェントは、最初から縦向き(アンタップ状態)で場に出ます。</p>
+                        <p>出す位置は任意ですが、効果以外であとから位置を変更することはできません。</p>
                     </div>
                     <div>
                         <b>アクションの場合</b>
@@ -333,10 +276,14 @@ export default function ManualPage() {
                     <div>
                         <b>ファンクションの場合</b>
                         <p>自分の場のキャストエリアに出します。そのまま効果を処理しますが、その後も場に残り続けます。</p>
+                        <p>出す位置は任意ですが、効果以外であとから位置を変更することはできません。</p>
+                        <p>出す位置は任意ですが、効果以外であとから位置を変更することはできません。</p>
                     </div>
                     <div>
                         <b>リアクションの場合</b>
                         <p>自分の場に裏向きで伏せてセットします。この時点ではコストはかかりません。伏せたターン以降、カードの効果によって決められたタイミングで任意に発動できます。この時にコストをエーテルから支払います。</p>
+                        <p>出す位置は任意ですが、効果以外であとから位置を変更することはできません。</p>
+
                     </div>
                     <div>
                         <b>カウンターと書かれたカードについて</b>
@@ -414,6 +361,64 @@ export default function ManualPage() {
                 <div className="text-gray-600 dark:text-gray-300 space-y-2">
                     <p>相手のプロテクターが0枚の状態で相手に攻撃すると勝利となります。</p>
                     <p>またデッキ切れ時にダイブできない場合(墓地が0枚の場合)は敗北となります。</p>
+                </div>
+            </div>
+
+            {/* 用語説明 */}
+            <div id="terms" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">カード内用語説明</h2>
+                <div className="space-y-4">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《顕現》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            手札からコストを支払って場に出した時に発動する能力。
+                            カードの効果や、カウンターで場に出た場合は発動しません。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《破壊》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            破壊された時に発動する能力。
+                            この効果の処理中は場に残っているものとし、この効果処理が終わったあとに墓地に送られます。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《攻撃》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            攻撃した際に発動する能力です。
+                            戦闘を行う前に発動し、この効果処理が終わったら戦闘を行います。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《即行》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            場に出したターンから攻撃できる能力です。
+                            初めから横向き(タップ状態)ではなく、縦向き(アンタップ状態)で場に出ます。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《カウンター》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            プロテクターから発動した場合に処理される能力です。
+                            カウンターとして発動した場合、この《カウンター》以下に書かれた文章から処理します。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《挑発》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            相手は、この効果を持つエージェントしか攻撃対象に選べなくなる能力です。
+                            速度の値に関係なく、相手は攻撃する場合このエージェントしか選べません。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">ダイブ</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            デッキが切れた状態でカードを引こうとしたときに強制発動する処理。<br />
+                            自身のデッキと墓地を入れ替えて、ドライバーのカードを裏返してゲームを続行します。<br />
+                            カードを引く効果の処理中だった場合、キャンセルせずに続行します。<br />
+                            <span className="block mt-2 text-xs text-gray-400">例：デッキが残り1枚の状態でカードを2枚引く効果を発動→１枚引いてダイブ→ダイブ後にもう1枚引く</span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
