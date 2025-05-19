@@ -228,55 +228,23 @@ export default function ManualPage() {
             <div id="field" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">フィールド</h2>
                 <div className="text-gray-600 dark:text-gray-300">
-                    <p className="mb-4">縦3列横6列のフィールド</p>
-                    <div className="flex flex-col items-center gap-4 mb-6">
-                        {/* エージェントゾーン */}
-                        <div className="flex gap-2">
-                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <div className="w-24 h-36 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-lg flex items-center justify-center">
-                                <span className="text-gray-600 dark:text-gray-300">墓</span>
-                            </div>
-                        </div>
-                        {/* キャストゾーン */}
-                        <div className="flex gap-2">
-                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/driver-front.jpg" alt="ドライバー" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <div className="relative w-24 h-36 ml-8 -mt-4">
-                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '0', left: '0' }} />
-                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '12px', left: '0' }} />
-                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '24px', left: '0' }} />
-                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '36px', left: '0' }} />
-                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '48px', left: '0' }} />
-                            </div>
-                        </div>
-                        {/* プロテクターゾーン */}
-                        <div className="flex gap-2">
-                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
-                            <div className="w-24 h-36 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-lg flex items-center justify-center">
-                                <span className="text-gray-600 dark:text-gray-300">山</span>
-                            </div>
-                        </div>
+                    <div className="flex flex-col items-center mb-6">
+                        <img src="/images/voidrive/field.png" alt="フィールド図" className="w-full max-w-3xl rounded-lg shadow-lg mb-4" />
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            エージェントは最大5枚、キャストは最大4枚。
+                            プロテクターは最大枚数制限なし、エーテルは最大10枚まで。
+                        </p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg font-mono text-center">
-                        <p className="mb-2">エエエエエ 墓</p>
-                        <p className="mb-2">キキドキキ 魔</p>
-                        <p>プププププ 山</p>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">フィールドの説明</h3>
+                        <ul className="list-disc list-inside space-y-2">
+                            <li>縦3列で構成されています</li>
+                            <li>上段：エージェントゾーン（エージェントカードを配置）</li>
+                            <li>中段：キャストゾーン（キャストカードを配置）</li>
+                            <li>下段：プロテクターゾーン（プロテクターカードを配置）</li>
+                            <li>右端：墓地、エーテル、デッキの配置場所</li>
+                        </ul>
                     </div>
-                    <p className="mt-4">
-                        エージェント=エ、キャスト=キ、プロテクター=プ、ドライバー=ド、墓地=墓、エーテル=魔、デッキ=山
-                        (プロテクターは最大枚数制限なし、エーテルは10枚まで)
-                    </p>
                 </div>
             </div>
 
