@@ -8,6 +8,9 @@ export default function ManualPage() {
                     ヴォイドライブ
                 </h1>
                 <p className="text-xl text-gray-600 dark:text-gray-300">オンラインマニュアル</p>
+                <div className="mt-4 text-gray-600 dark:text-gray-300">
+                    <p className="text-lg">開発: <a href="https://x.com/seraf_dev" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">Seraf()</a></p>
+                </div>
             </div>
 
             {/* 目次セクション */}
@@ -69,7 +72,7 @@ export default function ManualPage() {
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                         <h3 className="font-semibold mb-2">プレイ時間</h3>
-                        <p>10分〜20分</p>
+                        <p>15分〜30分</p>
                     </div>
                 </div>
             </div>
@@ -102,7 +105,10 @@ export default function ManualPage() {
                 {/* カード紹介：Manaの例 */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <img src="/images/voidrive/driver-front.png" alt="ドライバーカード" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
+                            <img src="/images/voidrive/driver-front.jpg" alt="ドライバーカード（表）" className="rounded-lg shadow-lg w-full" />
+                            <img src="/images/voidrive/driver-back.jpg" alt="ドライバーカード（裏）" className="rounded-lg shadow-lg w-full" />
+                        </div>
                         <span className="text-lg font-bold text-gray-700 dark:text-gray-200">ドライバー例</span>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md text-center md:col-span-2">
@@ -122,7 +128,10 @@ export default function ManualPage() {
                 {/* エージェント紹介サンプル */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <img src="/images/voidrive/agent.png" alt="エージェントカード例" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
+                            <img src="/images/voidrive/agent.jpg" alt="エージェントカード（表）" className="rounded-lg shadow-lg w-full" />
+                            <img src="/images/voidrive/back.jpg" alt="エージェントカード（裏）" className="rounded-lg shadow-lg w-full" />
+                        </div>
                         <span className="text-lg font-bold text-gray-700 dark:text-gray-200">エージェント例</span>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md text-center md:col-span-2">
@@ -141,7 +150,10 @@ export default function ManualPage() {
                 {/* キャスト紹介サンプル */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <img src="/images/voidrive/cast.png" alt="キャストカード例" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-4">
+                            <img src="/images/voidrive/cast.jpg" alt="キャストカード（表）" className="rounded-lg shadow-lg w-full" />
+                            <img src="/images/voidrive/back.jpg" alt="キャストカード（裏）" className="rounded-lg shadow-lg w-full" />
+                        </div>
                         <span className="text-lg font-bold text-gray-700 dark:text-gray-200">キャスト例</span>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md text-center md:col-span-2">
@@ -259,6 +271,13 @@ export default function ManualPage() {
                         <p className="text-gray-600 dark:text-gray-300">
                             場に出したターンから攻撃できる能力です。
                             初めから横向き(タップ状態)ではなく、縦向き(アンタップ状態)で場に出ます。
+                        </p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="font-semibold mb-2">《カウンター》</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            プロテクターから発動した場合に処理される能力です。
+                            カウンターとして発動した場合、この《カウンター》以下に書かれた文章から処理します。
                         </p>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
@@ -410,6 +429,21 @@ export default function ManualPage() {
                     <div>
                         <b>Q. 効果が同時に発生するなどした場合はどの順番で処理しますか？</b>
                         <p>A. 速度の高い順に処理します。速度が同値の場合はターンプレイヤーの左(古いカード)から順番に処理します。</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* クレジット */}
+            <div id="credits" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">クレジット</h2>
+                <div className="text-gray-600 dark:text-gray-300 space-y-4">
+                    <div>
+                        <h3 className="font-semibold mb-2">開発メンバー</h3>
+                        <ul className="list-disc list-inside space-y-1">
+                            <li>KTN</li>
+                            <li>しそ</li>
+                            <li>ドライバー（+）</li>
+                        </ul>
                     </div>
                 </div>
             </div>
