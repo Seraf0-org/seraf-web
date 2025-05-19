@@ -65,6 +65,12 @@ export default function ManualPage() {
                             カード効果の修正について
                         </a>
                     </li>
+                    <li className="hover:text-cyan-500 transition-colors">
+                        <a href="#credits" className="flex items-center">
+                            <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                            クレジット
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -447,12 +453,12 @@ export default function ManualPage() {
                         <h3 className="text-xl font-bold mb-2 text-cyan-500">マナ</h3>
                         <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm mb-4">
                             <p className="font-semibold text-lg">修正内容</p>
-                            <p>エーテル供給が4から5に修正されました。</p>
+                            <p>エーテル供給を4から5に修正。</p>
                         </div>
                         <div className="bg-gray-100 dark:bg-gray-600 p-3 rounded-lg">
                             <p className="font-semibold text-lg mb-2">修正理由</p>
-                            <p className="mb-2">マナは、表面で相手の攻撃を耐えて、裏面で攻めに転じる、というデッキコンセプトになっています。</p>
-                            <p className="mb-2">しかしながら、現在ケイのドライブや、「精錬の守護」などを用いたコスト軽減によるコンボに対する対抗策が少ないと感じています。</p>
+                            <p className="mb-2">マナは、「表面で相手の攻撃を耐えて、裏面で攻めに転じる」というデッキコンセプトになっています。</p>
+                            <p className="mb-2">しかしながら、現在ケイのドライブ「イマジナリコントラクト」や、「精錬の守護」などを用いたコスト軽減によるコンボに対する対抗策が少ないと感じています。</p>
                             <p>マナのエーテル供給数を増やすことで、マナの動きの自由度を向上させて、相手に対応しやすくします。</p>
                         </div>
                     </div>
@@ -472,14 +478,55 @@ export default function ManualPage() {
             {/* クレジット */}
             <div id="credits" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">クレジット</h2>
-                <div className="text-gray-600 dark:text-gray-300 space-y-4">
-                    <div>
-                        <h3 className="font-semibold mb-2">開発メンバー</h3>
-                        <ul className="list-disc list-inside space-y-1">
-                            <li>KTN</li>
-                            <li>しそ</li>
-                            <li>ドライバー（+）</li>
-                        </ul>
+                <div className="text-gray-600 dark:text-gray-300 space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+                            <h3 className="font-bold text-lg mb-3 text-cyan-500">KTN</h3>
+                            <ul className="space-y-2">
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    プロデュース
+                                </li>
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    ゲームデザイン
+                                </li>
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    デバッグ
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+                            <h3 className="font-bold text-lg mb-3 text-cyan-500">しそ</h3>
+                            <ul className="space-y-2">
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    ロゴデザイン
+                                </li>
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    ビジュアルデザイン
+                                </li>
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    イラスト
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+                            <h3 className="font-bold text-lg mb-3 text-cyan-500">白桜</h3>
+                            <ul className="space-y-2">
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    キャラクターデザイン
+                                </li>
+                                <li className="flex items-center">
+                                    <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                                    イラスト
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
