@@ -113,22 +113,21 @@ export const members: Member[] = [
     },
     {
         id: 5,
-        name: "ドライバー（+）",
-        position: "イラストレーター",
+        name: "白桜",
+        position: "イラストレーター,マルチクリエイター",
         mainImage: "/images/members/member-5.jpg",
         subImage: "/images/members/member-5.jpg",
         description: "準備中。",
         skills: [],
         sns: [
-            /*{
-                url: "https://twitter.com/kasha25_dr25",
+            {
+                url: "https://twitter.com/4696_dr25",
                 label: "X(旧Twitter)",
                 color: {
                     base: "22, 163, 74",
                     hover: "16, 122, 57"
                 }
             }
-            */
         ]
     },
     {
