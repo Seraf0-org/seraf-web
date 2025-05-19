@@ -228,10 +228,49 @@ export default function ManualPage() {
             <div id="field" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">フィールド</h2>
                 <div className="text-gray-600 dark:text-gray-300">
-                    <p className="mb-4">縦3列横6列</p>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg font-mono">
-                        <p>エエエエエ 墓</p>
-                        <p>キキドキキ 魔</p>
+                    <p className="mb-4">縦3列横6列のフィールド</p>
+                    <div className="flex flex-col items-center gap-4 mb-6">
+                        {/* エージェントゾーン */}
+                        <div className="flex gap-2">
+                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/agent.jpg" alt="エージェント" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <div className="w-24 h-36 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-lg flex items-center justify-center">
+                                <span className="text-gray-600 dark:text-gray-300">墓</span>
+                            </div>
+                        </div>
+                        {/* キャストゾーン */}
+                        <div className="flex gap-2">
+                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/driver-front.jpg" alt="ドライバー" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/cast.jpg" alt="キャスト" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <div className="relative w-24 h-36 ml-8 -mt-4">
+                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '0', left: '0' }} />
+                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '12px', left: '0' }} />
+                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '24px', left: '0' }} />
+                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '36px', left: '0' }} />
+                                <img src="/images/voidrive/back.jpg" alt="エーテル" className="absolute w-24 h-36 object-cover rounded-lg shadow-lg transform -rotate-90" style={{ top: '48px', left: '0' }} />
+                            </div>
+                        </div>
+                        {/* プロテクターゾーン */}
+                        <div className="flex gap-2">
+                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <img src="/images/voidrive/back.jpg" alt="プロテクター" className="w-24 h-36 object-cover rounded-lg shadow-lg" />
+                            <div className="w-24 h-36 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-lg flex items-center justify-center">
+                                <span className="text-gray-600 dark:text-gray-300">山</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg font-mono text-center">
+                        <p className="mb-2">エエエエエ 墓</p>
+                        <p className="mb-2">キキドキキ 魔</p>
                         <p>プププププ 山</p>
                     </div>
                     <p className="mt-4">
