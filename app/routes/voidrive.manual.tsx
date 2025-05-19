@@ -202,8 +202,8 @@ export default function ManualPage() {
                             <h4 className="font-semibold mb-2">コレクトフェイズ</h4>
                             <p className="text-gray-600 dark:text-gray-300">
                                 場にあるカードの維持コストを支払います。
-                                エージェントを左から(古い)順に、1枚ずつ維持するか、破壊するか処理します。
-                                その後、ファンクションを左から(古い)順に1枚ずつ維持するか、破壊するか処理します。
+                                エージェントを左から順に、1枚ずつ維持するか、破壊するか処理します。
+                                その後、ファンクションを左から順に1枚ずつ維持するか、破壊するか処理します。
                             </p>
                         </div>
                         <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
@@ -250,7 +250,7 @@ export default function ManualPage() {
 
             {/* 用語説明 */}
             <div id="terms" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
-                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">用語説明</h2>
+                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">カード内用語説明</h2>
                 <div className="space-y-4">
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                         <h3 className="font-semibold mb-2">《顕現》</h3>
@@ -295,26 +295,12 @@ export default function ManualPage() {
                         </p>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">エーテル</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            カードを使用、維持するのに必要なコストを支払うためのカードのこと。
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                         <h3 className="font-semibold mb-2">ダイブ</h3>
                         <p className="text-gray-600 dark:text-gray-300">
                             デッキが切れた状態でカードを引こうとしたときに強制発動する処理。<br />
                             自身のデッキと墓地を入れ替えて、ドライバーのカードを裏返してゲームを続行します。<br />
                             カードを引く効果の処理中だった場合、キャンセルせずに続行します。<br />
                             <span className="block mt-2 text-xs text-gray-400">例：デッキが残り1枚の状態でカードを2枚引く効果を発動→１枚引いてダイブ→ダイブ後にもう1枚引く</span>
-                        </p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">コレクト</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            ターン開始時、ドロー後のくるフェイズのこと。<br />
-                            自分の場にあるエージェント、ファンクションカードを維持するために、それぞれのカードに記されたコストを支払います。<br />
-                            もしくは、支払わずにそのカードを破壊します。
                         </p>
                     </div>
                 </div>
@@ -324,7 +310,7 @@ export default function ManualPage() {
             <div id="ether" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">エーテルについて</h2>
                 <div className="text-gray-600 dark:text-gray-300 space-y-2">
-                    <p>カードの使用や維持に使用されます。</p>
+                    <p>カードの使用や維持に使用されるコストになるカードです。</p>
                     <p>指定がない限りは裏向きで存在し、コストを支払う場合はその値と同じ枚数エーテルから墓地に送ります。</p>
                     <p>最大枚数は10枚です。最大枚数を超える場合、エーテルに加える処理はスキップされます。</p>
                 </div>
@@ -377,6 +363,18 @@ export default function ManualPage() {
                     <p>攻撃を行ったエージェントを横向き(タップ状態)となり、攻撃ができません。</p>
                     <p>相手のエージェントを攻撃した場合、お互いの攻撃力を比較して、低い方が破壊されます。同値の場合は両者とも破壊されます。</p>
                     <p>相手自身を攻撃した場合、攻撃した側が相手の任意のプロテクターを選んで破壊します。相手のプロテクターがない状態で相手自身への攻撃に成功した場合、ゲームに勝利します。ただし相手自身への攻撃は、エージェントの攻撃力が1以上ない場合は何も起きません。</p>
+                </div>
+            </div>
+
+            {/* コレクトについて */}
+            <div id="collect" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">コレクトについて</h2>
+                <div className="text-gray-600 dark:text-gray-300 space-y-2">
+                    <p>既に自分の場に表向きで出してあるカードを維持することを、コレクトと呼びます。</p>
+                    <p>このコレクトは自分のターンのドローフェイズ後にあるコレクトフェイズにて処理します。</p>
+                    <p>まずエージェントを、左にあるカードから順番にそのカードを維持するか選択します。</p>
+                    <p>維持する場合はコストをエーテルから支払い、維持しない場合はそのまま破壊されます。</p>
+                    <p>エージェントのコレクトが終わったら、同様にファンクションカードを左から順番に維持するか選択します。</p>
                 </div>
             </div>
 
