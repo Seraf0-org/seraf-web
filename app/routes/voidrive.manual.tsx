@@ -59,6 +59,12 @@ export default function ManualPage() {
                             用語説明
                         </a>
                     </li>
+                    <li className="hover:text-cyan-500 transition-colors">
+                        <a href="#card-corrections" className="flex items-center">
+                            <span className="w-2 h-2 bg-cyan-500 rounded-full mr-2"></span>
+                            カード効果の修正について
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -116,7 +122,7 @@ export default function ManualPage() {
                         <div className="text-left text-gray-600 dark:text-gray-300 text-sm space-y-2">
                             <p><b>初期手札</b>　ゲーム開始時の手札の枚数を表します。</p>
                             <p><b>プロテクター</b>　ゲーム開始時のプロテクターの枚数を表します。</p>
-                            <p><b>エーテル</b>　ターン開始時のエーテルの供給枚数を表します。</p>
+                            <p><b>エーテル供給</b>　ターン開始時のエーテルの供給枚数を表します。</p>
                             <p className="mt-4">（表面記載）</p>
                             <p><b>ドライブ</b>　このドライバーが表面で発動できる能力の効果を表します。</p>
                             <p className="mt-4">（裏面記載）</p>
@@ -422,16 +428,6 @@ export default function ManualPage() {
                 </div>
             </div>
 
-            {/* 予備のカードについて */}
-            <div id="extra-cards" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8 mt-12">
-                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">予備のカードについて</h2>
-                <div className="text-gray-600 dark:text-gray-300 space-y-2">
-                    <p>各デッキごとに、何枚か予備の入れ替え用カードが含まれています。</p>
-                    <p>基本的には最初に含まれる40枚でプレイしていただきますが、この予備のカードと入れ替えてデッキを構築することもできます！</p>
-                    <p>デッキの枚数は40枚固定となりますので、予備のカードを使う際は元々含まれているデッキから同じ枚数だけ抜いてください。</p>
-                </div>
-            </div>
-
             {/* Q&A・細かいルール */}
             <div id="qa" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">Q&A・細かいルール</h2>
@@ -440,6 +436,36 @@ export default function ManualPage() {
                         <b>Q. 効果が同時に発生するなどした場合はどの順番で処理しますか？</b>
                         <p>A. 速度の高い順に処理します。速度が同値の場合はターンプレイヤーの左(古いカード)から順番に処理します。</p>
                     </div>
+                </div>
+            </div>
+
+            {/* カード効果の修正について */}
+            <div id="card-corrections" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">カード効果の修正について</h2>
+                <div className="text-gray-600 dark:text-gray-300 space-y-4">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <h3 className="text-xl font-bold mb-2 text-cyan-500">マナ</h3>
+                        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm mb-4">
+                            <p className="font-semibold text-lg">修正内容</p>
+                            <p>エーテル供給が4から5に修正されました。</p>
+                        </div>
+                        <div className="bg-gray-100 dark:bg-gray-600 p-3 rounded-lg">
+                            <p className="font-semibold text-lg mb-2">修正理由</p>
+                            <p className="mb-2">マナは、表面で相手の攻撃を耐えて、裏面で攻めに転じる、というデッキコンセプトになっています。</p>
+                            <p className="mb-2">しかしながら、現在ケイのドライブや、「精錬の守護」などを用いたコスト軽減によるコンボに対する対抗策が少ないと感じています。</p>
+                            <p>マナのエーテル供給数を増やすことで、マナの動きの自由度を向上させて、相手に対応しやすくします。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 予備のカードについて */}
+            <div id="extra-cards" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8 mt-12">
+                <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">予備のカードについて</h2>
+                <div className="text-gray-600 dark:text-gray-300 space-y-2">
+                    <p>各デッキごとに、何枚か予備の入れ替え用カードが含まれています。</p>
+                    <p>基本的には最初に含まれる40枚でプレイしていただきますが、この予備のカードと入れ替えてデッキを構築することもできます！</p>
+                    <p>デッキの枚数は40枚固定となりますので、予備のカードを使う際は元々含まれているデッキから同じ枚数だけ抜いてください。</p>
                 </div>
             </div>
 
