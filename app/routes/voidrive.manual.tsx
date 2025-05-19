@@ -5,7 +5,7 @@ export default function ManualPage() {
         <section className="container mx-auto py-10 px-4">
             <div className="text-center mb-12">
                 <div className="flex justify-center mb-4">
-                    <img src="/images/voidrive/logo.png" alt="ヴォイドライブ" className="h-40 md:h-48" />
+                    <img src="/images/voidrive/logo.png" alt="ヴォイドライブ" className="h-40 md:h-64" />
                 </div>
                 <p className="text-2xl md:text-3xl font-bold text-gray-600 dark:text-gray-300">オンラインマニュアル</p>
                 <div className="mt-4 text-gray-600 dark:text-gray-300">
