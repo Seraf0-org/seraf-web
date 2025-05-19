@@ -4,12 +4,12 @@ export default function ManualPage() {
     return (
         <section className="container mx-auto py-10 px-4">
             <div className="text-center mb-12">
-                <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-                    ヴォイドライブ
-                </h1>
-                <p className="text-xl text-gray-600 dark:text-gray-300">オンラインマニュアル</p>
+                <div className="flex justify-center mb-4">
+                    <img src="/images/voidrive/logo.png" alt="ヴォイドライブ" className="h-40 md:h-48" />
+                </div>
+                <p className="text-2xl md:text-3xl font-bold text-gray-600 dark:text-gray-300">オンラインマニュアル</p>
                 <div className="mt-4 text-gray-600 dark:text-gray-300">
-                    <p className="text-lg">開発: <a href="https://x.com/seraf_dev" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">Seraf()</a></p>
+                    <p className="text-xl md:text-2xl">開発: <a href="https://x.com/seraf_dev" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">Seraf()</a></p>
                 </div>
             </div>
 

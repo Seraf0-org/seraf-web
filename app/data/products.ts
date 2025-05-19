@@ -76,7 +76,7 @@ export const products: Product[] = [
         features: "デッキ切れ=負けなカードゲームとは一風変わったシステム。デッキが切れるとデッキと墓地、そしてフィールドを裏返して続行する。カードの効果やルールすらも異なる裏面を上手く使い、ゲームを有利に進めよう。",
         genre: "カードゲーム",
         platform: "アナログ",
-        releaseDate: "2025年春予定",
+        releaseDate: "2025年秋発売予定",
         image: "/images/products/product-4.jpg",
         links: [
             {
