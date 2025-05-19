@@ -1,3 +1,14 @@
+export type Link = {
+    url: string;
+    text: string;
+    color: {
+        base: string;
+        hover: string;
+        shadow: string;
+    };
+    icon?: string;
+};
+
 export type Product = {
     id: number;
     name: string;
@@ -8,8 +19,7 @@ export type Product = {
     platform?: string;
     releaseDate?: string;
     image: string;
-    link?: string;
-    storeLink?: string;
+    links?: Link[];
 };
 
 export const products: Product[] = [
@@ -34,7 +44,18 @@ export const products: Product[] = [
         platform: "PC(Web) / iOS / Android",
         releaseDate: "2024年8月21日",
         image: "/images/products/product-2.jpg",
-        link: "https://unityroom.com/games/reflectone"
+        links: [
+            {
+                url: "https://unityroom.com/games/reflectone",
+                text: "プレイする",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178",
+                    shadow: "6, 182, 212"
+                },
+                icon: "play"
+            }
+        ]
     },
     {
         id: 3,
@@ -56,7 +77,19 @@ export const products: Product[] = [
         genre: "カードゲーム",
         platform: "アナログ",
         releaseDate: "2025年春予定",
-        image: "/images/products/product-4.jpg"
+        image: "/images/products/product-4.jpg",
+        links: [
+            {
+                url: "/voidrive/manual",
+                text: "マニュアル",
+                color: {
+                    base: "16, 185, 129",
+                    hover: "5, 150, 105",
+                    shadow: "16, 185, 129"
+                },
+                icon: "book"
+            }
+        ]
     },
     {
         id: 5,
@@ -79,7 +112,18 @@ export const products: Product[] = [
         platform: "PC(Web) / スマートフォン",
         releaseDate: "2025年4月20日",
         image: "/images/products/product-6.jpg",
-        link: "https://unityroom.com/games/skiey"
+        links: [
+            {
+                url: "https://unityroom.com/games/skiey",
+                text: "プレイする",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178",
+                    shadow: "6, 182, 212"
+                },
+                icon: "play"
+            }
+        ]
     },
     {
         id: 10,

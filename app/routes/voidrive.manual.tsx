@@ -9,7 +9,7 @@ export default function ManualPage() {
                 </h1>
                 <p className="text-xl text-gray-600 dark:text-gray-300">オンラインマニュアル</p>
             </div>
-            
+
             {/* 目次セクション */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">目次</h2>
@@ -102,7 +102,7 @@ export default function ManualPage() {
                 {/* カード紹介：Manaの例 */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <img src="/voidrive/mana-front.png" alt="Manaカード" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
+                        <img src="/images/voidrive/driver-front.png" alt="ドライバーカード" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
                         <span className="text-lg font-bold text-gray-700 dark:text-gray-200">ドライバー例</span>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md text-center md:col-span-2">
@@ -122,7 +122,7 @@ export default function ManualPage() {
                 {/* エージェント紹介サンプル */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <img src="/voidrive/agent-sample.png" alt="エージェントカード例" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
+                        <img src="/images/voidrive/agent.png" alt="エージェントカード例" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
                         <span className="text-lg font-bold text-gray-700 dark:text-gray-200">エージェント例</span>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md text-center md:col-span-2">
@@ -141,7 +141,7 @@ export default function ManualPage() {
                 {/* キャスト紹介サンプル */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-12">
                     <div className="flex flex-col items-center">
-                        <img src="/voidrive/cast-sample.png" alt="キャストカード例" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
+                        <img src="/images/voidrive/cast.png" alt="キャストカード例" className="rounded-lg shadow-lg w-full max-w-xs mb-4" />
                         <span className="text-lg font-bold text-gray-700 dark:text-gray-200">キャスト例</span>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md text-center md:col-span-2">
@@ -149,6 +149,8 @@ export default function ManualPage() {
                         <div className="text-left text-gray-600 dark:text-gray-300 text-sm space-y-2">
                             <p>キャストゾーンに出して効果を発動するカードです。</p>
                             <p>キャストには、アクション、ファンクション、リアクションの3種類があります。</p>
+                            <p>キャストの種類は、カードの左上か枠の色で判別できます。</p>
+                            <p>アクション：青枠、ファンクション：緑枠、リアクション：赤枠</p>
                             <p><b>名前</b>：このキャストの名前を表します。</p>
                             <p><b>コスト</b>：このキャストを発動する、維持するのに必要なコストの値を表します。</p>
                             <p><b>速度</b>：このキャストが持つ速度の値を表します。自身より速度が高いカードは効果の対象にできません。</p>
@@ -161,7 +163,7 @@ export default function ManualPage() {
             {/* ゲームの流れ */}
             <div id="game-flow" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-semibold mb-4 border-b-2 border-cyan-500 pb-2">ゲームの流れ</h2>
-                
+
                 {/* 準備 */}
                 <div className="mb-6">
                     <h3 className="text-xl font-semibold mb-3">準備</h3>
@@ -310,7 +312,7 @@ export default function ManualPage() {
                     <div>
                         <b>エージェントの場合</b>
                         <p>自分の場のエージェントエリアに基本的に横向き(タップ状態)で出します。<br />
-                        《即行》と書かれたエージェントは、最初から縦向き(アンタップ状態)で場に出ます。</p>
+                            《即行》と書かれたエージェントは、最初から縦向き(アンタップ状態)で場に出ます。</p>
                     </div>
                     <div>
                         <b>アクションの場合</b>
