@@ -198,6 +198,30 @@ export default function ManualPage() {
                     </p>
                 </div>
 
+                {/* ゲーム開始 */}
+                <div className="mb-6">
+                    <h3 className="text-xl font-semibold mb-3">ゲーム開始</h3>
+                    <div className="space-y-4">
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <h4 className="font-semibold mb-2">先行後攻の決定</h4>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                じゃんけんなどで先行後攻を決めます。
+                                先行となったプレイヤーからターンを開始します。
+                            </p>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <h4 className="font-semibold mb-2">先行プレイヤーの特別ルール</h4>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                先行プレイヤーは、最初の1ターン目のみ以下の特別ルールが適用されます：
+                            </p>
+                            <ul className="list-disc list-inside mt-2 text-gray-600 dark:text-gray-300">
+                                <li>ドローフェイズでカードを引かない</li>
+                                <li>エーテル供給の枚数が-1される</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 {/* ターンの流れ */}
                 <div className="mb-6">
                     <h3 className="text-xl font-semibold mb-3">ターンの流れ</h3>
