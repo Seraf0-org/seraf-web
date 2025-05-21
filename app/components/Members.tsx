@@ -82,7 +82,12 @@ const MemberPopup = ({ member, onClose }: {
             onClick={handleClose}
         >
             <div
-                className="relative w-full max-w-6xl bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl h-[80vh] md:h-[65vh] overflow-y-auto animate-clip-from-top"
+                className="relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
+                style={{
+                    width: 'min(90vw, calc(90vh * 16 / 9))',
+                    height: 'min(90vh, calc(90vw * 9 / 16))',
+                    maxWidth: '1600px'
+                }}
                 onClick={e => e.stopPropagation()}
             >
                 <button
@@ -95,7 +100,7 @@ const MemberPopup = ({ member, onClose }: {
                 </button>
 
                 <div className="flex flex-col md:flex-row h-full">
-                    <div className="w-full md:w-1/2 relative h-48 md:h-full">
+                    <div className="w-full md:w-1/2 relative">
                         <div className="relative h-full">
                             <img
                                 src={member.mainImage}
@@ -114,96 +119,89 @@ const MemberPopup = ({ member, onClose }: {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full overflow-y-auto">
-                        <div>
-                            <div className="mb-6 opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
-                                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                                    {member.name}
-                                </h3>
-                                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
-                                    {member.position}
-                                </p>
-                            </div>
+                    <div className="w-full md:w-1/2 p-6 overflow-y-auto">
+                        <div className="mb-6 opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
+                            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                {member.name}
+                            </h3>
+                            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                                {member.position}
+                            </p>
+                        </div>
 
-                            <div className="prose dark:prose-invert max-w-none opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
-                                <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
-                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
-                                    {member.description || "準備中..."}
-                                </p>
+                        <div className="prose dark:prose-invert max-w-none opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
+                            <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
+                            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
+                                {member.description || "準備中..."}
+                            </p>
 
-                                <h4 className="text-xl font-semibold mb-3">スキル</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {member.skills?.map((skill, index) => (
-                                        <span
-                                            key={index}
-                                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
+                            <h4 className="text-xl font-semibold mb-3">スキル</h4>
+                            <div className="flex flex-wrap gap-2">
+                                {member.skills?.map((skill, index) => (
+                                    <span
+                                        key={index}
+                                        className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
+                                    >
+                                        {skill}
+                                    </span>
+                                ))}
                             </div>
                         </div>
 
-                        {member.sns && member.sns.length > 0 && (
-                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8 opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
-                                {member.sns.map((sns, index) => {
-                                    // デフォルトのカラー
-                                    const defaultColor = {
-                                        base: "6, 182, 212",
-                                        hover: "8, 145, 178"
-                                    };
+                        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8 opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
+                            {member.sns.map((sns, index) => {
+                                const defaultColor = {
+                                    base: "6, 182, 212",
+                                    hover: "8, 145, 178"
+                                };
 
-                                    const color = sns.color || defaultColor;
+                                const color = sns.color || defaultColor;
 
-                                    return (
-                                        <a
-                                            key={index}
-                                            href={sns.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center justify-center px-6 py-3 text-white font-medium rounded-lg transition-all duration-300"
+                                return (
+                                    <a
+                                        key={index}
+                                        href={sns.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center px-6 py-3 text-white font-medium rounded-lg transition-all duration-300"
+                                        style={{
+                                            backgroundColor: `rgb(${color.base})`,
+                                            boxShadow: `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`,
+                                            filter: `brightness(1.05) contrast(1.05)`,
+                                            textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+                                        }}
+                                        onMouseEnter={e => {
+                                            e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
+                                            e.currentTarget.style.boxShadow = `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`;
+                                            e.currentTarget.style.filter = `brightness(1.1) contrast(1.1)`;
+                                        }}
+                                        onMouseLeave={e => {
+                                            e.currentTarget.style.backgroundColor = `rgb(${color.base})`;
+                                            e.currentTarget.style.boxShadow = `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`;
+                                            e.currentTarget.style.filter = `brightness(1.05) contrast(1.05)`;
+                                        }}
+                                    >
+                                        <span>{sns.label}</span>
+                                        <svg
+                                            className="w-5 h-5 ml-2"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
                                             style={{
-                                                backgroundColor: `rgb(${color.base})`,
-                                                boxShadow: `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`,
-                                                '--hover-color': `rgb(${color.hover})`,
-                                                '--hover-shadow': `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`,
-                                                filter: `brightness(1.05) contrast(1.05)`,
                                                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
                                             }}
-                                            onMouseEnter={e => {
-                                                e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
-                                                e.currentTarget.style.boxShadow = `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`;
-                                                e.currentTarget.style.filter = `brightness(1.1) contrast(1.1)`;
-                                            }}
-                                            onMouseLeave={e => {
-                                                e.currentTarget.style.backgroundColor = `rgb(${color.base})`;
-                                                e.currentTarget.style.boxShadow = `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`;
-                                                e.currentTarget.style.filter = `brightness(1.05) contrast(1.05)`;
-                                            }}
                                         >
-                                            <span>{sns.label}</span>
-                                            <svg
-                                                className="w-5 h-5 ml-2"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                style={{
-                                                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
-                                                }}
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                                />
-                                            </svg>
-                                        </a>
-                                    );
-                                })}
-                            </div>
-                        )}
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                            />
+                                        </svg>
+                                    </a>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

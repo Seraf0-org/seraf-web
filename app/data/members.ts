@@ -213,5 +213,24 @@ export const members: Member[] = [
                 }
             }
         ]
+    },
+    {
+        id: 10,
+        name: "こと",
+        position: "背景モデラー",
+        mainImage: "/images/members/member-10.jpg",
+        subImage: "/images/members/member-10.jpg",
+        description: "背景モデラーを目指して勉強中",
+        skills: ["Maya", "Substance Painter"],
+        sns: [
+            {
+                url: "https://x.com/koto_koto724",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ]
     }
 ];
