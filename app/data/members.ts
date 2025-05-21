@@ -49,7 +49,7 @@ export const members: Member[] = [
     {
         id: 2,
         name: "ゆぴる",
-        position: "代表補佐, 専属デザイナー, イラストレーター, モデラー",
+        position: "代表補佐, 専属デザイナー, イラストレーター, 背景モデラー",
         mainImage: "/images/members/member-2.jpg",
         subImage: "/images/members/member-2-sub.jpg",
         description: "専属デザイナーしてます。\n3DCGは背景、Live2Dはイラストからキャラクターリグとアニメーションまでやってます。",
@@ -76,7 +76,7 @@ export const members: Member[] = [
     {
         id: 3,
         name: "Mossy",
-        position: "サウンドクリエイター, モデラー",
+        position: "サウンドクリエイター, 背景モデラー",
         mainImage: "/images/members/member-3.jpg",
         subImage: "/images/members/member-3-sub.jpg",
         description: "Seraf()のサウンドデザイナー、モデラー。\n空間に応じたサウンドエフェクトの制作や背景、プロップのモデリングをやっています。",
@@ -171,7 +171,7 @@ export const members: Member[] = [
     {
         id: 8,
         name: "rapid",
-        position: "モデラー、リガー",
+        position: "キャラモデラー、リガー",
         mainImage: "/images/members/member-8.jpg",
         subImage: "/images/members/member-8.jpg",
         description: "準備中。",
