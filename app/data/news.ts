@@ -49,6 +49,13 @@ export const newsItems: NewsItem[] = [
         description: "デジタルハリウッド大学の新入生歓迎会2025にて、ゲームの展示を行いました。",
         image: "/images/news/news-6.jpg"
     },
+    {
+        id: 7,
+        date: "2025.5.18",
+        title: "春ゲムマ2025に出展！",
+        description: "春のゲームマーケット2025にて、ヴォイドライブの試遊と販売を行いました。",
+        image: "/images/news/news-7.jpg"
+    }
 
 ];
 
