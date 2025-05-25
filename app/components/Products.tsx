@@ -86,7 +86,7 @@ const ProductPopup = ({ product, onClose }: {
       onClick={handleClose}
     >
       <div
-        className="relative w-[90vw] max-w-[1600px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
+        className="relative w-[90vw] h-[90vh] md:w-[min(90vw,calc(90vh*16/9))] md:h-[min(90vh,calc(90vw*9/16))] md:max-w-[1800px] md:max-h-[1012px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
         onClick={e => e.stopPropagation()}
       >
         <button
@@ -98,7 +98,7 @@ const ProductPopup = ({ product, onClose }: {
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row h-[80vh] overflow-y-auto">
+        <div className="flex flex-col md:flex-row h-full">
           <div className="w-full md:w-3/5 h-[40vh] md:h-full relative">
             <div className="absolute inset-0">
               <img
@@ -110,101 +110,105 @@ const ProductPopup = ({ product, onClose }: {
             </div>
           </div>
 
-          <div className="w-full md:w-2/5 p-6 md:p-8 flex flex-col">
-            <div className="flex-grow overflow-y-auto pr-4 space-y-6">
-              <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                  {product.name}
-                </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300" style={{ whiteSpace: 'pre-line' }}>
-                  制作: {product.description}
-                </p>
-              </div>
-
-              {product.details && (
-                <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
-                  <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">概要</h4>
-                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
-                    {product.details}
+          <div className="w-full md:w-2/5 flex flex-col h-[calc(90vh-40vh)] md:h-full">
+            <div className="flex-1 p-6 md:p-8 overflow-y-auto">
+              <div className="space-y-6">
+                <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
+                  <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+                    {product.name}
+                  </h3>
+                  <p className="text-lg text-gray-600 dark:text-gray-300" style={{ whiteSpace: 'pre-line' }}>
+                    制作: {product.description}
                   </p>
                 </div>
-              )}
 
-              {product.features && (
-                <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
-                  <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">特徴</h4>
-                  <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
-                    {product.features}
-                  </p>
+                {product.details && (
+                  <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
+                    <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">概要</h4>
+                    <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
+                      {product.details}
+                    </p>
+                  </div>
+                )}
+
+                {product.features && (
+                  <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
+                    <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">特徴</h4>
+                    <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
+                      {product.features}
+                    </p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-6 opacity-0 animate-text-appear" style={{ animationDelay: '1.0s' }}>
+                  {product.genre && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">ジャンル</h4>
+                      <p className="text-lg text-gray-600 dark:text-gray-300">{product.genre}</p>
+                    </div>
+                  )}
+
+                  {product.platform && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">プラットフォーム</h4>
+                      <p className="text-lg text-gray-600 dark:text-gray-300">{product.platform}</p>
+                    </div>
+                  )}
+
+                  {product.releaseDate && (
+                    <div>
+                      <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">リリース日</h4>
+                      <p className="text-lg text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
+                    </div>
+                  )}
                 </div>
-              )}
-
-              <div className="grid grid-cols-2 gap-6 opacity-0 animate-text-appear" style={{ animationDelay: '1.0s' }}>
-                {product.genre && (
-                  <div>
-                    <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">ジャンル</h4>
-                    <p className="text-lg text-gray-600 dark:text-gray-300">{product.genre}</p>
-                  </div>
-                )}
-
-                {product.platform && (
-                  <div>
-                    <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">プラットフォーム</h4>
-                    <p className="text-lg text-gray-600 dark:text-gray-300">{product.platform}</p>
-                  </div>
-                )}
-
-                {product.releaseDate && (
-                  <div>
-                    <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">リリース日</h4>
-                    <p className="text-lg text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
-                  </div>
-                )}
               </div>
             </div>
 
             {product.links && product.links.length > 0 && (
-              <div className="flex flex-col sm:flex-row gap-4 mt-6 sticky bottom-0 bg-white dark:bg-gray-800 pt-4 opacity-0 animate-text-appear" style={{ animationDelay: '1.2s' }}>
-                {product.links.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target={link.url.startsWith('http') ? '_blank' : undefined}
-                    rel={link.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex-1 inline-flex items-center justify-center px-8 py-4 
-                      text-white text-lg font-medium rounded-lg transition-colors duration-200"
-                    style={{
-                      backgroundColor: `rgb(${link.color.base})`,
-                      boxShadow: `0 0 15px rgba(${link.color.shadow}, 0.3)`,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgb(${link.color.hover})`;
-                      e.currentTarget.style.boxShadow = `0 0 20px rgba(${link.color.shadow}, 0.5)`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = `rgb(${link.color.base})`;
-                      e.currentTarget.style.boxShadow = `0 0 15px rgba(${link.color.shadow}, 0.3)`;
-                    }}
-                  >
-                    <span>{link.text}</span>
-                    {link.icon === 'play' && (
-                      <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    )}
-                    {link.icon === 'book' && (
-                      <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                    )}
-                    {link.icon === 'store' && (
-                      <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                      </svg>
-                    )}
-                  </a>
-                ))}
+              <div className="p-6 md:p-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-text-appear" style={{ animationDelay: '1.2s' }}>
+                  {product.links.map((link, index) => (
+                    <a
+                      key={index}
+                      href={link.url}
+                      target={link.url.startsWith('http') ? '_blank' : undefined}
+                      rel={link.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="flex-1 inline-flex items-center justify-center px-8 py-4 
+                        text-white text-lg font-medium rounded-lg transition-colors duration-200"
+                      style={{
+                        backgroundColor: `rgb(${link.color.base})`,
+                        boxShadow: `0 0 15px rgba(${link.color.shadow}, 0.3)`,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = `rgb(${link.color.hover})`;
+                        e.currentTarget.style.boxShadow = `0 0 20px rgba(${link.color.shadow}, 0.5)`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = `rgb(${link.color.base})`;
+                        e.currentTarget.style.boxShadow = `0 0 15px rgba(${link.color.shadow}, 0.3)`;
+                      }}
+                    >
+                      <span>{link.text}</span>
+                      {link.icon === 'play' && (
+                        <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      )}
+                      {link.icon === 'book' && (
+                        <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                      )}
+                      {link.icon === 'store' && (
+                        <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                      )}
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </div>

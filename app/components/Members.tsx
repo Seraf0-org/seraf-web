@@ -83,9 +83,9 @@ const MemberPopup = ({ member, onClose }: {
         >
             <div
                 className="relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top
-                    w-[min(90vw,calc(90vh*16/9))] h-[min(90vh,calc(90vw*9/16))] max-w-[1600px]
+                    w-[90vw] h-[90vh]
                     md:w-[min(90vw,calc(90vh*16/9))] md:h-[min(90vh,calc(90vw*9/16))]
-                    w-[90vw] h-[90vh]"
+                    md:max-w-[1800px] md:max-h-[1012px]"
                 onClick={e => e.stopPropagation()}
             >
                 <button
@@ -117,7 +117,8 @@ const MemberPopup = ({ member, onClose }: {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/2 p-4 md:p-6 overflow-y-auto">
+                    <div className="w-full md:w-1/2 flex flex-col h-full">
+                        <div className="flex-1 p-4 md:p-6 overflow-y-auto">
                             <div className="mb-6 opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
                                 <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                                     {member.name}
@@ -143,10 +144,12 @@ const MemberPopup = ({ member, onClose }: {
                                             {skill}
                                         </span>
                                     ))}
+                                </div>
                             </div>
                         </div>
 
-                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8 opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
+                        <div className="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700">
+                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
                                 {member.sns.map((sns, index) => {
                                     const defaultColor = {
                                         base: "6, 182, 212",
@@ -200,6 +203,7 @@ const MemberPopup = ({ member, onClose }: {
                                     );
                                 })}
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
