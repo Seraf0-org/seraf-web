@@ -144,21 +144,21 @@ const ProductPopup = ({ product, onClose }: {
                   {product.genre && (
                     <div>
                       <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">ジャンル</h4>
-                      <p className="text-lg text-gray-600 dark:text-gray-300">{product.genre}</p>
+                      <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">{product.genre}</p>
                     </div>
                   )}
 
                   {product.platform && (
                     <div>
                       <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">プラットフォーム</h4>
-                      <p className="text-lg text-gray-600 dark:text-gray-300">{product.platform}</p>
+                      <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">{product.platform}</p>
                     </div>
                   )}
 
                   {product.releaseDate && (
                     <div>
                       <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">リリース日</h4>
-                      <p className="text-lg text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
+                      <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">{product.releaseDate}</p>
                     </div>
                   )}
                 </div>
