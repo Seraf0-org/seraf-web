@@ -52,6 +52,7 @@ export const members: Member[] = [
         position: "代表補佐, 専属デザイナー, イラストレーター, 背景モデラー",
         mainImage: "/images/members/member-2.jpg",
         subImage: "/images/members/member-2-sub.jpg",
+        description: "代表補佐と専属デザイナーしてます。\n3DCGは背景、Live2Dはイラストからキャラクターリグとアニメーションまでやってます。",
         skills: ["Blender", "Live2D", "CLIP STUDIO PAINT", "VTuber Studio", "Substance Painter"],
         sns: [
             {
@@ -97,6 +98,7 @@ export const members: Member[] = [
         position: "デザイナー, 映像クリエイター",
         mainImage: "/images/members/member-4.jpg",
         subImage: "/images/members/member-4.jpg",
+        description: "色々なところでフライヤー等を中心としたグラフィックデザインをしています。映像もちょっとやります。",
         skills: ["Illustrator", "After Effects", "Web"],
         sns: [
             {
