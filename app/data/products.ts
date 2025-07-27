@@ -60,7 +60,7 @@ export const products: Product[] = [
     {
         id: 3,
         name: "クラリオン",
-        description: "KTN, ゆぴる, Mossy",
+        description: "KTN, ゆぴる, Mossy, Jiska, こと、すずめ(Studio.zip)",
         details: "せめて美しく散れ。戦場を彩る花として。",
         features: "剣と銃を巧みに扱いながら、スタイリッシュかつ派手に敵を薙ぎ払っていく無双アクションゲーム",
         genre: "3Dアクションゲーム",
@@ -71,7 +71,7 @@ export const products: Product[] = [
     {
         id: 4,
         name: "ヴォイドライブ",
-        description: "KTN, しそ, 白桜）",
+        description: "KTN, しそ, 白桜, あきべ, はふり(外注), すずめ(Studio.zip)",
         details: "デッキが切れても負けじゃない。表面と裏面を操り勝利を掴め。",
         features: "デッキ切れ=負けなカードゲームとは一風変わったシステム。デッキが切れるとデッキと墓地、そしてフィールドを裏返して続行する。カードの効果やルールすらも異なる裏面を上手く使い、ゲームを有利に進めよう。",
         genre: "カードゲーム",
