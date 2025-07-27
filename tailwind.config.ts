@@ -178,5 +178,31 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase }: any) {
+      addBase({
+        'html': {
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+        },
+        'html::-webkit-scrollbar': {
+          'display': 'none',
+        },
+        'body': {
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+        },
+        'body::-webkit-scrollbar': {
+          'display': 'none',
+        },
+        '*': {
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+        },
+        '*::-webkit-scrollbar': {
+          'display': 'none',
+        },
+      })
+    }
+  ],
 } satisfies Config;
