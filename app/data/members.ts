@@ -52,7 +52,6 @@ export const members: Member[] = [
         position: "代表補佐, 専属デザイナー, イラストレーター, 背景モデラー",
         mainImage: "/images/members/member-2.jpg",
         subImage: "/images/members/member-2-sub.jpg",
-        description: "専属デザイナーしてます。\n3DCGは背景、Live2Dはイラストからキャラクターリグとアニメーションまでやってます。",
         skills: ["Blender", "Live2D", "CLIP STUDIO PAINT", "VTuber Studio", "Substance Painter"],
         sns: [
             {
@@ -98,7 +97,6 @@ export const members: Member[] = [
         position: "デザイナー, 映像クリエイター",
         mainImage: "/images/members/member-4.jpg",
         subImage: "/images/members/member-4.jpg",
-        description: "準備中。",
         skills: ["Illustrator", "After Effects", "Web"],
         sns: [
             {
@@ -152,11 +150,11 @@ export const members: Member[] = [
     {
         id: 7,
         name: "あきべ",
-        position: "イラストレーター、デザイナー",
+        position: "イラストレーター、ピクセルアーティスト、コンセプトアーティスト",
         mainImage: "/images/members/member-7.jpg",
         subImage: "/images/members/member-7.jpg",
-        description: "準備中。",
-        skills: [],
+        description: "ゲームのコンセプトアートやキャラクターデザイン、ピクセルアニメーションを主にやらせていただいてます！ ",
+        skills: ["CLIP STUDIO PAINT", "Procreate", "Photoshop", "Aseprite", "Maya"],
         sns: [
             {
                 url: "https://twitter.com/pikobi222",
