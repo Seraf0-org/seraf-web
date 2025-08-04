@@ -374,12 +374,16 @@ export function Products() {
               className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
                 transition-all duration-500 transform cursor-pointer
                 hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
+                relative
                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               style={{
                 transitionDelay: `${index * 200}ms`,
                 transitionProperty: 'opacity, transform'
               }}
             >
+              {/* ホバー時の下線アニメーション */}
+              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-300 ease-out group-hover:w-full group-hover:h-0.5"></div>
+              
               <div className="relative overflow-hidden">
                 <div className="pt-[56.25%] md:pt-[50%]">
                   <img

@@ -288,6 +288,7 @@ export function Members() {
     const lines = useLines('fuchsia');
     const [selectedMember, setSelectedMember] = useState<typeof members[0] | null>(null);
     const [parallaxOffset, setParallaxOffset] = useState(0);
+    const [outlineHoverId, setOutlineHoverId] = useState<number | null>(null); // 追加
 
     useEffect(() => {
         const handleScroll = () => {
@@ -387,17 +388,17 @@ export function Members() {
                     }}
                 >
                     <path
-                        d={`M ${line.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+                        d={`M ${line.points.map((p: any) => `${p.x},${p.y}`).join(' L ')}`}
                         stroke={line.color}
                         strokeWidth={line.width}
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
-                    {line.branches.map((branch, i) => (
+                    {line.branches.map((branch: any, i: number) => (
                         <path
                             key={`${line.id}-${i}`}
-                            d={`M ${branch.points.map(p => `${p.x},${p.y}`).join(' L ')}`}
+                            d={`M ${branch.points.map((p: any) => `${p.x},${p.y}`).join(' L ')}`}
                             stroke={branch.color}
                             strokeWidth={branch.width}
                             fill="none"
@@ -440,6 +441,8 @@ export function Members() {
                                 transitionDelay: `${index * 200}ms`,
                                 transitionProperty: 'opacity, transform'
                             }}
+                            onMouseEnter={() => setOutlineHoverId(member.id)}
+                            onMouseLeave={() => setOutlineHoverId(null)}
                         >
                             {/* 名札の穴部分 */}
                             <div className="absolute top-4 md:top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 md:w-6 md:h-6 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner border border-fuchsia-500/50 dark:border-fuchsia-400/50" style={{ boxShadow: '0 0 5px rgba(219, 39, 119, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2)' }}></div>
@@ -495,6 +498,24 @@ export function Members() {
                             >
                                 {member.position}
                             </p>
+                            {/* SVGアウトラインアニメーション */}
+                            <div className="absolute inset-0 pointer-events-none">
+                                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="block">
+                                    <rect
+                                        x="1" y="1" width="98" height="98" rx="10" ry="10"
+                                        fill="none"
+                                        stroke="#ec4899"
+                                        strokeWidth="1"
+                                        strokeLinejoin="round"
+                                        strokeLinecap="round"
+                                        strokeDasharray="400"
+                                        strokeDashoffset={outlineHoverId === member.id ? 0 : 400}
+                                        style={{
+                                            transition: 'stroke-dashoffset 1.2s'
+                                        }}
+                                    />
+                                </svg>
+                            </div>
                         </a>
                     ))}
                 </div>
