@@ -2,8 +2,9 @@ import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useState, useEffect, useCallback } from "react";
-import { partners, partnershipTypeColors, type Partner } from "~/data/partners";
+import { partners, type Partner } from "~/data/partners";
 import { createPortal } from 'react-dom';
+import { animate, stagger } from "motion";
 
 // 以下のHexagonコンポーネントを追加
 const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
@@ -75,6 +76,71 @@ export function Partnership() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Motionアニメーションを初期化
+    useEffect(() => {
+        if (isVisible) {
+            // タイトルのアニメーション
+            (animate as any)(
+                ".partnership-title",
+                { opacity: [0, 1], y: [30, 0] },
+                { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
+
+            // パートナーカードの表示アニメーション
+            (animate as any)(
+                ".partner-card",
+                { opacity: [0, 1], y: [60, 0], scale: [0.8, 1] },
+                { 
+                    delay: stagger(0.2),
+                    duration: 1,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
+
+            // カード内のテキストアニメーション
+            (animate as any)(
+                ".partner-text",
+                { opacity: [0, 1], y: [30, 0] },
+                { 
+                    delay: stagger(0.15, { startDelay: 1 }),
+                    duration: 0.8,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
+        }
+    }, [isVisible]);
+
+    // ホバーアニメーションの設定
+    useEffect(() => {
+        const partnerCards = document.querySelectorAll('.partner-card');
+        
+        partnerCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                (animate as any)(
+                    card,
+                    { 
+                        y: [0, -12],
+                        scale: [1, 1.03],
+                        boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 25px 50px rgba(0,0,0,0.25)']
+                    },
+                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+
+            card.addEventListener('mouseleave', () => {
+                (animate as any)(
+                    card,
+                    { 
+                        y: [-12, 0],
+                        scale: [1.03, 1],
+                        boxShadow: ['0 25px 50px rgba(0,0,0,0.25)', '0 10px 25px rgba(0,0,0,0.1)']
+                    },
+                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+        });
+    }, [isVisible]);
+
     const parallaxTransform = {
         text: `translateY(calc(-70% + ${parallaxOffset * 1.7}px))`,
     };
@@ -85,28 +151,25 @@ export function Partnership() {
 
     // パートナーシップタイプ別にグループ化
     const partnersByType = partners.reduce((acc, partner) => {
-        if (!acc[partner.partnershipType]) {
-            acc[partner.partnershipType] = [];
+        const type = partner.tag || 'general';
+        if (!acc[type]) {
+            acc[type] = [];
         }
-        acc[partner.partnershipType].push(partner);
+        acc[type].push(partner);
         return acc;
-    }, {} as Record<Partner['partnershipType'], Partner[]>);
+    }, {} as Record<string, Partner[]>);
 
     // 各パートナーの固有タグを生成する関数
     const getPartnerTag = (partner: Partner) => {
-        // ここではパートナー名の最初の単語を使用する例
-        // 実際の実装では、APIから取得するか、データに基づいて適切なタグを返す
+        // パートナーのタグまたは名前の最初の単語を使用
+        if (partner.tag) {
+            return partner.tag;
+        }
         const nameParts = partner.name.split(' ');
-        if (partner.partnershipType === 'creative') {
-            return 'マルチクリエイション';
-        } else if (partner.partnershipType === 'technology' && nameParts[0].length > 3) {
-            return nameParts[0];
-        } else if (partner.partnershipType === 'academic') {
-            return '研究協力';
-        } else if (nameParts.length > 1) {
+        if (nameParts.length > 1) {
             return nameParts[0];
         }
-        return '';  // タグを表示しない
+        return partner.name;  // 単語が1つの場合は名前全体
     };
 
     return (
@@ -176,7 +239,7 @@ export function Partnership() {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 md:px-8">
-                <h2 className="text-4xl md:text-6xl font-bold text-center mb-16 text-gray-700 dark:text-white drop-shadow-[0_0_8px_rgba(22,172,32,0.5)] dark:drop-shadow-[0_0_8px_rgba(34,210,54,0.5)]">
+                <h2 className="partnership-title text-4xl md:text-6xl font-bold text-center mb-16 text-gray-700 dark:text-white drop-shadow-[0_0_8px_rgba(22,172,32,0.5)] dark:drop-shadow-[0_0_8px_rgba(34,210,54,0.5)]">
                     Partners
                     <div className="relative">
                         <svg width="100vw" height="40" viewBox="0 0 800 10" preserveAspectRatio="none" style={{ marginLeft: '-25vw', width: '150vw' }}>
@@ -185,8 +248,9 @@ export function Partnership() {
                                 stroke="#99ff99"
                                 strokeWidth="3"
                                 fill="none"
-                                className={`${isVisible ? 'animate-draw-line-from-left' : ''}`}
+                                className="decorative-line origin-left"
                                 strokeDasharray="800"
+                                strokeDashoffset="800"
                             />
                         </svg>
                     </div>
@@ -205,13 +269,9 @@ export function Partnership() {
                                         href={partner.website || undefined}
                                         target={partner.website ? "_blank" : undefined}
                                         rel={partner.website ? "noopener noreferrer" : undefined}
-                                        className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
-                                        transition-all duration-500 transform cursor-pointer w-full max-w-[32rem]
-                                        hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
-                                        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                                        className="partner-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
+                                        cursor-pointer w-full max-w-[32rem] opacity-0"
                                         style={{
-                                            transitionDelay: `${index * 200}ms`,
-                                            transitionProperty: 'opacity, transform',
                                             borderLeft: `4px solid ${partner.color.primary}`
                                         }}
                                     >
@@ -237,7 +297,7 @@ export function Partnership() {
                                                     className="absolute top-4 right-4 px-3 py-1 rounded-full text-white text-xs font-medium"
                                                     style={{ backgroundColor: partner.color.primary }}
                                                 >
-                                                    {partner.partnershipType === 'creative' && 'マルチクリエイション'}
+                                                    {partner.tag || 'パートナー'}
                                                 </div>
                                                 {/* パートナー固有のタグ */}
                                                 {partner.tag && (
@@ -261,19 +321,13 @@ export function Partnership() {
                                             />
                                             <div className="relative z-10">
                                                 <h3
-                                                    className={`text-xl font-semibold mb-2 text-gray-900 dark:text-white transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-                                                    style={{
-                                                        transitionDelay: `${index * 200 + 200}ms`,
-                                                        transitionProperty: 'opacity, transform'
-                                                    }}
+                                                    className="partner-text text-xl font-semibold mb-2 text-gray-900 dark:text-white opacity-0"
                                                 >
                                                     {partner.name}
                                                 </h3>
                                                 <p
-                                                    className={`text-gray-600 dark:text-gray-300 transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                                                    className="partner-text text-gray-600 dark:text-gray-300 opacity-0"
                                                     style={{
-                                                        transitionDelay: `${index * 200 + 400}ms`,
-                                                        transitionProperty: 'opacity, transform',
                                                         whiteSpace: 'pre-line'
                                                     }}
                                                 >

@@ -3,6 +3,7 @@ import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { useState, useRef, useEffect } from "react";
+import { animate, stagger } from "motion";
 
 // 型定義を追加
 interface Point {
@@ -65,6 +66,39 @@ export function About() {
       videoRef.current.pause();
     }
   }, [isDark, isIOS, isVisible]);
+
+  // Motionアニメーションを初期化
+  useEffect(() => {
+    if (isVisible) {
+      // タイトルのアニメーション
+      (animate as any)(
+        ".about-title",
+        { opacity: [0, 1], y: [30, 0] },
+        { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // コンテンツのフェードインアニメーション
+      (animate as any)(
+        ".about-content",
+        { opacity: [0, 1], y: [40, 0] },
+        { duration: 1.2, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // 動画のアニメーション
+      (animate as any)(
+        ".about-video",
+        { opacity: [0, 1], scale: [0.9, 1] },
+        { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // 装飾線のアニメーション
+      (animate as any)(
+        ".decorative-line",
+        { strokeDashoffset: [600, 0] },
+        { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+    }
+  }, [isVisible]);
 
   return (
     <section
@@ -144,62 +178,57 @@ export function About() {
         </svg>
       ))}
 
-      <div className="container mx-auto relative flex flex-col sm:flex-row items-center">
-        <div className={`container mx-auto px-6 md:px-4 py-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          } flex flex-col md:flex-row items-center`}>
-          <div className="max-w-4xl text-left md:mr-8">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose">
-              About
-              <div className="absolute fixed-left">
-                <svg width="100vw" height="40" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
-                  <path
-                    d="M0 0 L100 0 120 10 L500 10"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    fill="none"
-                    className={`text-fuchsia-400 dark:text-fuchsia-500 ${isVisible ? 'animate-draw-line-from-left' : ''}`}
-                    strokeDasharray="600"
-                  />
-                </svg>
-              </div>
-            </h1>
-            <p
-              className={`text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-loose md:leading-loose transition-all duration-1000 transform 
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: '0.2s' }}
+      <div className="about-content container mx-auto px-6 md:px-4 py-10 flex flex-col md:flex-row items-center">
+        <div className="max-w-4xl text-left md:mr-8">
+          <h1 className="about-title text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose">
+            About
+            <div className="absolute fixed-left">
+              <svg width="100vw" height="40" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
+                <path
+                  d="M0 0 L100 0 L120 10 L500 10"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  fill="none"
+                  className="decorative-line text-fuchsia-400 dark:text-fuchsia-500 origin-left"
+                  strokeDasharray="600"
+                  strokeDashoffset="600"
+                />
+              </svg>
+            </div>
+          </h1>
+          <p
+            className="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-loose md:leading-loose"
+          >
+            <span className="text-lg md:text-3xl font-semibold">Seraf()</span>
+            は、ゲーム制作を中心としたクリエイタースタジオです。<br className="mb-4" />
+            リーダーのKTNを主軸に、複数のスキルと高いモチベーションを持ったクリエイターと共に様々なゲームを作っていきます。<br className="mb-4" />
+            学生の若さ故に持つ強い自我が大衆に均される前に、確立されたエゴを以て学び合い高めあう。<br className="mb-4" />
+            誠実に。されど貪欲に。<br className="mb-4" />
+            最新鋭の技術や、各々の得意や好きを余すことなく活かし、個性をぶつかり合わせて生まれるオリジナリティ溢れる作品をお楽しみあれ。
+          </p>
+        </div>
+        <div className="about-video mt-10">
+          {isIOS ? (
+            <img
+              src={isDark ? "/images/namelogo-light.png" : "/images/namelogo-dark.png"}
+              alt="Seraf Logo"
+              className="w-auto h-[40vh] md:h-[60vh] opacity-80 object-contain"
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              muted
+              playsInline
+              className="w-full md:w-auto max-w-xs md:max-w-xl h-auto"
+              style={{
+                transform: 'scale(1.1)',
+                objectFit: 'contain',
+              }}
             >
-              <span className="text-lg md:text-3xl font-semibold">Seraf()</span>
-              は、ゲーム制作を中心としたクリエイタースタジオです。<br className="mb-4" />
-              リーダーのKTNを主軸に、複数のスキルと高いモチベーションを持ったクリエイターと共に様々なゲームを作っていきます。<br className="mb-4" />
-              学生の若さ故に持つ強い自我が大衆に均される前に、確立されたエゴを以て学び合い高めあう。<br className="mb-4" />
-              誠実に。されど貪欲に。<br className="mb-4" />
-              最新鋭の技術や、各々の得意や好きを余すことなく活かし、個性をぶつかり合わせて生まれるオリジナリティ溢れる作品をお楽しみあれ。
-            </p>
-          </div>
-          <div className="mt-10">
-            {isIOS ? (
-              <img
-                src={isDark ? "/images/namelogo-light.png" : "/images/namelogo-dark.png"}
-                alt="Seraf Logo"
-                className={`w-auto h-[40vh] md:h-[60vh] opacity-80 transition-all duration-1000 ${isVisible ? 'translate-x-0' : 'translate-x-20'
-                  } object-contain`}
-              />
-            ) : (
-              <video
-                ref={videoRef}
-                muted
-                playsInline
-                className="w-full md:w-auto max-w-xs md:max-w-xl h-auto"
-                style={{
-                  transform: 'scale(1.1)',
-                  objectFit: 'contain',
-                }}
-              >
-                <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />
-                <source src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"} type="video/webm" />
-              </video>
-            )}
-          </div>
+              <source src={isDark ? "/images/logo-anim-dark.mov" : "/images/logo-anim-light.mov"} type="video/quicktime" />
+              <source src={isDark ? "/images/logo-anim-dark.webm" : "/images/logo-anim-light.webm"} type="video/webm" />
+            </video>
+          )}
         </div>
       </div>
     </section>

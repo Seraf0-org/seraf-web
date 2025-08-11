@@ -5,6 +5,7 @@ import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { useEffect, useState, useCallback } from "react";
 import { createPortal } from 'react-dom';
+import { animate, stagger, inView } from "motion";
 
 const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
   x: number;
@@ -237,6 +238,78 @@ export function Products() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Motionアニメーションを初期化
+  useEffect(() => {
+    if (isVisible) {
+      // タイトルのアニメーション
+      (animate as any)(
+        ".products-title",
+        { opacity: [0, 1], y: [30, 0] },
+        { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // 装飾線のアニメーション
+      (animate as any)(
+        ".decorative-line",
+        { strokeDashoffset: [1000, 0] },
+        { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // カードの表示アニメーション
+      (animate as any)(
+        ".product-card",
+        { opacity: [0, 1], y: [50, 0], scale: [0.9, 1] },
+        { 
+          delay: stagger(0.15),
+          duration: 0.8,
+          easing: [0.25, 0.46, 0.45, 0.94]
+        }
+      );
+
+      // カード内のテキストアニメーション
+      (animate as any)(
+        ".product-text",
+        { opacity: [0, 1], y: [20, 0] },
+        { 
+          delay: stagger(0.1, { startDelay: 0.8 }),
+          duration: 0.6,
+          easing: [0.25, 0.46, 0.45, 0.94]
+        }
+      );
+    }
+  }, [isVisible]);
+
+  // ホバーアニメーションの設定
+  useEffect(() => {
+    const productCards = document.querySelectorAll('.product-card');
+    
+    productCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        (animate as any)(
+          card,
+          { 
+            y: [0, -10],
+            scale: [1, 1.02],
+            boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 20px 40px rgba(0,0,0,0.2)']
+          },
+          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+      });
+
+      card.addEventListener('mouseleave', () => {
+        (animate as any)(
+          card,
+          { 
+            y: [-10, 0],
+            scale: [1.02, 1],
+            boxShadow: ['0 20px 40px rgba(0,0,0,0.2)', '0 10px 25px rgba(0,0,0,0.1)']
+          },
+          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+      });
+    });
+  }, [isVisible]);
+
   const parallaxTransform = {
     text: `translateY(calc(-60% + ${parallaxOffset * 1.4}px))`
   };
@@ -351,7 +424,7 @@ export function Products() {
 
       <div className={`container mx-auto px-6 md:px-6 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-        <h1 className="text-4xl md:text-6xl font-bold text-center text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
+        <h1 className="products-title text-4xl md:text-6xl font-bold text-center text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
           Products
           <div className="absolute top-24 fixed-left">
             <svg width="100vw" height="60" viewBox="0 0 1000 20" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
@@ -360,8 +433,9 @@ export function Products() {
                 stroke="currentColor"
                 strokeWidth="3"
                 fill="none"
-                className={`text-cyan-400 dark:text-cyan-100 ${isVisible ? 'animate-draw-line-from-right' : ''}`}
+                className="decorative-line text-cyan-400 dark:text-cyan-100 origin-left"
                 strokeDasharray="1000"
+                strokeDashoffset="1000"
               />
             </svg>
           </div>
@@ -371,15 +445,8 @@ export function Products() {
             <div
               key={product.id}
               onClick={() => handleProductClick(product)}
-              className={`group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
-                transition-all duration-500 transform cursor-pointer
-                hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
-                relative
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{
-                transitionDelay: `${index * 200}ms`,
-                transitionProperty: 'opacity, transform'
-              }}
+              className={`product-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
+                cursor-pointer relative opacity-0`}
             >
               {/* ホバー時の下線アニメーション */}
               <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-300 ease-out group-hover:w-full group-hover:h-0.5"></div>
@@ -402,19 +469,13 @@ export function Products() {
                 />
                 <div className="relative z-10">
                   <h3
-                    className={`text-xl font-semibold mb-2 text-gray-900 dark:text-white transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-                    style={{
-                      transitionDelay: `${(products.length * 200) + 200}ms`,
-                      transitionProperty: 'opacity, transform'
-                    }}
+                    className="product-text text-xl font-semibold mb-2 text-gray-900 dark:text-white opacity-0"
                   >
                     {product.name}
                   </h3>
                   <p
-                    className={`text-gray-600 dark:text-gray-300 transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                    className="product-text text-gray-600 dark:text-gray-300 opacity-0"
                     style={{
-                      transitionDelay: `${(products.length * 200) + 400}ms`,
-                      transitionProperty: 'opacity, transform',
                       whiteSpace: 'pre-line'
                     }}
                   >

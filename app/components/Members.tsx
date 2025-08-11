@@ -5,6 +5,7 @@ import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { createPortal } from 'react-dom';
+import { animate, stagger } from "motion";
 
 const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
     x: number;
@@ -300,6 +301,78 @@ export function Members() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Motionアニメーションを初期化
+    useEffect(() => {
+        if (isVisible) {
+            // タイトルのアニメーション
+            (animate as any)(
+                ".members-title",
+                { opacity: [0, 1], y: [30, 0] },
+                { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
+
+            // メンバーカードの表示アニメーション
+            (animate as any)(
+                ".member-card",
+                { opacity: [0, 1], y: [60, 0], scale: [0.8, 1] },
+                { 
+                    delay: stagger(0.2),
+                    duration: 1,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
+
+            // メンバー情報のアニメーション
+            (animate as any)(
+                ".member-info",
+                { opacity: [0, 1], y: [30, 0] },
+                { 
+                    delay: stagger(0.15, { startDelay: 1 }),
+                    duration: 0.8,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
+
+            // 装飾線のアニメーション
+            (animate as any)(
+                ".decorative-line",
+                { strokeDashoffset: [1000, 0] },
+                { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
+        }
+    }, [isVisible]);
+
+    // ホバーアニメーションの設定
+    useEffect(() => {
+        const memberCards = document.querySelectorAll('.member-card');
+        
+        memberCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                (animate as any)(
+                    card,
+                    { 
+                        y: [0, -15],
+                        scale: [1, 1.05],
+                        boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 25px 50px rgba(0,0,0,0.25)']
+                    },
+                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+
+            card.addEventListener('mouseleave', () => {
+                (animate as any)(
+                    card,
+                    { 
+                        y: [-15, 0],
+                        scale: [1.05, 1],
+                        boxShadow: ['0 25px 50px rgba(0,0,0,0.25)', '0 10px 25px rgba(0,0,0,0.1)']
+                    },
+                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+        });
+    }, [isVisible]);
+
     const parallaxTransform = {
         text: `translateY(calc(-70% + ${parallaxOffset * 1.5}px))`
     };
@@ -411,7 +484,7 @@ export function Members() {
 
             <div className={`container mx-auto transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}>
-                <h2 className="text-6xl font-bold text-center mb-20 text-gray-700 dark:text-white relative drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)]">
+                <h2 className="members-title text-6xl font-bold text-center mb-20 text-gray-700 dark:text-white relative drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)]">
                     Members
                     <div className="absolute top-24 fixed-left">
                         <svg width="100vw" height="80" viewBox="0 0 1000 20" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
@@ -420,8 +493,9 @@ export function Members() {
                                 stroke="currentColor"
                                 strokeWidth="3"
                                 fill="none"
-                                className={`text-fuchsia-500 dark:text-fuchsia-400 ${isVisible ? 'animate-draw-line-from-left' : ''}`}
+                                className="decorative-line text-fuchsia-500 dark:text-fuchsia-400 origin-left"
                                 strokeDasharray="1000"
+                                strokeDashoffset="1000"
                             />
                         </svg>
                     </div>
@@ -431,16 +505,11 @@ export function Members() {
                         <a
                             key={member.id}
                             onClick={(e) => handleMemberClick(e, member)}
-                            className={`group text-center cursor-pointer transition-all duration-500 
+                            className="member-card group text-center cursor-pointer 
                                 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 pt-10 
                                 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
                                 hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
-                                relative
-                                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                            style={{
-                                transitionDelay: `${index * 200}ms`,
-                                transitionProperty: 'opacity, transform'
-                            }}
+                                relative opacity-0"
                             onMouseEnter={() => setOutlineHoverId(member.id)}
                             onMouseLeave={() => setOutlineHoverId(null)}
                         >
@@ -479,22 +548,12 @@ export function Members() {
                                 </div>
                             </div>
                             <h3
-                                className={`text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 transition-all duration-500 transform
-                                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-                                style={{
-                                    transitionDelay: `${(index * 200) + 300}ms`,
-                                    transitionProperty: 'opacity, transform'
-                                }}
+                                className="member-info text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 opacity-0"
                             >
                                 {member.name}
                             </h3>
                             <p
-                                className={`text-xs md:text-base text-gray-600 dark:text-gray-300 w-12/13 md:w-11/12 mx-auto transition-all duration-500 transform
-                                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-                                style={{
-                                    transitionDelay: `${(index * 200) + 400}ms`,
-                                    transitionProperty: 'opacity, transform'
-                                }}
+                                className="member-info text-xs md:text-base text-gray-600 dark:text-gray-300 w-12/13 md:w-11/12 mx-auto opacity-0"
                             >
                                 {member.position}
                             </p>

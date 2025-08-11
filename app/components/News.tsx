@@ -4,6 +4,7 @@ import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { newsItems } from "~/data/news";
 import { useEffect, useState, useRef } from "react";
+import { animate, stagger } from "motion";
 
 export function News() {
   const [sectionRef, isVisible] = useIntersectionObserver();
@@ -30,6 +31,78 @@ export function News() {
       videoRef.current.play();
     }
   }, [isVisible, isIOS]);
+
+  // Motionアニメーションを初期化
+  useEffect(() => {
+    if (isVisible) {
+      // タイトルのアニメーション
+      (animate as any)(
+        ".news-title",
+        { opacity: [0, 1], y: [30, 0] },
+        { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // ニュースアイテムの表示アニメーション
+      (animate as any)(
+        ".news-item",
+        { opacity: [0, 1], y: [50, 0], scale: [0.9, 1] },
+        { 
+            delay: stagger(0.15),
+            duration: 0.8,
+            easing: [0.25, 0.46, 0.45, 0.94]
+        }
+      );
+
+      // ニュースアイテム内のテキストアニメーション
+      (animate as any)(
+        ".news-text",
+        { opacity: [0, 1], y: [20, 0] },
+        { 
+            delay: stagger(0.1, { startDelay: 0.8 }),
+            duration: 0.6,
+            easing: [0.25, 0.46, 0.45, 0.94]
+        }
+      );
+
+      // 装飾線のアニメーション
+      (animate as any)(
+        ".decorative-line",
+        { strokeDashoffset: [1000, 0] },
+        { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+    }
+  }, [isVisible]);
+
+  // ホバーアニメーションの設定
+  useEffect(() => {
+    const newsItems = document.querySelectorAll('.news-item');
+    
+    newsItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        (animate as any)(
+          item,
+          { 
+            y: [0, -8],
+            scale: [1, 1.02],
+            boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 20px 40px rgba(0,0,0,0.2)']
+          },
+          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+      });
+
+      item.addEventListener('mouseleave', () => {
+        (animate as any)(
+          item,
+          { 
+            y: [-8, 0],
+            scale: [1.02, 1],
+            boxShadow: ['0 20px 40px rgba(0,0,0,0.2)', '0 10px 25px rgba(0,0,0,0.1)']
+          },
+          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+      });
+    });
+  }, [isVisible]);
 
   return (
     <section
@@ -160,10 +233,9 @@ export function News() {
           </video>
         )}
       </div>
-      <div className={`container mx-auto relative z-10 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
+      <div className="container mx-auto relative z-10">
         <div className="ml-auto max-w-3xl pr-6 md:pr-2">
-          <h1 className={`text-4xl md:text-7xl font-bold text-right mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] ${isDark ? 'text-white' : 'text-gray-700'}`}>
+          <h1 className="news-title text-4xl md:text-7xl font-bold text-right mb-16 relative drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] opacity-0">
             News
             <div className="absolute fixed-right">
               <svg width="100vw" height="45" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw' }}>
@@ -172,8 +244,9 @@ export function News() {
                   stroke="currentColor"
                   strokeWidth="3"
                   fill="none"
-                  className={`text-cyan-400 dark:text-cyan-100 ${isVisible ? 'animate-draw-line-from-right' : ''}`}
+                  className="decorative-line text-cyan-400 dark:text-cyan-100 origin-right"
                   strokeDasharray="1000"
+                  strokeDashoffset="1000"
                 />
               </svg>
             </div>
@@ -183,13 +256,11 @@ export function News() {
               {[...newsItems, ...newsItems].map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
-                  className={`bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden flex 
+                  className="news-item bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden flex 
                       shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
                       hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]
-                      transition-all duration-300 ${isVisible ? 'animate-clip-from-right' : ''}`}
+                      transition-all duration-300 opacity-0"
                   style={{
-                    animationDelay: `${index * 200}ms`,
-                    clipPath: isVisible ? undefined : 'polygon(100% 0, 100% 0, 100% 100%, 0 100%)',
                     height: '20vh'
                   }}
                 >
@@ -209,13 +280,13 @@ export function News() {
                       }}
                     />
                     <div className="relative z-10">
-                      <p className="text-sm md:text-lg text-gray-400 dark:text-gray-500">
+                      <p className="news-text text-sm md:text-lg text-gray-400 dark:text-gray-500 opacity-0">
                         {item.date}
                       </p>
-                      <h3 className="text-lg md:text-2xl font-semibold mb-2 text-gray-900 dark:text-white" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <h3 className="news-text text-lg md:text-2xl font-semibold mb-2 text-gray-900 dark:text-white opacity-0" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {item.title}
                       </h3>
-                      <p className="text-sm md:text-lg text-gray-600 dark:text-gray-300">
+                      <p className="news-text text-sm md:text-lg text-gray-600 dark:text-gray-300 opacity-0">
                         {item.description}
                       </p>
                     </div>
