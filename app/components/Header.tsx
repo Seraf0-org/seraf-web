@@ -3,6 +3,7 @@ import { useOutletContext } from "@remix-run/react";
 import type { Theme } from "~/root";
 import type { OutletContext } from "~/root";
 import { useBackgroundLines } from "~/hooks/useBackgroundLines";
+import { animate, stagger } from "motion";
 
 export function Header() {
     const { theme, setTheme, smoothScrollTo } = useOutletContext<OutletContext>();
@@ -45,6 +46,52 @@ export function Header() {
             clearTimeout(timer4);
         };
     }, []);
+
+    // Motionアニメーションを初期化
+    useEffect(() => {
+        if (isVisible) {
+            // ロゴのアニメーション
+            (animate as any)(
+                ".header-logo",
+                { opacity: [0, 1], scale: [0.8, 1], x: [-20, 0] },
+                { duration: 0.8, delay: 0.2, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
+
+            // ナビゲーションメニューのアニメーション
+            (animate as any)(
+                ".nav-item",
+                { opacity: [0, 1], y: [-10, 0] },
+                { 
+                    delay: stagger(0.1, { startDelay: 0.4 }),
+                    duration: 0.6,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
+
+            // テーマ切り替えボタンのアニメーション
+            (animate as any)(
+                ".theme-toggle",
+                { opacity: [0, 1], scale: [0.8, 1], rotate: [180, 0] },
+                { duration: 0.8, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
+        }
+    }, [isVisible]);
+
+    // モバイルメニューのアニメーション
+    useEffect(() => {
+        if (isMenuOpen) {
+            // モバイルメニューアイテムのアニメーション
+            (animate as any)(
+                ".mobile-nav-item",
+                { opacity: [0, 1], x: [-20, 0] },
+                { 
+                    delay: stagger(0.1),
+                    duration: 0.5,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
+        }
+    }, [isMenuOpen]);
 
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
@@ -172,7 +219,7 @@ export function Header() {
                                 <a
                                     href="#"
                                     onClick={handleLogoClick}
-                                    className="flex items-center text-xl font-bold text-gray-800 dark:text-white ml-2"
+                                    className="header-logo flex items-center text-xl font-bold text-gray-800 dark:text-white ml-2"
                                 >
                                     <img
                                         src={isCurrentDark ? "/images/logo-light.png" : "/images/logo-dark.png"}
@@ -188,7 +235,7 @@ export function Header() {
                                             <li key={item}>
                                                 <button
                                                     onClick={() => handleClick(item)}
-                                                    className={`text-base xl:text-lg 2xl:text-xl font-bold transition-colors duration-300 ${isCurrentDark
+                                                    className={`nav-item text-base xl:text-lg 2xl:text-xl font-bold transition-colors duration-300 ${isCurrentDark
                                                         ? 'text-gray-300 hover:text-white'
                                                         : 'text-gray-700 hover:text-gray-900'
                                                         }`}
@@ -200,7 +247,7 @@ export function Header() {
                                         <li>
                                             <button
                                                 onClick={toggleTheme}
-                                                className={`p-2 rounded-full transition-colors duration-300 ${isHovered
+                                                className={`theme-toggle p-2 rounded-full transition-colors duration-300 ${isHovered
                                                     ? 'text-gray-300 dark:text-gray-700 hover:text-white dark:hover:text-gray-900'
                                                     : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                                                     }`}
@@ -225,7 +272,7 @@ export function Header() {
                                     {/* テーマ切り替えボタン（モバイル） */}
                                     <button
                                         onClick={toggleTheme}
-                                        className={`p-2 rounded-full transition-colors duration-300 ${isHovered
+                                        className={`theme-toggle p-2 rounded-full transition-colors duration-300 ${isHovered
                                             ? 'text-gray-800 hover:text-gray-600'
                                             : 'text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white'
                                             }`}
@@ -245,7 +292,7 @@ export function Header() {
                                     {/* ハンバーガーメニューアイコン */}
                                     <button
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                        className="p-2"
+                                        className="mobile-menu-toggle p-2"
                                         aria-label="メニュー"
                                     >
                                         <div className="relative w-6 h-6">
@@ -273,7 +320,7 @@ export function Header() {
                                 <li key={item}>
                                     <button
                                         onClick={() => handleClick(item)}
-                                        className={`w-full text-left text-xl font-bold transition-colors duration-300 ${isHovered
+                                        className={`mobile-nav-item w-full text-left text-xl font-bold transition-colors duration-300 ${isHovered
                                             ? 'text-gray-800 hover:text-gray-600'
                                             : 'text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white'
                                             }`}
