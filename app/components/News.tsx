@@ -66,9 +66,9 @@ export function News() {
 
       // 装飾線のアニメーション
       (animate as any)(
-        ".decorative-line",
+        ".news-decorative-line",
         { strokeDashoffset: [1000, 0] },
-        { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+        { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
       );
     }
   }, [isVisible]);
@@ -244,9 +244,12 @@ export function News() {
                   stroke="currentColor"
                   strokeWidth="3"
                   fill="none"
-                  className="decorative-line text-cyan-400 dark:text-cyan-100 origin-right"
+                  className="news-decorative-line text-cyan-400 dark:text-cyan-100"
                   strokeDasharray="1000"
                   strokeDashoffset="1000"
+                  style={{
+                    transformOrigin: 'left'
+                  }}
                 />
               </svg>
             </div>

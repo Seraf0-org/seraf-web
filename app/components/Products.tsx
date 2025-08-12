@@ -67,6 +67,36 @@ const ProductPopup = ({ product, onClose }: {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    
+    // ポップアップ表示時のアニメーション
+    (animate as any)(
+      ".popup-overlay",
+      { opacity: [0, 1] },
+      { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+    );
+
+    (animate as any)(
+      ".popup-content",
+      { opacity: [0, 1], scale: [0.95, 1], x: [-100, 0] },
+      { duration: 0.6, delay: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
+    );
+
+    (animate as any)(
+      ".popup-image",
+      { opacity: [0, 1], scale: [0.9, 1], y: [30, 0] },
+      { duration: 0.7, delay: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+    );
+
+    (animate as any)(
+      ".popup-text",
+      { opacity: [0, 1], y: [40, 0] },
+      { 
+        delay: stagger(0.1, { startDelay: 0.5 }),
+        duration: 0.6,
+        easing: [0.25, 0.46, 0.45, 0.94]
+      }
+    );
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -74,7 +104,21 @@ const ProductPopup = ({ product, onClose }: {
 
   const handleClose = () => {
     setIsClosing(true);
-    setTimeout(onClose, 300); // フェードアウトの時間に合わせて遅延
+    
+    // ポップアップ非表示時のアニメーション
+    (animate as any)(
+      ".popup-content",
+      { opacity: [1, 0], scale: [1, 0.95], x: [0, 100] },
+      { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+    );
+
+    (animate as any)(
+      ".popup-overlay",
+      { opacity: [1, 0] },
+      { duration: 0.3, delay: 0.2, easing: [0.25, 0.46, 0.45, 0.94] }
+    );
+
+    setTimeout(onClose, 300);
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -83,16 +127,16 @@ const ProductPopup = ({ product, onClose }: {
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+      className={`popup-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
       onClick={handleClose}
     >
       <div
-        className="relative w-[90vw] h-[90vh] md:w-[min(90vw,calc(90vh*16/9))] md:h-[min(90vh,calc(90vw*9/16))] md:max-w-[1800px] md:max-h-[1012px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
+        className="popup-content relative w-[90vw] h-[90vh] md:w-[min(90vw,calc(90vh*16/9))] md:h-[min(90vh,calc(90vw*9/16))] md:max-w-[1800px] md:max-h-[1012px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top"
         onClick={e => e.stopPropagation()}
       >
         <button
           onClick={handleClose}
-          className="absolute top-6 right-6 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+          className="popup-close absolute top-6 right-6 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -101,7 +145,7 @@ const ProductPopup = ({ product, onClose }: {
 
         <div className="flex flex-col md:flex-row h-full">
           <div className="w-full md:w-3/5 h-[40vh] md:h-full relative">
-            <div className="absolute inset-0">
+            <div className="popup-image absolute inset-0">
               <img
                 src={product.image || "/images/products/product-none.jpg"}
                 alt={product.name}
@@ -114,7 +158,7 @@ const ProductPopup = ({ product, onClose }: {
           <div className="w-full md:w-2/5 flex flex-col h-[calc(90vh-40vh)] md:h-full">
             <div className="flex-1 p-6 md:p-8 overflow-y-auto">
               <div className="space-y-6">
-                <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
+                <div className="popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
                   <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                     {product.name}
                   </h3>
@@ -124,7 +168,7 @@ const ProductPopup = ({ product, onClose }: {
                 </div>
 
                 {product.details && (
-                  <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
+                  <div className="popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
                     <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">概要</h4>
                     <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
                       {product.details}
@@ -133,7 +177,7 @@ const ProductPopup = ({ product, onClose }: {
                 )}
 
                 {product.features && (
-                  <div className="opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
+                  <div className="popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
                     <h4 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">特徴</h4>
                     <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
                       {product.features}
@@ -141,7 +185,7 @@ const ProductPopup = ({ product, onClose }: {
                   </div>
                 )}
 
-                <div className="grid grid-cols-2 gap-6 opacity-0 animate-text-appear" style={{ animationDelay: '1.0s' }}>
+                <div className="grid grid-cols-2 gap-6 popup-text opacity-0 animate-text-appear" style={{ animationDelay: '1.0s' }}>
                   {product.genre && (
                     <div>
                       <h4 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">ジャンル</h4>
@@ -168,7 +212,7 @@ const ProductPopup = ({ product, onClose }: {
 
             {product.links && product.links.length > 0 && (
               <div className="p-6 md:p-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-                <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-text-appear" style={{ animationDelay: '1.2s' }}>
+                <div className="flex flex-col sm:flex-row gap-4 popup-text opacity-0 animate-text-appear" style={{ animationDelay: '1.2s' }}>
                   {product.links.map((link, index) => (
                     <a
                       key={index}
@@ -199,7 +243,7 @@ const ProductPopup = ({ product, onClose }: {
                       )}
                       {link.icon === 'book' && (
                         <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                       )}
                       {link.icon === 'store' && (
@@ -250,9 +294,9 @@ export function Products() {
 
       // 装飾線のアニメーション
       (animate as any)(
-        ".decorative-line",
+        ".products-decorative-line",
         { strokeDashoffset: [1000, 0] },
-        { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
+        { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
       );
 
       // カードの表示アニメーション
@@ -433,9 +477,12 @@ export function Products() {
                 stroke="currentColor"
                 strokeWidth="3"
                 fill="none"
-                className="decorative-line text-cyan-400 dark:text-cyan-100 origin-left"
+                className="products-decorative-line text-cyan-400 dark:text-cyan-100"
                 strokeDasharray="1000"
                 strokeDashoffset="1000"
+                style={{
+                  transformOrigin: 'left'
+                }}
               />
             </svg>
           </div>

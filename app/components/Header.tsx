@@ -60,7 +60,7 @@ export function Header() {
             // ナビゲーションメニューのアニメーション
             (animate as any)(
                 ".nav-item",
-                { opacity: [0, 1], y: [-10, 0] },
+                { opacity: [0, 1], y: [-10, 0], scale: [0.9, 1] },
                 { 
                     delay: stagger(0.1, { startDelay: 0.4 }),
                     duration: 0.6,
@@ -74,8 +74,126 @@ export function Header() {
                 { opacity: [0, 1], scale: [0.8, 1], rotate: [180, 0] },
                 { duration: 0.8, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
             );
+
+            // ヘッダーアウトラインのアニメーション
+            (animate as any)(
+                ".header-outline",
+                { strokeDashoffset: [100, 0] },
+                { duration: 1.2, delay: 1.0, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
+
+            // 背景ラインのアニメーション
+            (animate as any)(
+                ".background-line",
+                { opacity: [0, 0.3], scaleX: [0, 1] },
+                { 
+                    delay: stagger(0.15, { startDelay: 0.6 }),
+                    duration: 0.8,
+                    easing: [0.25, 0.46, 0.45, 0.94]
+                }
+            );
         }
     }, [isVisible]);
+
+    // ホバー時の追加アニメーション
+    useEffect(() => {
+        const headerLogo = document.querySelector('.header-logo');
+        const navItems = document.querySelectorAll('.nav-item');
+        const themeToggle = document.querySelector('.theme-toggle');
+
+        // ロゴのホバーアニメーション
+        if (headerLogo) {
+            headerLogo.addEventListener('mouseenter', () => {
+                (animate as any)(
+                    headerLogo,
+                    { scale: [1, 1.05], y: [0, -2] },
+                    { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+
+            headerLogo.addEventListener('mouseleave', () => {
+                (animate as any)(
+                    headerLogo,
+                    { scale: [1.05, 1], y: [-2, 0] },
+                    { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+        }
+
+        // ナビゲーションアイテムのホバーアニメーション
+        navItems.forEach((item, index) => {
+            const underline = item.parentElement?.querySelector('.nav-underline');
+            
+            item.addEventListener('mouseenter', () => {
+                (animate as any)(
+                    item,
+                    { scale: [1, 1.1], y: [0, -3] },
+                    { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+                
+                // 下線アニメーション
+                if (underline) {
+                    (animate as any)(
+                        underline,
+                        { width: [0, '100%'] },
+                        { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                    );
+                }
+            });
+
+            item.addEventListener('mouseleave', () => {
+                (animate as any)(
+                    item,
+                    { scale: [1.1, 1], y: [-3, 0] },
+                    { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+                
+                // 下線アニメーション
+                if (underline) {
+                    (animate as any)(
+                        underline,
+                        { width: ['100%', 0] },
+                        { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                    );
+                }
+            });
+        });
+
+        // テーマ切り替えボタンのホバーアニメーション
+        if (themeToggle) {
+            themeToggle.addEventListener('mouseenter', () => {
+                (animate as any)(
+                    themeToggle,
+                    { scale: [1, 1.1], rotate: [0, 15] },
+                    { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+
+            themeToggle.addEventListener('mouseleave', () => {
+                (animate as any)(
+                    themeToggle,
+                    { scale: [1.1, 1], rotate: [15, 0] },
+                    { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+            });
+        }
+
+        return () => {
+            // クリーンアップ
+            if (headerLogo) {
+                headerLogo.removeEventListener('mouseenter', () => {});
+                headerLogo.removeEventListener('mouseleave', () => {});
+            }
+            navItems.forEach(item => {
+                item.removeEventListener('mouseenter', () => {});
+                item.removeEventListener('mouseleave', () => {});
+            });
+            if (themeToggle) {
+                themeToggle.removeEventListener('mouseenter', () => {});
+                themeToggle.removeEventListener('mouseleave', () => {});
+            }
+        };
+    }, []);
 
     // モバイルメニューのアニメーション
     useEffect(() => {
@@ -116,7 +234,7 @@ export function Header() {
 
     return (
         <>
-            <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+            <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none" style={{ zIndex: 9999 }}>
                 {/* 逆色の背景レイヤー - アニメーション完了後は非表示 */}
                 {!isAnimationComplete && (
                     <div
@@ -128,7 +246,8 @@ export function Header() {
                             transition: 'transform 600ms ease-out, opacity 800ms ease-in-out',
                             transitionDelay: isAnimating ? '0ms' : isVisible ? '600ms' : '0ms',
                             backgroundColor: !isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(255 255 255 / 0.5)',
-                            backdropFilter: 'blur(8px)'
+                            backdropFilter: 'blur(8px)',
+                            boxShadow: !isCurrentDark ? '0 12px 40px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(6, 182, 212, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)' : '0 12px 40px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(236, 72, 153, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
                         }}
                     />
                 )}
@@ -150,7 +269,10 @@ export function Header() {
                             `,
                         transitionDelay: isFirstSlideComplete ? '400ms' : '0ms',
                         backgroundColor: isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(210 210 210 / 0.5)',
-                        backdropFilter: 'blur(8px)'
+                        backdropFilter: 'blur(8px)',
+                        boxShadow: isCurrentDark 
+                            ? '0 12px 40px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(6, 182, 212, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                            : '0 12px 40px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(236, 72, 153, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
                     }}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
@@ -177,6 +299,11 @@ export function Header() {
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                     opacity="0.3"
+                                    className="background-line"
+                                    style={{
+                                        transformOrigin: 'left',
+                                        transform: 'scaleX(0)'
+                                    }}
                                 />
                             </svg>
                         ))}
@@ -200,14 +327,15 @@ export function Header() {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 pathLength="100"
+                                className="header-outline"
                                 style={{
                                     strokeDasharray: 100,
                                     strokeDashoffset: isHovered ? 0 : 100,
                                     transition: 'stroke-dashoffset 0.6s ease-in-out',
                                     opacity: 1,
                                     filter: isCurrentDark
-                                        ? 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 8px rgba(6, 182, 212, 0.7))' // 白 + cyan
-                                        : 'drop-shadow(0 0 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 8px rgba(255, 0, 255, 0.7))' // 黒 + fuchsia
+                                        ? 'drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 8px rgba(6, 182, 212, 0.8)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5))'
+                                        : 'drop-shadow(0 0 12px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 8px rgba(255, 0, 255, 0.8)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))'
                                 }}
                             />
                         </svg>
@@ -232,7 +360,7 @@ export function Header() {
                                     {/* デスクトップメニュー */}
                                     <ul className="flex space-x-4 lg:space-x-10 ml-auto mr-40 items-center">
                                         {['about', 'news', 'products', 'members', 'partners', 'contact'].map((item) => (
-                                            <li key={item}>
+                                            <li key={item} className="relative">
                                                 <button
                                                     onClick={() => handleClick(item)}
                                                     className={`nav-item text-base xl:text-lg 2xl:text-xl font-bold transition-colors duration-300 ${isCurrentDark
@@ -242,6 +370,9 @@ export function Header() {
                                                 >
                                                     {item.charAt(0).toUpperCase() + item.slice(1)}
                                                 </button>
+                                                <div className="nav-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
+                                                    backgroundColor: isCurrentDark ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
+                                                }}></div>
                                             </li>
                                         ))}
                                         <li>

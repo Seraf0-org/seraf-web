@@ -67,6 +67,36 @@ const MemberPopup = ({ member, onClose }: {
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
+        
+        // ポップアップ表示時のアニメーション
+        (animate as any)(
+            ".popup-overlay",
+            { opacity: [0, 1] },
+            { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+
+        (animate as any)(
+            ".popup-content",
+            { opacity: [0, 1], scale: [0.95, 1], y: [100, 0] },
+            { duration: 0.6, delay: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+
+        (animate as any)(
+            ".popup-image",
+            { opacity: [0, 1], scale: [0.9, 1], y: [30, 0] },
+            { duration: 0.7, delay: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+
+        (animate as any)(
+            ".popup-text",
+            { opacity: [0, 1], y: [40, 0] },
+            { 
+                delay: stagger(0.1, { startDelay: 0.5 }),
+                duration: 0.6,
+                easing: [0.25, 0.46, 0.45, 0.94]
+            }
+        );
+
         return () => {
             document.body.style.overflow = 'unset';
         };
@@ -74,16 +104,30 @@ const MemberPopup = ({ member, onClose }: {
 
     const handleClose = () => {
         setIsClosing(true);
+        
+        // ポップアップ非表示時のアニメーション
+        (animate as any)(
+            ".popup-content",
+            { opacity: [1, 0], scale: [1, 0.95], y: [0, -100] },
+            { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+
+        (animate as any)(
+            ".popup-overlay",
+            { opacity: [1, 0] },
+            { duration: 0.3, delay: 0.2, easing: [0.25, 0.46, 0.45, 0.94] }
+        );
+
         setTimeout(onClose, 300);
     };
 
     return createPortal(
         <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+            className={`popup-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
             onClick={handleClose}
         >
             <div
-                className="relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top
+                className="popup-content relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top
                     w-[90vw] h-[90vh]
                     md:w-[min(90vw,calc(90vh*16/9))] md:h-[min(90vh,calc(90vw*9/16))]
                     md:max-w-[1800px] md:max-h-[1012px]"
@@ -91,7 +135,7 @@ const MemberPopup = ({ member, onClose }: {
             >
                 <button
                     onClick={handleClose}
-                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+                    className="popup-close absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -100,7 +144,7 @@ const MemberPopup = ({ member, onClose }: {
 
                 <div className="flex flex-col md:flex-row h-full">
                     <div className="w-full md:w-1/2 relative h-[40vh] md:h-full">
-                        <div className="relative h-full">
+                        <div className="popup-image relative h-full">
                             <img
                                 src={member.mainImage}
                                 alt={member.name}
@@ -120,7 +164,7 @@ const MemberPopup = ({ member, onClose }: {
 
                     <div className="w-full md:w-1/2 flex flex-col h-full">
                         <div className="flex-1 p-4 md:p-6 overflow-y-auto">
-                            <div className="mb-6 opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
+                            <div className="mb-6 popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
                                 <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                                     {member.name}
                                 </h3>
@@ -129,7 +173,7 @@ const MemberPopup = ({ member, onClose }: {
                                 </p>
                             </div>
 
-                            <div className="prose dark:prose-invert max-w-none opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
+                            <div className="prose dark:prose-invert max-w-none popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
                                 <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
                                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
                                     {member.description || "準備中..."}
@@ -150,7 +194,7 @@ const MemberPopup = ({ member, onClose }: {
                         </div>
 
                         <div className="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700">
-                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
+                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
                                 {member.sns.map((sns, index) => {
                                     const defaultColor = {
                                         base: "6, 182, 212",

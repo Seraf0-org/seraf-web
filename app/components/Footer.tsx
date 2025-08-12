@@ -45,6 +45,44 @@ export function Footer() {
         }
     }, [isVisible]);
 
+    // 下線アニメーションのホバー効果
+    useEffect(() => {
+        const footerLinks = document.querySelectorAll('.footer-link');
+        
+        footerLinks.forEach((link) => {
+            const underline = link.parentElement?.querySelector('.footer-underline');
+            
+            link.addEventListener('mouseenter', () => {
+                if (underline) {
+                    // 全部左から右に出現
+                    (animate as any)(
+                        underline,
+                        { width: [0, '60%'] }, // 長さを60%に短縮
+                        { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                    );
+                }
+            });
+
+            link.addEventListener('mouseleave', () => {
+                if (underline) {
+                    // 全部左から右に消去
+                    (animate as any)(
+                        underline,
+                        { width: ['60%', 0] }, // 長さを60%に短縮
+                        { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                    );
+                }
+            });
+        });
+
+        return () => {
+            footerLinks.forEach(link => {
+                link.removeEventListener('mouseenter', () => {});
+                link.removeEventListener('mouseleave', () => {});
+            });
+        };
+    }, []);
+
     // ナビゲーションリンクのクリックハンドラー
     const handleClick = (sectionId: string) => {
         const element = document.getElementById(sectionId);
@@ -106,11 +144,36 @@ export function Footer() {
                     <div className="footer-section">
                         <h3 className="text-xl font-bold mb-4">リンク</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" onClick={() => handleClick('about')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">About</a></li>
-                            <li><a href="#" onClick={() => handleClick('news')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">News</a></li>
-                            <li><a href="#" onClick={() => handleClick('products')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">Products</a></li>
-                            <li><a href="#" onClick={() => handleClick('members')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">Members</a></li>
-                            <li><a href="#" onClick={() => handleClick('contact')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">Contact</a></li>
+                            <li className="relative">
+                                <a href="#" onClick={() => handleClick('about')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">About</a>
+                                <div className="footer-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
+                                    backgroundColor: theme === 'dark' ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
+                                }}></div>
+                            </li>
+                            <li className="relative">
+                                <a href="#" onClick={() => handleClick('news')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">News</a>
+                                <div className="footer-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
+                                    backgroundColor: theme === 'dark' ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
+                                }}></div>
+                            </li>
+                            <li className="relative">
+                                <a href="#" onClick={() => handleClick('products')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">Products</a>
+                                <div className="footer-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
+                                    backgroundColor: theme === 'dark' ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
+                                }}></div>
+                            </li>
+                            <li className="relative">
+                                <a href="#" onClick={() => handleClick('members')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">Members</a>
+                                <div className="footer-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
+                                    backgroundColor: theme === 'dark' ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
+                                }}></div>
+                            </li>
+                            <li className="relative">
+                                <a href="#" onClick={() => handleClick('contact')} className="footer-link text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer">Contact</a>
+                                <div className="footer-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
+                                    backgroundColor: theme === 'dark' ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
+                                }}></div>
+                            </li>
                         </ul>
                     </div>
                     <div className="footer-section">

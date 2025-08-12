@@ -107,6 +107,13 @@ export function Partnership() {
                     easing: [0.25, 0.46, 0.45, 0.94]
                 }
             );
+
+            // 装飾線のアニメーション
+            (animate as any)(
+                ".partnership-decorative-line",
+                { strokeDashoffset: [800, 0] },
+                { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
+            );
         }
     }, [isVisible]);
 
@@ -248,9 +255,12 @@ export function Partnership() {
                                 stroke="#99ff99"
                                 strokeWidth="3"
                                 fill="none"
-                                className="decorative-line origin-left"
+                                className="partnership-decorative-line"
                                 strokeDasharray="800"
                                 strokeDashoffset="800"
+                                style={{
+                                    transformOrigin: 'left'
+                                }}
                             />
                         </svg>
                     </div>
