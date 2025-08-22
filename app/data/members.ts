@@ -232,5 +232,59 @@ export const members: Member[] = [
                 }
             }
         ]
+    },
+    {
+        id: 11,
+        name: "タカノリ",
+        position: "グラフィックデザイナー",
+        mainImage: "/images/members/member-11.jpg",
+        subImage: "/images/members/member-11.jpg",
+        description: "Unity1weekを経てチームに参加させていただく事になりました。チームと支え合ってみんなと自分の作りたいものを作っていければと思います。よろしくお願いします。",
+        skills: ["Illustrator", "Photoshop"],
+        sns: [
+            {
+                url: "https://x.com/TakeANoWorries",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "59, 130, 246",
+                    hover: "37, 99, 235"
+                }
+            },
+            {
+                url: "https://www.instagram.com/takano_ri_/",
+                label: "Instagram",
+                color: {
+                    base: "214, 41, 118",
+                    hover: "150, 47, 191"
+                }
+            }
+        ]
+    },
+    {
+        id: 12,
+        name: "ぽち。",
+        position: "プログラミング、映像、3DCG、ちょっぴりUI/Webデザイン",
+        mainImage: "/images/members/member-12.jpg",
+        subImage: "/images/members/member-12.jpg",
+        description: "１年のぽちです～ プログラミングと映像主にやってます！ MV/ PV作れます👀お手柔らかにこれからよろしくお願いします🫡",
+        skills: ["C#", "JavaScript", "Rust", "C++", "CSS", "Unity", "AviUtl", "Blender", "FL Studio"],
+        sns: [
+            {
+                url: "https://twitter.com/potistudio",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            },
+            {
+                url: "https://github.com/potistudio",
+                label: "Instagram",
+                color: {
+                    base: "214, 41, 118",
+                    hover: "150, 47, 191"
+                }
+            }
+        ]
     }
 ];
