@@ -233,6 +233,7 @@ export const members: Member[] = [
             }
         ]
     },
+    /*
     {
         id: 11,
         name: "タカノリ",
@@ -286,5 +287,5 @@ export const members: Member[] = [
                 }
             }
         ]
-    }
+    }*/
 ];
