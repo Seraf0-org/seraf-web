@@ -253,6 +253,16 @@ export default function App() {
           getKey={location => location.pathname + new Date().getTime()}
         />
         <Scripts />
+        {/* Cloudflare Pages環境変数をクライアントサイドで利用可能にする */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify({
+              EMAILJS_PUBLIC_KEY: 's7JAyEhqGZ44jV-9E',
+              EMAILJS_SERVICE_ID: 'service_Seraf0',
+              EMAILJS_TEMPLATE_ID: 'template_AutoReply',
+            })};`,
+          }}
+        />
         <LiveReload />
       </body>
     </html>

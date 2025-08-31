@@ -18,7 +18,7 @@ export function Footer() {
             (animate as any)(
                 ".footer-section",
                 { opacity: [0, 1], y: [30, 0] },
-                { 
+                {
                     delay: stagger(0.2),
                     duration: 0.8,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -29,7 +29,7 @@ export function Footer() {
             (animate as any)(
                 ".footer-link",
                 { opacity: [0, 1], x: [-15, 0] },
-                { 
+                {
                     delay: stagger(0.1, { startDelay: 0.8 }),
                     duration: 0.6,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -48,10 +48,10 @@ export function Footer() {
     // 下線アニメーションのホバー効果
     useEffect(() => {
         const footerLinks = document.querySelectorAll('.footer-link');
-        
+
         footerLinks.forEach((link) => {
             const underline = link.parentElement?.querySelector('.footer-underline');
-            
+
             link.addEventListener('mouseenter', () => {
                 if (underline) {
                     // 全部左から右に出現
@@ -77,8 +77,8 @@ export function Footer() {
 
         return () => {
             footerLinks.forEach(link => {
-                link.removeEventListener('mouseenter', () => {});
-                link.removeEventListener('mouseleave', () => {});
+                link.removeEventListener('mouseenter', () => { });
+                link.removeEventListener('mouseleave', () => { });
             });
         };
     }, []);
@@ -179,7 +179,7 @@ export function Footer() {
                     <div className="footer-section">
                         <h3 className="text-xl font-bold mb-4">お問い合わせ</h3>
                         <p className="text-gray-600 dark:text-gray-400">
-                            KTN44295080@Seraf0.com
+                            january44292080@gmail.com
                         </p>
                     </div>
                     <div className="footer-section">

@@ -7,6 +7,7 @@ import { Products } from "~/components/Products";
 import { Members } from "~/components/Members";
 import { Partnership } from "~/components/Partnership";
 import { Footer } from "~/components/Footer";
+import { Contact } from "~/components/Contact";
 
 export const meta: MetaFunction = () => {
   return [
@@ -41,8 +42,9 @@ export default function Index() {
         <Partnership />
       </section>
       <section id="contact">
-        <Footer />
+        <Contact />
       </section>
+      <Footer />
     </main>
   );
 }
