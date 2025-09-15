@@ -90,7 +90,7 @@ export function Partnership() {
             (animate as any)(
                 ".partner-card",
                 { opacity: [0, 1], y: [60, 0], scale: [0.8, 1] },
-                { 
+                {
                     delay: stagger(0.2),
                     duration: 1,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -101,7 +101,7 @@ export function Partnership() {
             (animate as any)(
                 ".partner-text",
                 { opacity: [0, 1], y: [30, 0] },
-                { 
+                {
                     delay: stagger(0.15, { startDelay: 1 }),
                     duration: 0.8,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -120,12 +120,12 @@ export function Partnership() {
     // ホバーアニメーションの設定
     useEffect(() => {
         const partnerCards = document.querySelectorAll('.partner-card');
-        
+
         partnerCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 (animate as any)(
                     card,
-                    { 
+                    {
                         y: [0, -12],
                         scale: [1, 1.03],
                         boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 25px 50px rgba(0,0,0,0.25)']
@@ -137,7 +137,7 @@ export function Partnership() {
             card.addEventListener('mouseleave', () => {
                 (animate as any)(
                     card,
-                    { 
+                    {
                         y: [-12, 0],
                         scale: [1.03, 1],
                         boxShadow: ['0 25px 50px rgba(0,0,0,0.25)', '0 10px 25px rgba(0,0,0,0.1)']

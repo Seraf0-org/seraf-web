@@ -1,60 +1,92 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useOutletContext } from "@remix-run/react";
-import { animate, stagger } from "motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { OutletContext } from "~/root";
+
+// GSAPプラグインを登録
+gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
   const japaneseText = "何者にもなれる。何者でもないから。";
   const englishText1 = "Become anything,";
   const englishText2 = "from being nothing.";
-  const [scrollY, setScrollY] = useState(0);
   const { theme } = useOutletContext<OutletContext>();
 
-  const handleScroll = useCallback(() => {
-    requestAnimationFrame(() => {
-      setScrollY(window.scrollY);
+  // GSAP用のrefs
+  const heroRef = useRef<HTMLElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  // 初期アニメーションとパララックス効果の設定
+  useEffect(() => {
+    if (!heroRef.current || !backgroundRef.current || !contentRef.current || !textRef.current) return;
+
+    // 初期状態を設定
+    gsap.set(".japanese-letter", { opacity: 0, y: 30 });
+    gsap.set(".english-text", { opacity: 0, y: 40 });
+    gsap.set(".decorative-line", { strokeDashoffset: 800 });
+
+    // 文字アニメーションのタイムライン
+    const tl = gsap.timeline();
+
+    // 日本語テキストのアニメーション
+    tl.to(".japanese-letter", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.08,
+      ease: "power2.out"
     });
-  }, []);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  // Motionアニメーションを初期化
-  useEffect(() => {
-    // 日本語テキストの文字アニメーション - y軸移動付き
-    (animate as any)(
-      ".japanese-letter",
-      { opacity: [0, 1], y: [30, 0] },
-      { 
-        duration: 1, 
-        delay: stagger(0.08),
-        easing: [0.25, 0.46, 0.45, 0.94]
-      }
-    );
-
-    // 英語テキストのアニメーション - y軸移動付き
-    (animate as any)(
-      ".english-text",
-      { opacity: [0, 1], y: [40, 0] },
-      { 
-        duration: 1.2, 
-        delay: stagger(0.3, { startDelay: 1.8 }),
-        easing: [0.25, 0.46, 0.45, 0.94]
-      }
-    );
+    // 英語テキストのアニメーション
+    tl.to(".english-text", {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      stagger: 0.3,
+      ease: "power2.out"
+    }, 1.8);
 
     // 装飾線のアニメーション
-    (animate as any)(
-      ".decorative-line",
-      { strokeDashoffset: [800, 0] },
-      { 
-        duration: 1.5, 
-        delay: 0.5, 
-        easing: [0.25, 0.46, 0.45, 0.94] 
+    tl.to(".decorative-line", {
+      strokeDashoffset: 0,
+      duration: 1.5,
+      ease: "power2.out"
+    }, 0.5);
+
+    // パララックス効果の設定
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const yPos = progress * 100;
+
+        // 背景のパララックス効果
+        gsap.set(backgroundRef.current, {
+          y: yPos,
+          scale: 1.1
+        });
+
+        // コンテンツのパララックス効果
+        gsap.set(contentRef.current, {
+          y: yPos * 0.5
+        });
+
+        // テキストの透明度変化
+        gsap.set(textRef.current, {
+          opacity: Math.max(0, 1 - progress * 2)
+        });
       }
-    );
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   // ホバーアニメーションの設定
@@ -63,27 +95,23 @@ export function Hero() {
     const japaneseLetters = document.querySelectorAll('.japanese-letter');
     japaneseLetters.forEach(letter => {
       letter.addEventListener('mouseenter', () => {
-        (animate as any)(
-          letter,
-          { 
-            scale: [1, 1.1], 
-            y: [0, -5],
-            textShadow: ['0 0 20px rgba(255, 255, 255, 0.3)', '0 0 30px rgba(103, 232, 249, 0.8)']
-          },
-          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
-        );
+        gsap.to(letter, {
+          scale: 1.1,
+          y: -5,
+          textShadow: '0 0 30px rgba(103, 232, 249, 0.8)',
+          duration: 0.3,
+          ease: "power2.out"
+        });
       });
 
       letter.addEventListener('mouseleave', () => {
-        (animate as any)(
-          letter,
-          { 
-            scale: [1.1, 1], 
-            y: [-5, 0],
-            textShadow: ['0 0 30px rgba(103, 232, 249, 0.8)', '0 0 20px rgba(255, 255, 255, 0.3)']
-          },
-          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
-        );
+        gsap.to(letter, {
+          scale: 1,
+          y: 0,
+          textShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+          duration: 0.3,
+          ease: "power2.out"
+        });
       });
     });
 
@@ -91,68 +119,27 @@ export function Hero() {
     const englishTexts = document.querySelectorAll('.english-text');
     englishTexts.forEach(text => {
       text.addEventListener('mouseenter', () => {
-        (animate as any)(
-          text,
-          { 
-            scale: [1, 1.05], 
-            y: [0, -3],
-            textShadow: ['0 0 20px rgba(255, 255, 255, 0.3)', '0 0 25px rgba(236, 72, 153, 0.8)']
-          },
-          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
-        );
+        gsap.to(text, {
+          scale: 1.05,
+          y: -3,
+          textShadow: '0 0 25px rgba(236, 72, 153, 0.8)',
+          duration: 0.3,
+          ease: "power2.out"
+        });
       });
 
       text.addEventListener('mouseleave', () => {
-        (animate as any)(
-          text,
-          { 
-            scale: [1.05, 1], 
-            y: [-3, 0],
-            textShadow: ['0 0 25px rgba(236, 72, 153, 0.8)', '0 0 20px rgba(255, 255, 255, 0.3)']
-          },
-          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
-        );
+        gsap.to(text, {
+          scale: 1,
+          y: 0,
+          textShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+          duration: 0.3,
+          ease: "power2.out"
+        });
       });
     });
   }, []);
 
-  // スクロール連動アニメーション
-  useEffect(() => {
-    const handleScrollAnimation = () => {
-      const scrolled = window.scrollY;
-      const rate = scrolled * -0.5;
-      
-      // 背景の視差効果を強化
-      (animate as any)(
-        ".hero-background",
-        { y: [0, rate] },
-        { duration: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
-      );
-
-      // テキストの視差効果
-      (animate as any)(
-        ".hero-content",
-        { y: [0, rate * 0.3] },
-        { duration: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
-      );
-
-      // スクロールに応じた透明度変化
-      const opacity = Math.max(0, 1 - scrolled / 800);
-      (animate as any)(
-        ".hero-text",
-        { opacity: [1, opacity] },
-        { duration: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
-      );
-    };
-
-    window.addEventListener('scroll', handleScrollAnimation, { passive: true });
-    return () => window.removeEventListener('scroll', handleScrollAnimation);
-  }, []);
-
-  const parallaxTransform = {
-    background: `scale(1.1) translate3d(0, ${scrollY * 1}px, 0)`,
-    content: `translate3d(0, ${scrollY * 0.5}px, 0)`
-  };
 
   const createLetterSpans = (text: string, baseDelay: number, className: string = "") => {
     const sentences = text.split('。').filter(Boolean);
@@ -193,27 +180,25 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section ref={heroRef} className="relative h-screen overflow-hidden">
       <div
+        ref={backgroundRef}
         className="hero-background absolute inset-0 z-0 will-change-transform"
         style={{
           backgroundImage: "url('/images/hero-bg.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          transform: parallaxTransform.background,
         }}
       >
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/50' : 'bg-black/30'} transition-colors duration-200`} />
       </div>
 
       <div
+        ref={contentRef}
         className="hero-content relative z-10 h-full flex items-center justify-center will-change-transform"
-        style={{
-          transform: parallaxTransform.content,
-        }}
       >
-        <div className="text-center hero-text">
+        <div ref={textRef} className="text-center hero-text">
           <h1
             className="font-light text-white tracking-[.25em] relative font-mincho leading-loose px-4"
             style={{ lineHeight: '1.8em' }}

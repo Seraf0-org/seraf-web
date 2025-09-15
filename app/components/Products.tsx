@@ -67,7 +67,7 @@ const ProductPopup = ({ product, onClose }: {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    
+
     // ポップアップ表示時のアニメーション
     (animate as any)(
       ".popup-overlay",
@@ -90,7 +90,7 @@ const ProductPopup = ({ product, onClose }: {
     (animate as any)(
       ".popup-text",
       { opacity: [0, 1], y: [40, 0] },
-      { 
+      {
         delay: stagger(0.1, { startDelay: 0.5 }),
         duration: 0.6,
         easing: [0.25, 0.46, 0.45, 0.94]
@@ -104,7 +104,7 @@ const ProductPopup = ({ product, onClose }: {
 
   const handleClose = () => {
     setIsClosing(true);
-    
+
     // ポップアップ非表示時のアニメーション
     (animate as any)(
       ".popup-content",
@@ -303,7 +303,7 @@ export function Products() {
       (animate as any)(
         ".product-card",
         { opacity: [0, 1], y: [50, 0], scale: [0.9, 1] },
-        { 
+        {
           delay: stagger(0.15),
           duration: 0.8,
           easing: [0.25, 0.46, 0.45, 0.94]
@@ -314,7 +314,7 @@ export function Products() {
       (animate as any)(
         ".product-text",
         { opacity: [0, 1], y: [20, 0] },
-        { 
+        {
           delay: stagger(0.1, { startDelay: 0.8 }),
           duration: 0.6,
           easing: [0.25, 0.46, 0.45, 0.94]
@@ -326,12 +326,12 @@ export function Products() {
   // ホバーアニメーションの設定
   useEffect(() => {
     const productCards = document.querySelectorAll('.product-card');
-    
+
     productCards.forEach(card => {
       card.addEventListener('mouseenter', () => {
         (animate as any)(
           card,
-          { 
+          {
             y: [0, -10],
             scale: [1, 1.02],
             boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 20px 40px rgba(0,0,0,0.2)']
@@ -343,7 +343,7 @@ export function Products() {
       card.addEventListener('mouseleave', () => {
         (animate as any)(
           card,
-          { 
+          {
             y: [-10, 0],
             scale: [1.02, 1],
             boxShadow: ['0 20px 40px rgba(0,0,0,0.2)', '0 10px 25px rgba(0,0,0,0.1)']
@@ -497,7 +497,7 @@ export function Products() {
             >
               {/* ホバー時の下線アニメーション */}
               <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-300 ease-out group-hover:w-full group-hover:h-0.5"></div>
-              
+
               <div className="relative overflow-hidden">
                 <div className="pt-[56.25%] md:pt-[50%]">
                   <img
