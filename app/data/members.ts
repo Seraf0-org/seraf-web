@@ -22,7 +22,7 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "代表, ゲームデザイナー, シナリオライター, エンジニア, モデラー、映像クリエイター",
+        position: "代表, ゲームデザイナー, シナリオライター, プログラマー, 3DCG、映像クリエイター",
         mainImage: "/images/members/member-1.jpg",
         subImage: "/images/members/member-1-sub.jpg",
         description: "たくさんゲームを作るます。\nゲームデザイン、シナリオ制作をメインに手広く活動していきます。",
@@ -190,7 +190,7 @@ export const members: Member[] = [
     {
         id: 9,
         name: "前田ネイト",
-        position: "イラストレーター、キャラクターデザイン、背景画",
+        position: "イラストレーター、キャラクターデザイナー、背景画",
         mainImage: "/images/members/member-9.jpg",
         subImage: "/images/members/member-9.jpg",
         description: "画家です。\n第96回新構造展奨励賞、第1回Gates Art Competition審査員特別賞、第4回ホキ美術館大賞展入選など実績多数。\nめざましテレビ「キラビト」、NHK「沼ハマ」、ニコニコニュース等にて紹介されました。\nオンライン芸術教室を運営。",
@@ -236,7 +236,7 @@ export const members: Member[] = [
     /*
     {
         id: 11,
-        name: "タカノリ",
+        name: "成瀬にぁ",
         position: "グラフィックデザイナー",
         mainImage: "/images/members/member-11.jpg",
         subImage: "/images/members/member-11.jpg",
@@ -263,10 +263,58 @@ export const members: Member[] = [
     },
     {
         id: 12,
-        name: "ぽち。",
-        position: "プログラミング、映像、3DCG、ちょっぴりUI/Webデザイン",
+        name: "カーリー",
+        position: "プログラマー",
         mainImage: "/images/members/member-12.jpg",
         subImage: "/images/members/member-12.jpg",
+        description: "準備中。",
+        skills: ["C#", "Unity"],
+        sns: [
+            {
+                url: "https://twitter.com/carry7766",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ]
+    },
+    */
+    {
+        id: 13,
+        name: "タカノリ",
+        position: "グラフィックデザイナー",
+        mainImage: "/images/members/member-13.jpg",
+        subImage: "/images/members/member-13.jpg",
+        description: "Unity1weekを経てチームに参加させていただく事になりました。チームと支え合ってみんなと自分の作りたいものを作っていければと思います。よろしくお願いします。",
+        skills: ["Illustrator", "Photoshop"],
+        sns: [
+            {
+                url: "https://x.com/TakeANoWorries",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "59, 130, 246",
+                    hover: "37, 99, 235"
+                }
+            },
+            {
+                url: "https://www.instagram.com/takano_ri_/",
+                label: "Instagram",
+                color: {
+                    base: "214, 41, 118",
+                    hover: "150, 47, 191"
+                }
+            }
+        ]
+    },
+
+    {
+        id: 14,
+        name: "ぽち。",
+        position: "プログラマー、映像クリエイター、3DCG、UI/Webデザイナー",
+        mainImage: "/images/members/member-14.jpg",
+        subImage: "/images/members/member-14.jpg",
         description: "１年のぽちです～ プログラミングと映像主にやってます！ MV/ PV作れます👀お手柔らかにこれからよろしくお願いします🫡",
         skills: ["C#", "JavaScript", "Rust", "C++", "CSS", "Unity", "AviUtl", "Blender", "FL Studio"],
         sns: [
@@ -287,5 +335,24 @@ export const members: Member[] = [
                 }
             }
         ]
-    }*/
+    },
+    {
+        id: 15,
+        name: "はふり",
+        position: "イラストレーター",
+        mainImage: "/images/members/member-15.jpg",
+        subImage: "/images/members/member-15.jpg",
+        description: "イラストやデザインをメインに、3DCGや映像、Live2Dなど創作の幅を広げています！",
+        skills: ["Blender", "IbisPaint", "Unreal Engine5", "Adobe After Effects"],
+        sns: [
+            {
+                url: "https://x.com/hafuri_illust",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ]
+    },
 ];
