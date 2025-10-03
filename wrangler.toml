@@ -6,8 +6,7 @@ name = "seraf-homepage-production"
 
 [env.staging]
 name = "seraf-homepage-staging"
-
-# 環境変数の設定
+ 
 [vars]
 EMAILJS_PUBLIC_KEY = "s7JAyEhqGZ44jV-9E"
 EMAILJS_SERVICE_ID = "service_Seraf0"
