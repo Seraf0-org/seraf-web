@@ -1,5 +1,5 @@
 name = "seraf-homepage"
-compatibility_date = "2024-01-01"
+compatibility_date = "2024-11-23"
 
 [env.production]
 name = "seraf-homepage-production"
@@ -9,7 +9,6 @@ name = "seraf-homepage-staging"
 
 # 環境変数の設定
 [vars]
-# EmailJS設定（実際の値に置き換えてください）
 EMAILJS_PUBLIC_KEY = "s7JAyEhqGZ44jV-9E"
 EMAILJS_SERVICE_ID = "service_Seraf0"
 EMAILJS_TEMPLATE_ID = "template_AutoReply"
