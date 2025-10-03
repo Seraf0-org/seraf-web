@@ -55,6 +55,20 @@ export const newsItems: NewsItem[] = [
         title: "春ゲムマ2025に出展！",
         description: "春のゲームマーケット2025にて、ヴォイドライブの試遊と販売を行いました。",
         image: "/images/news/news-7.jpg"
+    },
+    {
+        id: 8,
+        date: "2025.8.30",
+        title: "秋-四季/LuCAのMVが公開！",
+        description: "Studio.zip様協力のもと、秋 -四季/LuCAのMVを制作いたしました。",
+        image: "/images/news/news-8.jpg"
+    },
+    {
+        id: 8,
+        date: "2025.9.28",
+        title: "TGS2025に出展！",
+        description: "TGS2025にて、クラリオンの試遊を行いました。",
+        image: "/images/news/news-9.jpg"
     }
 
 ];
