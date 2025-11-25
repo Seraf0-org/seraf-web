@@ -102,7 +102,11 @@ export default function Index() {
       // /pose に送る（画像は返ってこない）
       await fetch(`${NGROK_URL}/pose`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            // ★ここにも追加
+            "ngrok-skip-browser-warning": "true"
+        },
         body: JSON.stringify({ x: q.x, y: q.y, z: q.z, w: q.w }),
       });
       // 成功しても何もしない（ログだけ）
@@ -120,11 +124,15 @@ export default function Index() {
     const q = threeRef.current.camera.quaternion;
 
     try {
-      const response = await fetch(`${NGROK_URL}/snap`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ x: q.x, y: q.y, z: q.z, w: q.w }),
-      });
+        const response = await fetch(`${NGROK_URL}/snap`, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                // ★以下の1行を追加してください！これがないとngrokで弾かれます
+                "ngrok-skip-browser-warning": "true" 
+            },
+            body: JSON.stringify({ x: q.x, y: q.y, z: q.z, w: q.w }),
+          });
 
       if (!response.ok) throw new Error("Server Error");
 
