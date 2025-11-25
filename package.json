@@ -11,9 +11,11 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@remix-run/cloudflare": "^2.15.2",
     "@remix-run/cloudflare-pages": "^2.15.2",
     "@remix-run/react": "^2.12.1",
+    "gsap": "^3.13.0",
     "isbot": "^4.1.0",
     "motion": "^12.23.12",
     "react": "^18.2.0",
