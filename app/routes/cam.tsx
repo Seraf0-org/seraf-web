@@ -20,7 +20,7 @@ export const meta: MetaFunction = () => {
 };
 
 // ★ ngrokのURL (末尾のスラッシュなし)
-const NGROK_URL = "https://xxxx-xxxx.ngrok-free.app";
+const NGROK_URL = "https://37da9d14642c.ngrok-free.app/";
 
 export default function Index() {
   const videoRef = useRef<HTMLVideoElement>(null);
