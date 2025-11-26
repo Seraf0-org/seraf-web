@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import type { MetaFunction } from "@remix-run/node";
 import * as THREE from "three";
-// MindARとジャイロの両方を使います
 import { DeviceOrientationControls } from "three-stdlib";
 
-// ★ ngrokのURL
 const NGROK_URL = "https://xxxx-xxxx.ngrok-free.app";
-
-// ★ マーカーファイルのパス
 const TARGETS_MIND_URL = "/targets.mind";
 
 export const meta: MetaFunction = () => {
@@ -29,10 +25,12 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [hasPrinted, setHasPrinted] = useState(false);
-
-  // 現在のモード表示用
   const [trackingMode, setTrackingMode] = useState<"AR" | "GYRO">("GYRO");
   const [cameraPos, setCameraPos] = useState({ x: 0, y: 0, z: 0 });
+
+  // ★追加: ライブラリ読み込み状態管理
+  const [isLibLoaded, setIsLibLoaded] = useState(false);
+  const [libError, setLibError] = useState(false);
 
   const mindARRef = useRef<any>(null);
   const videoElementRef = useRef<HTMLVideoElement | null>(null);
@@ -42,25 +40,37 @@ export default function Index() {
     const record = localStorage.getItem("hasInvasionPrinted");
     if (record === "true") setHasPrinted(true);
 
+    // ★修正: 読み込み完了とエラーを検知する
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js";
     script.async = true;
+
+    script.onload = () => {
+      console.log("MindAR Loaded Successfully");
+      setIsLibLoaded(true); // 読み込み完了！
+    };
+
+    script.onerror = () => {
+      console.error("MindAR Load Failed");
+      setLibError(true); // エラー発生
+      alert("ARエンジンの読み込みに失敗しました。\nネット環境を確認するか、広告ブロッカーをOFFにしてください。");
+    };
+
     document.body.appendChild(script);
 
     return () => {
       if (mindARRef.current) mindARRef.current.stop();
-      document.body.removeChild(script);
+      if (document.body.contains(script)) document.body.removeChild(script);
     };
   }, []);
 
   const startApp = async () => {
-    if (!containerRef.current || !(window as any).MINDAR) {
-      alert("ライブラリ読み込み中...数秒後に再試行してください");
+    // ボタンが無効化されているはずだが、念の為チェック
+    if (!isLibLoaded || !containerRef.current || !(window as any).MINDAR) {
       return;
     }
 
     try {
-      // 1. ジャイロセンサーの許可 (iOS対応)
       // @ts-ignore
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         // @ts-ignore
@@ -70,7 +80,6 @@ export default function Index() {
 
       setIsStarted(true);
 
-      // 2. MindARの初期化
       const MindARThree = (window as any).MINDAR.IMAGE.MindARThree;
       const mindarThree = new MindARThree({
         container: containerRef.current,
@@ -82,14 +91,11 @@ export default function Index() {
       mindARRef.current = mindarThree;
       const { renderer, scene, camera } = mindarThree;
 
-      // 3. ジャイロコントロールの初期化 (MindARのカメラにアタッチ)
       const gyroControls = new DeviceOrientationControls(camera);
       gyroControlsRef.current = gyroControls;
 
-      // アンカー設定
       const anchor = mindarThree.addAnchor(0);
 
-      // デバッグ用: 赤い箱を表示
       const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
       const material = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.5 });
       const box = new THREE.Mesh(geometry, material);
@@ -98,37 +104,19 @@ export default function Index() {
       await mindarThree.start();
       videoElementRef.current = mindarThree.video;
 
-      // ★ハイブリッド・ループ処理
       renderer.setAnimationLoop(() => {
-
         if (anchor.group.visible) {
-          // ■ パターンA: マーカーが見えている (ARモード)
-          // MindARが自動的にカメラ位置を更新しているので、計算だけ行う
-
           setTrackingMode("AR");
-
-          // マーカー(0,0,0) から見た カメラ(World) の相対位置を計算
           const cameraWorldPos = new THREE.Vector3();
           camera.getWorldPosition(cameraWorldPos);
           const localCamPos = anchor.group.worldToLocal(cameraWorldPos.clone());
-
           setCameraPos({ x: localCamPos.x, y: localCamPos.y, z: localCamPos.z });
-
         } else {
-          // ■ パターンB: マーカーが見えない (ジャイロモード)
-
           setTrackingMode("GYRO");
-
-          // ジャイロで回転を更新
           gyroControls.update();
-
-          // 位置は原点に戻す (ジャイロでは位置移動できないため)
-          // ※ここを固定しないと、最後にマーカーを見た位置にカメラが残り続けてしまう
           camera.position.set(0, 0, 0);
-
           setCameraPos({ x: 0, y: 0, z: 0 });
         }
-
         renderer.render(scene, camera);
       });
 
@@ -174,7 +162,6 @@ export default function Index() {
       const response = await fetch(`${NGROK_URL}/snap`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
-        // モードに関わらず現在のカメラ状態を送るだけでOK
         body: JSON.stringify({
           x: q.x, y: q.y, z: q.z, w: q.w,
           posX: p.x, posY: p.y, posZ: p.z,
@@ -222,8 +209,6 @@ export default function Index() {
 
   return (
     <div ref={containerRef} style={styles.container}>
-
-      {/* モード・座標表示 */}
       <div style={styles.posLog}>
         MODE: <span style={{ color: trackingMode === "AR" ? "cyan" : "orange" }}>{trackingMode}</span><br />
         X: {cameraPos.x.toFixed(2)}<br />
@@ -233,7 +218,18 @@ export default function Index() {
 
       <div style={styles.uiLayer}>
         {!isStarted ? (
-          <button style={styles.startButton} onClick={startApp}>ARカメラ起動</button>
+          // ★修正: 読み込み完了するまでボタンを押せなくし、表示を変える
+          <button
+            style={{
+              ...styles.startButton,
+              opacity: isLibLoaded ? 1 : 0.5,
+              background: libError ? "red" : styles.startButton.background
+            }}
+            onClick={startApp}
+            disabled={!isLibLoaded || libError}
+          >
+            {libError ? "読込エラー" : isLibLoaded ? "ARカメラ起動" : "準備中..."}
+          </button>
         ) : (
           <>
             {!isLoading && !resultImage && (
