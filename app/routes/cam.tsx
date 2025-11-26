@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { DeviceOrientationControls } from "three-stdlib";
 
 // ★ ngrokのURL (末尾のスラッシュなし)
-const NGROK_URL = "https://xxxx-xxxx.ngrok-free.app";
+const NGROK_URL = "https://a63807827dd8.ngrok-free.app";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Invasion Camera" }];
