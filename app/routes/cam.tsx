@@ -91,7 +91,7 @@ export default function Index() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    const dataUrl = canvas.toDataURL("image/jpeg", 1.0);
     return dataUrl.replace(/^data:image\/(png|jpeg);base64,/, "");
   };
 
