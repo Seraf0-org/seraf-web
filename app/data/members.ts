@@ -355,4 +355,50 @@ export const members: Member[] = [
             }
         ]
     },
+    {
+        id: 16,
+        name: "Kazuki/千煌",
+        position: "背景モデラー",
+        mainImage: "/images/members/member-none.png",
+        subImage: "/images/members/member-none.png",
+        description: "背景モデラー目指して勉強中",
+        skills: ["MAYA", "Substance Painter", "Unity"],
+        sns: [
+            {
+                url: "https://x.com/kazuki_cg",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            },
+            {
+                url: "https://www.instagram.com/kazuki_cg",
+                label: "Instagram",
+                color: {
+                    base: "214, 41, 118",
+                    hover: "150, 47, 191"
+                }
+            }
+        ]
+    },
+    {
+        id: 17,
+        name: "楚々 ",
+        position: "イラストレーター",
+        mainImage: "/images/members/member-17.jpg",
+        subImage: "/images/members/member-17.jpg",
+        description: "イラスト担当で参加させていただきます！全力で楽しみながら良い作品を作りたいです✨",
+        skills: ["CLIP STUDIO PAINT", "Procreate", "Maya"],
+        sns: [
+            {
+                url: "https://x.com/nmm_soso",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ]
+    }
 ];
