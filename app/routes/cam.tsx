@@ -3,7 +3,7 @@ import type { MetaFunction } from "@remix-run/node";
 import * as THREE from "three";
 import { DeviceOrientationControls } from "three-stdlib";
 
-const NGROK_URL = "https://xxxx-xxxx.ngrok-free.app";
+const NGROK_URL = "https://a63807827dd8.ngrok-free.app";
 const TARGETS_MIND_URL = "/targets.mind";
 
 export const meta: MetaFunction = () => {
@@ -209,6 +209,8 @@ export default function Index() {
 
   return (
     <div ref={containerRef} style={styles.container}>
+
+      
       <div style={styles.posLog}>
         MODE: <span style={{ color: trackingMode === "AR" ? "cyan" : "orange" }}>{trackingMode}</span><br />
         X: {cameraPos.x.toFixed(2)}<br />
