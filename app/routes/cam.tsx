@@ -1,89 +1,146 @@
 import { useEffect, useRef, useState } from "react";
 import type { MetaFunction } from "@remix-run/node";
 import * as THREE from "three";
+// MindARとジャイロの両方を使います
 import { DeviceOrientationControls } from "three-stdlib";
 
-// ★ ngrokのURL (末尾のスラッシュなし)
-const NGROK_URL = "https://a63807827dd8.ngrok-free.app";
+// ★ ngrokのURL
+const NGROK_URL = "https://xxxx-xxxx.ngrok-free.app";
+
+// ★ マーカーファイルのパス
+const TARGETS_MIND_URL = "/targets.mind";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Invasion Camera" }];
+  return [{ title: "Invasion Camera AR" }];
 };
 
 const styles = {
   container: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%", overflow: "hidden", background: "#000" } as React.CSSProperties,
-  video: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 1 } as React.CSSProperties,
   uiLayer: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 10, pointerEvents: "none" } as React.CSSProperties,
   startButton: { position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", padding: "15px 30px", fontSize: "18px", background: "rgba(0,0,0,0.7)", color: "#fff", border: "2px solid #fff", borderRadius: "30px", pointerEvents: "auto", cursor: "pointer" } as React.CSSProperties,
   shutterButton: { position: "absolute", bottom: "40px", left: "50%", transform: "translateX(-50%)", width: "80px", height: "80px", background: "rgba(255,255,255,0.2)", border: "4px solid #fff", borderRadius: "50%", pointerEvents: "auto", cursor: "pointer" } as React.CSSProperties,
-  // デバッグボタンのスタイルは削除済み
   overlay: { position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "black", zIndex: 100, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" } as React.CSSProperties,
+  posLog: { position: "absolute", top: "10px", left: "10px", color: "#0f0", fontSize: "14px", fontFamily: "monospace", background: "rgba(0,0,0,0.5)", padding: "5px" } as React.CSSProperties,
 };
 
 export default function Index() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
-
-  // 印刷済みフラグ
   const [hasPrinted, setHasPrinted] = useState(false);
 
-  // デバッグ機能（内部ロジックのみ保持、ボタンは非表示）
-  const [isDebugMode, setIsDebugMode] = useState(false);
+  // 現在のモード表示用
+  const [trackingMode, setTrackingMode] = useState<"AR" | "GYRO">("GYRO");
+  const [cameraPos, setCameraPos] = useState({ x: 0, y: 0, z: 0 });
 
-  const threeRef = useRef<{ camera: THREE.PerspectiveCamera; controls: DeviceOrientationControls | null }>({ camera: null!, controls: null });
+  const mindARRef = useRef<any>(null);
+  const videoElementRef = useRef<HTMLVideoElement | null>(null);
+  const gyroControlsRef = useRef<DeviceOrientationControls | null>(null);
 
-  // 1. Three.js 初期化
-  useEffect(() => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-    threeRef.current.camera = camera;
-    let animationId: number;
-    const animate = () => {
-      animationId = requestAnimationFrame(animate);
-      if (threeRef.current.controls) threeRef.current.controls.update();
-    };
-    animate();
-    return () => cancelAnimationFrame(animationId);
-  }, []);
-
-  // 2. デバッグループ (isDebugMode=trueの場合のみ)
-  useEffect(() => {
-    let intervalId: any;
-    if (isStarted && isDebugMode) {
-      intervalId = setInterval(() => sendDebugPose(), 1000);
-    }
-    return () => clearInterval(intervalId);
-  }, [isStarted, isDebugMode]);
-
-  // 3. 起動時に印刷履歴チェック
   useEffect(() => {
     const record = localStorage.getItem("hasInvasionPrinted");
-    if (record === "true") {
-      setHasPrinted(true);
-    }
+    if (record === "true") setHasPrinted(true);
+
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      if (mindARRef.current) mindARRef.current.stop();
+      document.body.removeChild(script);
+    };
   }, []);
 
   const startApp = async () => {
+    if (!containerRef.current || !(window as any).MINDAR) {
+      alert("ライブラリ読み込み中...数秒後に再試行してください");
+      return;
+    }
+
     try {
-      if (navigator.mediaDevices && videoRef.current) {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-        videoRef.current.srcObject = stream;
-      }
+      // 1. ジャイロセンサーの許可 (iOS対応)
       // @ts-ignore
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         // @ts-ignore
         const permission = await DeviceOrientationEvent.requestPermission();
         if (permission !== 'granted') { alert("センサー許可が必要です"); return; }
       }
-      threeRef.current.controls = new DeviceOrientationControls(threeRef.current.camera);
+
       setIsStarted(true);
-    } catch (err: any) { console.error(err); alert("起動エラー: " + err.message); }
+
+      // 2. MindARの初期化
+      const MindARThree = (window as any).MINDAR.IMAGE.MindARThree;
+      const mindarThree = new MindARThree({
+        container: containerRef.current,
+        imageTargetSrc: TARGETS_MIND_URL,
+        filterMinCF: 0.0001,
+        filterBeta: 0.001,
+      });
+
+      mindARRef.current = mindarThree;
+      const { renderer, scene, camera } = mindarThree;
+
+      // 3. ジャイロコントロールの初期化 (MindARのカメラにアタッチ)
+      const gyroControls = new DeviceOrientationControls(camera);
+      gyroControlsRef.current = gyroControls;
+
+      // アンカー設定
+      const anchor = mindarThree.addAnchor(0);
+
+      // デバッグ用: 赤い箱を表示
+      const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+      const material = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.5 });
+      const box = new THREE.Mesh(geometry, material);
+      anchor.group.add(box);
+
+      await mindarThree.start();
+      videoElementRef.current = mindarThree.video;
+
+      // ★ハイブリッド・ループ処理
+      renderer.setAnimationLoop(() => {
+
+        if (anchor.group.visible) {
+          // ■ パターンA: マーカーが見えている (ARモード)
+          // MindARが自動的にカメラ位置を更新しているので、計算だけ行う
+
+          setTrackingMode("AR");
+
+          // マーカー(0,0,0) から見た カメラ(World) の相対位置を計算
+          const cameraWorldPos = new THREE.Vector3();
+          camera.getWorldPosition(cameraWorldPos);
+          const localCamPos = anchor.group.worldToLocal(cameraWorldPos.clone());
+
+          setCameraPos({ x: localCamPos.x, y: localCamPos.y, z: localCamPos.z });
+
+        } else {
+          // ■ パターンB: マーカーが見えない (ジャイロモード)
+
+          setTrackingMode("GYRO");
+
+          // ジャイロで回転を更新
+          gyroControls.update();
+
+          // 位置は原点に戻す (ジャイロでは位置移動できないため)
+          // ※ここを固定しないと、最後にマーカーを見た位置にカメラが残り続けてしまう
+          camera.position.set(0, 0, 0);
+
+          setCameraPos({ x: 0, y: 0, z: 0 });
+        }
+
+        renderer.render(scene, camera);
+      });
+
+    } catch (err: any) {
+      console.error(err);
+      alert("エラー: " + err.message);
+      setIsStarted(false);
+    }
   };
 
   const captureVideoFrame = (): string | null => {
-    const video = videoRef.current;
+    const video = videoElementRef.current;
     if (!video || video.videoWidth === 0) return null;
     const canvas = document.createElement("canvas");
     canvas.width = video.videoWidth;
@@ -95,34 +152,21 @@ export default function Index() {
     return dataUrl.replace(/^data:image\/(png|jpeg);base64,/, "");
   };
 
-  const sendDebugPose = async () => {
-    if (!threeRef.current.camera) return;
-    const q = threeRef.current.camera.quaternion;
-    const isPortrait = window.innerHeight > window.innerWidth;
-    try {
-      await fetch(`${NGROK_URL}/pose`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
-        body: JSON.stringify({ x: q.x, y: q.y, z: q.z, w: q.w, isPortrait }),
-      });
-    } catch (e) { }
-  };
-
   const takePhoto = async () => {
-    if (!threeRef.current.camera || !videoRef.current) return;
-
-    // 撮影体験向上のためビデオを一時停止
-    videoRef.current.pause();
+    if (!videoElementRef.current) return;
+    videoElementRef.current.pause();
     setIsLoading(true);
 
-    const q = threeRef.current.camera.quaternion;
-    const isPortrait = videoRef.current.videoHeight > videoRef.current.videoWidth;
+    const camera = mindARRef.current.camera;
+    const q = camera.quaternion;
+    const p = cameraPos;
+    const isPortrait = videoElementRef.current.videoHeight > videoElementRef.current.videoWidth;
     const imageBase64 = captureVideoFrame();
 
     if (!imageBase64) {
       alert("画像のキャプチャに失敗しました");
       setIsLoading(false);
-      videoRef.current.play(); // 失敗時は再開
+      videoElementRef.current.play();
       return;
     }
 
@@ -130,18 +174,21 @@ export default function Index() {
       const response = await fetch(`${NGROK_URL}/snap`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
-        body: JSON.stringify({ x: q.x, y: q.y, z: q.z, w: q.w, isPortrait, imageBase64 }),
+        // モードに関わらず現在のカメラ状態を送るだけでOK
+        body: JSON.stringify({
+          x: q.x, y: q.y, z: q.z, w: q.w,
+          posX: p.x, posY: p.y, posZ: p.z,
+          isPortrait, imageBase64
+        }),
       });
 
       if (!response.ok) throw new Error("Server Error");
-
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setResultImage(imageUrl);
-
     } catch (e: any) {
       alert("エラー: " + e.message);
-      videoRef.current.play(); // エラー時は再開
+      videoElementRef.current.play();
     } finally {
       setIsLoading(false);
     }
@@ -149,52 +196,46 @@ export default function Index() {
 
   const handlePrintOnPC = async () => {
     if (!confirm("PCのプリンターで印刷しますか？\n※印刷できるのは1回のみです")) return;
-
     try {
       const response = await fetch(`${NGROK_URL}/print`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
         body: JSON.stringify({}),
       });
-
       if (response.ok) {
         alert("印刷指示を送りました！");
-        // 成功したらフラグを立てて保存
         setHasPrinted(true);
         localStorage.setItem("hasInvasionPrinted", "true");
       }
       else if (response.status === 403) {
-        // IP制限で弾かれた場合
-        alert("エラー：この端末（ネットワーク）からは既に印刷済みです。");
+        alert("エラー：この端末からは既に印刷済みです。");
         setHasPrinted(true);
       }
-      else {
-        alert("印刷指示に失敗しました。サーバーエラーです。");
-      }
-    } catch (e: any) {
-      alert("通信エラー: " + e.message);
-    }
+      else { alert("印刷指示に失敗しました。"); }
+    } catch (e: any) { alert("通信エラー: " + e.message); }
   };
 
   const handleClose = () => {
     setResultImage(null);
-    // 画面を閉じたタイミングでビデオ再開
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
+    if (videoElementRef.current) videoElementRef.current.play();
   };
 
   return (
-    <div style={styles.container}>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video ref={videoRef} style={styles.video} autoPlay playsInline muted />
+    <div ref={containerRef} style={styles.container}>
+
+      {/* モード・座標表示 */}
+      <div style={styles.posLog}>
+        MODE: <span style={{ color: trackingMode === "AR" ? "cyan" : "orange" }}>{trackingMode}</span><br />
+        X: {cameraPos.x.toFixed(2)}<br />
+        Y: {cameraPos.y.toFixed(2)}<br />
+        Z: {cameraPos.z.toFixed(2)}
+      </div>
+
       <div style={styles.uiLayer}>
         {!isStarted ? (
-          <button style={styles.startButton} onClick={startApp}>カメラ起動</button>
+          <button style={styles.startButton} onClick={startApp}>ARカメラ起動</button>
         ) : (
           <>
-            {/* デバッグボタン削除済み */}
-
             {!isLoading && !resultImage && (
               <button style={styles.shutterButton} onClick={takePhoto} />
             )}
@@ -204,18 +245,15 @@ export default function Index() {
           </>
         )}
       </div>
+
       {resultImage && (
         <div style={styles.overlay}>
           <img src={resultImage} style={{ maxWidth: "100%", maxHeight: "80vh", border: "2px solid white" }} alt="Result" />
-
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px" }}>
-
             <a href={resultImage} download="invasion_photo.png"
               style={{ color: "white", fontSize: "18px", textAlign: "center", textDecoration: "none", border: "1px solid white", padding: "10px 20px", borderRadius: "30px" }}>
               画像をスマホに保存
             </a>
-
-            {/* まだ印刷していない場合のみボタンを表示 */}
             {!hasPrinted ? (
               <button onClick={handlePrintOnPC}
                 style={{ fontSize: "18px", padding: "10px 20px", borderRadius: "30px", background: "white", color: "black", border: "none", cursor: "pointer", fontWeight: "bold" }}>
@@ -223,15 +261,13 @@ export default function Index() {
               </button>
             ) : (
               <div style={{ color: "#aaa", fontSize: "16px", textAlign: "center", border: "1px dashed #aaa", padding: "10px", borderRadius: "10px" }}>
-                印刷済みです<br />(撮影は何度でも可能です)
+                印刷済みです
               </div>
             )}
-
             <button onClick={handleClose}
               style={{ fontSize: "16px", padding: "10px", background: "transparent", color: "#aaa", border: "none", cursor: "pointer" }}>
               閉じて戻る
             </button>
-
           </div>
         </div>
       )}
