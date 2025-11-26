@@ -16,7 +16,7 @@ const styles = {
   uiLayer: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 10, pointerEvents: "none" } as React.CSSProperties,
   startButton: { position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", padding: "15px 30px", fontSize: "18px", background: "rgba(0,0,0,0.7)", color: "#fff", border: "2px solid #fff", borderRadius: "30px", pointerEvents: "auto", cursor: "pointer" } as React.CSSProperties,
   shutterButton: { position: "absolute", bottom: "40px", left: "50%", transform: "translateX(-50%)", width: "80px", height: "80px", background: "rgba(255,255,255,0.2)", border: "4px solid #fff", borderRadius: "50%", pointerEvents: "auto", cursor: "pointer" } as React.CSSProperties,
-  debugButton: { position: "absolute", top: "20px", right: "20px", padding: "10px", fontSize: "14px", background: "rgba(0,0,0,0.5)", color: "#fff", border: "1px solid #fff", borderRadius: "5px", pointerEvents: "auto", cursor: "pointer" } as React.CSSProperties,
+  // デバッグボタンのスタイルは削除済み
   overlay: { position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "black", zIndex: 100, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" } as React.CSSProperties,
 };
 
@@ -25,9 +25,16 @@ export default function Index() {
   const [isStarted, setIsStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
+
+  // 印刷済みフラグ
+  const [hasPrinted, setHasPrinted] = useState(false);
+
+  // デバッグ機能（内部ロジックのみ保持、ボタンは非表示）
   const [isDebugMode, setIsDebugMode] = useState(false);
+
   const threeRef = useRef<{ camera: THREE.PerspectiveCamera; controls: DeviceOrientationControls | null }>({ camera: null!, controls: null });
 
+  // 1. Three.js 初期化
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -41,6 +48,7 @@ export default function Index() {
     return () => cancelAnimationFrame(animationId);
   }, []);
 
+  // 2. デバッグループ (isDebugMode=trueの場合のみ)
   useEffect(() => {
     let intervalId: any;
     if (isStarted && isDebugMode) {
@@ -48,6 +56,14 @@ export default function Index() {
     }
     return () => clearInterval(intervalId);
   }, [isStarted, isDebugMode]);
+
+  // 3. 起動時に印刷履歴チェック
+  useEffect(() => {
+    const record = localStorage.getItem("hasInvasionPrinted");
+    if (record === "true") {
+      setHasPrinted(true);
+    }
+  }, []);
 
   const startApp = async () => {
     try {
@@ -95,10 +111,10 @@ export default function Index() {
   const takePhoto = async () => {
     if (!threeRef.current.camera || !videoRef.current) return;
 
-    // ★修正: 撮影開始直後にビデオを一時停止（フリーズ）させる
+    // 撮影体験向上のためビデオを一時停止
     videoRef.current.pause();
-
     setIsLoading(true);
+
     const q = threeRef.current.camera.quaternion;
     const isPortrait = videoRef.current.videoHeight > videoRef.current.videoWidth;
     const imageBase64 = captureVideoFrame();
@@ -106,8 +122,7 @@ export default function Index() {
     if (!imageBase64) {
       alert("画像のキャプチャに失敗しました");
       setIsLoading(false);
-      // 失敗したら再開
-      videoRef.current.play();
+      videoRef.current.play(); // 失敗時は再開
       return;
     }
 
@@ -117,41 +132,53 @@ export default function Index() {
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
         body: JSON.stringify({ x: q.x, y: q.y, z: q.z, w: q.w, isPortrait, imageBase64 }),
       });
+
       if (!response.ok) throw new Error("Server Error");
+
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setResultImage(imageUrl);
+
     } catch (e: any) {
       alert("エラー: " + e.message);
-      // ★エラー時はビデオを再開して元の画面に戻す
-      videoRef.current.play();
+      videoRef.current.play(); // エラー時は再開
     } finally {
       setIsLoading(false);
     }
   };
 
   const handlePrintOnPC = async () => {
-    if (!confirm("PCのプリンターで印刷しますか？")) return;
+    if (!confirm("PCのプリンターで印刷しますか？\n※印刷できるのは1回のみです")) return;
+
     try {
       const response = await fetch(`${NGROK_URL}/print`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
         body: JSON.stringify({}),
       });
+
       if (response.ok) {
-        alert("PCに印刷指示を送りました！\nプリンターを確認してください。");
-      } else {
-        alert("印刷指示に失敗しました。PCとの接続を確認してください。");
+        alert("印刷指示を送りました！");
+        // 成功したらフラグを立てて保存
+        setHasPrinted(true);
+        localStorage.setItem("hasInvasionPrinted", "true");
+      }
+      else if (response.status === 403) {
+        // IP制限で弾かれた場合
+        alert("エラー：この端末（ネットワーク）からは既に印刷済みです。");
+        setHasPrinted(true);
+      }
+      else {
+        alert("印刷指示に失敗しました。サーバーエラーです。");
       }
     } catch (e: any) {
       alert("通信エラー: " + e.message);
     }
   };
 
-  // ★追加: 閉じるボタンを押したときの処理
   const handleClose = () => {
     setResultImage(null);
-    // ビデオ再生を再開
+    // 画面を閉じたタイミングでビデオ再開
     if (videoRef.current) {
       videoRef.current.play();
     }
@@ -166,12 +193,8 @@ export default function Index() {
           <button style={styles.startButton} onClick={startApp}>カメラ起動</button>
         ) : (
           <>
-            <button
-              style={{ ...styles.debugButton, background: isDebugMode ? "rgba(0,255,0,0.5)" : "rgba(0,0,0,0.5)" }}
-              onClick={() => setIsDebugMode(!isDebugMode)}
-            >
-              {isDebugMode ? "Debug: ON" : "Debug: OFF"}
-            </button>
+            {/* デバッグボタン削除済み */}
+
             {!isLoading && !resultImage && (
               <button style={styles.shutterButton} onClick={takePhoto} />
             )}
@@ -192,12 +215,18 @@ export default function Index() {
               画像をスマホに保存
             </a>
 
-            <button onClick={handlePrintOnPC}
-              style={{ fontSize: "18px", padding: "10px 20px", borderRadius: "30px", background: "white", color: "black", border: "none", cursor: "pointer", fontWeight: "bold" }}>
-              🖨 PCで印刷する
-            </button>
+            {/* まだ印刷していない場合のみボタンを表示 */}
+            {!hasPrinted ? (
+              <button onClick={handlePrintOnPC}
+                style={{ fontSize: "18px", padding: "10px 20px", borderRadius: "30px", background: "white", color: "black", border: "none", cursor: "pointer", fontWeight: "bold" }}>
+                🖨 PCで印刷する (1回のみ)
+              </button>
+            ) : (
+              <div style={{ color: "#aaa", fontSize: "16px", textAlign: "center", border: "1px dashed #aaa", padding: "10px", borderRadius: "10px" }}>
+                印刷済みです<br />(撮影は何度でも可能です)
+              </div>
+            )}
 
-            {/* 閉じるボタンの動作を関数に変更 */}
             <button onClick={handleClose}
               style={{ fontSize: "16px", padding: "10px", background: "transparent", color: "#aaa", border: "none", cursor: "pointer" }}>
               閉じて戻る
