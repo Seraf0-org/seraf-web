@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { DeviceOrientationControls } from "three-stdlib";
 
 // ★ ngrokのURL (末尾のスラッシュなし)
-const NGROK_URL = "https://a63807827dd8.ngrok-free.app";
+const NGROK_URL = "https://xxxx-xxxx.ngrok-free.app";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Invasion Camera" }];
@@ -94,11 +94,22 @@ export default function Index() {
 
   const takePhoto = async () => {
     if (!threeRef.current.camera || !videoRef.current) return;
+
+    // ★修正: 撮影開始直後にビデオを一時停止（フリーズ）させる
+    videoRef.current.pause();
+
     setIsLoading(true);
     const q = threeRef.current.camera.quaternion;
     const isPortrait = videoRef.current.videoHeight > videoRef.current.videoWidth;
     const imageBase64 = captureVideoFrame();
-    if (!imageBase64) { alert("画像のキャプチャに失敗しました"); setIsLoading(false); return; }
+
+    if (!imageBase64) {
+      alert("画像のキャプチャに失敗しました");
+      setIsLoading(false);
+      // 失敗したら再開
+      videoRef.current.play();
+      return;
+    }
 
     try {
       const response = await fetch(`${NGROK_URL}/snap`, {
@@ -110,20 +121,23 @@ export default function Index() {
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setResultImage(imageUrl);
-    } catch (e: any) { alert("エラー: " + e.message); } finally { setIsLoading(false); }
+    } catch (e: any) {
+      alert("エラー: " + e.message);
+      // ★エラー時はビデオを再開して元の画面に戻す
+      videoRef.current.play();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // ★変更: PCに印刷指示を送る関数
   const handlePrintOnPC = async () => {
     if (!confirm("PCのプリンターで印刷しますか？")) return;
-
     try {
       const response = await fetch(`${NGROK_URL}/print`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
-        body: JSON.stringify({}), // 空のボディを送る
+        body: JSON.stringify({}),
       });
-
       if (response.ok) {
         alert("PCに印刷指示を送りました！\nプリンターを確認してください。");
       } else {
@@ -131,6 +145,15 @@ export default function Index() {
       }
     } catch (e: any) {
       alert("通信エラー: " + e.message);
+    }
+  };
+
+  // ★追加: 閉じるボタンを押したときの処理
+  const handleClose = () => {
+    setResultImage(null);
+    // ビデオ再生を再開
+    if (videoRef.current) {
+      videoRef.current.play();
     }
   };
 
@@ -164,20 +187,18 @@ export default function Index() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px" }}>
 
-            {/* 保存ボタン */}
             <a href={resultImage} download="invasion_photo.png"
               style={{ color: "white", fontSize: "18px", textAlign: "center", textDecoration: "none", border: "1px solid white", padding: "10px 20px", borderRadius: "30px" }}>
               画像をスマホに保存
             </a>
 
-            {/* PC印刷ボタン */}
             <button onClick={handlePrintOnPC}
               style={{ fontSize: "18px", padding: "10px 20px", borderRadius: "30px", background: "white", color: "black", border: "none", cursor: "pointer", fontWeight: "bold" }}>
               🖨 PCで印刷する
             </button>
 
-            {/* 閉じるボタン */}
-            <button onClick={() => setResultImage(null)}
+            {/* 閉じるボタンの動作を関数に変更 */}
+            <button onClick={handleClose}
               style={{ fontSize: "16px", padding: "10px", background: "transparent", color: "#aaa", border: "none", cursor: "pointer" }}>
               閉じて戻る
             </button>
