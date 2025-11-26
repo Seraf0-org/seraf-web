@@ -4,7 +4,6 @@ import * as THREE from "three";
 import { DeviceOrientationControls } from "three-stdlib";
 
 // ★ ngrokのURL (末尾のスラッシュなし)
-const NGROK_URL = "https://a63807827dd8.ngrok-free.app";
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,6 +26,8 @@ export default function Index() {
   const [isStarted, setIsStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
+
+  // 印刷済みフラグ
   const [hasPrinted, setHasPrinted] = useState(false);
 
   // デバッグ機能（内部ロジックのみ保持）
@@ -34,12 +35,11 @@ export default function Index() {
 
   const threeRef = useRef<{ camera: THREE.PerspectiveCamera; controls: DeviceOrientationControls | null }>({ camera: null!, controls: null });
 
-  // 1. Three.js 初期化 (計算用)
+  // 1. Three.js 初期化
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
     threeRef.current.camera = camera;
-
     let animationId: number;
     const animate = () => {
       animationId = requestAnimationFrame(animate);
@@ -48,7 +48,6 @@ export default function Index() {
       }
     };
     animate();
-
     return () => cancelAnimationFrame(animationId);
   }, []);
 
@@ -72,7 +71,6 @@ export default function Index() {
   const startApp = async () => {
     try {
       if (navigator.mediaDevices && videoRef.current) {
-        // 高画質(4K)を要求
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "environment",
@@ -83,7 +81,6 @@ export default function Index() {
         videoRef.current.srcObject = stream;
       }
 
-      // ジャイロセンサー許可 (iOS対応)
       // @ts-ignore
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         // @ts-ignore
@@ -115,7 +112,6 @@ export default function Index() {
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // 最高画質(1.0)でJPEG変換
     const dataUrl = canvas.toDataURL("image/jpeg", 1.0);
     return dataUrl.replace(/^data:image\/(png|jpeg);base64,/, "");
   };
@@ -129,7 +125,6 @@ export default function Index() {
       await fetch(`${NGROK_URL}/pose`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
-        // 位置情報(posX,Y,Z)は0固定で送る
         body: JSON.stringify({
           x: q.x, y: q.y, z: q.z, w: q.w,
           posX: 0, posY: 0, posZ: 0,
@@ -162,7 +157,7 @@ export default function Index() {
         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
         body: JSON.stringify({
           x: q.x, y: q.y, z: q.z, w: q.w,
-          posX: 0, posY: 0, posZ: 0, // 位置は0固定
+          posX: 0, posY: 0, posZ: 0,
           isPortrait, imageBase64
         }),
       });
@@ -185,7 +180,7 @@ export default function Index() {
   };
 
   const handlePrintOnPC = async () => {
-    if (!confirm("PCのプリンターで印刷しますか？\n※印刷できるのは1回のみです")) return;
+    if (!confirm("印刷しますか？\n※印刷できるのは1回のみです")) return;
 
     try {
       const response = await fetch(`${NGROK_URL}/print`, {
@@ -200,7 +195,7 @@ export default function Index() {
         localStorage.setItem("hasInvasionPrinted", "true");
       }
       else if (response.status === 403) {
-        alert("エラー：この端末（ネットワーク）からは既に印刷済みです。");
+        alert("エラー：この端末からは既に印刷済みです。");
         setHasPrinted(true);
       }
       else {
@@ -219,7 +214,6 @@ export default function Index() {
   return (
     <div style={styles.container}>
 
-      {/* アプリ化スタイル（スクロール禁止） */}
       <style>{`
         html, body {
           margin: 0; padding: 0; width: 100%; height: 100%;
@@ -264,15 +258,14 @@ export default function Index() {
           <img src={resultImage} style={{ maxWidth: "100%", maxHeight: "80vh", border: "2px solid white" }} alt="Result" />
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px" }}>
-            <a href={resultImage} download="invasion_photo.png"
-              style={{ color: "white", fontSize: "18px", textAlign: "center", textDecoration: "none", border: "1px solid white", padding: "10px 20px", borderRadius: "30px" }}>
-              画像をスマホに保存
-            </a>
 
+            {/* ★修正: 保存ボタン削除済み */}
+
+            {/* ★修正: 印刷ボタンのテキスト変更 */}
             {!hasPrinted ? (
               <button onClick={handlePrintOnPC}
                 style={{ fontSize: "18px", padding: "10px 20px", borderRadius: "30px", background: "white", color: "black", border: "none", cursor: "pointer", fontWeight: "bold" }}>
-                🖨 PCで印刷する (1回のみ)
+                🖨 印刷 (1回のみ)
               </button>
             ) : (
               <div style={{ color: "#aaa", fontSize: "16px", textAlign: "center", border: "1px dashed #aaa", padding: "10px", borderRadius: "10px" }}>
