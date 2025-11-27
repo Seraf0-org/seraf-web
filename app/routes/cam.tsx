@@ -71,27 +71,37 @@ export default function Index() {
 
   const startApp = async () => {
     try {
-      if (navigator.mediaDevices && videoRef.current) {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: "environment",
-            width: { ideal: 4096 },
-            height: { ideal: 2160 }
-          }
-        });
-        videoRef.current.srcObject = stream;
-      }
-
+      // ★修正1: iOSの場合、カメラより「先」にジャイロセンサーの許可を取る
       // @ts-ignore
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // @ts-ignore
-        const permission = await DeviceOrientationEvent.requestPermission();
-        if (permission !== 'granted') {
-          alert("センサー許可が必要です");
-          return;
+        try {
+          // @ts-ignore
+          const permission = await DeviceOrientationEvent.requestPermission();
+          if (permission !== 'granted') {
+            alert("ジャイロセンサーの許可が必要です。\n再読み込みして許可してください。");
+            return;
+          }
+        } catch (e: any) {
+          // すでに許可済みの場合などでエラーになることがあるのでログだけ出す
+          console.log("Permission request logic: " + e.message);
         }
       }
 
+      // ★修正2: センサー許可が終わってから、カメラを起動する
+      if (navigator.mediaDevices && videoRef.current) {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { 
+            facingMode: "environment",
+            width: { ideal: 4096 }, 
+            height: { ideal: 2160 } 
+          } 
+        });
+        videoRef.current.srcObject = stream;
+        // iOS Safariで動画を再生開始するために必要
+        videoRef.current.play(); 
+      }
+
+      // コントロールの開始
       threeRef.current.controls = new DeviceOrientationControls(threeRef.current.camera);
       setIsStarted(true);
 
