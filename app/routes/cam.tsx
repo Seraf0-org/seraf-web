@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { DeviceOrientationControls } from "three-stdlib";
 
 // ★ ngrokのURL (末尾のスラッシュなし)
-const NGROK_URL = "https://252d388e1284.ngrok-free.app";
+const NGROK_URL = "https://85f522a77ec3.ngrok-free.app";
 
 export const meta: MetaFunction = () => {
   return [
