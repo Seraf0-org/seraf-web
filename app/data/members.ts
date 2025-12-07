@@ -359,8 +359,8 @@ export const members: Member[] = [
         id: 16,
         name: "Kazuki/千煌",
         position: "背景モデラー",
-        mainImage: "/images/members/member-none.png",
-        subImage: "/images/members/member-none.png",
+        mainImage: "/images/members/member-16.jpg",
+        subImage: "/images/members/member-16.jpg",
         description: "背景モデラー目指して勉強中",
         skills: ["MAYA", "Substance Painter", "Unity"],
         sns: [
