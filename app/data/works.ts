@@ -36,7 +36,7 @@ export const works: Work[] = [
         title: "Kuron様 ポートフォリオサイト",
         period: "2025-10",
         summary: "音楽制作スタジオの紹介サイト。サービス概要と問い合わせ導線をシンプルに構成。",
-        contribution: "情報設計 / UI実装",
+        contribution: "Webデザイン / 設計 / 実装等…すべての業務",
         tech: ["Remix", "TypeScript", "Tailwind CSS"],
         link: "https://ksmusicworks.com/",
         tag: "Web",
@@ -57,7 +57,7 @@ export const works: Work[] = [
         period: "2024-05",
         summary: "クラフトカクテルブランドEnjuのECサイト。プロダクト購入フローや在庫・カート周りのシステム実装を担当。",
         contribution: "ECシステム実装 / カート・在庫 / 購入フロー",
-        tech: ["TypeScript", "Remix", "Tailwind CSS", "EC Integration"],
+        tech: ["Liquid", "Shopify", "EC Integration"],
         link: "https://enju-cocktail.com/",
         tag: "Web",
         image: "/images/works/enju-ec.jpg"
