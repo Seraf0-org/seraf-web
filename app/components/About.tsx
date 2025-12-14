@@ -33,9 +33,15 @@ export function About() {
   const isDark = theme === 'dark';
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [isIOS, setIsIOS] = useState(false);
 
-  // @ts-ignore - MSStreamはIEの判定に使用されるが、型定義にはない
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  // SSRでnavigatorが無い環境を避けるためクライアント判定を遅延
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof navigator === "undefined") return;
+    // @ts-ignore - MSStreamはIE判定用
+    const detected = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    setIsIOS(detected);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

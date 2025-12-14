@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useOutletContext } from "@remix-run/react";
+import { useOutletContext, useLocation } from "@remix-run/react";
 import type { Theme } from "~/root";
 import type { OutletContext } from "~/root";
 import { useBackgroundLines } from "~/hooks/useBackgroundLines";
@@ -19,6 +19,8 @@ export function Header() {
     const [isFirstSlideComplete, setIsFirstSlideComplete] = useState(false);
     const [isAnimationComplete, setIsAnimationComplete] = useState(false);
     const cyanLines = useBackgroundLines('cyan', 'horizontal', isCurrentDark, isHovered);
+    const location = useLocation();
+    const isPortfolio = location.pathname.startsWith("/portfolio");
 
     useEffect(() => {
         setIsInitialRender(false);
@@ -61,7 +63,7 @@ export function Header() {
             (animate as any)(
                 ".nav-item",
                 { opacity: [0, 1], y: [-10, 0], scale: [0.9, 1] },
-                { 
+                {
                     delay: stagger(0.1, { startDelay: 0.4 }),
                     duration: 0.6,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -86,7 +88,7 @@ export function Header() {
             (animate as any)(
                 ".background-line",
                 { opacity: [0, 0.3], scaleX: [0, 1] },
-                { 
+                {
                     delay: stagger(0.15, { startDelay: 0.6 }),
                     duration: 0.8,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -123,14 +125,14 @@ export function Header() {
         // ナビゲーションアイテムのホバーアニメーション
         navItems.forEach((item, index) => {
             const underline = item.parentElement?.querySelector('.nav-underline');
-            
+
             item.addEventListener('mouseenter', () => {
                 (animate as any)(
                     item,
                     { scale: [1, 1.1], y: [0, -3] },
                     { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
                 );
-                
+
                 // 下線アニメーション
                 if (underline) {
                     (animate as any)(
@@ -147,7 +149,7 @@ export function Header() {
                     { scale: [1.1, 1], y: [-3, 0] },
                     { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
                 );
-                
+
                 // 下線アニメーション
                 if (underline) {
                     (animate as any)(
@@ -181,16 +183,16 @@ export function Header() {
         return () => {
             // クリーンアップ
             if (headerLogo) {
-                headerLogo.removeEventListener('mouseenter', () => {});
-                headerLogo.removeEventListener('mouseleave', () => {});
+                headerLogo.removeEventListener('mouseenter', () => { });
+                headerLogo.removeEventListener('mouseleave', () => { });
             }
             navItems.forEach(item => {
-                item.removeEventListener('mouseenter', () => {});
-                item.removeEventListener('mouseleave', () => {});
+                item.removeEventListener('mouseenter', () => { });
+                item.removeEventListener('mouseleave', () => { });
             });
             if (themeToggle) {
-                themeToggle.removeEventListener('mouseenter', () => {});
-                themeToggle.removeEventListener('mouseleave', () => {});
+                themeToggle.removeEventListener('mouseenter', () => { });
+                themeToggle.removeEventListener('mouseleave', () => { });
             }
         };
     }, []);
@@ -202,7 +204,7 @@ export function Header() {
             (animate as any)(
                 ".mobile-nav-item",
                 { opacity: [0, 1], x: [-20, 0] },
-                { 
+                {
                     delay: stagger(0.1),
                     duration: 0.5,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -231,6 +233,18 @@ export function Header() {
         e.preventDefault();
         smoothScrollTo(0);
     };
+
+    const navItems: { id: string; label: string }[] = isPortfolio
+        ? [
+            { id: "about", label: "About" },
+            { id: "products", label: "Projects" },
+            { id: "members", label: "Capabilities" },
+            { id: "contact", label: "Contact" },
+        ]
+        : ['about', 'news', 'products', 'members', 'partners', 'contact'].map((id) => ({
+            id,
+            label: id.charAt(0).toUpperCase() + id.slice(1),
+        }));
 
     return (
         <>
@@ -270,7 +284,7 @@ export function Header() {
                         transitionDelay: isFirstSlideComplete ? '400ms' : '0ms',
                         backgroundColor: isCurrentDark ? 'rgb(31 41 55 / 0.5)' : 'rgb(210 210 210 / 0.5)',
                         backdropFilter: 'blur(8px)',
-                        boxShadow: isCurrentDark 
+                        boxShadow: isCurrentDark
                             ? '0 12px 40px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(6, 182, 212, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
                             : '0 12px 40px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(236, 72, 153, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
                     }}
@@ -359,16 +373,16 @@ export function Header() {
                                 <div className="hidden md:flex items-start flex-1 pt-3">
                                     {/* デスクトップメニュー */}
                                     <ul className="flex space-x-4 lg:space-x-10 ml-auto mr-40 items-center">
-                                        {['about', 'news', 'products', 'members', 'partners', 'contact'].map((item) => (
-                                            <li key={item} className="relative">
+                                        {navItems.map((item) => (
+                                            <li key={item.id} className="relative">
                                                 <button
-                                                    onClick={() => handleClick(item)}
+                                                    onClick={() => handleClick(item.id)}
                                                     className={`nav-item text-base xl:text-lg 2xl:text-xl font-bold transition-colors duration-300 ${isCurrentDark
                                                         ? 'text-gray-300 hover:text-white'
                                                         : 'text-gray-700 hover:text-gray-900'
                                                         }`}
                                                 >
-                                                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                                                    {item.label}
                                                 </button>
                                                 <div className="nav-underline absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 ease-out" style={{
                                                     backgroundColor: isCurrentDark ? 'rgb(6 182 212)' : 'rgb(236 72 153)'
@@ -447,16 +461,16 @@ export function Header() {
                         } backdrop-blur-md rounded-2xl shadow-lg p-4 animate-clip-from-top`}
                     >
                         <ul className="space-y-4">
-                            {['about', 'news', 'products', 'members', 'partners', 'contact'].map((item) => (
-                                <li key={item}>
+                            {navItems.map((item) => (
+                                <li key={item.id}>
                                     <button
-                                        onClick={() => handleClick(item)}
+                                        onClick={() => handleClick(item.id)}
                                         className={`mobile-nav-item w-full text-left text-xl font-bold transition-colors duration-300 ${isHovered
                                             ? 'text-gray-800 hover:text-gray-600'
                                             : 'text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white'
                                             }`}
                                     >
-                                        {item.charAt(0).toUpperCase() + item.slice(1)}
+                                        {item.label}
                                     </button>
                                 </li>
                             ))}

@@ -13,8 +13,15 @@ export function News() {
   const lines = useLines('cyan');
   const [parallaxOffset, setParallaxOffset] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isIOS, setIsIOS] = useState(false);
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  // SSR環境でnavigator未定義を避ける
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof navigator === "undefined") return;
+    // @ts-ignore - MSStreamはIE判定用
+    const detected = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    setIsIOS(detected);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
