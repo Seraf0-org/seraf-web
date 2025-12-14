@@ -60,7 +60,7 @@ export const works: Work[] = [
         tech: ["Liquid", "Shopify", "EC Integration"],
         link: "https://enju-cocktail.com/",
         tag: "Web",
-        image: "/images/works/enju-ec.jpg"
+        image: "/images/works/enju.png"
     },
     {
         title: "未来の扉 インスタレーション（大阪・関西万博）",
