@@ -294,7 +294,7 @@ export default function PortfolioPage() {
               実装とデザインを行き来しながら、クライアント様の求める心地よいプロダクトを形にしていきます。
             </p>
             <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed hero-text">
-              ゲーム/Web制作、背景/キャラクターデザイン、Live2D、メカ/プロップモデリング、舞台照明など、
+              ゲーム/Web制作、背景/キャラクターデザイン、Live2D、メカ/プロップモデリングなど、、
               シーンに応じて必要なスキルセットを組み合わせて対応いたします。
             </p>
             <div className="flex flex-wrap gap-3 hero-cta">
