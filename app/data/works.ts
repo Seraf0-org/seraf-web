@@ -20,29 +20,31 @@ export const works: Work[] = [
         tag: "Web",
         image: "/images/works/seraf-portfolio.jpg"
     },
+    /*
     {
         title: "Invasion Camera",
-        period: "2024",
+        period: "2025-11",
         summary: "スマートフォンの姿勢推定とリアルタイム合成を組み合わせ、イベント会場向けに即時印刷できるカメラ体験を構築。",
         contribution: "Three.js / WebRTC / 姿勢推定ロジック / UI実装",
-        tech: ["Three.js", "TypeScript", "DeviceOrientation", "EmailJS"],
+        tech: ["Unity", "TypeScript", "DeviceOrientation"],
         link: "/cam",
         tag: "Web",
         image: "/images/works/invasion-camera.jpg"
     },
+    */
     {
-        title: "KSMusic Works",
-        period: "2024",
+        title: "Kuron様 ポートフォリオサイト",
+        period: "2025-10",
         summary: "音楽制作スタジオの紹介サイト。サービス概要と問い合わせ導線をシンプルに構成。",
         contribution: "情報設計 / UI実装",
         tech: ["Remix", "TypeScript", "Tailwind CSS"],
         link: "https://ksmusicworks.com/",
         tag: "Web",
-        image: "/images/works/ksmusicworks.jpg"
+        image: "/images/works/ksmusicworks.png"
     },
     {
         title: "Travelers 2025",
-        period: "2024",
+        period: "2025-08",
         summary: "旅の世界観を伝えるティザー/告知サイト。軽量な演出で雰囲気を表現。",
         contribution: "UI実装 / アニメーション",
         tech: ["Remix", "TypeScript", "Tailwind CSS"],
@@ -52,7 +54,7 @@ export const works: Work[] = [
     },
     {
         title: "Enju Cocktail EC",
-        period: "2025",
+        period: "2024-05",
         summary: "クラフトカクテルブランドEnjuのECサイト。プロダクト購入フローや在庫・カート周りのシステム実装を担当。",
         contribution: "ECシステム実装 / カート・在庫 / 購入フロー",
         tech: ["TypeScript", "Remix", "Tailwind CSS", "EC Integration"],
@@ -62,7 +64,7 @@ export const works: Work[] = [
     },
     {
         title: "未来の扉 インスタレーション（大阪・関西万博）",
-        period: "2024 - 2025",
+        period: "2025-06",
         summary: "非接触ハンドル体験のソフト一部開発とデモ映像のアニメーション・エフェクト制作。ホログラフィック演出で身体性を拡張するインスタレーション。",
         contribution: "体験ソフト実装 / デモ映像アニメーション / エフェクト制作",
         tech: ["Unity", "VFX", "Realtime Animation"],
@@ -72,7 +74,7 @@ export const works: Work[] = [
     },
     {
         title: "Reverie - リヴェリー -",
-        period: "2024",
+        period: "2024-06",
         summary: "アセットモデリングとバーチャルプロダクションワークフローで構築した映像デモ。リアルタイム環境で質感とライティングを最適化。",
         contribution: "3Dアセットモデリング / バーチャルプロダクションパイプ構築",
         tech: ["Unreal Engine 5", "3D Modeling", "Virtual Production"],
@@ -82,7 +84,7 @@ export const works: Work[] = [
     },
     {
         title: "春のオープンキャンパス2024【デジタルハリウッド大学】",
-        period: "2024",
+        period: "2024-03",
         summary: "司会のマイク音声から感情を解析し、リアルタイムで背景映像を変化させるライブ配信演出。",
         contribution: "音声感情解析連携 / 映像生成ロジック / ライブ演出",
         tech: ["Python", "WebSocket", "Audio Emotion Analysis", "Realtime VFX"],
@@ -92,7 +94,7 @@ export const works: Work[] = [
     },
     {
         title: "DHUハロウィンパーティー 前後二層投影VJ",
-        period: "2023",
+        period: "2025-10",
         summary: "大学ハロウィンパーティーで前景・背景の二系統プロジェクターを用いた立体的なVJ演出を実施。",
         contribution: "VJ / 映像演出 / 投影オペレーション",
         tech: ["Dual Projection", "VJ", "Realtime VFX"],
@@ -101,7 +103,7 @@ export const works: Work[] = [
     },
     {
         title: "【Valorant】 Virturs Valorant Cup",
-        period: "2024",
+        period: "2024-04",
         summary: "大学内VALORANT大会向けに、スコアボードとリアルタイムリプレイを含む配信支援システムを実装。",
         contribution: "配信システム実装 / スコアボード / リアルタイムリプレイ",
         tech: ["TypeScript", "WebSocket", "OBS連携", "Realtime Replay"],
@@ -111,7 +113,7 @@ export const works: Work[] = [
     },
     {
         title: "DHU学園祭2025 照明演出",
-        period: "2025",
+        period: "2025-11",
         summary: "学園祭でのライブ・ダンスステージ向け照明演出。バンド演奏に合わせたリアルタイム照明と、ダンスに合わせた事前プログラム照明を実施。",
         contribution: "ライティングプログラム / ライブオペレーション",
         tech: ["Stage Lighting", "DMX", "Preprogrammed Lighting"],
@@ -120,7 +122,7 @@ export const works: Work[] = [
     },
     {
         title: "秋 - 四季 / LuCA Music Video",
-        period: "2025",
+        period: "2025-09",
         summary: "3DCGキャラクターとモーションキャプチャを用いたMV。モーション編集、UE実装、テクニカルディレクション、FXを担当。",
         contribution: "3DCG / Motion Capture / Motion Editing / UE 実装 & TD / FX",
         tech: ["Unreal Engine 5", "Motion Capture", "3DCG", "FX"],
@@ -130,7 +132,7 @@ export const works: Work[] = [
     },
     {
         title: "DHU七夕音楽祭 オーディオリアクティブVJ",
-        period: "2025",
+        period: "2025-07",
         summary: "大学七夕音楽祭でGLSLベースのオーディオリアクティブVJを実施。ライブ音源に反応するシェーダ表現で演出を構築。",
         contribution: "VJ / GLSLシェーダ / ライブ演出",
         tech: ["GLSL", "Audio Reactive", "VJ"],
@@ -149,7 +151,7 @@ export const works: Work[] = [
     },
     {
         title: "クラリオン",
-        period: "2025 夏予定",
+        period: "2025-09",
         summary: "剣と銃で派手に敵を薙ぎ払う無双系3Dアクション。戦場を彩る花がテーマ。",
         contribution: "ゲームデザイン / 実装 / 演出",
         tech: ["3Dアクション", "PC (Steam)"],
@@ -158,7 +160,7 @@ export const works: Work[] = [
     },
     {
         title: "BluenBrum",
-        period: "開発中",
+        period: "2024-02",
         summary: "化け物に占拠された学校から脱出する探索型ホラーアドベンチャー。伝説の花に火を灯すため校舎を巡る。",
         contribution: "ゲームデザイン / 実装 / レベル設計",
         tech: ["ホラーゲーム", "PC (Steam)", "In Production"],
@@ -167,7 +169,7 @@ export const works: Work[] = [
     },
     {
         title: "ヴォイドライブ",
-        period: "2025 秋予定",
+        period: "2025-05",
         summary: "デッキを裏返して続行する二面性カードゲーム。表裏でルールが変化する独自システム。",
         contribution: "ゲームデザイン / ルール設計 / プロトタイプ",
         tech: ["カードゲーム", "アナログ"],
@@ -177,7 +179,7 @@ export const works: Work[] = [
     },
     {
         title: "アイノイロ",
-        period: "2025-04-20",
+        period: "2025-04",
         summary: "隔絶された病院を舞台にしたビジュアルノベル。少年ハジメと謎の少女ユキの出会いから始まる物語。",
         contribution: "シナリオ / 演出 / 実装",
         tech: ["ビジュアルノベル", "PC(Web) / スマートフォン"],
