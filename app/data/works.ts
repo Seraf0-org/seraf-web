@@ -18,7 +18,7 @@ export const works: Work[] = [
         tech: ["Remix", "TypeScript", "Three.js", "Tailwind CSS", "Motion One"],
         link: "/",
         tag: "Web",
-        image: "/images/works/seraf-portfolio.jpg"
+        image: "/images/works/seraf.png"
     },
     /*
     {
