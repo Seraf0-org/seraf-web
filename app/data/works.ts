@@ -106,7 +106,7 @@ export const works: Work[] = [
         period: "2024-04",
         summary: "大学内VALORANT大会向けに、スコアボードとリアルタイムリプレイを含む配信支援システムを実装。",
         contribution: "配信システム実装 / スコアボード / リアルタイムリプレイ",
-        tech: ["TypeScript", "WebSocket", "OBS連携", "Realtime Replay"],
+        tech: ["TypeScript", "WebSocket", "OBS連携", "Overwolf"],
         link: "https://www.youtube.com/live/PtQmuo7dHss?si=07tDuMz-6ZJHMSad",
         tag: "Live",
         image: "https://i.ytimg.com/vi/PtQmuo7dHss/maxresdefault.jpg"
@@ -116,7 +116,7 @@ export const works: Work[] = [
         period: "2025-11",
         summary: "学園祭でのライブ・ダンスステージ向け照明演出。バンド演奏に合わせたリアルタイム照明と、ダンスに合わせた事前プログラム照明を実施。",
         contribution: "ライティングプログラム / ライブオペレーション",
-        tech: ["Stage Lighting", "DMX", "Preprogrammed Lighting"],
+        tech: ["Lighting", "DMX", "QLC+5", "MagicQ"],
         tag: "Live",
         image: "/images/works/campus-lighting.jpg"
     },
