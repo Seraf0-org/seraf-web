@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useOutletContext } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { animate, stagger, inView } from "motion";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
@@ -87,9 +87,26 @@ export default function PortfolioPage() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [isClosingModal, setIsClosingModal] = useState(false);
   const [selectedTag, setSelectedTag] = useState<string>("all");
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   const tags = ["all", ...Array.from(new Set(projects.map((p) => p.tag)))];
+  const parsePeriod = (period: string) => {
+    // 4桁年を抽出し、最大値を採用。見つからなければ0。
+    const matches = period.match(/\d{4}/g);
+    if (!matches) return 0;
+    return Math.max(...matches.map((m) => Number(m)));
+  };
+
   const filteredProjects = selectedTag === "all" ? projects : projects.filter((p) => p.tag === selectedTag);
+  const sortedProjects = useMemo(
+    () => [...filteredProjects].sort((a, b) => parsePeriod(b.period) - parsePeriod(a.period)),
+    [filteredProjects]
+  );
+
+  const limitedProjects = useMemo(() => {
+    if (showAllProjects) return sortedProjects;
+    return sortedProjects.slice(0, 4); // 最新4件を表示
+  }, [sortedProjects, showAllProjects]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -294,7 +311,10 @@ export default function PortfolioPage() {
               <button
                 key={tag}
                 type="button"
-                onClick={() => setSelectedTag((prev) => (prev === tag ? "all" : tag))}
+                onClick={() => {
+                  setSelectedTag((prev) => (prev === tag ? "all" : tag));
+                  setShowAllProjects(false);
+                }}
                 className={`px-4 py-2 rounded-full border text-sm font-semibold transition-colors duration-200 ${selectedTag === tag
                   ? "bg-cyan-500 text-white border-cyan-500 shadow-cyan-500/30 shadow"
                   : "bg-white/70 dark:bg-gray-900/60 border-gray-200/70 dark:border-white/10 text-gray-700 dark:text-gray-200 hover:border-cyan-400/60 hover:text-cyan-600 dark:hover:text-cyan-300"
@@ -305,54 +325,72 @@ export default function PortfolioPage() {
             ))}
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {filteredProjects.map((project) => (
-              <article
-                key={project.title}
-                className="group relative rounded-2xl p-6 border border-gray-200/70 dark:border-white/10 bg-white/80 dark:bg-gray-900/70 shadow-lg shadow-gray-200/30 dark:shadow-black/20 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400/70 portfolio-project-card"
-                onClick={() => setSelected(project)}
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setSelected(project);
-                  }
-                }}
-              >
-                {project.image && (
-                  <div className="mb-4 relative overflow-hidden rounded-xl border border-gray-200/70 dark:border-white/10">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/[0.02] to-fuchsia-500/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20">
-                    {project.tag}
-                  </span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">{project.period}</span>
-                </div>
-                <h3 className="mt-4 text-2xl font-bold">{project.title}</h3>
-                <p className="mt-3 text-gray-700 dark:text-gray-200 leading-relaxed">{project.summary}</p>
-                <div className="mt-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  <span className="font-semibold">担当:</span> {project.contribution}
-                </div>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {project.tech.map((stack) => (
-                    <span
-                      key={stack}
-                      className="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200"
-                    >
-                      {stack}
+          <div className="relative">
+            <div className={`grid gap-6 md:grid-cols-2 ${!showAllProjects ? "max-h-[880px] overflow-hidden relative" : ""}`}>
+              {limitedProjects.map((project) => (
+                <article
+                  key={project.title}
+                  className="group relative rounded-2xl p-6 border border-gray-200/70 dark:border-white/10 bg-white/80 dark:bg-gray-900/70 shadow-lg shadow-gray-200/30 dark:shadow-black/20 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400/70 portfolio-project-card"
+                  onClick={() => setSelected(project)}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelected(project);
+                    }
+                  }}
+                >
+                  {project.image && (
+                    <div className="mb-4 relative overflow-hidden rounded-xl border border-gray-200/70 dark:border-white/10">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/[0.02] to-fuchsia-500/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20">
+                      {project.tag}
                     </span>
-                  ))}
-                </div>
-              </article>
-            ))}
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{project.period}</span>
+                  </div>
+                  <h3 className="mt-4 text-2xl font-bold">{project.title}</h3>
+                  <p className="mt-3 text-gray-700 dark:text-gray-200 leading-relaxed">{project.summary}</p>
+                  <div className="mt-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <span className="font-semibold">担当:</span> {project.contribution}
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.tech.map((stack) => (
+                      <span
+                        key={stack}
+                        className="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200"
+                      >
+                        {stack}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {!showAllProjects && filteredProjects.length > limitedProjects.length && (
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white dark:from-gray-900 to-transparent" />
+            )}
+
+            {!showAllProjects && filteredProjects.length > limitedProjects.length && (
+              <div className="flex justify-center mt-4 relative">
+                <button
+                  type="button"
+                  onClick={() => setShowAllProjects(true)}
+                  className="px-5 py-2.5 rounded-full font-semibold border border-cyan-500/60 text-cyan-600 dark:text-cyan-300 bg-white/90 dark:bg-gray-900/90 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 transition-colors duration-200 shadow"
+                >
+                  すべて表示
+                </button>
+              </div>
+            )}
           </div>
         </section>
 
