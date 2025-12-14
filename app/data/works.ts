@@ -50,7 +50,7 @@ export const works: Work[] = [
         tech: ["Remix", "TypeScript", "Tailwind CSS"],
         link: "https://travelers2025.com/",
         tag: "Web",
-        image: "/images/works/travelers2025.jpg"
+        image: "/images/works/travelers2025.png"
     },
     {
         title: "Enju Cocktail EC",
