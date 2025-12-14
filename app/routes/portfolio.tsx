@@ -285,17 +285,17 @@ export default function PortfolioPage() {
               <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
               <span className="text-sm font-semibold text-gray-600 dark:text-gray-300">Portfolio</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-heading">
+            <h1 className="text-3xl sm:text-3xl lg:text-5xl font-bold leading-tight hero-heading">
               体験の質にこだわり、<br className="hidden sm:block" />
-              プロトタイピングから運用まで伴走します。
+              企画から運用まで伴走します。
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed hero-text">
-              ゲーム / インタラクティブコンテンツを軸に、デジタル体験の企画・実装・運用をワンストップで提供しています。
-              実装とデザインを行き来しながら、触って心地よいプロダクトを形にしていきます。
+              ゲーム / インタラクティブコンテンツを軸に、デジタル体験の企画・デザイン・実装・運用をワンストップで提供しています。
+              実装とデザインを行き来しながら、クライアント様の求める心地よいプロダクトを形にしていきます。
             </p>
             <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed hero-text">
-              ゲーム制作、Web制作、ステージデザイン、キャラクターデザイン、Live2D、メカ/プロップモデリング、舞台照明など、
-              シーンに応じて必要なスキルセットを組み合わせて対応します。
+              ゲーム/Web制作、背景/キャラクターデザイン、Live2D、メカ/プロップモデリング、舞台照明など、
+              シーンに応じて必要なスキルセットを組み合わせて対応いたします。
             </p>
             <div className="flex flex-wrap gap-3 hero-cta">
               <a
