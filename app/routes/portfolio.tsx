@@ -364,7 +364,7 @@ export default function PortfolioPage() {
                 return (
                   <article
                     key={project.title}
-                    className={`group relative rounded-2xl p-6 border border-gray-200/70 dark:border-white/10 bg-white/80 dark:bg-gray-900/70 shadow-lg shadow-gray-200/30 dark:shadow-black/20 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400/70 portfolio-project-card ${isPreview ? "blur-sm opacity-80 translate-y-3" : ""
+                    className={`group relative rounded-2xl p-6 border border-gray-200/70 dark:border-white/10 bg-white/80 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg shadow-gray-200/30 dark:shadow-black/20 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400/70 portfolio-project-card ${isPreview ? "blur-sm opacity-80 translate-y-3" : ""
                       }`}
                     onClick={() => setSelected(project)}
                     tabIndex={0}
@@ -477,12 +477,6 @@ export default function PortfolioPage() {
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/35 transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   お問い合わせフォームへ
-                </a>
-                <a
-                  href="mailto:contact@seraf0.com"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-white/60 text-gray-900 dark:text-white bg-white/80 dark:bg-gray-900/70 hover:border-cyan-400/80 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors duration-200"
-                >
-                  メールで連絡
                 </a>
               </div>
             </div>
