@@ -35,9 +35,9 @@ export const works: Work[] = [
     {
         title: "Kuron様 ポートフォリオサイト",
         period: "2025-10",
-        summary: "音楽制作スタジオの紹介サイト。サービス概要と問い合わせ導線をシンプルに構成。",
+        summary: "個人で音楽制作をされているクライアント様の紹介サイト。サービス概要と問い合わせ導線をシンプルに構成。CMSにNotionを採用したことで、非技術者の方でも簡単に更新が可能な設計とした。",
         contribution: "Webデザイン / 設計 / 実装等…すべての業務",
-        tech: ["Remix", "TypeScript", "Tailwind CSS"],
+        tech: ["Next.js", "Tailwind CSS", "Three.js", "Notion"],
         link: "https://ksmusicworks.com/",
         tag: "Web",
         image: "/images/works/ksmusicworks.png"
@@ -45,9 +45,9 @@ export const works: Work[] = [
     {
         title: "Travelers 2025",
         period: "2025-08",
-        summary: "旅の世界観を伝えるティザー/告知サイト。軽量な演出で雰囲気を表現。",
-        contribution: "UI実装 / アニメーション",
-        tech: ["Remix", "TypeScript", "Tailwind CSS"],
+        summary: "オープンキャンパスにて、来場者の方に様々な展示と技術をお楽しみいただくためのWebサイト。",
+        contribution: "Webデザイン / 設計 / 実装等…すべての業務",
+        tech: ["Next.js", "Tailwind CSS", "Three.js", "MindAR", "Zappar"],
         link: "https://travelers2025.com/",
         tag: "Web",
         image: "/images/works/travelers2025.png"
