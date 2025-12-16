@@ -400,5 +400,24 @@ export const members: Member[] = [
                 }
             }
         ]
+    },
+    {
+        id: 18,
+        name: "みはる",
+        position: "イラストレーター, キャラクターデザイナー",
+        mainImage: "/images/members/member-18.jpg",
+        subImage: "/images/members/member-18.jpg",
+        description: "一年のみはるです！\nイラストを主にやっていて最近はモデリング練習中です（マヤとブレンダー両方）\nフリフリが大好きで、動きがあった構図やロリータや細かいデザインの服を描くのが好きです！",
+        skills: ["Illustrator", "Photoshop", "IbisPaint", "Procreate", "Maya", "Blender"],
+        sns: [
+            {
+                url: "https://x.com/puepue_mi",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ]
     }
 ];
