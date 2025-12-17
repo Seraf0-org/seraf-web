@@ -31,12 +31,27 @@ export default function Index() {
 
   return (
     <>
-      <div className="fixed inset-0 z-0 opacity-95" style={{
-        backgroundImage: isDark
-          ? "linear-gradient(180deg, rgba(10,12,20,0.9) 0%, rgba(15,23,42,0.92) 45%, rgba(17,24,39,0.98) 100%)"
-          : "linear-gradient(180deg, rgba(245,249,255,0.9) 0%, rgba(241,245,249,0.9) 45%, rgba(255,255,255,0.96) 100%)"
-      }} />
-      <PortfolioCursorNodes isDark={isDark} />
+      <div className="fixed inset-0 z-0 opacity-95" style={isDark
+        ? {
+          backgroundColor: "#050505",
+          backgroundImage: `
+              radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.34) 0%, rgba(34, 211, 238, 0.00) 68%),
+              radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.26) 0%, rgba(59, 130, 246, 0.00) 64%),
+              radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.22) 0%, rgba(14, 165, 233, 0.00) 62%),
+              linear-gradient(135deg, rgba(34, 211, 238, 0.10) 0%, rgba(59, 130, 246, 0.06) 40%, rgba(0,0,0,0) 72%)
+            `,
+        }
+        : {
+          backgroundColor: "#f8fafc",
+          backgroundImage: `
+              radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
+              radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
+              radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
+              linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
+            `,
+        }
+      } />
+      <PortfolioCursorNodes isDark={isDark} className="z-10" />
       <main className="relative z-20">
         <Header />
         <Hero />

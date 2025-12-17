@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 
-type Props = { isDark: boolean };
+type Props = {
+  isDark: boolean;
+  className?: string;
+};
 
 type Node = {
   x: number;
@@ -11,7 +14,7 @@ type Node = {
   maxLife: number;
 };
 
-export function PortfolioCursorNodes({ isDark }: Props) {
+export function PortfolioCursorNodes({ isDark, className = "" }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const nodesRef = useRef<Node[]>([]);
   const rafRef = useRef<number | null>(null);
@@ -133,8 +136,8 @@ export function PortfolioCursorNodes({ isDark }: Props) {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 12 }}
+      className={`fixed inset-0 pointer-events-none ${className}`}
+      // style={{ zIndex: 12 }} // Removed hardcoded zIndex to allow override via className
       aria-hidden
     />
   );

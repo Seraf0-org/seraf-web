@@ -324,13 +324,9 @@ export function ThreeBackground({ isDark }: Props) {
       // lerp pointer
       pointer.x += (pointerTarget.x - pointer.x) * 0.06;
       pointer.y += (pointerTarget.y - pointer.y) * 0.06;
-      // Increase parallax strength: 0.12/0.08 is too subtle. Try 0.8/0.4.
-      // User Request: "Guwan Guwan" (Much stronger). Try 3.5 / 1.5.
-      // User Request: "Suppress a bit" -> Middle ground (1.8 / 0.8).
-      // User Request: "Weaken it a bit more" -> 1.2 / 0.6
-      // User Request: "Suppress it a bit more" -> 0.6 / 0.3
-      camera.position.x = pointer.x * 0.2;
-      camera.position.y = -pointer.y * 0.2;
+
+      camera.position.x = pointer.x * 0.25;
+      camera.position.y = -pointer.y * 0.25;
       camera.lookAt(0, 0, 0);
 
       for (let i = 0; i < shardCount; i++) {
@@ -431,7 +427,6 @@ export function ThreeBackground({ isDark }: Props) {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      // if (!lowPower) window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("resize", handleResize);
@@ -447,29 +442,30 @@ export function ThreeBackground({ isDark }: Props) {
     };
   }, [isDark]);
 
-  const backgroundStyle: CSSProperties = isDark
-    ? {
-      // もう少し明るいベースにして“黒つぶれ”を回避
-      backgroundColor: "#07121a",
-      backgroundImage: `
-          /* “明るい場所”を中央寄せ */
-          /* 文字の左寄せ位置に合わせてスポットも左寄せ */
-          /* Fixed px -> % for responsiveness */
-          radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.34) 0%, rgba(34, 211, 238, 0.00) 68%),
-          radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.26) 0%, rgba(59, 130, 246, 0.00) 64%),
-          radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.22) 0%, rgba(14, 165, 233, 0.00) 62%),
-          linear-gradient(135deg, rgba(34, 211, 238, 0.10) 0%, rgba(59, 130, 246, 0.06) 40%, rgba(0,0,0,0) 72%)
-        `,
-    }
-    : {
-      backgroundColor: "#f8fafc",
-      backgroundImage: `
-          radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
-          radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
-          radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
-          linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
-        `,
-    };
+  // Background styles moved to global _index.tsx for continuous effect
+  // const backgroundStyle: CSSProperties = isDark
+  //   ? {
+  //     // もう少し明るいベースにして“黒つぶれ”を回避
+  //     backgroundColor: "#07121a",
+  //     backgroundImage: `
+  //         /* “明るい場所”を中央寄せ */
+  //         /* 文字の左寄せ位置に合わせてスポットも左寄せ */
+  //         /* Fixed px -> % for responsiveness */
+  //         radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.34) 0%, rgba(34, 211, 238, 0.00) 68%),
+  //         radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.26) 0%, rgba(59, 130, 246, 0.00) 64%),
+  //         radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.22) 0%, rgba(14, 165, 233, 0.00) 62%),
+  //         linear-gradient(135deg, rgba(34, 211, 238, 0.10) 0%, rgba(59, 130, 246, 0.06) 40%, rgba(0,0,0,0) 72%)
+  //       `,
+  //   }
+  //   : {
+  //     backgroundColor: "#f8fafc",
+  //     backgroundImage: `
+  //         radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
+  //         radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
+  //         radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
+  //         linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
+  //       `,
+  //   };
 
   return (
     <div
@@ -480,7 +476,6 @@ export function ThreeBackground({ isDark }: Props) {
       <div
         ref={containerRef}
         className="pointer-events-none absolute inset-0"
-        style={backgroundStyle}
       />
 
       {/* Grain / Texture (SVG filter) */}

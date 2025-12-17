@@ -49,6 +49,7 @@ export function Hero() {
   return (
     <section ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center">
       {/* 3D Background Layer */}
+      {/* 3D Background Layer (Glass) - z index should be higher than cursor but lower than content */}
       <ThreeBackground isDark={isDark} />
 
       {/* Content Layer - Left aligned */}
