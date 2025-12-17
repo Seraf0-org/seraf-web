@@ -321,23 +321,33 @@ export function ThreeBackground({ isDark }: Props) {
       lastTime = now;
       const t = now * 0.001; // Needed for pulsing etc
 
-      // Calculate Scroll-based Rotation
-      // Normal speed = 1.0. 
-      // As we scroll down, speed increases.
-      // e.g. at 1000px scroll, speed is 3x or 5x.
-      const scrollY = window.scrollY || 0;
-      // scrollFactor: 0 -> 1.0, 1000 -> 2.0 (total 3.0)
-      const scrollSpeedBoost = 1.0 + (scrollY * 0.005);
+      // Calculate Scroll-based Rotation (Smoothed Momentum)
+      const currentScrollY = window.scrollY || 0;
+      if ((animate as any).lastScrollY === undefined) (animate as any).lastScrollY = currentScrollY;
+      const deltaY = currentScrollY - (animate as any).lastScrollY;
+      (animate as any).lastScrollY = currentScrollY;
 
-      // Accumulate rotation time
-      // We use a property on the ref or a let variable outside loop? 
-      // 'startTimeRef' is for elapsed time. We need a separate accumulator.
-      // Since we can't easily add a new ref inside this effect without full reload,
-      // and we defined 'animate' inside useEffect, we can use a local closure variable.
-      if ((animate as any).accTime === undefined) (animate as any).accTime = 0;
-      (animate as any).accTime += dt * scrollSpeedBoost;
+      // Initialize persistent variables
+      if ((animate as any).totalRotation === undefined) (animate as any).totalRotation = (now * 0.001);
+      if ((animate as any).scrollVelocity === undefined) (animate as any).scrollVelocity = 0;
 
-      const effectiveT = (animate as any).accTime;
+      // 1. Add impulse from scroll (Sensitivity)
+      // This creates "Acceleration" rather than "Position Mapping".
+      // Smooths out the "Kaku-kaku" (stepped) movement of scroll wheels.
+      (animate as any).scrollVelocity += deltaY * 0.04;
+
+      // 2. Apply Friction / Decay 
+      // Returns to 0 over time.
+      (animate as any).scrollVelocity *= 0.92;
+
+      // 3. Apply velocity to rotation
+      // Base speed: 1.0 (Matches original normal speed)
+      // Plus scroll momentum.
+      // effectiveT is multiplied by speed[i] (~0.15) later.
+      const timeScale = 1.0 + (animate as any).scrollVelocity;
+      (animate as any).totalRotation += dt * timeScale;
+
+      const effectiveT = (animate as any).totalRotation;
 
       // lerp pointer
       pointer.x += (pointerTarget.x - pointer.x) * 0.06;

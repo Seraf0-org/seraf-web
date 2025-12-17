@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useOutletContext } from "@remix-run/react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { OutletContext } from "~/root";
 import { ThreeBackground } from "./ThreeBackground";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function Hero({ startAnimation }: { startAnimation: boolean }) {
   const { theme } = useOutletContext<OutletContext>();
@@ -46,6 +49,35 @@ export function Hero({ startAnimation }: { startAnimation: boolean }) {
           ease: "sine.inOut"
         }
       );
+
+      // Scroll Exit Animation
+      // Fade out, blur, and move up GRADUALLY
+      gsap.to(".hero-line", {
+        scrollTrigger: {
+          trigger: document.body,
+          // Start: "200px top".
+          // Compromise: Solid for ~200px.
+          start: "200px top",
+          // End: "+=2000".
+          // Compromise: 1500 (Too fast gap) < 2000 < 2500 (Too loose).
+          // Finishes slightly before the section ends, creating a small nice clear beat before content arrives.
+          end: "+=2000",
+          scrub: 1.2,         // Balanced smoothing
+          snap: {
+            // One scroll moves to next step.
+            snapTo: 1 / 3,
+            duration: { min: 0.8, max: 1.8 }, // Brisk but smooth glide
+            delay: 0.0,
+            ease: "power2.inOut"
+          }
+        },
+        y: -150,
+        opacity: 0,
+        filter: "blur(15px)",
+        stagger: 0.2,    // Faster sequence
+        ease: "none",
+        immediateRender: false
+      });
 
     }, textContainerRef);
 
