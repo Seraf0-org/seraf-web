@@ -112,9 +112,7 @@ export function Contact() {
             id="contact"
             ref={sectionRef}
             className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
-            style={{
-                backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
-            }}
+            style={{}}
         >
             {/* 横書きの「Contact」 */}
             <div className="absolute left-14 top-[90%] transform pointer-events-none">

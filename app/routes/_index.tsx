@@ -21,30 +21,45 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+import { PortfolioCursorNodes } from "~/components/PortfolioCursorNodes";
+import { useOutletContext } from "@remix-run/react";
+import type { OutletContext } from "~/root";
+
 export default function Index() {
+  const { theme } = useOutletContext<OutletContext>();
+  const isDark = theme === 'dark';
+
   return (
-    <main>
-      <Header />
-      <Hero />
-      <section id="about">
-        <About />
-      </section>
-      <section id="news">
-        <News />
-      </section>
-      <section id="products">
-        <Products />
-      </section>
-      <section id="members">
-        <Members />
-      </section>
-      <section id="partnership">
-        <Partnership />
-      </section>
-      <section id="contact">
-        <Contact />
-      </section>
-      <Footer />
-    </main>
+    <>
+      <div className="fixed inset-0 z-0 opacity-95" style={{
+        backgroundImage: isDark
+          ? "linear-gradient(180deg, rgba(10,12,20,0.9) 0%, rgba(15,23,42,0.92) 45%, rgba(17,24,39,0.98) 100%)"
+          : "linear-gradient(180deg, rgba(245,249,255,0.9) 0%, rgba(241,245,249,0.9) 45%, rgba(255,255,255,0.96) 100%)"
+      }} />
+      <PortfolioCursorNodes isDark={isDark} />
+      <main className="relative z-20">
+        <Header />
+        <Hero />
+        <section id="about">
+          <About />
+        </section>
+        <section id="news">
+          <News />
+        </section>
+        <section id="products">
+          <Products />
+        </section>
+        <section id="members">
+          <Members />
+        </section>
+        <section id="partnership">
+          <Partnership />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
+        <Footer />
+      </main>
+    </>
   );
 }

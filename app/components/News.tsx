@@ -53,10 +53,10 @@ export function News() {
       (animate as any)(
         ".news-item",
         { opacity: [0, 1], y: [50, 0], scale: [0.9, 1] },
-        { 
-            delay: stagger(0.15),
-            duration: 0.8,
-            easing: [0.25, 0.46, 0.45, 0.94]
+        {
+          delay: stagger(0.15),
+          duration: 0.8,
+          easing: [0.25, 0.46, 0.45, 0.94]
         }
       );
 
@@ -64,10 +64,10 @@ export function News() {
       (animate as any)(
         ".news-text",
         { opacity: [0, 1], y: [20, 0] },
-        { 
-            delay: stagger(0.1, { startDelay: 0.8 }),
-            duration: 0.6,
-            easing: [0.25, 0.46, 0.45, 0.94]
+        {
+          delay: stagger(0.1, { startDelay: 0.8 }),
+          duration: 0.6,
+          easing: [0.25, 0.46, 0.45, 0.94]
         }
       );
 
@@ -83,12 +83,12 @@ export function News() {
   // ホバーアニメーションの設定
   useEffect(() => {
     const newsItems = document.querySelectorAll('.news-item');
-    
+
     newsItems.forEach(item => {
       item.addEventListener('mouseenter', () => {
         (animate as any)(
           item,
-          { 
+          {
             y: [0, -8],
             scale: [1, 1.02],
             boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 20px 40px rgba(0,0,0,0.2)']
@@ -100,7 +100,7 @@ export function News() {
       item.addEventListener('mouseleave', () => {
         (animate as any)(
           item,
-          { 
+          {
             y: [-8, 0],
             scale: [1.02, 1],
             boxShadow: ['0 20px 40px rgba(0,0,0,0.2)', '0 10px 25px rgba(0,0,0,0.1)']
@@ -116,9 +116,7 @@ export function News() {
       id="news"
       ref={sectionRef}
       className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
-      style={{
-        backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
-      }}
+      style={{}}
     >
       {/* 横書きの「News」 */}
       <div

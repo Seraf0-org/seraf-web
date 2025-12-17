@@ -67,7 +67,7 @@ const MemberPopup = ({ member, onClose }: {
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
-        
+
         // ポップアップ表示時のアニメーション
         (animate as any)(
             ".popup-overlay",
@@ -90,7 +90,7 @@ const MemberPopup = ({ member, onClose }: {
         (animate as any)(
             ".popup-text",
             { opacity: [0, 1], y: [40, 0] },
-            { 
+            {
                 delay: stagger(0.1, { startDelay: 0.5 }),
                 duration: 0.6,
                 easing: [0.25, 0.46, 0.45, 0.94]
@@ -104,7 +104,7 @@ const MemberPopup = ({ member, onClose }: {
 
     const handleClose = () => {
         setIsClosing(true);
-        
+
         // ポップアップ非表示時のアニメーション
         (animate as any)(
             ".popup-content",
@@ -359,7 +359,7 @@ export function Members() {
             (animate as any)(
                 ".member-card",
                 { opacity: [0, 1], y: [60, 0], scale: [0.8, 1] },
-                { 
+                {
                     delay: stagger(0.2),
                     duration: 1,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -370,7 +370,7 @@ export function Members() {
             (animate as any)(
                 ".member-info",
                 { opacity: [0, 1], y: [30, 0] },
-                { 
+                {
                     delay: stagger(0.15, { startDelay: 1 }),
                     duration: 0.8,
                     easing: [0.25, 0.46, 0.45, 0.94]
@@ -389,12 +389,12 @@ export function Members() {
     // ホバーアニメーションの設定
     useEffect(() => {
         const memberCards = document.querySelectorAll('.member-card');
-        
+
         memberCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 (animate as any)(
                     card,
-                    { 
+                    {
                         y: [0, -15],
                         scale: [1, 1.05],
                         boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 25px 50px rgba(0,0,0,0.25)']
@@ -406,7 +406,7 @@ export function Members() {
             card.addEventListener('mouseleave', () => {
                 (animate as any)(
                     card,
-                    { 
+                    {
                         y: [-15, 0],
                         scale: [1.05, 1],
                         boxShadow: ['0 25px 50px rgba(0,0,0,0.25)', '0 10px 25px rgba(0,0,0,0.1)']
@@ -431,9 +431,7 @@ export function Members() {
             id="members"
             ref={sectionRef}
             className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
-            style={{
-                backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
-            }}
+            style={{}}
         >
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <svg

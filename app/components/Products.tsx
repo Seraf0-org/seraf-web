@@ -372,9 +372,7 @@ export function Products() {
       id="products"
       ref={sectionRef}
       className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
-      style={{
-        backgroundColor: isDark ? 'rgb(17 24 39)' : 'rgb(249 250 251)'
-      }}
+      style={{}}
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <svg
