@@ -5,7 +5,7 @@ import type { OutletContext } from "~/root";
 import { useBackgroundLines } from "~/hooks/useBackgroundLines";
 import { animate, stagger } from "motion";
 
-export function Header() {
+export function Header({ startAnimation }: { startAnimation: boolean }) {
     const { theme, setTheme, smoothScrollTo } = useOutletContext<OutletContext>();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
@@ -24,6 +24,7 @@ export function Header() {
     const isPortfolio = location.pathname.startsWith("/portfolio");
 
     useEffect(() => {
+        if (!startAnimation) return;
         setIsInitialRender(false);
 
         const timer1 = setTimeout(() => {
@@ -48,11 +49,11 @@ export function Header() {
             clearTimeout(timer3);
             clearTimeout(timer4);
         };
-    }, []);
+    }, [startAnimation]);
 
     // Motionアニメーションを初期化
     useEffect(() => {
-        if (isVisible) {
+        if (isVisible && startAnimation) {
             // ロゴのアニメーション
             (animate as any)(
                 ".header-logo",
@@ -283,12 +284,12 @@ export function Header() {
                             // Liquid Glass: Almost transparent background, heavy blur, high saturation. Opaque on hover for readability.
                             backgroundColor: isCurrentDark
                                 ? `rgba(30, 40, 50, ${isHovered ? 0.9 : 0.1})`
-                                : `rgba(255, 255, 255, ${isHovered ? 0.9 : 0.1})`,
+                                : `rgba(255, 255, 255, ${isHovered ? 0.9 : 0.15})`, // Slightly increased base opacity for presence
                             backdropFilter: 'blur(24px) saturate(180%)',
                             // Glass shadows: Strong Bevel (Top highlight, side highlight, bottom shadow, inner glow)
                             boxShadow: isCurrentDark
                                 ? 'inset 0 1px 0 0 rgba(255,255,255,0.4), inset 1px 0 0 0 rgba(255,255,255,0.2), inset 0 -2px 5px 0 rgba(0,0,0,0.4), inset 0 0 30px rgba(6,182,212,0.15), 0 10px 40px -10px rgba(0,0,0,0.5)'
-                                : 'inset 0 1px 0 0 rgba(255,255,255,0.9), inset 1px 0 0 0 rgba(255,255,255,0.6), inset 0 -2px 5px 0 rgba(0,0,0,0.1), inset 0 0 30px rgba(236,72,153,0.15), 0 10px 40px -10px rgba(0,0,0,0.3)',
+                                : 'inset 0 0 0 1px rgba(255,255,255,0.4), inset 0 1px 0 0 rgba(255,255,255,0.4), 0 0 0 1px rgba(0,0,0,0.03), 0 4px 20px -5px rgba(0,0,0,0.1)', // Reduced glare, added subtle ring
                             borderRadius: '100px', // Pill shape
                             overflow: 'hidden' // Clip background lines
                         }}

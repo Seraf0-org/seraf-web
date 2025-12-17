@@ -4,27 +4,33 @@ import { gsap } from "gsap";
 import type { OutletContext } from "~/root";
 import { ThreeBackground } from "./ThreeBackground";
 
-export function Hero() {
+export function Hero({ startAnimation }: { startAnimation: boolean }) {
   const { theme } = useOutletContext<OutletContext>();
   const heroRef = useRef<HTMLElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
   const isDark = theme === "dark";
 
   useEffect(() => {
+    if (!startAnimation) return;
     if (!textContainerRef.current) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
       // Entry Animation: Staggered slide-up reveal
-      tl.from(".hero-line", {
-        y: 120,
-        opacity: 0,
-        duration: 1.4,
-        stagger: 0.15,
-        ease: "power4.out",
-        delay: 0.2
-      });
+      tl.fromTo(".hero-line",
+        {
+          y: 120,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.4,
+          stagger: 0.15,
+          ease: "power4.out",
+          delay: 0.2
+        });
 
       // Floating animation for the "()" 
       // Request: "Lower reference position. Less up, more down."
@@ -44,7 +50,7 @@ export function Hero() {
     }, textContainerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [startAnimation]);
 
   return (
     <section ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center">
@@ -61,7 +67,7 @@ export function Hero() {
 
           {/* Small Label */}
           <div className="overflow-hidden mb-2">
-            <p className="hero-line text-sm md:text-base font-medium tracking-[0.2em] uppercase opacity-80">
+            <p className="hero-line text-sm md:text-base font-medium tracking-[0.2em] uppercase opacity-0">
               Creative Collective
             </p>
           </div>
@@ -71,14 +77,14 @@ export function Hero() {
 
             {/* Line 1: WE ARE */}
             <div className="overflow-hidden">
-              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11em]">
+              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11em] opacity-0">
                 We are
               </h1>
             </div>
 
             {/* Line 2: SERAF() */}
             <div className="overflow-hidden">
-              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11rem] flex items-center gap-2 md:gap-4">
+              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11rem] flex items-center gap-2 md:gap-4 opacity-0">
                 <span>Seraf</span>
                 {/* tracking-[0.2em] adds spacing between ( and ) */}
                 <span className="brackets font-bbh tracking-[0.2em] font-light text-cyan-400 bg-clip-text text-transparent bg-gradient-to-tr from-cyan-400 to-pink-500">
@@ -91,7 +97,7 @@ export function Hero() {
 
           {/* Description / CTA area */}
           <div className="overflow-hidden mt-8 md:mt-12 max-w-lg">
-            <p className="hero-line text-lg md:text-xl font-light opacity-70 leading-relaxed">
+            <p className="hero-line text-lg md:text-xl font-light opacity-0 leading-relaxed">
               Become anything from being nothing.
             </p>
           </div>

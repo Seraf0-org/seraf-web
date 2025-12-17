@@ -24,13 +24,30 @@ export const meta: MetaFunction = () => {
 import { PortfolioCursorNodes } from "~/components/PortfolioCursorNodes";
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/root";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { LoadingScreen } from "~/components/LoadingScreen";
 
 export default function Index() {
   const { theme } = useOutletContext<OutletContext>();
   const isDark = theme === 'dark';
+  const [isLoading, setIsLoading] = useState(true);
+  const [startAnimation, setStartAnimation] = useState(false);
 
   return (
     <>
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <LoadingScreen
+            isDark={isDark}
+            onComplete={() => {
+              setIsLoading(false);
+              setTimeout(() => setStartAnimation(true), 500); // Wait for curtain to clear
+            }}
+          />
+        )}
+      </AnimatePresence>
+
       <div className="fixed inset-0 z-0 opacity-95" style={isDark
         ? {
           backgroundColor: "#050505",
@@ -52,12 +69,12 @@ export default function Index() {
         }
       } />
       <main className="relative z-20">
-        <Header />
+        <Header startAnimation={startAnimation} />
 
         {/* Sticky Hero Wrapper with Scroll Buffer */}
         <div className="relative" style={{ height: '250vh' }}>
           <div className="sticky top-0 h-screen overflow-hidden" style={{ zIndex: 1 }}>
-            <Hero />
+            <Hero startAnimation={startAnimation} />
           </div>
         </div>
 
