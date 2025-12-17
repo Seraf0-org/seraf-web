@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@react-three/drei": "9.99.0",
+    "@react-three/fiber": "8.15.16",
     "@remix-run/cloudflare": "^2.15.2",
     "@remix-run/cloudflare-pages": "^2.15.2",
     "@remix-run/react": "^2.12.1",
@@ -21,8 +23,8 @@
     "motion": "^12.23.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.181.2",
-    "three-stdlib": "^2.36.1"
+    "three": "0.160.0",
+    "three-stdlib": "^2.29.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250124.3",

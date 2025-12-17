@@ -8,11 +8,11 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import "./tailwind.css";
+import tailwindStylesHref from "./tailwind.css?url";
 import { LinesProvider } from './contexts/LinesContext';
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: "/build/tailwind.css" },
+  { rel: "stylesheet", href: tailwindStylesHref },
   { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
   { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
