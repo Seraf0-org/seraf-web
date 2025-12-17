@@ -62,7 +62,7 @@ export default function Index() {
         </div>
 
         {/* Scrolling Content Wrapper - Opaque to cover Hero */}
-        <div className="relative z-30 bg-[#020202]">
+        <div className={`relative z-30 ${isDark ? 'bg-[#020202]' : 'bg-[#f8fafc]'}`}>
           <PortfolioCursorNodes isDark={isDark} />
           <section id="about">
             <About />
