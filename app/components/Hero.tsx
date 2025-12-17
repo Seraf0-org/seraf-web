@@ -71,14 +71,14 @@ export function Hero() {
 
             {/* Line 1: WE ARE */}
             <div className="overflow-hidden">
-              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[11rem]">
+              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11em]">
                 We are
               </h1>
             </div>
 
             {/* Line 2: SERAF() */}
             <div className="overflow-hidden">
-              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[11rem] flex items-center gap-2 md:gap-4">
+              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11rem] flex items-center gap-2 md:gap-4">
                 <span>Seraf</span>
                 {/* tracking-[0.2em] adds spacing between ( and ) */}
                 <span className="brackets font-bbh tracking-[0.2em] font-light text-cyan-400 bg-clip-text text-transparent bg-gradient-to-tr from-cyan-400 to-pink-500">
