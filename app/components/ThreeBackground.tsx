@@ -319,7 +319,25 @@ export function ThreeBackground({ isDark }: Props) {
 
       const dt = Math.min((now - lastTime) / 1000, 0.05);
       lastTime = now;
-      const t = now * 0.001;
+      const t = now * 0.001; // Needed for pulsing etc
+
+      // Calculate Scroll-based Rotation
+      // Normal speed = 1.0. 
+      // As we scroll down, speed increases.
+      // e.g. at 1000px scroll, speed is 3x or 5x.
+      const scrollY = window.scrollY || 0;
+      // scrollFactor: 0 -> 1.0, 1000 -> 2.0 (total 3.0)
+      const scrollSpeedBoost = 1.0 + (scrollY * 0.005);
+
+      // Accumulate rotation time
+      // We use a property on the ref or a let variable outside loop? 
+      // 'startTimeRef' is for elapsed time. We need a separate accumulator.
+      // Since we can't easily add a new ref inside this effect without full reload,
+      // and we defined 'animate' inside useEffect, we can use a local closure variable.
+      if ((animate as any).accTime === undefined) (animate as any).accTime = 0;
+      (animate as any).accTime += dt * scrollSpeedBoost;
+
+      const effectiveT = (animate as any).accTime;
 
       // lerp pointer
       pointer.x += (pointerTarget.x - pointer.x) * 0.06;
@@ -331,13 +349,17 @@ export function ThreeBackground({ isDark }: Props) {
 
       for (let i = 0; i < shardCount; i++) {
         // Orbit Logic
-        const currentTheta = initialAngle[i] + t * speed[i];
+        // Use effectiveT instead of raw t
+        const currentTheta = initialAngle[i] + effectiveT * speed[i];
 
         // 1. Calculate position on a FLAT plane (XZ)
         let px = Math.cos(currentTheta) * radius[i];
         let pz = Math.sin(currentTheta) * radius[i];
         // let py = (Math.sin(currentTheta * 3 + t) * 0.5); // Original
-        let py = (Math.sin(currentTheta * 3 + t) * 0.2); // Amplitude reduced (less wobble)
+        // Use raw 't' for bobbing to keep it independent of orbit speed? 
+        // Or sync it? Syncing feels more natural if "accelerating".
+        let py = (Math.sin(currentTheta * 3 + t) * 0.2); // Keep pulse gentle mostly
+
 
         // 2. TILT the plane (Diagonal orbit)
         // Rotate around Z axis by ~30 deg, then X axis by ~60 deg?
@@ -448,19 +470,19 @@ export function ThreeBackground({ isDark }: Props) {
     ? {
       backgroundColor: "transparent",
       backgroundImage: `
-          radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.34) 0%, rgba(34, 211, 238, 0.00) 68%),
-          radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.26) 0%, rgba(59, 130, 246, 0.00) 64%),
-          radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.22) 0%, rgba(14, 165, 233, 0.00) 62%),
-          linear-gradient(135deg, rgba(34, 211, 238, 0.10) 0%, rgba(59, 130, 246, 0.06) 40%, rgba(0,0,0,0) 72%)
+          radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.20) 0%, rgba(34, 211, 238, 0.00) 68%),
+          radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.00) 64%),
+          radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0.00) 62%),
+          linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, rgba(59, 130, 246, 0.03) 40%, rgba(0,0,0,0) 72%)
         `,
     }
     : {
       backgroundColor: "transparent",
       backgroundImage: `
-          radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
-          radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
-          radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
-          linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
+          radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.10) 0%, rgba(14, 165, 233, 0.00) 66%),
+          radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.00) 64%),
+          radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.08) 0%, rgba(34, 211, 238, 0.00) 62%),
+          linear-gradient(135deg, rgba(14, 165, 233, 0.04) 0%, rgba(59, 130, 246, 0.02) 45%, rgba(255,255,255,0) 75%)
         `,
     };
 

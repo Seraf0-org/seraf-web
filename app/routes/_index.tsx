@@ -51,30 +51,40 @@ export default function Index() {
             `,
         }
       } />
-      <PortfolioCursorNodes isDark={isDark} className="z-10" />
       <main className="relative z-20">
         <Header />
-        <Hero />
-        <section id="about">
-          <About />
-        </section>
-        <section id="news">
-          <News />
-        </section>
-        <section id="products">
-          <Products />
-        </section>
-        <section id="members">
-          <Members />
-        </section>
-        <section id="partnership">
-          <Partnership />
-        </section>
-        <section id="contact">
-          <Contact />
-        </section>
-        <Footer />
-      </main>
+
+        {/* Sticky Hero Wrapper with Scroll Buffer */}
+        <div className="relative" style={{ height: '250vh' }}>
+          <div className="sticky top-0 h-screen overflow-hidden" style={{ zIndex: 1 }}>
+            <Hero />
+          </div>
+        </div>
+
+        {/* Scrolling Content Wrapper - Opaque to cover Hero */}
+        <div className="relative z-30 bg-[#020202]">
+          <PortfolioCursorNodes isDark={isDark} />
+          <section id="about">
+            <About />
+          </section>
+          <section id="news">
+            <News />
+          </section>
+          <section id="products">
+            <Products />
+          </section>
+          <section id="members">
+            <Members />
+          </section>
+          <section id="partnership">
+            <Partnership />
+          </section>
+          <section id="contact">
+            <Contact />
+          </section>
+          <Footer />
+        </div>
+      </main >
     </>
   );
 }
