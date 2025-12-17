@@ -1,5 +1,5 @@
 import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
-import { useOutletContext } from "@remix-run/react";
+import { useOutletContext, Link } from "@remix-run/react";
 import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { useState, useRef, useEffect } from "react";
@@ -212,6 +212,23 @@ export function About() {
             誠実に。されど貪欲に。<br className="mb-4" />
             最新鋭の技術や、各々の得意や好きを余すことなく活かし、個性をぶつかり合わせて生まれるオリジナリティ溢れる作品をお楽しみあれ。
           </p>
+
+          <div className="mt-8 text-center md:text-left">
+            <Link
+              to="/portfolio"
+              className="group inline-flex items-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full shadow-lg hover:shadow-fuchsia-500/50 transform hover:-translate-y-1 transition-all duration-300"
+            >
+              <span className="mr-2">制作実績はこちら</span>
+              <svg
+                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
         <div className="about-video mt-10">
           {isIOS ? (
