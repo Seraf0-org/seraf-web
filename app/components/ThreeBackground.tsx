@@ -300,6 +300,7 @@ export function ThreeBackground({ isDark }: Props) {
       pointerTarget.x = (x - 0.5) * 2;
       pointerTarget.y = (y - 0.5) * 2;
     };
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     let animationId = 0;
     let lastTime = performance.now();
