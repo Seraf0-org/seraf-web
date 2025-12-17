@@ -18,7 +18,9 @@ export default {
         ],
         zen: ["Zen Kaku Gothic New", "sans-serif"],
         orbitron: ["Orbitron", "sans-serif"],
+        orbitron: ["Orbitron", "sans-serif"],
         mincho: ['"Noto Serif JP"', 'serif'],
+        bbh: ['"BBH Bogle"', 'sans-serif'],
       },
       animation: {
         'fade-in-down': 'fade-in-down 1s ease-out forwards',

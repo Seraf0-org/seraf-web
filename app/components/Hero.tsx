@@ -27,13 +27,19 @@ export function Hero() {
       });
 
       // Floating animation for the "()" 
-      gsap.to(".brackets", {
-        y: -10,
-        duration: 1.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
+      // Request: "Lower reference position. Less up, more down."
+      // Previous: 0 -> -6 (All up).
+      // New: +3 -> -3 (Centered). Reference lowered by 3px.
+      gsap.fromTo(".brackets",
+        { y: 3 },
+        {
+          y: -3,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut"
+        }
+      );
 
     }, textContainerRef);
 
@@ -73,7 +79,8 @@ export function Hero() {
             <div className="overflow-hidden">
               <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[11rem] flex items-center gap-2 md:gap-4">
                 <span>Seraf</span>
-                <span className="brackets font-mono font-light text-cyan-400 bg-clip-text text-transparent bg-gradient-to-tr from-cyan-400 to-pink-500">
+                {/* tracking-[0.2em] adds spacing between ( and ) */}
+                <span className="brackets font-bbh tracking-[0.2em] font-light text-cyan-400 bg-clip-text text-transparent bg-gradient-to-tr from-cyan-400 to-pink-500">
                   ()
                 </span>
               </h1>

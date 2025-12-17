@@ -296,10 +296,10 @@ export function ThreeBackground({ isDark }: Props) {
       const rect = container.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
+
       pointerTarget.x = (x - 0.5) * 2;
       pointerTarget.y = (y - 0.5) * 2;
     };
-    if (!lowPower) window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     let animationId = 0;
     let lastTime = performance.now();
@@ -323,8 +323,13 @@ export function ThreeBackground({ isDark }: Props) {
       // lerp pointer
       pointer.x += (pointerTarget.x - pointer.x) * 0.06;
       pointer.y += (pointerTarget.y - pointer.y) * 0.06;
-      camera.position.x = pointer.x * 0.12;
-      camera.position.y = -pointer.y * 0.08;
+      // Increase parallax strength: 0.12/0.08 is too subtle. Try 0.8/0.4.
+      // User Request: "Guwan Guwan" (Much stronger). Try 3.5 / 1.5.
+      // User Request: "Suppress a bit" -> Middle ground (1.8 / 0.8).
+      // User Request: "Weaken it a bit more" -> 1.2 / 0.6
+      // User Request: "Suppress it a bit more" -> 0.6 / 0.3
+      camera.position.x = pointer.x * 0.2;
+      camera.position.y = -pointer.y * 0.2;
       camera.lookAt(0, 0, 0);
 
       for (let i = 0; i < shardCount; i++) {
@@ -358,7 +363,7 @@ export function ThreeBackground({ isDark }: Props) {
         const tiltZ = 0.3; // rad (少し緩やかに)
         const x2 = px * Math.cos(tiltZ) - py * Math.sin(tiltZ);
         const y2 = px * Math.sin(tiltZ) + py * Math.cos(tiltZ);
-        px = x2;
+        px = x2 - 0.5; // Shift entire ring LEFT (Request: "A bit left")
         py = y2 + 0.8; // Shift entire ring UP (Request: "A bit more up")
 
         // Tumble rotation
@@ -425,7 +430,8 @@ export function ThreeBackground({ isDark }: Props) {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      if (!lowPower) window.removeEventListener("pointermove", onPointerMove);
+      // if (!lowPower) window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
