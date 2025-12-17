@@ -442,30 +442,27 @@ export function ThreeBackground({ isDark }: Props) {
     };
   }, [isDark]);
 
-  // Background styles moved to global _index.tsx for continuous effect
-  // const backgroundStyle: CSSProperties = isDark
-  //   ? {
-  //     // もう少し明るいベースにして“黒つぶれ”を回避
-  //     backgroundColor: "#07121a",
-  //     backgroundImage: `
-  //         /* “明るい場所”を中央寄せ */
-  //         /* 文字の左寄せ位置に合わせてスポットも左寄せ */
-  //         /* Fixed px -> % for responsiveness */
-  //         radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.34) 0%, rgba(34, 211, 238, 0.00) 68%),
-  //         radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.26) 0%, rgba(59, 130, 246, 0.00) 64%),
-  //         radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.22) 0%, rgba(14, 165, 233, 0.00) 62%),
-  //         linear-gradient(135deg, rgba(34, 211, 238, 0.10) 0%, rgba(59, 130, 246, 0.06) 40%, rgba(0,0,0,0) 72%)
-  //       `,
-  //   }
-  //   : {
-  //     backgroundColor: "#f8fafc",
-  //     backgroundImage: `
-  //         radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
-  //         radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
-  //         radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
-  //         linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
-  //       `,
-  //   };
+  // Hero Highlight (Bright gradients only in Hero)
+  // Transparent base color to allow global nodes to shine through
+  const heroHighlightStyle: CSSProperties = isDark
+    ? {
+      backgroundColor: "transparent",
+      backgroundImage: `
+          radial-gradient(65% 65% at 34% 46%, rgba(34, 211, 238, 0.34) 0%, rgba(34, 211, 238, 0.00) 68%),
+          radial-gradient(55% 55% at 78% 18%, rgba(59, 130, 246, 0.26) 0%, rgba(59, 130, 246, 0.00) 64%),
+          radial-gradient(60% 60% at 22% 86%, rgba(14, 165, 233, 0.22) 0%, rgba(14, 165, 233, 0.00) 62%),
+          linear-gradient(135deg, rgba(34, 211, 238, 0.10) 0%, rgba(59, 130, 246, 0.06) 40%, rgba(0,0,0,0) 72%)
+        `,
+    }
+    : {
+      backgroundColor: "transparent",
+      backgroundImage: `
+          radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
+          radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
+          radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
+          linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
+        `,
+    };
 
   return (
     <div
@@ -476,6 +473,7 @@ export function ThreeBackground({ isDark }: Props) {
       <div
         ref={containerRef}
         className="pointer-events-none absolute inset-0"
+        style={heroHighlightStyle}
       />
 
       {/* Grain / Texture (SVG filter) */}

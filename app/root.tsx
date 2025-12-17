@@ -43,6 +43,11 @@ export const meta: MetaFunction = () => {
       tagName: "link",
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;500;600;700&display=swap"
+    },
+    {
+      tagName: "link",
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
     }
   ];
 };
