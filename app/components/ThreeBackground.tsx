@@ -545,7 +545,7 @@ export function ThreeBackground({ isDark }: Props) {
       // Horizontal Shift Logic
       // Start shifting after Hero (Hero is 250vh)
       // About starts appearing around 2.5vh
-      const shiftStart = vh * 1.7;
+      const shiftStart = vh * 1.6;
       const shiftEnd = vh * 3;
       const shiftProgress = Math.min(1, Math.max(0, (currentScrollY - shiftStart) / (shiftEnd - shiftStart)));
       // Smooth ease
@@ -605,12 +605,48 @@ export function ThreeBackground({ isDark }: Props) {
       camera.position.y = -pointer.y * 0.25;
       camera.lookAt(0, 0, 0);
 
-      // Flare Billboard & Pulse
+      // News Section Visibility Logic (User Request: "Hide temporally in News section")
+      // News estimated range: 3.8vh to 5.5vh
+      const newsStart = vh * 3.1;
+      const newsEnd = vh * 3.7;
+      const fadeLength = vh * 0.1;
+
+      // 1.0 = Visible, 0.0 = Hidden
+      let globalAlpha = 1.0;
+
+      if (currentScrollY > newsStart - fadeLength && currentScrollY < newsEnd + fadeLength) {
+        // Entering News
+        if (currentScrollY < newsStart) {
+          // Fade Out
+          globalAlpha = 1.0 - (currentScrollY - (newsStart - fadeLength)) / fadeLength;
+        } else if (currentScrollY > newsEnd) {
+          // Fade In
+          globalAlpha = (currentScrollY - newsEnd) / fadeLength;
+        } else {
+          // Inside News
+          globalAlpha = 0.0;
+        }
+      }
+
+      // Apply visibility
+      prismMesh.visible = globalAlpha > 0.01;
+      haloMesh.visible = globalAlpha > 0.01;
+      flareMesh.visible = globalAlpha > 0.01;
+
+      // Modulate Opacity/Intensity for smooth fade
+      // Prism is Additive Black, so Opacity controls alpha blending
+      (prismMat as any).opacity = globalAlpha;
+      // Also scale it down for effect? No, simple fade is cleaner.
+
+      haloMat.uniforms.uIntensity.value = (isDark ? 0.35 : 0.0) * globalAlpha;
+
+      // Flare billboard update with alpha
       flareMesh.rotation.copy(camera.rotation);
       const pulse = 1.0 + Math.sin(t * 1.5) * 0.05 + Math.sin(t * 4.3) * 0.02;
       // Multiply pulse by targetScale to keep proportion
       flareMesh.scale.set(pulse * targetScale, pulse * targetScale, 1.0);
       flareMat.uniforms.uTime.value = t;
+      flareMat.uniforms.uColor.value.setScalar(globalAlpha); // Dim color to fade
 
       for (let i = 0; i < shardCount; i++) {
         // Orbit Logic

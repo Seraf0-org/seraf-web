@@ -326,7 +326,7 @@ const adjustColorForDarkMode = (color: string) => {
 };
 
 export function Members() {
-    const [sectionRef, isVisible] = useIntersectionObserver();
+    const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.3 });
     const [hoveredId, setHoveredId] = useState<number | null>(null);
     const { theme } = useOutletContext<OutletContext>();
     const isDark = theme === 'dark';
@@ -383,6 +383,12 @@ export function Members() {
                 { strokeDashoffset: [1000, 0] },
                 { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
             );
+        } else {
+            // Smooth fade out when out of view
+            (animate as any)(".members-title", { opacity: 0, y: 30 }, { duration: 0.5 });
+            (animate as any)(".member-card", { opacity: 0, y: 60, scale: 0.8 }, { duration: 0.5 });
+            (animate as any)(".member-info", { opacity: 0, y: 30 }, { duration: 0.5 });
+            (animate as any)(".decorative-line", { strokeDashoffset: 1000 }, { duration: 0.5 });
         }
     }, [isVisible]);
 
@@ -526,7 +532,7 @@ export function Members() {
 
             <div className={`container mx-auto transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}>
-                <h2 className="members-title text-6xl font-bold text-center mb-20 text-gray-700 dark:text-white relative drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)]">
+                <h2 className="members-title text-6xl font-bold text-center mb-20 text-gray-700 dark:text-white relative drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] opacity-0">
                     Members
                     <div className="absolute top-24 fixed-left">
                         <svg width="100vw" height="80" viewBox="0 0 1000 20" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>

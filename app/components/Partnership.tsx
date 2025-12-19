@@ -60,7 +60,7 @@ const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }
 };
 
 export function Partnership() {
-    const [sectionRef, isVisible] = useIntersectionObserver();
+    const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.4 });
     const { theme } = useOutletContext<OutletContext>();
     const isDark = theme === 'dark';
     const [parallaxOffset, setParallaxOffset] = useState(0);
@@ -114,6 +114,12 @@ export function Partnership() {
                 { strokeDashoffset: [800, 0] },
                 { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
             );
+        } else {
+            // Smooth fade out when out of view
+            (animate as any)(".partnership-title", { opacity: 0, y: 30 }, { duration: 0.5 });
+            (animate as any)(".partnership-decorative-line", { strokeDashoffset: 800 }, { duration: 0.5 });
+            (animate as any)(".partner-card", { opacity: 0, y: 60, scale: 0.8 }, { duration: 0.5 });
+            (animate as any)(".partner-text", { opacity: 0, y: 30 }, { duration: 0.5 });
         }
     }, [isVisible]);
 
@@ -243,7 +249,7 @@ export function Partnership() {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 md:px-8">
-                <h2 className="partnership-title text-4xl md:text-6xl font-bold text-center mb-16 text-gray-700 dark:text-white drop-shadow-[0_0_8px_rgba(22,172,32,0.5)] dark:drop-shadow-[0_0_8px_rgba(34,210,54,0.5)]">
+                <h2 className="partnership-title text-4xl md:text-6xl font-bold text-center mb-16 text-gray-700 dark:text-white drop-shadow-[0_0_8px_rgba(22,172,32,0.5)] dark:drop-shadow-[0_0_8px_rgba(34,210,54,0.5)] opacity-0">
                     Partners
                     <div className="relative">
                         <svg width="100vw" height="40" viewBox="0 0 800 10" preserveAspectRatio="none" style={{ marginLeft: '-25vw', width: '150vw' }}>

@@ -265,7 +265,7 @@ const ProductPopup = ({ product, onClose }: {
 };
 
 export function Products() {
-  const [sectionRef, isVisible] = useIntersectionObserver();
+  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.4 });
   const { theme } = useOutletContext<OutletContext>();
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
@@ -320,6 +320,12 @@ export function Products() {
           easing: [0.25, 0.46, 0.45, 0.94]
         }
       );
+    } else {
+      // Smooth fade out when out of view
+      (animate as any)(".products-title", { opacity: 0, y: 30 }, { duration: 0.5 });
+      (animate as any)(".products-decorative-line", { strokeDashoffset: 1000 }, { duration: 0.5 });
+      (animate as any)(".product-card", { opacity: 0, y: 50, scale: 0.9 }, { duration: 0.5 });
+      (animate as any)(".product-text", { opacity: 0, y: 20 }, { duration: 0.5 });
     }
   }, [isVisible]);
 
@@ -466,7 +472,7 @@ export function Products() {
 
       <div className={`container mx-auto px-6 md:px-6 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-        <h1 className="products-title text-4xl md:text-6xl font-bold text-center text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]">
+        <h1 className="products-title text-4xl md:text-6xl font-bold text-center text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(0,192,192,0.5)] dark:drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] opacity-0">
           Products
           <div className="absolute top-24 fixed-left">
             <svg width="100vw" height="60" viewBox="0 0 1000 20" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>

@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { animate, stagger } from "motion";
 
 export function News() {
-  const [sectionRef, isVisible] = useIntersectionObserver();
+  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.6 });
   const { theme } = useOutletContext<OutletContext>();
   const isDark = theme === 'dark';
   const lines = useLines('cyan');
@@ -77,6 +77,12 @@ export function News() {
         { strokeDashoffset: [1000, 0] },
         { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
       );
+    } else {
+      // Smooth fade out when out of view
+      (animate as any)(".news-title", { opacity: 0, y: 30 }, { duration: 0.5 });
+      (animate as any)(".news-item", { opacity: 0, y: 50, scale: 0.9 }, { duration: 0.5 });
+      (animate as any)(".news-text", { opacity: 0, y: 20 }, { duration: 0.5 });
+      (animate as any)(".news-decorative-line", { strokeDashoffset: 1000 }, { duration: 0.5 });
     }
   }, [isVisible]);
 
@@ -213,7 +219,7 @@ export function News() {
             : 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
         }}
       ></div>
-      <div className="absolute left-0 top-0 -translate-y-1/2 z-0 w-full h-full md:w-full md:h-auto" style={{ transform: `translateY(${parallaxOffset - 170}px)` }}>
+      <div className="absolute left-0 top-0 z-0 w-full h-full md:w-full md:h-auto" style={{ transform: `translateY(calc(${parallaxOffset}px - 30vh))` }}>
         {isIOS ? (
           <img
             src="/images/news/news-bg.png"

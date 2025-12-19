@@ -27,7 +27,7 @@ interface Line {
 }
 
 export function About() {
-  const [sectionRef, isVisible] = useIntersectionObserver();
+  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.4 });
   const { theme } = useOutletContext<OutletContext>();
   const lines = useLines('fuchsia');
   const isDark = theme === 'dark';
@@ -103,6 +103,12 @@ export function About() {
         { strokeDashoffset: [600, 0] },
         { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
       );
+    } else {
+      // Smooth fade out when out of view
+      (animate as any)(".about-title", { opacity: 0, y: 30 }, { duration: 0.5 });
+      (animate as any)(".about-content", { opacity: 0, y: 40 }, { duration: 0.5 });
+      (animate as any)(".about-video", { opacity: 0, scale: 0.9 }, { duration: 0.5 });
+      (animate as any)(".decorative-line", { strokeDashoffset: 600 }, { duration: 0.5 });
     }
   }, [isVisible]);
 
@@ -182,9 +188,9 @@ export function About() {
         </svg>
       ))}
 
-      <div className="about-content container mx-auto px-6 md:px-4 py-10 flex flex-col md:flex-row items-center">
+      <div className="about-content container mx-auto px-6 md:px-4 py-10 flex flex-col md:flex-row items-center opacity-0">
         <div className="max-w-4xl text-left md:mr-8">
-          <h1 className="about-title text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose">
+          <h1 className="about-title text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose opacity-0">
             About
             <div className="absolute fixed-left">
               <svg width="100vw" height="40" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
@@ -228,7 +234,7 @@ export function About() {
             </Link>
           </div>
         </div>
-        <div className="about-video mt-10">
+        <div className="about-video mt-10 opacity-0">
           {isIOS ? (
             <img
               src={isDark ? "/images/namelogo-light.png" : "/images/namelogo-dark.png"}

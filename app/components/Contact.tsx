@@ -8,7 +8,7 @@ import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from "~/config/emailjs";
 
 export function Contact() {
-    const [sectionRef, isVisible] = useIntersectionObserver();
+    const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.3 });
     const { theme } = useOutletContext<OutletContext>();
     const isDark = theme === 'dark';
     const lines = useLines('fuchsia');
@@ -44,6 +44,11 @@ export function Contact() {
                 { strokeDashoffset: [600, 0] },
                 { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
             );
+        } else {
+            // Smooth fade out when out of view
+            (animate as any)(".contact-title", { opacity: 0, y: 30 }, { duration: 0.5 });
+            (animate as any)(".contact-content", { opacity: 0, y: 40 }, { duration: 0.5 });
+            (animate as any)(".contact-decorative-line", { strokeDashoffset: 600 }, { duration: 0.5 });
         }
     }, [isVisible]);
 
@@ -180,9 +185,9 @@ export function Contact() {
                 </svg>
             ))}
 
-            <div className="contact-content container mx-auto px-6 md:px-4 py-10">
+            <div className="contact-content container mx-auto px-6 md:px-4 py-10 opacity-0">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="contact-title text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose">
+                    <h2 className="contact-title text-4xl md:text-6xl font-bold text-gray-700 dark:text-white mb-16 drop-shadow-[0_0_8px_rgba(255,0,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(255,0,255,0.7)] md:leading-loose opacity-0">
                         Contact
                         <div className="absolute fixed-left">
                             <svg width="100vw" height="40" viewBox="0 0 1000 10" preserveAspectRatio="none" style={{ marginLeft: 'calc(-50vw + 75%)' }}>
