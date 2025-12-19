@@ -546,7 +546,7 @@ export function ThreeBackground({ isDark }: Props) {
       // Start shifting after Hero (Hero is 250vh)
       // About starts appearing around 2.5vh
       const shiftStart = vh * 1.6;
-      const shiftEnd = vh * 3;
+      const shiftEnd = vh * 2.8;
       const shiftProgress = Math.min(1, Math.max(0, (currentScrollY - shiftStart) / (shiftEnd - shiftStart)));
       // Smooth ease
       const smoothShift = shiftProgress * shiftProgress * (3 - 2 * shiftProgress);
@@ -609,7 +609,7 @@ export function ThreeBackground({ isDark }: Props) {
       // News estimated range: 3.8vh to 5.5vh
       const newsStart = vh * 3.1;
       const newsEnd = vh * 3.7;
-      const fadeLength = vh * 0.1;
+      const fadeLength = vh * 0.3;
 
       // 1.0 = Visible, 0.0 = Hidden
       let globalAlpha = 1.0;

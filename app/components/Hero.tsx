@@ -107,7 +107,7 @@ export function Hero({ startAnimation }: { startAnimation: boolean }) {
 
             {/* Line 1: WE ARE */}
             <div className="overflow-hidden">
-              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 2xl:text-[11em] opacity-0">
+              <h1 className="hero-line text-[5rem] md:text-[9rem] lg:text-[9rem] xl:text-[10rem] 3xl:text-[11em] opacity-0">
                 We are
               </h1>
             </div>

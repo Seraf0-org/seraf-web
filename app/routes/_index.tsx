@@ -71,6 +71,7 @@ export default function Index() {
       } />
       <ThreeBackground isDark={isDark} />
       <main className="relative z-20">
+        <PortfolioCursorNodes isDark={isDark} />
         <Header startAnimation={startAnimation} />
 
         {/* Sticky Hero Wrapper with Scroll Buffer */}
@@ -90,7 +91,6 @@ export default function Index() {
             backdropFilter: 'blur(2px)' // Optional: Adds slight blur to enhance text further
           }}
         >
-          <PortfolioCursorNodes isDark={isDark} />
           <section id="about">
             <About />
           </section>

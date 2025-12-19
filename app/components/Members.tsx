@@ -326,7 +326,13 @@ const adjustColorForDarkMode = (color: string) => {
 };
 
 export function Members() {
-    const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.3 });
+    // threshold: 0 + rootMargin effectively creates different trigger points for entry and exit
+    // Bottom -30%: Delays entry until element is 30% up the screen
+    // Top -20%: Delays exit until element is nearly gone (triggers fade out in top 20% area)
+    const [sectionRef, isVisible] = useIntersectionObserver({
+        threshold: 0,
+        rootMargin: "-20% 0px -30% 0px"
+    });
     const [hoveredId, setHoveredId] = useState<number | null>(null);
     const { theme } = useOutletContext<OutletContext>();
     const isDark = theme === 'dark';
