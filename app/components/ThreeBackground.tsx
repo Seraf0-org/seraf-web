@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef } from "react";
 import type { CSSProperties } from "react";
 import * as THREE from "three";
-import { EffectComposer, RenderPass, ShaderPass, RGBShiftShader } from "three-stdlib";
+import { EffectComposer, RenderPass, ShaderPass, RGBShiftShader, RoundedBoxGeometry } from "three-stdlib";
 
 type Props = { isDark: boolean };
 
@@ -295,41 +295,67 @@ export function ThreeBackground({ isDark }: Props) {
     // --- HALO EFFECT END ---
 
     // --- PRISM START ---
-    // User Request: "Place a prism in the center" -> "Cube", "Smaller" -> "More prism-like" (Glowing edges, dark glass)
-    const prismGeo = new THREE.BoxGeometry(0.6, 0.6, 0.6);
+    // User Request: "Reference image style" -> Rounded, Glassy, Dispersion
+    const prismGeo = new RoundedBoxGeometry(0.7, 0.7, 0.7, 4, 0.1); // Rounded edges
     const prismMat = new THREE.MeshPhysicalMaterial({
-      color: 0x222222,    // Dark body
-      roughness: 0.05,
-      metalness: 0.1,
-      transmission: 0.9,  // High transmission but dark color = smoked glass effect
-      thickness: 1.2,
-      ior: 2.33,          // Diamond/High refraction
-      attenuationColor: 0xffffff,
-      attenuationDistance: 0.5,
-      clearcoat: 1.0,
-
-      // Iridescence for the rainbow look
-      iridescence: 1.0,
-      iridescenceIOR: 1.3,
-      iridescenceThicknessRange: [200, 800],
-
-      envMapIntensity: 3.0,
-      side: THREE.DoubleSide
-    });
-    const prismMesh = new THREE.Mesh(prismGeo, prismMat);
-
-    // Glowing Edges using EdgesGeometry
-    const edgeGeo = new THREE.EdgesGeometry(prismGeo);
-    const edgeMat = new THREE.LineBasicMaterial({
-      color: 0xaaddff, // Pale Cyan/White
+      color: 0x000000,    // Black body (Transparent in Additive)
+      roughness: 0.0,     // Perfectly smooth
+      metalness: 1.0,     // Metallic/Mirror reflections
+      transmission: 0.0,  // Disable Transmission
       transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    });
-    const edgeMesh = new THREE.LineSegments(edgeGeo, edgeMat);
-    prismMesh.add(edgeMesh); // Attach to parent so it rotates together
+      blending: THREE.AdditiveBlending, // Key to transparency + GOW
+      side: THREE.DoubleSide, // Show back edges
+      depthWrite: false,  // Sort correctly
 
+      envMapIntensity: 2.0, // Visible reflections
+
+      // Iridescence (Fake Dispersion/Rainbow)
+      iridescence: 1.0,
+      iridescenceIOR: 2.2,
+      iridescenceThicknessRange: [100, 800],
+    } as any);
+
+    // Disable dispersion property (Using Iridescence instead)
+    (prismMat as any).dispersion = 0.0;
+
+    // Additional tuning for the "Glow" inside
+    prismMat.attenuationColor = new THREE.Color(0xffffff);
+    prismMat.attenuationDistance = 1000.0; // Effectively Infinity (No fog)
+
+    // Custom Fresnel Injection for "More Fresnel" look (User Request)
+    const prismFresnelColor = new THREE.Color(isDark ? 0xffffff : 0xdef7ff);
+    const prismFresnelPower = 20.0;    // Ghostly Sharp (Only exact edges)
+    const prismFresnelIntensity = 10.0; // Extreme Glow to be visible
+
+    prismMat.onBeforeCompile = (shader) => {
+      shader.uniforms.uFresnelColor = { value: prismFresnelColor };
+      shader.uniforms.uFresnelPower = { value: prismFresnelPower };
+      shader.uniforms.uFresnelIntensity = { value: prismFresnelIntensity };
+
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <common>",
+        `#include <common>
+          uniform vec3 uFresnelColor;
+          uniform float uFresnelPower;
+          uniform float uFresnelIntensity;`
+      );
+
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <normal_fragment_begin>",
+        `#include <normal_fragment_begin>
+          float fresnel = pow(1.0 - abs(dot(normalize(vViewPosition), normalize(normal))), uFresnelPower);
+          fresnel = clamp(fresnel, 0.0, 1.0);`
+      );
+
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <output_fragment>",
+        `// Additive Fresnel
+          outgoingLight += uFresnelColor * fresnel * uFresnelIntensity;
+          #include <output_fragment>`
+      );
+    };
+
+    const prismMesh = new THREE.Mesh(prismGeo, prismMat);
     prismMesh.position.set(0, 0, 0);
     scene.add(prismMesh);
     // --- PRISM END ---
@@ -587,8 +613,6 @@ export function ThreeBackground({ isDark }: Props) {
       haloMat.dispose();
       prismGeo.dispose();
       prismMat.dispose();
-      edgeGeo.dispose();
-      edgeMat.dispose();
       envTex.dispose();
       envRT.texture.dispose();
       envRT.dispose();
