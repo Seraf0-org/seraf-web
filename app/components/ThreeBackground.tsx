@@ -22,6 +22,7 @@ function isTouchLikeDevice() {
 export function ThreeBackground({ isDark }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const startTimeRef = useRef<number | null>(null); // For entry animation
+  const scrollGroupRef = useRef<THREE.Group | null>(null); // To move shards
   const noiseId = useId();
   const svgFilterId = `noise-${noiseId.replace(/:/g, "")}`;
 
@@ -80,6 +81,13 @@ export function ThreeBackground({ isDark }: Props) {
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.display = "block";
     renderer.domElement.style.pointerEvents = "none";
+    renderer.domElement.style.zIndex = "1"; // User Request: "Behind text"
+
+
+    // Groups
+    const scrollGroup = new THREE.Group();
+    scene.add(scrollGroup);
+    scrollGroupRef.current = scrollGroup;
 
     // ライティング（ガラスが見える最低限）
     const ambient = new THREE.AmbientLight(0xffffff, isDark ? 1.2 : 0.9);
@@ -291,7 +299,7 @@ export function ThreeBackground({ isDark }: Props) {
 
     const haloMesh = new THREE.Mesh(haloGeo, haloMat);
     haloMesh.position.set(0, 0, -2); // Behind shards
-    scene.add(haloMesh);
+    scene.add(haloMesh); // Fixed (Follows cube)
     // --- HALO EFFECT END ---
 
     // --- PRISM START ---
@@ -360,9 +368,67 @@ export function ThreeBackground({ isDark }: Props) {
     scene.add(prismMesh);
     // --- PRISM END ---
 
+    // --- LENS FLARE START ---
+    // User Request: Lens Flare
+    const flareGeo = new THREE.PlaneGeometry(10, 10);
+    const flareMat = new THREE.ShaderMaterial({
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying vec2 vUv;
+        uniform float uTime;
+        uniform vec3 uColor;
+        
+        void main() {
+          vec2 uv = vUv - 0.5;
+          // Anamorphic Stretch
+          float d = length(uv);
+          float dX = length(vec2(uv.x * 0.1, uv.y)); // Stretch X
+          
+          // Core Glow
+          float glow = 0.05 / (d + 0.05);
+          glow = pow(glow, 2.0);
+          
+          // Horizontal Streak
+          float streak = 0.02 / (abs(uv.y) + 0.02);
+          streak *= smoothstep(0.5, 0.0, abs(uv.x)); // Fade out ends
+          streak = pow(streak, 2.5);
+          
+          // Combine
+          vec3 finalColor = uColor * (glow * 1.5 + streak * 0.8);
+          
+          // Soft edges
+          float alpha = smoothstep(0.5, 0.2, d);
+          finalColor *= alpha; // Apply mask
+          
+          // Use brightness as alpha to prevents black box (0 alpha)
+          // while keeping bright parts visible (high alpha)
+          float brightness = max(finalColor.r, max(finalColor.g, finalColor.b));
+          gl_FragColor = vec4(finalColor, brightness);
+        }
+      `,
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(0xccf0ff) }, // Cyan-ish white
+      },
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    const flareMesh = new THREE.Mesh(flareGeo, flareMat);
+    flareMesh.position.set(0, 0, 0.01); // Slightly in front
+    scene.add(flareMesh);
+    // --- LENS FLARE END ---
+
     const shards = new THREE.InstancedMesh(shardGeo, shardMat, shardCount);
     shards.frustumCulled = false;
-    scene.add(shards);
+    scrollGroup.add(shards); // Scroll away
 
     const dummy = new THREE.Object3D();
     // Orbit parameters
@@ -460,6 +526,40 @@ export function ThreeBackground({ isDark }: Props) {
       const deltaY = currentScrollY - (animate as any).lastScrollY;
       (animate as any).lastScrollY = currentScrollY;
 
+      // Move ScrollGroup (simulate document flow)
+      // Visual Height at Z=0 is approx 5 units. Window Height is ~1000px.
+      // Ratio ~ 0.005.
+      // Move UP positive Y.
+      // User Request: "Fixed initially (Hero), then scroll away (About)"
+      // Threshold: ~800px (End of Hero text interaction)
+      // Updated by User: Responsive (vh based)
+      // Hero is 250vh.
+      const vh = window.innerHeight;
+
+      if (scrollGroupRef.current) {
+        const threshold = vh * 1.5; // Start scrolling shards away at 2.2vh
+        const offset = Math.max(0, currentScrollY - threshold);
+        scrollGroupRef.current.position.y = offset * 0.005;
+      }
+
+      // Horizontal Shift Logic
+      // Start shifting after Hero (Hero is 250vh)
+      // About starts appearing around 2.5vh
+      const shiftStart = vh * 1.7;
+      const shiftEnd = vh * 3;
+      const shiftProgress = Math.min(1, Math.max(0, (currentScrollY - shiftStart) / (shiftEnd - shiftStart)));
+      // Smooth ease
+      const smoothShift = shiftProgress * shiftProgress * (3 - 2 * shiftProgress);
+      const targetX = smoothShift * -2; // Move left by 2.5 units (User Request: "A little more left")
+
+      prismMesh.position.x = targetX;
+      flareMesh.position.x = targetX; // + 0 is handled in geometry/creation, but here we override position
+      haloMesh.position.x = targetX; // Halo follows cube
+      if (scrollGroupRef.current) {
+        // Shards also shift left while scrolling up
+        scrollGroupRef.current.position.x = targetX;
+      }
+
       // Initialize persistent variables
       if ((animate as any).totalRotation === undefined) (animate as any).totalRotation = (now * 0.001);
       if ((animate as any).scrollVelocity === undefined) (animate as any).scrollVelocity = 0;
@@ -485,10 +585,15 @@ export function ThreeBackground({ isDark }: Props) {
       // Update Halo Uniforms
       haloMat.uniforms.uTime.value = t;
 
+      // Scale Logic (User Request: "Make it a bit bigger at this time")
+      const targetScale = 1.0 + (smoothShift * 0.5); // Scale up to 1.6x (User Request: "A bit more bigger")
+      prismMesh.scale.set(targetScale, targetScale, targetScale);
+      haloMesh.scale.set(targetScale, targetScale, targetScale);
+
       // Animate Prism
-      // Slow rotation
+      // Slow rotation + Fast spin during scroll shift
       prismMesh.rotation.x = t * 0.2;
-      prismMesh.rotation.y = t * 0.25;
+      prismMesh.rotation.y = t * 0.25 + (smoothShift * Math.PI * 4.0); // Spin 2 times during shift
       prismMesh.rotation.z = t * 0.15;
 
 
@@ -499,6 +604,13 @@ export function ThreeBackground({ isDark }: Props) {
       camera.position.x = pointer.x * 0.25;
       camera.position.y = -pointer.y * 0.25;
       camera.lookAt(0, 0, 0);
+
+      // Flare Billboard & Pulse
+      flareMesh.rotation.copy(camera.rotation);
+      const pulse = 1.0 + Math.sin(t * 1.5) * 0.05 + Math.sin(t * 4.3) * 0.02;
+      // Multiply pulse by targetScale to keep proportion
+      flareMesh.scale.set(pulse * targetScale, pulse * targetScale, 1.0);
+      flareMat.uniforms.uTime.value = t;
 
       for (let i = 0; i < shardCount; i++) {
         // Orbit Logic
@@ -613,6 +725,8 @@ export function ThreeBackground({ isDark }: Props) {
       haloMat.dispose();
       prismGeo.dispose();
       prismMat.dispose();
+      flareGeo.dispose();
+      flareMat.dispose();
       envTex.dispose();
       envRT.texture.dispose();
       envRT.dispose();
@@ -645,9 +759,9 @@ export function ThreeBackground({ isDark }: Props) {
 
   return (
     <div
-      className="absolute inset-0 z-0 overflow-hidden transition-all duration-700"
+      className="fixed inset-0 z-0 pointer-events-none overflow-hidden transition-all duration-700"
       aria-hidden="true"
-      style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}
+      style={{ position: "fixed", top: 0, right: 0, bottom: 0, left: 0 }}
     >
       <div
         ref={containerRef}

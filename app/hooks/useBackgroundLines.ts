@@ -34,7 +34,7 @@ interface Line {
 }
 
 export function useBackgroundLines(
-    baseColor: 'cyan' | 'fuchsia', 
+    baseColor: 'cyan' | 'fuchsia',
     direction: 'vertical' | 'horizontal' = 'vertical',
     isDark?: boolean,
     isHovered?: boolean
@@ -50,7 +50,7 @@ export function useBackgroundLines(
     function createInitialLine(existingLines: Line[]) {
         const id = Math.random();
         let left: number;
-        
+
         if (direction === 'horizontal') {
             left = -10;
         } else {
@@ -265,11 +265,10 @@ export function useBackgroundLines(
         if (direction === 'horizontal') {
             setLines(prev => prev.map(line => ({
                 ...line,
-                color: `hsl(${line.color.split(',')[0].split('(')[1]}, ${line.color.split(',')[1]}, ${
-                    isHovered 
+                color: `hsl(${line.color.split(',')[0].split('(')[1]}, ${line.color.split(',')[1]}, ${isHovered
                         ? (isDark ? '80%' : '40%')
                         : (isDark ? '40%' : '80%')
-                })`
+                    })`
             })));
         }
     }, [isDark, isHovered, direction]);

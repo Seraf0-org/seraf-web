@@ -43,9 +43,43 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                 transition={{ duration: 1.2, ease: "easeOut" }}
                 className="relative z-10 flex flex-col items-center"
             >
-                <h1 className="text-4xl md:text-6xl lg:text-8xl font-thin tracking-[0.2em] flex items-center gap-4">
-                    <span>NOW LOADING</span>
-                    <span className="text-cyan-400 opacity-80 animate-pulse">...</span>
+                <h1 className="text-4xl md:text-6xl lg:text-8xl font-thin tracking-[0.2em] flex items-center gap-1">
+                    {/* Bouncing Text Logic */}
+                    {"NOW LOADING".split("").map((char, index) => (
+                        <motion.span
+                            key={index}
+                            animate={{
+                                y: [0, -20, 0],
+                            }}
+                            transition={{
+                                duration: 1.2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: index * 0.1, // Stagger effect
+                            }}
+                            className="inline-block"
+                        >
+                            {char === " " ? "\u00A0" : char}
+                        </motion.span>
+                    ))}
+                    {/* Bouncing Dots */}
+                    {[".", ".", "."].map((char, index) => (
+                        <motion.span
+                            key={`dot-${index}`}
+                            animate={{
+                                y: [0, -20, 0],
+                            }}
+                            transition={{
+                                duration: 1.2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: (11 + index) * 0.1, // Continue delay from "NOW LOADING" (11 chars)
+                            }}
+                            className="text-cyan-400 inline-block ml-1"
+                        >
+                            {char}
+                        </motion.span>
+                    ))}
                 </h1>
 
                 {/* Center Counter - Small & Minimal below text */}

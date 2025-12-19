@@ -8,6 +8,7 @@ import { Members } from "~/components/Members";
 import { Partnership } from "~/components/Partnership";
 import { Footer } from "~/components/Footer";
 import { Contact } from "~/components/Contact";
+import { ThreeBackground } from "~/components/ThreeBackground";
 
 export const meta: MetaFunction = () => {
   return [
@@ -68,6 +69,7 @@ export default function Index() {
             `,
         }
       } />
+      <ThreeBackground isDark={isDark} />
       <main className="relative z-20">
         <Header startAnimation={startAnimation} />
 
@@ -78,8 +80,16 @@ export default function Index() {
           </div>
         </div>
 
-        {/* Scrolling Content Wrapper - Opaque to cover Hero */}
-        <div className={`relative z-30 ${isDark ? 'bg-[#020202]' : 'bg-[#f8fafc]'}`}>
+        {/* Scrolling Content Wrapper - Semi-transparent gradient for readability */}
+        <div
+          className={`relative z-30 pt-32`}
+          style={{
+            background: isDark
+              ? 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 5%, rgba(0,0,0,0.2) 100%)'
+              : 'linear-gradient(to bottom, rgba(248,250,252,0) 0%, rgba(248,250,252,0.95) 20%, rgba(248,250,252,1) 100%)',
+            backdropFilter: 'blur(2px)' // Optional: Adds slight blur to enhance text further
+          }}
+        >
           <PortfolioCursorNodes isDark={isDark} />
           <section id="about">
             <About />

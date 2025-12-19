@@ -3,7 +3,6 @@ import { useOutletContext } from "@remix-run/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { OutletContext } from "~/root";
-import { ThreeBackground } from "./ThreeBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,8 +86,7 @@ export function Hero({ startAnimation }: { startAnimation: boolean }) {
   return (
     <section ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center">
       {/* 3D Background Layer */}
-      {/* 3D Background Layer (Glass) - z index should be higher than cursor but lower than content */}
-      <ThreeBackground isDark={isDark} />
+      {/* Moved to _index.tsx for global sticking */}
 
       {/* Content Layer - Left aligned */}
       <div
