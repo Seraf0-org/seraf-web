@@ -70,7 +70,7 @@ export function ThreeBackground({ isDark }: Props) {
     // RGB Shift (Chromatic Aberration)
     const rgbShiftPass = new ShaderPass(RGBShiftShader);
     // Amount: 画面に対するシフト量。0.005くらいで結構見える。リファレンスは強め。
-    rgbShiftPass.uniforms["amount"].value = 0.0025;
+    rgbShiftPass.uniforms["amount"].value = isDark ? 0.0025 : 0.0012; // Light Mode: Reduced shift
     rgbShiftPass.uniforms["angle"].value = 0.0;
     composer.addPass(rgbShiftPass);
 
@@ -114,11 +114,11 @@ export function ThreeBackground({ isDark }: Props) {
     const ctx = envCanvas.getContext("2d");
     if (ctx) {
       const g = ctx.createLinearGradient(0, 0, envCanvas.width, envCanvas.height);
-      g.addColorStop(0, isDark ? "#0b1020" : "#f8fafc");
+      g.addColorStop(0, isDark ? "#0b1020" : "#bfcad6");
       // ハイライトを強めにして、ガラスの反射を出す
-      g.addColorStop(0.35, isDark ? "#22d3ee" : "#93c5fd");
-      g.addColorStop(0.55, isDark ? "#0ea5e9" : "#dbeafe");
-      g.addColorStop(1, isDark ? "#05070c" : "#ffffff");
+      g.addColorStop(0.35, isDark ? "#22d3ee" : "#89b9ef");
+      g.addColorStop(0.55, isDark ? "#0ea5e9" : "#c5dbf5");
+      g.addColorStop(1, isDark ? "#05070c" : "#e2e8f0");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, envCanvas.width, envCanvas.height);
 
@@ -167,19 +167,19 @@ export function ThreeBackground({ isDark }: Props) {
     // エッジを丸めるならRoundedBoxだが、まずは標準Boxでシャープさを出す
     const shardMat = new THREE.MeshPhysicalMaterial({
       color: isDark ? 0x202020 : 0xffffff, // 完全に黒ではなく、少しグレーにして白さを拾いやすく
-      roughness: 0.0,
-      metalness: 1.0, // 金属のように周囲を反射させる
-      transmission: 0.0,
-      thickness: 0.0,
-      ior: 2.33,
+      roughness: isDark ? 0.0 : 0.2, // Light Mode: Blurred/Soft Glass
+      metalness: isDark ? 1.0 : 0.0, // Light Mode: Glass (Dielectric), Dark Mode: Metallic
+      transmission: isDark ? 0.0 : 1.0, // Light Mode: Refractive Glass
+      thickness: isDark ? 0.0 : 1.5,     // Thickness for refraction
+      ior: 1.5,
       transparent: true,
-      opacity: isDark ? 0.6 : 0.25, // 黒をしっかり出すためにOpacityを上げる
+      opacity: isDark ? 0.6 : 1.0, // Light Mode: Full opacity (rely on transmission)
       side: THREE.BackSide,
       blending: THREE.NormalBlending,
       depthWrite: false,
 
       // Iridescence (虹色干渉)
-      iridescence: 1.0,
+      iridescence: isDark ? 1.0 : 0.6, // Light Mode: Bit stronger again because roughness blurs it
       iridescenceIOR: 1.8,
       iridescenceThicknessRange: [100, 800],
 
@@ -193,8 +193,8 @@ export function ThreeBackground({ isDark }: Props) {
     shardMat.side = THREE.DoubleSide;
     shardMat.vertexColors = false; // 黒ベースにするので頂点カラー（白系）はオフにする
     // 暗い背景でも“存在”が分かる程度の弱い発光（ガラスの縁の補助）
-    shardMat.emissive = new THREE.Color(isDark ? 0x22d3ee : 0x0ea5e9);
-    shardMat.emissiveIntensity = isDark ? 0.0 : 0.1; // リファレンスは自己発光していないので、環境反射に任せる（0.0にする）
+    shardMat.emissive = new THREE.Color(isDark ? 0x22d3ee : 0x000000);
+    shardMat.emissiveIntensity = isDark ? 0.0 : 0.0; // リファレンスは自己発光していないので、環境反射に任せる（0.0にする）
 
     // Fresnel（縁が光る）をonBeforeCompileで注入
     // リファレンスのような「白いハイライト」のエッジにする
@@ -203,36 +203,38 @@ export function ThreeBackground({ isDark }: Props) {
     const fresnelIntensity = isDark ? 10.0 : 2.0; // エッジだけ強烈に白く光らせる
     const fresnelAlpha = isDark ? 1.0 : 0.8;
 
-    shardMat.onBeforeCompile = (shader) => {
-      shader.uniforms.uFresnelColor = { value: fresnelColor };
-      shader.uniforms.uFresnelPower = { value: fresnelPower };
-      shader.uniforms.uFresnelIntensity = { value: fresnelIntensity };
-      shader.uniforms.uFresnelAlpha = { value: fresnelAlpha };
+    if (isDark) {
+      shardMat.onBeforeCompile = (shader) => {
+        shader.uniforms.uFresnelColor = { value: fresnelColor };
+        shader.uniforms.uFresnelPower = { value: fresnelPower };
+        shader.uniforms.uFresnelIntensity = { value: fresnelIntensity };
+        shader.uniforms.uFresnelAlpha = { value: fresnelAlpha };
 
-      // NOTE: uniformsは自動宣言されないので、必ずシェーダに宣言を注入する
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        `#include <common>
-         uniform vec3 uFresnelColor;
-         uniform float uFresnelPower;
-         uniform float uFresnelIntensity;
-         uniform float uFresnelAlpha;`,
-      );
+        // NOTE: uniformsは自動宣言されないので、必ずシェーダに宣言を注入する
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <common>",
+          `#include <common>
+          uniform vec3 uFresnelColor;
+          uniform float uFresnelPower;
+          uniform float uFresnelIntensity;
+          uniform float uFresnelAlpha;`,
+        );
 
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <normal_fragment_begin>",
-        `#include <normal_fragment_begin>
-         float fresnel = pow(1.0 - abs(dot(normalize(vViewPosition), normalize(normal))), uFresnelPower);
-         fresnel = clamp(fresnel, 0.0, 1.0);`,
-      );
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <normal_fragment_begin>",
+          `#include <normal_fragment_begin>
+          float fresnel = pow(1.0 - abs(dot(normalize(vViewPosition), normalize(normal))), uFresnelPower);
+          fresnel = clamp(fresnel, 0.0, 1.0);`,
+        );
 
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <output_fragment>",
-        `outgoingLight += uFresnelColor * fresnel * uFresnelIntensity;
-         diffuseColor.a = max(diffuseColor.a, fresnel * uFresnelAlpha);
-         #include <output_fragment>`,
-      );
-    };
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <output_fragment>",
+          `outgoingLight += uFresnelColor * fresnel * uFresnelIntensity;
+          diffuseColor.a = max(diffuseColor.a, fresnel * uFresnelAlpha);
+          #include <output_fragment>`,
+        );
+      };
+    }
     shardMat.needsUpdate = true;
 
     // --- HALO EFFECT START ---
@@ -306,16 +308,18 @@ export function ThreeBackground({ isDark }: Props) {
     // User Request: "Reference image style" -> Rounded, Glassy, Dispersion
     const prismGeo = new RoundedBoxGeometry(0.7, 0.7, 0.7, 4, 0.1); // Rounded edges
     const prismMat = new THREE.MeshPhysicalMaterial({
-      color: 0x000000,    // Black body (Transparent in Additive)
-      roughness: 0.0,     // Perfectly smooth
-      metalness: 1.0,     // Metallic/Mirror reflections
-      transmission: 0.0,  // Disable Transmission
+      color: isDark ? 0x000000 : 0xffffff,
+      roughness: isDark ? 0.0 : 0.15, // Light Mode: Slightly softer
+      metalness: isDark ? 1.0 : 0.0, // Dark=Mirror, Light=Glass
+      transmission: isDark ? 0.0 : 1.0, // Transmission for Light mode
+      thickness: isDark ? 0.0 : 1.2,
+      ior: 1.6,
       transparent: true,
-      blending: THREE.AdditiveBlending, // Key to transparency + GOW
-      side: THREE.DoubleSide, // Show back edges
-      depthWrite: false,  // Sort correctly
+      blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
+      side: THREE.DoubleSide,
+      depthWrite: false,
 
-      envMapIntensity: 2.0, // Visible reflections
+      envMapIntensity: isDark ? 2.0 : 1.0,
 
       // Iridescence (Fake Dispersion/Rainbow)
       iridescence: 1.0,
@@ -335,33 +339,36 @@ export function ThreeBackground({ isDark }: Props) {
     const prismFresnelPower = 20.0;    // Ghostly Sharp (Only exact edges)
     const prismFresnelIntensity = 10.0; // Extreme Glow to be visible
 
-    prismMat.onBeforeCompile = (shader) => {
-      shader.uniforms.uFresnelColor = { value: prismFresnelColor };
-      shader.uniforms.uFresnelPower = { value: prismFresnelPower };
-      shader.uniforms.uFresnelIntensity = { value: prismFresnelIntensity };
+    // Only apply extreme Additive Fresnel in Dark Mode
+    if (isDark) {
+      prismMat.onBeforeCompile = (shader) => {
+        shader.uniforms.uFresnelColor = { value: prismFresnelColor };
+        shader.uniforms.uFresnelPower = { value: prismFresnelPower };
+        shader.uniforms.uFresnelIntensity = { value: prismFresnelIntensity };
 
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        `#include <common>
-          uniform vec3 uFresnelColor;
-          uniform float uFresnelPower;
-          uniform float uFresnelIntensity;`
-      );
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <common>",
+          `#include <common>
+            uniform vec3 uFresnelColor;
+            uniform float uFresnelPower;
+            uniform float uFresnelIntensity;`
+        );
 
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <normal_fragment_begin>",
-        `#include <normal_fragment_begin>
-          float fresnel = pow(1.0 - abs(dot(normalize(vViewPosition), normalize(normal))), uFresnelPower);
-          fresnel = clamp(fresnel, 0.0, 1.0);`
-      );
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <normal_fragment_begin>",
+          `#include <normal_fragment_begin>
+            float fresnel = pow(1.0 - abs(dot(normalize(vViewPosition), normalize(normal))), uFresnelPower);
+            fresnel = clamp(fresnel, 0.0, 1.0);`
+        );
 
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <output_fragment>",
-        `// Additive Fresnel
-          outgoingLight += uFresnelColor * fresnel * uFresnelIntensity;
-          #include <output_fragment>`
-      );
-    };
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <output_fragment>",
+          `// Additive Fresnel
+            outgoingLight += uFresnelColor * fresnel * uFresnelIntensity;
+            #include <output_fragment>`
+        );
+      };
+    }
 
     const prismMesh = new THREE.Mesh(prismGeo, prismMat);
     prismMesh.position.set(0, 0, 0);

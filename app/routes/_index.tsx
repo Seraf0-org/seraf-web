@@ -60,12 +60,12 @@ export default function Index() {
             `,
         }
         : {
-          backgroundColor: "#f8fafc",
+          backgroundColor: "#bfcad6", // Further darkened from #d8e1e8
           backgroundImage: `
-              radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0.00) 66%),
-              radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.00) 64%),
-              radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.00) 62%),
-              linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(59, 130, 246, 0.03) 45%, rgba(255,255,255,0) 75%)
+              radial-gradient(55% 55% at 18% 22%, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0.00) 66%),
+              radial-gradient(50% 50% at 88% 16%, rgba(59, 130, 246, 0.10) 0%, rgba(59, 130, 246, 0.00) 64%),
+              radial-gradient(60% 60% at 70% 92%, rgba(34, 211, 238, 0.10) 0%, rgba(34, 211, 238, 0.00) 62%),
+              linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(59, 130, 246, 0.02) 45%, rgba(140,150,160,0) 75%)
             `,
         }
       } />
@@ -87,7 +87,7 @@ export default function Index() {
           style={{
             background: isDark
               ? 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 5%, rgba(0,0,0,0.2) 100%)'
-              : 'linear-gradient(to bottom, rgba(248,250,252,0) 0%, rgba(248,250,252,0.95) 20%, rgba(248,250,252,1) 100%)',
+              : 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.6) 100%)',
             backdropFilter: 'blur(2px)' // Optional: Adds slight blur to enhance text further
           }}
         >

@@ -103,10 +103,18 @@ export function About() {
         { strokeDashoffset: [600, 0] },
         { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
       );
+
+      // テキスト行のシーケンシャルアニメーション
+      (animate as any)(
+        ".about-text-line",
+        { opacity: [0, 1], y: [20, 0] },
+        { delay: stagger(0.1, { startDelay: 0.8 }), duration: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
     } else {
       // Smooth fade out when out of view
       (animate as any)(".about-title", { opacity: 0, y: 30 }, { duration: 0.5 });
       (animate as any)(".about-content", { opacity: 0, y: 40 }, { duration: 0.5 });
+      (animate as any)(".about-text-line", { opacity: 0, y: 20 }, { duration: 0.5 }); // Reset lines
       (animate as any)(".about-video", { opacity: 0, scale: 0.9 }, { duration: 0.5 });
       (animate as any)(".decorative-line", { strokeDashoffset: 600 }, { duration: 0.5 });
     }
@@ -206,16 +214,24 @@ export function About() {
               </svg>
             </div>
           </h1>
-          <p
-            className="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-loose md:leading-loose"
-          >
-            <span className="text-lg md:text-3xl font-semibold">Seraf()</span>
-            は、ゲーム制作を中心としたクリエイタースタジオです。<br className="mb-4" />
-            リーダーのKTNを主軸に、複数のスキルと高いモチベーションを持ったクリエイターと共に様々なゲームを作っていきます。<br className="mb-4" />
-            学生の若さ故に持つ強い自我が大衆に均される前に、確立されたエゴを以て学び合い高めあう。<br className="mb-4" />
-            誠実に。されど貪欲に。<br className="mb-4" />
-            最新鋭の技術や、各々の得意や好きを余すことなく活かし、個性をぶつかり合わせて生まれるオリジナリティ溢れる作品をお楽しみあれ。
-          </p>
+          <div className="space-y-4 mb-8">
+            <p className="about-text-line text-base md:text-xl text-gray-600 dark:text-gray-300 leading-loose md:leading-loose opacity-0">
+              <span className="text-lg md:text-3xl font-semibold">Seraf()</span>
+              は、ゲーム制作を中心としたクリエイタースタジオです。
+            </p>
+            <p className="about-text-line text-base md:text-xl text-gray-600 dark:text-gray-300 leading-loose md:leading-loose opacity-0">
+              リーダーのKTNを主軸に、複数のスキルと高いモチベーションを持ったクリエイターと共に様々なゲームを作っていきます。
+            </p>
+            <p className="about-text-line text-base md:text-xl text-gray-600 dark:text-gray-300 leading-loose md:leading-loose opacity-0">
+              学生の若さ故に持つ強い自我が大衆に均される前に、確立されたエゴを以て学び合い高めあう。
+            </p>
+            <p className="about-text-line text-base md:text-xl text-gray-600 dark:text-gray-300 leading-loose md:leading-loose opacity-0">
+              誠実に。されど貪欲に。
+            </p>
+            <p className="about-text-line text-base md:text-xl text-gray-600 dark:text-gray-300 leading-loose md:leading-loose opacity-0">
+              最新鋭の技術や、各々の得意や好きを余すことなく活かし、個性をぶつかり合わせて生まれるオリジナリティ溢れる作品をお楽しみあれ。
+            </p>
+          </div>
 
           <div className="mt-8 text-center md:text-left">
             <Link
