@@ -130,25 +130,7 @@ export const members: Member[] = [
             }
         ]
     },
-    {
-        id: 6,
-        name: "しそ",
-        position: "UIデザイナー",
-        mainImage: "/images/members/member-6.jpg",
-        subImage: "/images/members/member-6.jpg",
-        description: "準備中。",
-        skills: ["Illustrator"],
-        sns: [
-            /*{
-                url: "https://twitter.com/Sm_1010_",
-                label: "X(旧Twitter)",
-                color: {
-                    base: "147, 51, 234",  // 紫色
-                    hover: "126, 34, 206"  // 紫色のホバー
-                }
-            }*/
-        ]
-    },
+
     {
         id: 7,
         name: "あきべ",
@@ -261,26 +243,34 @@ export const members: Member[] = [
             }
         ]
     },
+    */
     {
         id: 12,
         name: "カーリー",
         position: "プログラマー",
         mainImage: "/images/members/member-12.jpg",
         subImage: "/images/members/member-12.jpg",
-        description: "準備中。",
-        skills: ["C#", "Unity"],
+        description: "ジャンルやデジタル・アナログ問わず様々なゲームが好きです。最近はシェーダーにお熱。",
+        skills: ["C#", "C++", "Unity"],
         sns: [
             {
-                url: "https://twitter.com/carry7766",
+                url: "https://x.com/Carly7766",
                 label: "X(旧Twitter)",
                 color: {
                     base: "6, 182, 212",
                     hover: "8, 145, 178"
                 }
+            },
+            {
+                url: "https://github.com/Carly7766/",
+                label: "GitHub",
+                color: {
+                    base: "34, 210, 54",
+                    hover: "22, 172, 32"
+                }
             }
         ]
     },
-    */
     {
         id: 13,
         name: "タカノリ",

@@ -227,6 +227,113 @@ export function ThreeBackground({ isDark }: Props) {
     };
     shardMat.needsUpdate = true;
 
+    // --- HALO EFFECT START ---
+    // User Request: Spectral/Lens Flare Halo in center
+    const haloGeo = new THREE.PlaneGeometry(12, 12);
+    const haloMat = new THREE.ShaderMaterial({
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform float uIntensity;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 uv = vUv - 0.5;
+          float dist = length(uv);
+          
+          // Spectral ring parameters
+          float radius = 0.35 + sin(uTime * 0.2) * 0.02;
+          float width = 0.05;
+          
+          // Create RGB offset for rainbow effect (Chromatic Aberration)
+          // Red is outer, Blue is inner (or vice versa)
+          float r = smoothstep(width, 0.0, abs(dist - (radius + 0.015)));
+          float g = smoothstep(width, 0.0, abs(dist - radius));
+          float b = smoothstep(width, 0.0, abs(dist - (radius - 0.015)));
+          
+          vec3 ringColor = vec3(r, g, b);
+
+          // Add a second, larger, fainter ring
+          float radius2 = 0.6 + cos(uTime * 0.15) * 0.05;
+          float width2 = 0.15;
+          float r2 = smoothstep(width2, 0.0, abs(dist - (radius2 + 0.03)));
+          float g2 = smoothstep(width2, 0.0, abs(dist - radius2));
+          float b2 = smoothstep(width2, 0.0, abs(dist - (radius2 - 0.03)));
+          
+          vec3 ringColor2 = vec3(r2, g2, b2);
+          
+          // Combine
+          vec3 finalColor = ringColor * 1.5 + ringColor2 * 0.5;
+          
+          // Fade out edges of the plane
+          // Ensure it hits 0.0 before dist reaches 0.5 (edge of 1x1 plane)
+          // Previous (0.7, 0.2) was keeping it opaque at the edges (dist=0.5 -> alpha=0.4)
+          float alpha = smoothstep(0.45, 0.1, dist);
+          
+          gl_FragColor = vec4(finalColor, alpha * uIntensity);
+        }
+      `,
+      uniforms: {
+        uTime: { value: 0 },
+        uIntensity: { value: isDark ? 0.35 : 0.0 }, // Only visible in dark mode primarily
+      },
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+
+    const haloMesh = new THREE.Mesh(haloGeo, haloMat);
+    haloMesh.position.set(0, 0, -2); // Behind shards
+    scene.add(haloMesh);
+    // --- HALO EFFECT END ---
+
+    // --- PRISM START ---
+    // User Request: "Place a prism in the center" -> "Cube", "Smaller" -> "More prism-like" (Glowing edges, dark glass)
+    const prismGeo = new THREE.BoxGeometry(0.6, 0.6, 0.6);
+    const prismMat = new THREE.MeshPhysicalMaterial({
+      color: 0x222222,    // Dark body
+      roughness: 0.05,
+      metalness: 0.1,
+      transmission: 0.9,  // High transmission but dark color = smoked glass effect
+      thickness: 1.2,
+      ior: 2.33,          // Diamond/High refraction
+      attenuationColor: 0xffffff,
+      attenuationDistance: 0.5,
+      clearcoat: 1.0,
+
+      // Iridescence for the rainbow look
+      iridescence: 1.0,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [200, 800],
+
+      envMapIntensity: 3.0,
+      side: THREE.DoubleSide
+    });
+    const prismMesh = new THREE.Mesh(prismGeo, prismMat);
+
+    // Glowing Edges using EdgesGeometry
+    const edgeGeo = new THREE.EdgesGeometry(prismGeo);
+    const edgeMat = new THREE.LineBasicMaterial({
+      color: 0xaaddff, // Pale Cyan/White
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const edgeMesh = new THREE.LineSegments(edgeGeo, edgeMat);
+    prismMesh.add(edgeMesh); // Attach to parent so it rotates together
+
+    prismMesh.position.set(0, 0, 0);
+    scene.add(prismMesh);
+    // --- PRISM END ---
+
     const shards = new THREE.InstancedMesh(shardGeo, shardMat, shardCount);
     shards.frustumCulled = false;
     scene.add(shards);
@@ -334,7 +441,7 @@ export function ThreeBackground({ isDark }: Props) {
       // 1. Add impulse from scroll (Sensitivity)
       // This creates "Acceleration" rather than "Position Mapping".
       // Smooths out the "Kaku-kaku" (stepped) movement of scroll wheels.
-      (animate as any).scrollVelocity += deltaY * 0.04;
+      (animate as any).scrollVelocity += deltaY * 0.08;
 
       // 2. Apply Friction / Decay 
       // Returns to 0 over time.
@@ -348,6 +455,16 @@ export function ThreeBackground({ isDark }: Props) {
       (animate as any).totalRotation += dt * timeScale;
 
       const effectiveT = (animate as any).totalRotation;
+
+      // Update Halo Uniforms
+      haloMat.uniforms.uTime.value = t;
+
+      // Animate Prism
+      // Slow rotation
+      prismMesh.rotation.x = t * 0.2;
+      prismMesh.rotation.y = t * 0.25;
+      prismMesh.rotation.z = t * 0.15;
+
 
       // lerp pointer
       pointer.x += (pointerTarget.x - pointer.x) * 0.06;
@@ -466,6 +583,12 @@ export function ThreeBackground({ isDark }: Props) {
       if (container.contains(renderer.domElement)) container.removeChild(renderer.domElement);
       shardGeo.dispose();
       shardMat.dispose();
+      haloGeo.dispose();
+      haloMat.dispose();
+      prismGeo.dispose();
+      prismMat.dispose();
+      edgeGeo.dispose();
+      edgeMat.dispose();
       envTex.dispose();
       envRT.texture.dispose();
       envRT.dispose();
