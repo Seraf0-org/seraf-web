@@ -437,6 +437,38 @@ export function ThreeBackground({ isDark }: Props) {
     shards.frustumCulled = false;
     scrollGroup.add(shards); // Scroll away
 
+    // --- BUBBLES START ---
+    // User Request: "Bubbles appearing from News section"
+    const bubbleCount = isDark ? 60 : 40;
+    const bubbleGeo = new THREE.SphereGeometry(0.2, 16, 16);
+    const bubbleMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      roughness: 0.1,
+      metalness: 0.1,
+      transmission: 1.0,
+      thickness: 1.5,
+      ior: 1.4,
+      transparent: true,
+      opacity: 1.0, // Changed from 0.0 to 1.0 so they are actually visible
+      side: THREE.DoubleSide,
+      depthWrite: false, // Important for glass sorting
+      envMapIntensity: 2.0,
+    });
+    const bubbles = new THREE.InstancedMesh(bubbleGeo, bubbleMat, bubbleCount);
+    bubbles.frustumCulled = false;
+    bubbles.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    scene.add(bubbles); // Fixed in scene, doesn't scroll with "ScrollGroup" (we want them to float independently)
+
+    const bubbleData = new Array(bubbleCount).fill(0).map(() => ({
+      x: (Math.random() - 0.5) * 15, // Wide spread
+      y: (Math.random() - 0.5) * 10 - 5, // Convert to range roughly -10 to 0 initially
+      z: (Math.random() - 0.5) * 5,
+      speed: 0.5 + Math.random() * 1.5,
+      scale: 0.3 + Math.random() * 0.7,
+      offset: Math.random() * 100, // Random starting time offset
+    }));
+    // --- BUBBLES END ---
+
     const dummy = new THREE.Object3D();
     // Orbit parameters
     const initialAngle = new Array<number>(shardCount);
@@ -736,6 +768,63 @@ export function ThreeBackground({ isDark }: Props) {
         shards.setMatrixAt(i, dummy.matrix);
       }
       shards.instanceMatrix.needsUpdate = true;
+
+      // --- BUBBLE ANIMATION START ---
+      // Bubbles appear after News section starts
+      // News Range: newsStart (~3.1vh) onwards.
+      // Need to adjust this to match the actual DOM layout.
+      // Hero (2.5vh) + About (~1.0vh+) -> News starts around 3.5vh.
+      // Trigger visually during About so they are fully present for News.
+      const bubbleTrigger = newsStart; // User Request: "Start from News is fine"
+      let bubbleAlpha = 0.0;
+      if (currentScrollY > bubbleTrigger) {
+        // Fade in over 1.0vh scroll distance
+        bubbleAlpha = Math.min(1.0, (currentScrollY - bubbleTrigger) / (vh * 0.8));
+      }
+
+      // If visible, animate
+      if (bubbleAlpha > 0.01) {
+        bubbles.visible = true;
+        const bDummy = new THREE.Object3D();
+        const bColor = new THREE.Color(0xffffff);
+
+        for (let i = 0; i < bubbleCount; i++) {
+          const d = bubbleData[i];
+          // Float Up
+          // Y position loops from -8 to +8 (relative to camera y?)
+          // Since camera moves with pointer slightly, but mostly fixed Y?
+          // Wait, scrollGroup moves. Scene is fixed.
+          // Bubbles should fill the screen. Sreen height at Z=0 is ~5-6 units.
+          // Range -4 to +4 seems proper.
+
+          let y = d.y + (t * d.speed * 0.5);
+          // Wrap logic
+          const range = 12;
+          const halfRange = range / 2;
+          y = ((y + halfRange) % range) - halfRange;
+          // y is now -6 to +6.
+
+          // Wiggle
+          const x = d.x + Math.sin(t + d.offset) * 0.2;
+          const z = d.z + Math.cos(t * 0.8 + d.offset) * 0.2;
+
+          bDummy.position.set(x, y, z);
+          // Scale In/Out based on lifespan or just keep constant?
+          // Let's just scale by global alpha for fade in/out
+          const s = d.scale * bubbleAlpha; // Simple fade via scale?
+          // Scale 0 -> invisible.
+          bDummy.scale.set(s, s, s);
+          bDummy.updateMatrix();
+          bubbles.setMatrixAt(i, bDummy.matrix);
+
+          // Optional: Tint bubbles?
+          // bubbles.setColorAt(i, bColor);
+        }
+        bubbles.instanceMatrix.needsUpdate = true;
+      } else {
+        bubbles.visible = false;
+      }
+      // --- BUBBLE ANIMATION END ---
 
       // Render using composer
       composer.render();
