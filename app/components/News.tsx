@@ -77,12 +77,34 @@ export function News() {
         { strokeDashoffset: [1000, 0] },
         { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
       );
+
+      (animate as any)(
+        ".news-decorative-line",
+        { strokeDashoffset: [1000, 0] },
+        { duration: 1.2, delay: 0.8, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
+      // Grid Animation (Vertical then Horizontal)
+      (animate as any)(
+        ".grid-vertical",
+        { height: ["0%", "100%"] },
+        { duration: 1.0, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+      (animate as any)(
+        ".grid-horizontal",
+        { width: ["0%", "100%"] },
+        { duration: 1.0, delay: 1.0, easing: [0.25, 0.46, 0.45, 0.94] }
+      );
+
     } else {
       // Smooth fade out when out of view
       (animate as any)(".news-title", { opacity: 0, y: 30 }, { duration: 0.5 });
       (animate as any)(".news-item", { opacity: 0, y: 50, scale: 0.9 }, { duration: 0.5 });
       (animate as any)(".news-text", { opacity: 0, y: 20 }, { duration: 0.5 });
       (animate as any)(".news-decorative-line", { strokeDashoffset: 1000 }, { duration: 0.5 });
+
+      (animate as any)(".grid-vertical", { height: "0%" }, { duration: 0.5 });
+      (animate as any)(".grid-horizontal", { width: "0%" }, { duration: 0.5 });
     }
   }, [isVisible]);
 
@@ -211,12 +233,25 @@ export function News() {
       ))}
 
       <div
-        className="absolute inset-0 bg-grid-pattern"
+        className="absolute left-0 top-0 w-full grid-vertical"
         style={{
+          height: '0%', // Initially 0 for animation
           opacity: 0.3,
+          backgroundSize: '50px 50px',
           backgroundImage: isDark
-            ? 'linear-gradient(to right, rgba(255, 255, 255, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 1px, transparent 1px)'
-            : 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
+            ? 'linear-gradient(to right, rgba(255, 255, 255, 0.8) 1px, transparent 1px)'
+            : 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
+        }}
+      ></div>
+      <div
+        className="absolute left-0 top-0 h-full grid-horizontal"
+        style={{
+          width: '0%', // Initially 0 for animation
+          opacity: 0.3,
+          backgroundSize: '50px 50px',
+          backgroundImage: isDark
+            ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 1px, transparent 1px)'
+            : 'linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 1px, transparent 1px)',
         }}
       ></div>
       <div className="absolute left-0 top-0 z-0 w-full h-full md:w-full md:h-auto" style={{ transform: `translateY(calc(${parallaxOffset}px - 30vh))` }}>

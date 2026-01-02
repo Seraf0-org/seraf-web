@@ -103,7 +103,7 @@ export default function Index() {
           <section id="members">
             <Members />
           </section>
-          <section id="partnership">
+          <section id="partners">
             <Partnership />
           </section>
           <section id="contact">

@@ -7,57 +7,7 @@ import { useEffect, useState, useCallback } from "react";
 import { createPortal } from 'react-dom';
 import { animate, stagger, inView } from "motion";
 
-const Hexagon = ({ x, y, size, color, opacity, delay, parallaxSpeed, isVisible }: {
-  x: number;
-  y: number;
-  size: number;
-  color: string;
-  opacity: number;
-  delay: number;
-  parallaxSpeed: number;
-  isVisible: boolean;
-}) => {
-  const [offsetY, setOffsetY] = useState(0);
-  const [startScrollY, setStartScrollY] = useState(0);
 
-  const handleScroll = useCallback(() => {
-    if (!isVisible) return;
-
-    requestAnimationFrame(() => {
-      const currentScrollY = window.scrollY;
-      const relativeScroll = currentScrollY - startScrollY;
-      setOffsetY(relativeScroll * parallaxSpeed);
-    });
-  }, [parallaxSpeed, isVisible, startScrollY]);
-
-  useEffect(() => {
-    if (isVisible) {
-      setStartScrollY(window.scrollY);
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
-  }, [handleScroll, isVisible]);
-
-  const points = Array.from({ length: 6 }).map((_, i) => {
-    const angle = (i * 60 * Math.PI) / 180;
-    return `${x + size * Math.cos(angle)},${(y + offsetY / 50) + size * Math.sin(angle)}`;
-  }).join(' ');
-
-  return (
-    <polygon
-      points={points}
-      fill="none"
-      stroke={color}
-      strokeWidth="1"
-      opacity={opacity}
-      className={`transition-opacity duration-1000`}
-      style={{
-        transitionDelay: `${delay}ms`,
-        transform: `translateY(${offsetY}px)`,
-      }}
-    />
-  );
-};
 
 const ProductPopup = ({ product, onClose }: {
   product: typeof products[0];
@@ -380,27 +330,7 @@ export function Products() {
       className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
       style={{}}
     >
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          {isVisible && (
-            <>
-              <Hexagon x={10} y={20} size={3} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.2} delay={200} parallaxSpeed={0.02} isVisible={isVisible} />
-              <Hexagon x={50} y={30} size={4} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.15} delay={400} parallaxSpeed={-0.03} isVisible={isVisible} />
-              <Hexagon x={80} y={15} size={2.5} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.25} delay={600} parallaxSpeed={0.04} isVisible={isVisible} />
-              <Hexagon x={30} y={50} size={3.5} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.1} delay={800} parallaxSpeed={-0.02} isVisible={isVisible} />
-              <Hexagon x={90} y={40} size={4.5} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.2} delay={1000} parallaxSpeed={0.03} isVisible={isVisible} />
-              <Hexagon x={20} y={60} size={3} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.15} delay={1200} parallaxSpeed={-0.04} isVisible={isVisible} />
-              <Hexagon x={70} y={70} size={3.5} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.2} delay={1400} parallaxSpeed={0.025} isVisible={isVisible} />
-              <Hexagon x={40} y={80} size={4} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.15} delay={1600} parallaxSpeed={-0.035} isVisible={isVisible} />
-              <Hexagon x={60} y={25} size={3} color={isDark ? '#0891b2' : '#06b6d4'} opacity={0.1} delay={1800} parallaxSpeed={0.045} isVisible={isVisible} />
-            </>
-          )}
-        </svg>
-      </div>
+
 
       <div
         className="absolute right-14 top-1/2 transform pointer-events-none"
