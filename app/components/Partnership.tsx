@@ -6,7 +6,6 @@ import { partners, type Partner } from "~/data/partners";
 import { createPortal } from 'react-dom';
 import { animate, stagger } from "motion";
 
-// 以下のHexagonコンポーネントを追加
 
 
 export function Partnership() {
@@ -17,7 +16,6 @@ export function Partnership() {
 
     useEffect(() => {
         const handleScroll = () => {
-            // パララックス効果をほんの少し強く
             const offset = window.scrollY * 0.035;
             setParallaxOffset(offset);
         };
@@ -26,7 +24,6 @@ export function Partnership() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Motionアニメーションを初期化
     useEffect(() => {
         if (isVisible) {
             // タイトルのアニメーション

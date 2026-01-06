@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react";
 import { members } from "~/data/members";
 import { useIntersectionObserver } from "~/hooks/useIntersectionObserver";
 import { useOutletContext } from "@remix-run/react";
@@ -6,45 +6,72 @@ import type { OutletContext } from "~/root";
 import { useLines } from "~/contexts/LinesContext";
 import { createPortal } from 'react-dom';
 import { animate, stagger } from "motion";
+import { AnimatePresence, motion } from "framer-motion";
 
-
+import { works } from "~/data/works";
 
 const MemberPopup = ({ member, onClose }: {
     member: typeof members[0];
     onClose: () => void;
 }) => {
+
+    const portfolioAchevements = works
+        .filter(work => work.memberIds?.includes(member.id))
+        .map(work => ({
+            ...work,
+            image: work.image || "/images/products/product-none.jpg",
+            period: work.period
+        }));
+
+    const privateAchievements = member.achievements?.map(a => ({
+        ...a,
+        summary: a.summary || "",
+        contribution: a.contribution || "",
+        tech: a.tech || [],
+        tag: "",
+        period: ""
+    })) || [];
+
+    const allAchievements = [...portfolioAchevements, ...privateAchievements].sort((a, b) => {
+        if (a.period && !b.period) return -1;
+        if (!a.period && b.period) return 1;
+        if (!a.period && !b.period) return 0;
+        return b.period!.localeCompare(a.period!);
+    });
+
     const [isClosing, setIsClosing] = useState(false);
+    const [selectedWork, setSelectedWork] = useState<typeof allAchievements[0] | null>(null);
+    const [direction, setDirection] = useState(0);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const listRef = useRef<HTMLDivElement>(null);
+    const scrollPosRef = useRef({ mobile: 0, desktop: 0 });
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
 
-        // ポップアップ表示時のアニメーション
         (animate as any)(
             ".popup-overlay",
             { opacity: [0, 1] },
-            { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+            { duration: 0.2, easing: [0.25, 0.46, 0.45, 0.94] }
         );
 
         (animate as any)(
             ".popup-content",
             { opacity: [0, 1], scale: [0.95, 1], y: [100, 0] },
-            { duration: 0.6, delay: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
+            { duration: 0.4, delay: 0, easing: [0.25, 0.46, 0.45, 0.94] }
         );
 
         (animate as any)(
-            ".popup-image",
-            { opacity: [0, 1], scale: [0.9, 1], y: [30, 0] },
-            { duration: 0.7, delay: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+            ".popup-left-content",
+            { opacity: [0, 1], x: [-30, 0] },
+            { duration: 0.5, delay: 0.1, easing: [0.25, 0.46, 0.45, 0.94] }
         );
 
         (animate as any)(
-            ".popup-text",
-            { opacity: [0, 1], y: [40, 0] },
-            {
-                delay: stagger(0.1, { startDelay: 0.5 }),
-                duration: 0.6,
-                easing: [0.25, 0.46, 0.45, 0.94]
-            }
+            ".popup-right-content",
+            { opacity: [0, 1], x: [30, 0] },
+            { duration: 0.5, delay: 0.15, easing: [0.25, 0.46, 0.45, 0.94] }
         );
 
         return () => {
@@ -55,10 +82,9 @@ const MemberPopup = ({ member, onClose }: {
     const handleClose = () => {
         setIsClosing(true);
 
-        // ポップアップ非表示時のアニメーション
         (animate as any)(
             ".popup-content",
-            { opacity: [1, 0], scale: [1, 0.95], y: [0, -100] },
+            { opacity: [1, 0] },
             { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
         );
 
@@ -68,16 +94,98 @@ const MemberPopup = ({ member, onClose }: {
             { duration: 0.3, delay: 0.2, easing: [0.25, 0.46, 0.45, 0.94] }
         );
 
-        setTimeout(onClose, 300);
+        setTimeout(onClose, 550);
+    };
+
+    const variants = {
+        enter: (direction: number) => ({
+            x: direction === 0 ? 0 : (direction > 0 ? "100%" : "-100%"),
+            opacity: direction === 0 ? 1 : 0,
+            zIndex: 0
+        }),
+        center: {
+            zIndex: 1,
+            x: 0,
+            opacity: 1,
+            position: "relative" as const
+        },
+        exit: (direction: number) => ({
+            zIndex: 0,
+            x: direction < 0 ? "100%" : "-100%",
+            opacity: 0,
+            position: "absolute" as const
+        })
+    };
+
+    const handleSelectWork = (work: typeof allAchievements[0]) => {
+        if (window.innerWidth < 768) {
+            if (containerRef.current) {
+                scrollPosRef.current.mobile = containerRef.current.scrollTop;
+                containerRef.current.scrollTop = 0;
+            }
+        } else {
+            if (listRef.current) {
+                scrollPosRef.current.desktop = listRef.current.scrollTop;
+            }
+        }
+        setDirection(1);
+        setSelectedWork(work);
+    };
+
+    const handleBackToList = () => {
+        setDirection(-1);
+        setSelectedWork(null);
+    };
+
+    useLayoutEffect(() => {
+        if (!selectedWork) {
+            setTimeout(() => {
+                if (window.innerWidth < 768) {
+                    if (containerRef.current) {
+                        containerRef.current.scrollTop = scrollPosRef.current.mobile;
+                    }
+                } else {
+                    if (listRef.current) {
+                        listRef.current.scrollTop = scrollPosRef.current.desktop;
+                    }
+                }
+            }, 0);
+        }
+    }, [selectedWork]);
+
+    const gridContainerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.08,
+                delayChildren: 0.1
+            }
+        }
+    };
+
+    const gridItemVariants = {
+        hidden: {
+            clipPath: "inset(0 100% 0 0)",
+            opacity: 0
+        },
+        visible: {
+            clipPath: "inset(0 0% 0 0)",
+            opacity: 1,
+            transition: {
+                duration: 0.4,
+                ease: [0.25, 0.46, 0.45, 0.94] as const
+            }
+        }
     };
 
     return createPortal(
         <div
-            className={`popup-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+            className={`popup-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
             onClick={handleClose}
         >
             <div
-                className="popup-content relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl animate-clip-from-top
+                className="popup-content relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl
                     w-[90vw] h-[90vh]
                     md:w-[min(90vw,calc(90vh*16/9))] md:h-[min(90vh,calc(90vw*9/16))]
                     md:max-w-[1800px] md:max-h-[1012px]"
@@ -85,133 +193,323 @@ const MemberPopup = ({ member, onClose }: {
             >
                 <button
                     onClick={handleClose}
-                    className="popup-close absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10"
+                    className="popup-close absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10 bg-white/50 dark:bg-black/50 rounded-full p-1"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
 
-                <div className="flex flex-col md:flex-row h-full">
-                    <div className="w-full md:w-1/2 relative h-[40vh] md:h-full">
-                        <div className="popup-image relative h-full">
-                            <img
-                                src={member.mainImage}
-                                alt={member.name}
-                                className="absolute inset-0 w-full h-full object-cover"
-                            />
-                            <div
-                                className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
-                                style={{
-                                    backgroundImage: `url(${member.subImage})`,
-                                    opacity: 0,
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                                onMouseLeave={e => e.currentTarget.style.opacity = '0'}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="w-full md:w-1/2 flex flex-col h-full">
-                        <div className="flex-1 p-4 md:p-6 overflow-y-auto">
-                            <div className="mb-6 popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.4s' }}>
-                                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                                    {member.name}
-                                </h3>
-                                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
-                                    {member.position}
-                                </p>
+                <div
+                    ref={containerRef}
+                    className="flex flex-col md:flex-row h-full overflow-y-auto md:overflow-hidden overflow-x-hidden overscroll-contain"
+                >
+                    {/* 左側: プロフィール情報 */}
+                    <div className={`popup-left-content w-full md:w-2/5 p-6 md:p-10 shrink-0 h-auto md:h-full md:overflow-y-auto border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 opacity-0 bg-gray-50/50 dark:bg-gray-800/50 overscroll-contain ${selectedWork ? 'hidden md:block' : ''}`}>
+                        <div className="flex flex-col items-center md:items-start space-y-6">
+                            <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-lg border-4 border-white dark:border-gray-700">
+                                <img
+                                    src={member.mainImage}
+                                    alt={member.name}
+                                    className="w-full h-full object-cover"
+                                />
+                                <div
+                                    className="absolute inset-0 bg-cover bg-center transition-opacity duration-300 opacity-0 hover:opacity-100 cursor-pointer"
+                                    style={{ backgroundImage: `url(${member.subImage})` }}
+                                />
                             </div>
 
-                            <div className="prose dark:prose-invert max-w-none popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.6s' }}>
-                                <h4 className="text-lg md:text-xl font-semibold mb-3">自己紹介</h4>
-                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
-                                    {member.description || "準備中..."}
+                            <div className="text-center md:text-left w-full">
+                                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                                    {member.name}
+                                </h3>
+                                <p className="text-base md:text-lg text-fuchsia-600 dark:text-fuchsia-400 font-medium mb-6">
+                                    {member.position}
                                 </p>
 
-                                <h4 className="text-xl font-semibold mb-3">スキル</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {member.skills?.map((skill, index) => (
-                                        <span
-                                            key={index}
-                                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
+                                <div className="space-y-6">
+                                    <div>
+                                        <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">ABOUT</h4>
+                                        <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line leading-relaxed">
+                                            {member.description || "準備中..."}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">SKILLS</h4>
+                                        <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                                            {member.skills?.map((skill, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-full text-sm text-gray-700 dark:text-gray-300"
+                                                >
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">SOCIAL</h4>
+                                        <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                                            {member.sns.map((sns, index) => {
+                                                const defaultColor = { base: "6, 182, 212", hover: "8, 145, 178" };
+                                                const color = sns.color || defaultColor;
+
+                                                const getSnsDisplay = (url: string, label: string) => {
+                                                    const iconClass = "w-5 h-5";
+                                                    const lowerUrl = url.toLowerCase();
+                                                    const lowerLabel = label.toLowerCase();
+
+                                                    const isX = lowerUrl.includes('twitter.com') || lowerUrl.includes('x.com') || lowerLabel.includes('twitter') || lowerLabel.includes('x(');
+                                                    const isGithub = lowerUrl.includes('github.com') || lowerLabel.includes('github');
+
+                                                    if (isX || isGithub) {
+                                                        let icon;
+                                                        if (isX) {
+                                                            icon = (
+                                                                <svg className={iconClass} fill="currentColor" viewBox="0 0 24 24">
+                                                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                                                </svg>
+                                                            );
+                                                        } else {
+                                                            icon = (
+                                                                <svg className={iconClass} fill="currentColor" viewBox="0 0 24 24">
+                                                                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                                                                </svg>
+                                                            );
+                                                        }
+
+                                                        return (
+                                                            <a
+                                                                key={index}
+                                                                href={sns.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="inline-flex items-center justify-center w-10 h-10 rounded-full text-white transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                                                                style={{ backgroundColor: `rgb(${color.base})` }}
+                                                                title={sns.label}
+                                                            >
+                                                                {icon}
+                                                            </a>
+                                                        );
+                                                    }
+
+                                                    return (
+                                                        <a
+                                                            key={index}
+                                                            href={sns.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg text-white text-sm font-medium transition-transform hover:-translate-y-0.5 shadow-sm"
+                                                            style={{ backgroundColor: `rgb(${color.base})` }}
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                            </svg>
+                                                            <span>{sns.label}</span>
+                                                        </a>
+                                                    );
+                                                };
+
+                                                return getSnsDisplay(sns.url, sns.label);
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700">
-                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 popup-text opacity-0 animate-text-appear" style={{ animationDelay: '0.8s' }}>
-                                {member.sns.map((sns, index) => {
-                                    const defaultColor = {
-                                        base: "6, 182, 212",
-                                        hover: "8, 145, 178"
-                                    };
-
-                                    const color = sns.color || defaultColor;
-
-                                    return (
-                                        <a
-                                            key={index}
-                                            href={sns.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center justify-center px-6 py-3 text-white font-medium rounded-lg transition-all duration-300"
-                                            style={{
-                                                backgroundColor: `rgb(${color.base})`,
-                                                boxShadow: `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`,
-                                                filter: `brightness(1.05) contrast(1.05)`,
-                                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
-                                            }}
-                                            onMouseEnter={e => {
-                                                e.currentTarget.style.backgroundColor = `rgb(${color.hover})`;
-                                                e.currentTarget.style.boxShadow = `0 0 20px rgba(${color.base}, 0.4), 0 0 40px rgba(${color.base}, 0.2), 0 0 60px rgba(${color.base}, 0.15)`;
-                                                e.currentTarget.style.filter = `brightness(1.1) contrast(1.1)`;
-                                            }}
-                                            onMouseLeave={e => {
-                                                e.currentTarget.style.backgroundColor = `rgb(${color.base})`;
-                                                e.currentTarget.style.boxShadow = `0 0 15px rgba(${color.base}, 0.3), 0 0 30px rgba(${color.base}, 0.15), 0 0 45px rgba(${color.base}, 0.1)`;
-                                                e.currentTarget.style.filter = `brightness(1.05) contrast(1.05)`;
-                                            }}
-                                        >
-                                            <span>{sns.label}</span>
-                                            <svg
-                                                className="w-5 h-5 ml-2"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                style={{
-                                                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
-                                                }}
+                    <div className="popup-right-content w-full md:w-3/5 p-6 md:p-10 bg-gray-100 dark:bg-gray-900 opacity-0 relative overflow-hidden shrink-0 h-auto md:h-full">
+                        <AnimatePresence custom={direction} mode="popLayout">
+                            {selectedWork ? (
+                                <motion.div
+                                    key="detail"
+                                    custom={direction}
+                                    variants={variants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                    transition={{
+                                        x: { type: "spring", stiffness: 300, damping: 30 },
+                                        opacity: { duration: 0.2 }
+                                    }}
+                                    className="h-auto md:h-full md:overflow-y-auto pr-2 overscroll-contain"
+                                >
+                                    <div className="space-y-6 pb-10">
+                                        <div className="sticky top-0 z-10 py-2 mb-4">
+                                            <button
+                                                onClick={handleBackToList}
+                                                className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors bg-gray-100/80 dark:bg-gray-900/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm"
                                             >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                                />
+                                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                                </svg>
+                                                一覧に戻る
+                                            </button>
+                                        </div>
+
+                                        <div className="aspect-video w-full rounded-xl overflow-hidden shadow-md bg-gray-200 dark:bg-gray-800">
+                                            <img
+                                                src={selectedWork.image}
+                                                alt={selectedWork.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                                {selectedWork.title}
+                                            </h4>
+                                            <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                                {selectedWork.period && (
+                                                    <span className="bg-gray-200 dark:bg-gray-800 px-2 py-0.5 rounded">
+                                                        {selectedWork.period}
+                                                    </span>
+                                                )}
+                                                {selectedWork.tag && (
+                                                    <span className="text-fuchsia-500 font-medium">
+                                                        #{selectedWork.tag}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {selectedWork.summary && (
+                                            <div>
+                                                <h5 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">概要</h5>
+                                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                                                    {selectedWork.summary}
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {selectedWork.contribution && (
+                                                <div>
+                                                    <h5 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">担当</h5>
+                                                    <p className="text-gray-700 dark:text-gray-300">
+                                                        {selectedWork.contribution}
+                                                    </p>
+                                                </div>
+                                            )}
+                                            {selectedWork.tech && selectedWork.tech.length > 0 && (
+                                                <div>
+                                                    <h5 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">使用技術</h5>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {selectedWork.tech.map((t: string) => (
+                                                            <span key={t} className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-xs text-gray-700 dark:text-gray-300">
+                                                                {t}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* リンク */}
+                                        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                                            {selectedWork.link ? (
+                                                <a
+                                                    href={selectedWork.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center px-6 py-3 bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold rounded-lg transition-colors shadow-lg hover:shadow-xl"
+                                                >
+                                                    作品を見る / 詳しく見る
+                                                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                    </svg>
+                                                </a>
+                                            ) : (
+                                                <button
+                                                    disabled
+                                                    className="inline-flex items-center px-6 py-3 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold rounded-lg cursor-not-allowed"
+                                                >
+                                                    準備中...
+                                                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="list"
+                                    custom={direction}
+                                    variants={variants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                    transition={{
+                                        x: { type: "spring", stiffness: 300, damping: 30 },
+                                        opacity: { duration: 0.2 }
+                                    }}
+                                    ref={listRef}
+                                    className="h-auto md:h-full md:overflow-y-auto pr-2 overscroll-contain"
+                                >
+                                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-6 border-l-4 border-fuchsia-500 pl-3">
+                                        制作実績
+                                    </h4>
+
+                                    {allAchievements.length > 0 ? (
+                                        <motion.div
+                                            className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-10"
+                                            variants={gridContainerVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                        >
+                                            {allAchievements.map((item, index) => (
+                                                <motion.button
+                                                    key={index}
+                                                    variants={gridItemVariants}
+                                                    onClick={() => handleSelectWork(item)}
+                                                    className="group relative aspect-video rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300 text-left w-full"
+                                                >
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.title}
+                                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                                                        <div>
+                                                            <h5 className="text-white font-bold text-sm md:text-base line-clamp-2">
+                                                                {item.title}
+                                                            </h5>
+                                                            <span className="text-xs text-gray-300 mt-1 inline-flex items-center">
+                                                                Quick View
+                                                                <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </motion.button>
+                                            ))}
+                                        </motion.div>
+                                    ) : (
+                                        <div className="flex flex-col items-center justify-center h-64 text-gray-400 dark:text-gray-600">
+                                            <svg className="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
-                                        </a>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                                            <p>制作実績はまだありません</p>
+                                        </div>
+                                    )}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
-            </div>
-        </div>,
+            </div >
+        </div >,
         document.body
     );
 };
 
-// ダークモード時は色を少し濃くする（彩度は維持）
 const adjustColorForDarkMode = (color: string) => {
     const [r, g, b] = color.split(',').map(n => parseInt(n.trim()));
 
-    // RGBからHSLに変換
     const toHSL = (r: number, g: number, b: number) => {
         r /= 255;
         g /= 255;
@@ -235,7 +533,6 @@ const adjustColorForDarkMode = (color: string) => {
         return [h * 360, s * 100, l * 100];
     };
 
-    // HSLからRGBに変換
     const toRGB = (h: number, s: number, l: number) => {
         h /= 360;
         s /= 100;
@@ -276,9 +573,6 @@ const adjustColorForDarkMode = (color: string) => {
 };
 
 export function Members() {
-    // threshold: 0 + rootMargin effectively creates different trigger points for entry and exit
-    // Bottom -30%: Delays entry until element is 30% up the screen
-    // Top -20%: Delays exit until element is nearly gone (triggers fade out in top 20% area)
     const [sectionRef, isVisible] = useIntersectionObserver({
         threshold: 0,
         rootMargin: "-20% 0px -30% 0px"
@@ -289,7 +583,7 @@ export function Members() {
     const lines = useLines('fuchsia');
     const [selectedMember, setSelectedMember] = useState<typeof members[0] | null>(null);
     const [parallaxOffset, setParallaxOffset] = useState(0);
-    const [outlineHoverId, setOutlineHoverId] = useState<number | null>(null); // 追加
+    const [outlineHoverId, setOutlineHoverId] = useState<number | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -301,17 +595,14 @@ export function Members() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Motionアニメーションを初期化
     useEffect(() => {
         if (isVisible) {
-            // タイトルのアニメーション
             (animate as any)(
                 ".members-title",
                 { opacity: [0, 1], y: [30, 0] },
                 { duration: 1, easing: [0.25, 0.46, 0.45, 0.94] }
             );
 
-            // メンバーカードの表示アニメーション
             (animate as any)(
                 ".member-card",
                 { opacity: [0, 1], y: [60, 0], scale: [0.8, 1] },
@@ -322,7 +613,6 @@ export function Members() {
                 }
             );
 
-            // メンバー情報のアニメーション
             (animate as any)(
                 ".member-info",
                 { opacity: [0, 1], y: [30, 0] },
@@ -333,14 +623,12 @@ export function Members() {
                 }
             );
 
-            // 装飾線のアニメーション
             (animate as any)(
                 ".decorative-line",
                 { strokeDashoffset: [1000, 0] },
                 { duration: 1.5, delay: 0.5, easing: [0.25, 0.46, 0.45, 0.94] }
             );
         } else {
-            // Smooth fade out when out of view
             (animate as any)(".members-title", { opacity: 0, y: 30 }, { duration: 0.5 });
             (animate as any)(".member-card", { opacity: 0, y: 60, scale: 0.8 }, { duration: 0.5 });
             (animate as any)(".member-info", { opacity: 0, y: 30 }, { duration: 0.5 });
@@ -348,7 +636,6 @@ export function Members() {
         }
     }, [isVisible]);
 
-    // ホバーアニメーションの設定
     useEffect(() => {
         const memberCards = document.querySelectorAll('.member-card');
 
@@ -396,8 +683,6 @@ export function Members() {
             style={{}}
         >
 
-
-            {/* 縦書きの「Members」 */}
             <div
                 className="absolute left-14 top-1/2 transform pointer-events-none"
                 style={{ transform: parallaxTransform.text }}
@@ -539,7 +824,7 @@ export function Members() {
                             <p
                                 className="member-info text-xs md:text-base text-gray-600 dark:text-gray-300 w-12/13 md:w-11/12 mx-auto opacity-0"
                             >
-                                {member.position}
+                                {member.position.length > 20 ? `${member.position.slice(0, 17)}...` : member.position}
                             </p>
                             {/* SVGアウトラインアニメーション */}
                             <div className="absolute inset-0 pointer-events-none">

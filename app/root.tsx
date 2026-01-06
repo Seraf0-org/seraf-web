@@ -202,6 +202,10 @@ export default function App() {
     };
 
     const handleWheel = (e: WheelEvent) => {
+      // モーダル表示中などでスクロールがロックされている場合は、スムーズスクロールを無効化
+      // これによりモーダル内のネイティブスクロールが機能するようになる
+      if (document.body.style.overflow === 'hidden') return;
+
       e.preventDefault();
       const state = window.smoothScrollState;
       if (!state) return;

@@ -58,7 +58,7 @@ const ProductPopup = ({ product, onClose }: {
     // ポップアップ非表示時のアニメーション
     (animate as any)(
       ".popup-content",
-      { opacity: [1, 0], scale: [1, 0.95], x: [0, 100] },
+      { opacity: [1, 0] },
       { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
     );
 
@@ -68,7 +68,7 @@ const ProductPopup = ({ product, onClose }: {
       { duration: 0.3, delay: 0.2, easing: [0.25, 0.46, 0.45, 0.94] }
     );
 
-    setTimeout(onClose, 300);
+    setTimeout(onClose, 550);
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {

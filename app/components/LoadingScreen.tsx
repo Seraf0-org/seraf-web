@@ -10,10 +10,9 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        // Simulate loading progress - Faster for localized feel
         const timer = setInterval(() => {
             setProgress((prev) => {
-                const next = prev + Math.random() * 15;
+                const next = prev + Math.random() * 30 + 10;
                 if (next >= 100) {
                     clearInterval(timer);
                     setTimeout(onComplete, 800);
@@ -21,7 +20,7 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                 }
                 return next;
             });
-        }, 150);
+        }, 50);
 
         return () => clearInterval(timer);
     }, [onComplete]);
@@ -31,12 +30,11 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
             initial={{ opacity: 1 }}
             exit={{
                 y: "-100%",
-                transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } // Custom bezier for "Curtain" feel
+                transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
             }}
             className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center font-sans ${isDark ? "bg-[#050505] text-white" : "bg-[#f8fafc] text-gray-900"
                 }`}
         >
-            {/* Center Content Wrapper */}
             <motion.div
                 initial={{ opacity: 0, filter: "blur(20px)", scale: 0.9 }}
                 animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
@@ -44,7 +42,6 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                 className="relative z-10 flex flex-col items-center"
             >
                 <h1 className="text-4xl md:text-6xl lg:text-8xl font-thin tracking-[0.2em] flex items-center gap-1">
-                    {/* Bouncing Text Logic */}
                     {"NOW LOADING".split("").map((char, index) => (
                         <motion.span
                             key={index}
@@ -55,14 +52,13 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                                 duration: 1.2,
                                 repeat: Infinity,
                                 ease: "easeInOut",
-                                delay: index * 0.1, // Stagger effect
+                                delay: index * 0.1,
                             }}
                             className="inline-block"
                         >
                             {char === " " ? "\u00A0" : char}
                         </motion.span>
                     ))}
-                    {/* Bouncing Dots */}
                     {[".", ".", "."].map((char, index) => (
                         <motion.span
                             key={`dot-${index}`}
@@ -73,7 +69,7 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                                 duration: 1.2,
                                 repeat: Infinity,
                                 ease: "easeInOut",
-                                delay: (11 + index) * 0.1, // Continue delay from "NOW LOADING" (11 chars)
+                                delay: (11 + index) * 0.1,
                             }}
                             className="text-cyan-400 inline-block ml-1"
                         >
@@ -82,7 +78,6 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                     ))}
                 </h1>
 
-                {/* Center Counter - Small & Minimal below text */}
                 <div className="mt-4 md:mt-6">
                     <span className="font-mono text-xl md:text-2xl lg:text-3xl opacity-50 tracking-widest">
                         {Math.min(100, Math.floor(progress)).toString().padStart(3, '0')}%
@@ -90,7 +85,6 @@ export function LoadingScreen({ onComplete, isDark }: LoadingScreenProps) {
                 </div>
             </motion.div>
 
-            {/* Subtle Progress Line at bottom */}
             <div className="fixed bottom-0 left-0 w-full h-[2px] bg-gray-200/10">
                 <motion.div
                     className="h-full bg-cyan-400"

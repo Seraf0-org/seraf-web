@@ -7,6 +7,14 @@ export type Member = {
     description: string;
     skills: string[];
     sns: SNS[];
+    achievements: {
+        title: string;
+        image: string;
+        link?: string;
+        summary?: string;
+        contribution?: string;
+        tech?: string[];
+    }[];
 };
 
 type SNS = {
@@ -22,11 +30,11 @@ export const members: Member[] = [
     {
         id: 1,
         name: "KTN",
-        position: "代表, ゲームデザイナー, シナリオライター, プログラマー, 3DCG、映像クリエイター",
+        position: "代表, ゲームデザイナー, シナリオライター, プログラマー, 3DCG, 照明、映像",
         mainImage: "/images/members/member-1.jpg",
         subImage: "/images/members/member-1-sub.jpg",
         description: "たくさんゲームを作るます。\nゲームデザイン、シナリオ制作をメインに手広く活動していきます。",
-        skills: ["Unity", "Unreal Engine", "Web", "Blender", "After Effects", "Game Synth", "Illustrator"],
+        skills: ["Unity", "Unreal Engine", "Web", "Blender", "After Effects", "Aviutl", "QLC+", "DasLight", "Game Synth"],
         sns: [
             {
                 url: "https://twitter.com/KTN_PERIOD",
@@ -44,7 +52,8 @@ export const members: Member[] = [
                     hover: "22, 172, 32"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 2,
@@ -70,13 +79,79 @@ export const members: Member[] = [
                     base: "255, 0, 157",
                     hover: "219, 39, 119"
                 }
+            },
+            {
+                url: "https://skima.jp/profile?id=444412",
+                label: "SKIMA",
+                color: {
+                    base: "235, 90, 70",
+                    hover: "200, 70, 50"
+                }
+            },
+            {
+                url: "https://skeb.jp/@yupi_yupaLemon9",
+                label: "Skeb",
+                color: {
+                    base: "0, 160, 160",
+                    hover: "0, 130, 130"
+                }
+            }
+        ],
+        achievements: [
+            {
+                title: "魔女見習いの休日Re",
+                image: "/images/works/yupiru/witch-apprentice-re.jpg",
+                link: "https://x.com/yupi_yupapa9/status/1977871975319245306?s=20",
+                summary: "高校生の頃に制作した作品のリメイク。\n魔女見習いの少女の休日をイメージした作品。",
+                contribution: "All",
+                tech: ["Blender", "Clip Studio Paint", "Photoshop"]
+            },
+            {
+                title: "カフェ",
+                image: "/images/works/yupiru/cafe.jpg",
+                link: "https://x.com/yupi_yupapa9/status/1691744107071177109?s=20",
+                summary: "魔女見習いの少女通うカフェをイメージした作品。",
+                contribution: "All",
+                tech: ["Blender", "Clip Studio Paint", "Photoshop"]
+            },
+            {
+                title: "Seraf()- Webサイト風Live2D動画",
+                image: "https://img.youtube.com/vi/xYhPwO2abjQ/maxresdefault.jpg",
+                link: "https://youtu.be/xYhPwO2abjQ",
+                summary: "Seraf()のイベントサイトをイメージしたLive2D動画。",
+                contribution: "イラスト / Live2D Rigging & Animation",
+                tech: ["Blender", "Clip Studio Paint", "Live2D"]
+            },
+            {
+                title: "AbbyLive2DModel",
+                image: "https://img.youtube.com/vi/N7eIj-kdMIQ/maxresdefault.jpg",
+                link: "https://youtu.be/N7eIj-kdMIQ",
+                summary: "魔女見習いの少女、アビーのLive2Dモデル。",
+                contribution: "イラスト / Live2D",
+                tech: ["Clip Studio Paint", "Live2D"]
+            },
+            {
+                title: "Sky Blue Angel-Live2DModel",
+                image: "https://img.youtube.com/vi/MPmohnk9A1U/hqdefault.jpg",
+                link: "https://youtu.be/MPmohnk9A1U",
+                summary: "水色天使をイメージしたLive2Dモデル。",
+                contribution: "イラスト / Live2D",
+                tech: ["Clip Studio Paint", "Live2D"]
+            },
+            {
+                title: "ポートフォリオサイト",
+                image: "/images/works/yupiru/portfolio-site.png",
+                link: "https://yy9portfoliosite.myportfolio.com/work",
+                summary: "個人のポートフォリオサイト。",
+                contribution: "Webデザイン / 構成",
+                tech: ["Adobe Portfolio"]
             }
         ]
     },
     {
         id: 3,
         name: "Mossy",
-        position: "サウンドクリエイター, 背景モデラー",
+        position: "サウンドクリエイター, 背景モデラー, 音響",
         mainImage: "/images/members/member-3.jpg",
         subImage: "/images/members/member-3-sub.jpg",
         description: "Seraf()のサウンドデザイナー、モデラー。\n空間に応じたサウンドエフェクトの制作や背景、プロップのモデリングをやっています。",
@@ -90,7 +165,8 @@ export const members: Member[] = [
                     hover: "126, 34, 206"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 4,
@@ -108,6 +184,16 @@ export const members: Member[] = [
                     base: "59, 130, 246",
                     hover: "37, 99, 235"
                 }
+            }
+        ],
+        achievements: [
+            {
+                title: "ポートフォリオサイト",
+                image: "/images/works/jiska/portfolio-site.png",
+                link: "https://jiska.work/",
+                summary: "個人のポートフォリオサイト。",
+                contribution: "All",
+                tech: ["Web"]
             }
         ]
     },
@@ -128,7 +214,8 @@ export const members: Member[] = [
                     hover: "16, 122, 57"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
 
     {
@@ -148,7 +235,8 @@ export const members: Member[] = [
                     hover: "8, 145, 178"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 8,
@@ -167,7 +255,8 @@ export const members: Member[] = [
                     hover: "8, 145, 178"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 9,
@@ -194,7 +283,8 @@ export const members: Member[] = [
                     hover: "150, 47, 191"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 10,
@@ -213,7 +303,8 @@ export const members: Member[] = [
                     hover: "8, 145, 178"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     /*
     {
@@ -241,7 +332,8 @@ export const members: Member[] = [
                     hover: "150, 47, 191"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     */
     {
@@ -269,7 +361,8 @@ export const members: Member[] = [
                     hover: "22, 172, 32"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 13,
@@ -295,6 +388,16 @@ export const members: Member[] = [
                     base: "214, 41, 118",
                     hover: "150, 47, 191"
                 }
+            }
+        ],
+        achievements: [
+            {
+                title: "ポートフォリオサイト",
+                image: "/images/works/takanori/portfolio-site.png",
+                link: "https://fori.io/TAKANORI",
+                summary: "個人のポートフォリオサイト。",
+                contribution: "All",
+                tech: ["Web"]
             }
         ]
     },
@@ -324,7 +427,8 @@ export const members: Member[] = [
                     hover: "150, 47, 191"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 15,
@@ -343,7 +447,8 @@ export const members: Member[] = [
                     hover: "8, 145, 178"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 16,
@@ -370,7 +475,8 @@ export const members: Member[] = [
                     hover: "150, 47, 191"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 17,
@@ -389,7 +495,8 @@ export const members: Member[] = [
                     hover: "8, 145, 178"
                 }
             }
-        ]
+        ],
+        achievements: []
     },
     {
         id: 18,
@@ -408,6 +515,7 @@ export const members: Member[] = [
                     hover: "8, 145, 178"
                 }
             }
-        ]
+        ],
+        achievements: []
     }
 ];
