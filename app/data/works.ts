@@ -208,7 +208,7 @@ export const works: Work[] = [
     },
     {
         title: "魔女見習いの休日Re",
-        period: "2023-01",
+        period: "2025-10",
         summary: "高校生の頃に制作した作品のリメイク。魔女見習いの少女の休日をイメージした作品。",
         contribution: "All",
         tech: ["Blender", "Clip Studio Paint", "Photoshop"],
@@ -230,7 +230,7 @@ export const works: Work[] = [
     },
     {
         title: "Seraf()- Webサイト風Live2D動画",
-        period: "2023-XX",
+        period: "2025-01",
         summary: "Seraf()のイベントサイトをイメージしたLive2D動画。",
         contribution: "イラスト / Live2D Rigging & Animation",
         tech: ["Blender", "Clip Studio Paint", "Live2D"],
@@ -241,7 +241,7 @@ export const works: Work[] = [
     },
     {
         title: "AbbyLive2DModel",
-        period: "2023-XX",
+        period: "2023-11",
         summary: "魔女見習いの少女、アビーのLive2Dモデル。",
         contribution: "イラスト / Live2D",
         tech: ["Clip Studio Paint", "Live2D"],
@@ -252,7 +252,7 @@ export const works: Work[] = [
     },
     {
         title: "Sky Blue Angel-Live2DModel",
-        period: "2023-XX",
+        period: "2025-11",
         summary: "オリジナルキャラクター「Sky Blue Angel」のLive2Dモデル。",
         contribution: "イラスト / Live2D",
         tech: ["Clip Studio Paint", "Live2D"],
