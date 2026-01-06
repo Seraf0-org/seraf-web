@@ -150,7 +150,7 @@ export const works: Work[] = [
         contribution: "VJ / GLSLシェーダ / ライブ演出",
         tech: ["GLSL", "Audio Reactive", "VJ"],
         tag: "VJ / Interactive",
-        image: "/images/works/tanabata-vj.jpg",
+        image: "/images/works/ktn/tanabata-vj.jpg",
         memberIds: [1]
     },
     {
@@ -207,4 +207,3 @@ export const works: Work[] = [
         memberIds: [1, 9]
     }
 ];
-
