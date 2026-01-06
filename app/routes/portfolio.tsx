@@ -7,6 +7,7 @@ import { Footer } from "~/components/Footer";
 import { PortfolioNetworkBackground } from "~/components/PortfolioNetworkBackground";
 import { PortfolioCursorNodes } from "~/components/PortfolioCursorNodes";
 import type { OutletContext } from "~/root";
+import { members } from "~/data/members";
 import { works } from "~/data/works";
 
 type Project = {
@@ -18,6 +19,7 @@ type Project = {
   link?: string;
   tag: string;
   image?: string;
+  memberIds?: number[];
 };
 
 const projects: Project[] = works;
@@ -273,7 +275,7 @@ export default function PortfolioPage() {
       {/* カーソル追従のノードネットワークエフェクト */}
       <PortfolioCursorNodes isDark={isDark} />
 
-      <Header />
+      <Header startAnimation={true} />
 
       <main className="relative z-20 pt-32 pb-24 px-6 lg:px-12">
         <section
@@ -400,6 +402,11 @@ export default function PortfolioPage() {
                     <div className="mt-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                       <span className="font-semibold">担当:</span> {project.contribution}
                     </div>
+                    {project.memberIds && (
+                      <div className="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <span className="font-semibold">Member:</span> {project.memberIds.map(id => members.find(m => m.id === id)?.name).filter(Boolean).join(", ")}
+                      </div>
+                    )}
                     <div className="mt-3 flex flex-wrap gap-2">
                       {project.tech.map((stack) => (
                         <span
@@ -522,6 +529,11 @@ export default function PortfolioPage() {
               <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                 <span className="font-semibold">担当:</span> {selected.contribution}
               </div>
+              {selected.memberIds && (
+                <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <span className="font-semibold">Member:</span> {selected.memberIds.map(id => members.find(m => m.id === id)?.name).filter(Boolean).join(", ")}
+                </div>
+              )}
 
               {selected.tech && (
                 <div className="flex flex-wrap gap-2">

@@ -10,6 +10,7 @@ export type Member = {
     achievements: {
         title: string;
         image: string;
+        period?: string;
         link?: string;
         summary?: string;
         contribution?: string;
@@ -21,8 +22,8 @@ type SNS = {
     url: string;
     label: string;
     color?: {
-        base: string;  // "59, 130, 246" のような形式
-        hover: string; // "37, 99, 235" のような形式
+        base: string;
+        hover: string;
     };
 };
 
@@ -53,7 +54,17 @@ export const members: Member[] = [
                 }
             }
         ],
-        achievements: []
+        achievements: [
+            {
+                title: "【映像合作】ねぇ、どろどろさん",
+                image: "https://img.youtube.com/vi/WqXmKZ1jfnY/hqdefault.jpg",
+                period: "2025-02",
+                link: "https://youtu.be/WqXmKZ1jfnY",
+                summary: "映像合作。イントロとAメロを担当。",
+                contribution: "Intro / A-melody",
+                tech: ["After Effects", "Blender"]
+            }
+        ]
     },
     {
         id: 2,
@@ -101,6 +112,7 @@ export const members: Member[] = [
             {
                 title: "魔女見習いの休日Re",
                 image: "/images/works/yupiru/witch-apprentice-re.jpg",
+                period: "2025-10",
                 link: "https://x.com/yupi_yupapa9/status/1977871975319245306?s=20",
                 summary: "高校生の頃に制作した作品のリメイク。\n魔女見習いの少女の休日をイメージした作品。",
                 contribution: "All",
@@ -109,6 +121,7 @@ export const members: Member[] = [
             {
                 title: "カフェ",
                 image: "/images/works/yupiru/cafe.jpg",
+                period: "2023-08",
                 link: "https://x.com/yupi_yupapa9/status/1691744107071177109?s=20",
                 summary: "魔女見習いの少女通うカフェをイメージした作品。",
                 contribution: "All",
@@ -117,6 +130,7 @@ export const members: Member[] = [
             {
                 title: "Seraf()- Webサイト風Live2D動画",
                 image: "https://img.youtube.com/vi/xYhPwO2abjQ/maxresdefault.jpg",
+                period: "2025-01",
                 link: "https://youtu.be/xYhPwO2abjQ",
                 summary: "Seraf()のイベントサイトをイメージしたLive2D動画。",
                 contribution: "イラスト / Live2D Rigging & Animation",
@@ -125,6 +139,7 @@ export const members: Member[] = [
             {
                 title: "AbbyLive2DModel",
                 image: "https://img.youtube.com/vi/N7eIj-kdMIQ/maxresdefault.jpg",
+                period: "2023-11",
                 link: "https://youtu.be/N7eIj-kdMIQ",
                 summary: "魔女見習いの少女、アビーのLive2Dモデル。",
                 contribution: "イラスト / Live2D",
@@ -133,6 +148,7 @@ export const members: Member[] = [
             {
                 title: "Sky Blue Angel-Live2DModel",
                 image: "https://img.youtube.com/vi/MPmohnk9A1U/hqdefault.jpg",
+                period: "2025-11",
                 link: "https://youtu.be/MPmohnk9A1U",
                 summary: "水色天使をイメージしたLive2Dモデル。",
                 contribution: "イラスト / Live2D",
@@ -194,6 +210,15 @@ export const members: Member[] = [
                 summary: "個人のポートフォリオサイト。",
                 contribution: "All",
                 tech: ["Web"]
+            },
+            {
+                title: "秋 - 四季 / LuCA Music Video",
+                image: "https://i.ytimg.com/vi/ToBZkpOmon8/maxresdefault.jpg",
+                period: "2025-09",
+                link: "https://youtu.be/ToBZkpOmon8",
+                summary: "秋 - 四季 / LuCA Music Video。グラフィックデザインとクレジットデザインを担当。",
+                contribution: "Graphic Design / Credit & UI Design",
+                tech: ["Graphic Design"]
             }
         ]
     },

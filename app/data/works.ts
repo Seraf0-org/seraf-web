@@ -136,12 +136,12 @@ export const works: Work[] = [
         title: "秋 - 四季 / LuCA Music Video",
         period: "2025-09",
         summary: "3DCGキャラクターとモーションキャプチャを用いたMV。モーション編集、UE実装、テクニカルディレクション、FXを担当。",
-        contribution: "3DCG / Motion Capture / Motion Editing / UE 実装 & TD / FX",
-        tech: ["Unreal Engine 5", "Motion Capture", "3DCG", "FX"],
+        contribution: "3DCG / Motion Capture / Motion Editing / UE 実装 & TD / FX / Graphic Design / Credit & UI Design",
+        tech: ["Unreal Engine 5", "Motion Capture", "3DCG", "FX", "Graphic Design"],
         link: "https://youtu.be/ToBZkpOmon8?si=TkbFis-vEVFShzFH",
         tag: "Movie / 3DCG",
         image: "https://i.ytimg.com/vi/ToBZkpOmon8/maxresdefault.jpg",
-        memberIds: [1]
+        memberIds: [1, 4]
     },
     {
         title: "DHU七夕音楽祭 オーディオリアクティブVJ",
@@ -205,5 +205,60 @@ export const works: Work[] = [
         tag: "Games / Products",
         image: "/images/products/product-6.jpg",
         memberIds: [1, 9]
+    },
+    {
+        title: "魔女見習いの休日Re",
+        period: "2023-01",
+        summary: "高校生の頃に制作した作品のリメイク。魔女見習いの少女の休日をイメージした作品。",
+        contribution: "All",
+        tech: ["Blender", "Clip Studio Paint", "Photoshop"],
+        tag: "Illustration / 3DCG",
+        image: "/images/works/yupiru/witch-apprentice-re.jpg",
+        link: "https://x.com/yupi_yupapa9/status/1977871975319245306?s=20",
+        memberIds: [2]
+    },
+    {
+        title: "カフェ",
+        period: "2023-08",
+        summary: "魔女見習いの少女通うカフェをイメージした作品。",
+        contribution: "All",
+        tech: ["Blender", "Clip Studio Paint", "Photoshop"],
+        tag: "Illustration / 3DCG",
+        image: "/images/works/yupiru/cafe.jpg",
+        link: "https://x.com/yupi_yupapa9/status/1691744107071177109?s=20",
+        memberIds: [2]
+    },
+    {
+        title: "Seraf()- Webサイト風Live2D動画",
+        period: "2023-XX",
+        summary: "Seraf()のイベントサイトをイメージしたLive2D動画。",
+        contribution: "イラスト / Live2D Rigging & Animation",
+        tech: ["Blender", "Clip Studio Paint", "Live2D"],
+        tag: "Movie / Live2D",
+        image: "https://img.youtube.com/vi/xYhPwO2abjQ/maxresdefault.jpg",
+        link: "https://youtu.be/xYhPwO2abjQ",
+        memberIds: [2]
+    },
+    {
+        title: "AbbyLive2DModel",
+        period: "2023-XX",
+        summary: "魔女見習いの少女、アビーのLive2Dモデル。",
+        contribution: "イラスト / Live2D",
+        tech: ["Clip Studio Paint", "Live2D"],
+        tag: "Live2D / Model",
+        image: "https://img.youtube.com/vi/N7eIj-kdMIQ/hqdefault.jpg",
+        link: "https://youtu.be/N7eIj-kdMIQ",
+        memberIds: [2]
+    },
+    {
+        title: "Sky Blue Angel-Live2DModel",
+        period: "2023-XX",
+        summary: "オリジナルキャラクター「Sky Blue Angel」のLive2Dモデル。",
+        contribution: "イラスト / Live2D",
+        tech: ["Clip Studio Paint", "Live2D"],
+        tag: "Live2D / Model",
+        image: "https://img.youtube.com/vi/MPmohnk9A1U/hqdefault.jpg",
+        link: "https://youtu.be/MPmohnk9A1U",
+        memberIds: [2]
     }
 ];

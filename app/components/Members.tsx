@@ -29,7 +29,7 @@ const MemberPopup = ({ member, onClose }: {
         contribution: a.contribution || "",
         tech: a.tech || [],
         tag: "",
-        period: ""
+        period: a.period || ""
     })) || [];
 
     const allAchievements = [...portfolioAchevements, ...privateAchievements].sort((a, b) => {
