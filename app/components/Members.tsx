@@ -636,35 +636,7 @@ export function Members() {
         }
     }, [isVisible]);
 
-    useEffect(() => {
-        const memberCards = document.querySelectorAll('.member-card');
 
-        memberCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                (animate as any)(
-                    card,
-                    {
-                        y: [0, -15],
-                        scale: [1, 1.05],
-                        boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 25px 50px rgba(0,0,0,0.25)']
-                    },
-                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
-                );
-            });
-
-            card.addEventListener('mouseleave', () => {
-                (animate as any)(
-                    card,
-                    {
-                        y: [-15, 0],
-                        scale: [1.05, 1],
-                        boxShadow: ['0 25px 50px rgba(0,0,0,0.25)', '0 10px 25px rgba(0,0,0,0.1)']
-                    },
-                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
-                );
-            });
-        });
-    }, [isVisible]);
 
     const parallaxTransform = {
         text: `translateY(calc(-70% + ${parallaxOffset * 1.5}px))`
@@ -779,8 +751,30 @@ export function Members() {
                                 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]
                                 hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]
                                 relative opacity-0"
-                            onMouseEnter={() => setOutlineHoverId(member.id)}
-                            onMouseLeave={() => setOutlineHoverId(null)}
+                            onMouseEnter={(e) => {
+                                setOutlineHoverId(member.id);
+                                (animate as any)(
+                                    e.currentTarget,
+                                    {
+                                        y: [0, -15],
+                                        scale: [1, 1.05],
+                                        boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 25px 50px rgba(0,0,0,0.25)']
+                                    },
+                                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+                                );
+                            }}
+                            onMouseLeave={(e) => {
+                                setOutlineHoverId(null);
+                                (animate as any)(
+                                    e.currentTarget,
+                                    {
+                                        y: [-15, 0],
+                                        scale: [1.05, 1],
+                                        boxShadow: ['0 25px 50px rgba(0,0,0,0.25)', '0 10px 25px rgba(0,0,0,0.1)']
+                                    },
+                                    { duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+                                );
+                            }}
                         >
                             {/* 名札の穴部分 */}
                             <div className="absolute top-4 md:top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 md:w-6 md:h-6 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner border border-fuchsia-500/50 dark:border-fuchsia-400/50" style={{ boxShadow: '0 0 5px rgba(219, 39, 119, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2)' }}></div>
@@ -791,6 +785,8 @@ export function Members() {
                                         src={member.mainImage}
                                         alt={member.name}
                                         className="w-full h-full object-cover"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                                 <div

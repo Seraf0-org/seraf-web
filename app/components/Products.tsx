@@ -279,36 +279,7 @@ export function Products() {
     }
   }, [isVisible]);
 
-  // ホバーアニメーションの設定
-  useEffect(() => {
-    const productCards = document.querySelectorAll('.product-card');
 
-    productCards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        (animate as any)(
-          card,
-          {
-            y: [0, -10],
-            scale: [1, 1.02],
-            boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 20px 40px rgba(0,0,0,0.2)']
-          },
-          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
-        );
-      });
-
-      card.addEventListener('mouseleave', () => {
-        (animate as any)(
-          card,
-          {
-            y: [-10, 0],
-            scale: [1.02, 1],
-            boxShadow: ['0 20px 40px rgba(0,0,0,0.2)', '0 10px 25px rgba(0,0,0,0.1)']
-          },
-          { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
-        );
-      });
-    });
-  }, [isVisible]);
 
   const parallaxTransform = {
     text: `translateY(calc(-60% + ${parallaxOffset * 1.4}px))`
@@ -428,6 +399,28 @@ export function Products() {
               onClick={() => handleProductClick(product)}
               className={`product-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
                 cursor-pointer relative opacity-0`}
+              onMouseEnter={(e) => {
+                (animate as any)(
+                  e.currentTarget,
+                  {
+                    y: [0, -10],
+                    scale: [1, 1.02],
+                    boxShadow: ['0 10px 25px rgba(0,0,0,0.1)', '0 20px 40px rgba(0,0,0,0.2)']
+                  },
+                  { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+              }}
+              onMouseLeave={(e) => {
+                (animate as any)(
+                  e.currentTarget,
+                  {
+                    y: [-10, 0],
+                    scale: [1.02, 1],
+                    boxShadow: ['0 20px 40px rgba(0,0,0,0.2)', '0 10px 25px rgba(0,0,0,0.1)']
+                  },
+                  { duration: 0.3, easing: [0.25, 0.46, 0.45, 0.94] }
+                );
+              }}
             >
               {/* ホバー時の下線アニメーション */}
               <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-300 ease-out group-hover:w-full group-hover:h-0.5"></div>
@@ -439,6 +432,8 @@ export function Products() {
                     alt={product.name}
                     onError={handleImageError}
                     className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

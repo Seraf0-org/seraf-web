@@ -63,6 +63,15 @@ export const members: Member[] = [
                 summary: "映像合作。イントロとAメロを担当。",
                 contribution: "Intro / A-melody",
                 tech: ["After Effects", "Blender"]
+            },
+            {
+                title: "Unition",
+                image: "/images/works/ktn/unition.png",
+                period: "2026-01",
+                link: "https://github.com/Seraf0-org/Unition",
+                summary: "NotionからAPIを介してリアルタイムにUnityでデータを受け取るためのライブラリ。",
+                contribution: "Developer",
+                tech: ["Unity", "C#", "Notion API"]
             }
         ]
     },
@@ -191,7 +200,7 @@ export const members: Member[] = [
         mainImage: "/images/members/member-4.jpg",
         subImage: "/images/members/member-4.jpg",
         description: "色々なところでフライヤー等を中心としたグラフィックデザインをしています。映像もちょっとやります。",
-        skills: ["Illustrator", "After Effects", "Web"],
+        skills: ["Illustrator", "After Effects", "Web", "Aviutl"],
         sns: [
             {
                 url: "https://x.com/Jiska_i_i",
