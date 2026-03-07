@@ -34,6 +34,17 @@ export const works: Work[] = [
         memberIds: [1]
     },
     {
+        title: "LightSyncDMX",
+        period: "2026-03",
+        summary: "Unreal Engineのバーチャルプロダクションにおいて、UEシーン内の光の色味と実際のLED照明の色をリアルタイムで一致・同期させるためのプラグイン。",
+        contribution: "プログラミング / システム設計 / プラグイン開発",
+        tech: ["Unreal Engine", "C++", "DMX", "OSC"],
+        link: "https://github.com/Seraf0-org/LightSyncDMX",
+        tag: "Library / Tool",
+        image: "/images/works/ktn/lightsyncdmx.jpg",
+        memberIds: [1]
+    },
+    {
         title: "Invasion Camera",
         period: "2025-11",
         summary: "スマートフォンの加速度センサーとリアルタイム合成を組み合わせ、展示用に撮影したものを即時合成し、印刷できるカメラ体験を製作。",
