@@ -551,5 +551,25 @@ export const members: Member[] = [
             }
         ],
         achievements: []
+    },
+    {
+        id: 19,
+        name: "TEO",
+        position: "イラスト、CGモデリング",
+        mainImage: "/images/members/member-19.jpg",
+        subImage: "/images/members/member-19.jpg",
+        description: "イラストと3DCGモデリングをしています。\nやりたいこと全部やります",
+        skills: ["Maya", "Substance Painter", "Illustrator", "Photoshop", "IbisPaint", "CLIP STUDIO PAINT"],
+        sns: [
+            {
+                url: "https://x.com/teoo_27?s=21",
+                label: "X(旧Twitter)",
+                color: {
+                    base: "6, 182, 212",
+                    hover: "8, 145, 178"
+                }
+            }
+        ],
+        achievements: []
     }
 ];

@@ -23,6 +23,17 @@ export const works: Work[] = [
         memberIds: [1]
     },
     {
+        title: "深度カメラを使ったジェネレーティブVJ",
+        period: "2026-02",
+        summary: "深度カメラを用いて空間情報をリアルタイムに取得し、ジェネレーティブな映像表現と組み合わせたVJシステムを開発・運用。",
+        contribution: "VJシステム開発 / 映像演出",
+        tech: ["Depth Camera", "Realtime VFX"],
+        link: "https://doc.dhw.ac.jp/syosakukin_2026-0211/",
+        tag: "VJ / Interactive",
+        image: "/images/works/ktn/generative-vj.jpg",
+        memberIds: [1]
+    },
+    {
         title: "Invasion Camera",
         period: "2025-11",
         summary: "スマートフォンの加速度センサーとリアルタイム合成を組み合わせ、展示用に撮影したものを即時合成し、印刷できるカメラ体験を製作。",
