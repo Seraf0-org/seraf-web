@@ -30,7 +30,7 @@ type SNS = {
 export const members: Member[] = [
     {
         id: 1,
-        name: "KTN",
+        name: "KTN / 鈴木康太",
         position: "代表, ゲームデザイナー, シナリオライター, プログラマー, 3DCG, 照明、映像",
         mainImage: "/images/members/member-1.jpg",
         subImage: "/images/members/member-1-sub.jpg",
