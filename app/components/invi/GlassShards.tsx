@@ -190,9 +190,9 @@ function ShardGroup({ count = 50, type = 0, seed = 1 }) {
       const speed = Math.random() * 0.004 + 0.0008;
       const scrollY = THREE.MathUtils.lerp(0.001, 0.0085, depthLayer);
       const scrollX = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.0005, 0.0035, depthLayer);
-      const rotSpeedX = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.004, 0.014, depthLayer);
-      const rotSpeedY = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.004, 0.014, depthLayer);
-      const rotSpeedZ = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.004, 0.014, depthLayer);
+      const rotSpeedX = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.0008, 0.0032, depthLayer);
+      const rotSpeedY = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.0008, 0.0032, depthLayer);
+      const rotSpeedZ = (Math.random() - 0.5) * THREE.MathUtils.lerp(0.0006, 0.0024, depthLayer);
       temp.push({ 
         x, y, z,
         scaleX, scaleY, scaleZ, speed,
@@ -231,9 +231,9 @@ function ShardGroup({ count = 50, type = 0, seed = 1 }) {
 
       dummy.position.set(p.x + scrollShiftX + floatX, wrappedY, p.z + floatZ);
       dummy.rotation.set(
-        p.rotX + scrollTop * 0.00018 * p.depthLayer,
-        p.rotY - scrollTop * 0.00012 * p.depthLayer,
-        p.rotZ + scrollTop * 0.00022 * p.depthLayer
+        p.rotX + scrollTop * 0.000045 * p.depthLayer,
+        p.rotY - scrollTop * 0.00003 * p.depthLayer,
+        p.rotZ + scrollTop * 0.000055 * p.depthLayer
       );
       dummy.scale.set(p.scaleX * scalePulse, p.scaleY * scalePulse, p.scaleZ);
       dummy.updateMatrix();
@@ -318,7 +318,7 @@ export function GlassShards({
         {/* 環境マップ：ガラスの反射に必須 */}
         <Environment preset="sunset" />
 
-        <Float speed={0.5} rotationIntensity={0.5} floatIntensity={1}>
+        <Float speed={0.32} rotationIntensity={0.16} floatIntensity={0.85}>
           <ShardGroup count={countPerGroup + remainder} type={0} seed={1.0} />
           <ShardGroup count={countPerGroup} type={1} seed={2.3} />
           <ShardGroup count={countPerGroup} type={2} seed={3.7} />

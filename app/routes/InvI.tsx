@@ -13,13 +13,13 @@ export const meta: MetaFunction = () => {
     {
       name: "description",
       content:
-        "平成中期、日本の山奥にある閉ざされた集落。神の死が残した歪んだ世界で、ふたりの少女が運命に選ばされていく物語。",
+        "平成初期、日本の奥深い集落。奥行きのない世界を舞台に、視点変更による次元操作で戦う2D×2Dアクション。",
     },
     { property: "og:title", content: "InvI | Seraf()" },
     {
       property: "og:description",
       content:
-        "神の死が残した世界の歪みと、それに運命を選ばされた少女たちの物語。",
+        "トップダウンと横スクロールを瞬時に切り替え、空間の錯覚を利用して戦うスタイリッシュな2D×2Dアクション。",
     },
     { property: "og:type", content: "website" },
   ];
@@ -27,11 +27,11 @@ export const meta: MetaFunction = () => {
 
 const NAV_ICONS = [
   { id: "news", label: "00", href: "#news" },
-  { id: "world", label: "01", href: "#world" },
-  { id: "visuals", label: "02", href: "#visuals" },
-  { id: "characters", label: "03", href: "#characters" },
-  { id: "systems", label: "04", href: "#systems" },
-  { id: "movie", label: "05", href: "#movie" },
+  { id: "visuals", label: "01", href: "#visuals" },
+  { id: "systems", label: "02", href: "#systems" },
+  { id: "movie", label: "03", href: "#movie" },
+  { id: "characters", label: "04", href: "#characters" },
+  { id: "world", label: "05", href: "#world" },
   { id: "products", label: "06", href: "#products" },
   { id: "credits", label: "07", href: "#credits" },
   { id: "story", label: "08", href: "#story" },
@@ -40,8 +40,9 @@ const NAV_ICONS = [
 const GLOBAL_NAV = [
   { label: "News", href: "#news" },
   { label: "Story", href: "#story" },
-  { label: "Character", href: "#characters" },
+  { label: "Archive", href: "/InvI/wiki" },
   { label: "Movie", href: "#movie" },
+  { label: "Character", href: "#characters" },
   { label: "Products", href: "#products" },
   { label: "Credits", href: "#credits" },
   { label: "About", href: "#world" },
@@ -75,18 +76,18 @@ const CHARACTERS = [
 const WORLD_CARDS = [
   {
     label: "Location",
-    title: "山間の閉ざされた集落",
-    desc: "外界からほとんど切り離された、平成中期の日本の山奥。過去の信仰と噂話だけが、この村をかろうじて世界とつないでいる。",
+    title: "平成初期、日本の奥深い集落",
+    desc: "外界から隔てられた山奥の集落。統治する本家アガタを中心に、力と支配を巡る因縁が静かに渦巻いている。",
   },
   {
     label: "Anomaly",
-    title: "奥行きを失った遺跡空間",
-    desc: "神の力が滞留した遺跡では、遠くのものも近くのものも、すべてが同じ距離に見える。壁も、道も、空さえも、押しつぶされたように重なり合っている。",
+    title: "奥行きのない世界",
+    desc: "超常の存在「ナルカミ」によって、遺跡は奥行きを失った空間へ変貌した。遠近、重なり、回避の概念そのものが戦いのルールになる。",
   },
   {
-    label: "Power",
-    title: "神の死後も残り続けた力",
-    desc: "奇跡そのものは消えても、代償だけは世界に残る。その力をどう扱い、誰に背負わせるのか。決めるのは、いつだって神ではなく人間だ。",
+    label: "Conflict",
+    title: "スイとアガタの衝突",
+    desc: "特異な力を持つ少女スイは、その力を巡って集落を統治する本家アガタと激突する。歪んだ遺跡は、両者の争いをさらに異常なものへ変えていく。",
   },
 ];
 
@@ -101,25 +102,32 @@ const SCENE_FRAGMENTS = [
 const SYSTEMS = [
   {
     label: "01",
-    title: "Depthless Field",
-    desc: "奥行きが失われた遺跡では、距離感そのものが敵になる。重なった通路、隠れた段差、画面に貼りつく影を読み解きながら進む探索体験。",
+    title: "2D x 2D Action",
+    desc: "トップダウンと横スクロール、ふたつの2D視点を瞬時に切り替えながら進むスタイリッシュアクション。コントローラー操作でスイを操り、敵をなぎ倒していく。",
   },
   {
     label: "02",
-    title: "Resonance / Blade",
-    desc: "スイの共鳴とランの剣は、同じ力から生まれた反対の答え。ふたりの視点を切り替えることで、同じ空間に別の意味が立ち上がる。",
+    title: "Dimensional Shift",
+    desc: "横視点では避けられない攻撃を「奥」へ移動して回避し、奥に連なる敵を視点変更で1体に重ねて一掃する。空間の錯覚そのものが武器になる。",
   },
   {
     label: "03",
-    title: "Village Pressure",
-    desc: "村人の会話、家々に残る記録、祭具の配置が真相へつながる。敵は異形だけではなく、善意の顔をした共同体そのものでもある。",
+    title: "Tenka",
+    desc: "物体の向きを変える「転加」によって、変則的な空中制動や敵弾反射が可能になる。視点変更と転加を組み合わせ、戦況を切り開く。",
   },
+];
+
+const GAME_OVERVIEW = [
+  { label: "Genre", value: "2D x 2D Action" },
+  { label: "Play Style", value: "View Shift / Battle / ADV" },
+  { label: "Control", value: "Controller Action" },
+  { label: "Key System", value: "Dimensional Shift / Tenka" },
 ];
 
 const PRODUCTS = [
   { label: "Teaser Site", title: "InvI Official Web", status: "Now Open" },
   { label: "Concept Movie", title: "Depthless World Trailer", status: "Watch" },
-  { label: "Development", title: "RPG / Narrative Project", status: "In Progress" },
+  { label: "Development", title: "2D x 2D Action Project", status: "In Progress" },
 ];
 
 const CREDIT_GROUPS = [
@@ -415,7 +423,7 @@ export default function InViPage() {
         </div>
 
         {/* Three.js 舞い上がるガラス破片 (ヒーロー限定の2層目・高密度) */}
-        <GlassShards count={84} className="absolute inset-0 z-[2] pointer-events-none opacity-85" />
+        <GlassShards count={36} className="absolute inset-0 z-[2] pointer-events-none opacity-75" />
 
         {/* キーアート（スイ＋ラン＋ロゴ＋ガラス片） */}
         <div className="invi-art absolute inset-0 z-[4] flex items-end justify-center pointer-events-none">
@@ -434,24 +442,47 @@ export default function InViPage() {
               <span className="font-serif text-[12rem] sm:text-[18rem] font-bold tracking-widest text-transparent" style={{ WebkitTextStroke: "1px rgba(0,0,0,0.5)" }}>DEPTH</span>
             </div>
 
-            {/* ど真ん中のロゴ群 */}
-            <div className="parallax-bg absolute inset-0 z-[30] pointer-events-none">
+            {/* 背面の巨大エンブレム */}
+            <div className="parallax-bg absolute inset-0 z-[8] pointer-events-none">
               <div
-                className="w-full h-full flex flex-col items-center justify-center transition-transform duration-700 ease-out gap-4 pb-[18vh] sm:gap-6 lg:pb-[8vh]"
-                style={{ transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)` }}
+                className="flex h-full w-full items-center justify-center pb-[18vh] transition-transform duration-700 ease-out lg:pb-[8vh]"
+                style={{ transform: `translate(${mousePos.x * 6}px, ${mousePos.y * 6}px) scale(${1 + Math.abs(mousePos.x) * 0.01})` }}
               >
                 <img
                   src="/images/invi/emblem.png"
                   alt="InVi Emblem"
-                  className="w-[12vw] max-w-[80px] object-contain invert opacity-90 mix-blend-multiply -translate-y-[6vh] sm:-translate-y-[4vh]"
+                  className="w-[48vw] min-w-[17rem] max-w-[42rem] object-contain invert opacity-[0.16] mix-blend-multiply -translate-y-[4vh]"
                 />
+              </div>
+            </div>
 
+            {/* ど真ん中のタイトルロゴ */}
+            <div className="parallax-bg absolute inset-0 z-[30] pointer-events-none">
+              <div
+                className="w-full h-full flex flex-col items-center justify-center transition-transform duration-700 ease-out pb-[18vh] lg:pb-[8vh]"
+                style={{ transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)` }}
+              >
                 {/* タイトルロゴ */}
-                <img
-                  src="/images/invi/logo.png"
-                  alt="InVi Logo"
-                  className="w-[68vw] max-w-[480px] object-contain invert opacity-95 mix-blend-multiply -translate-y-[6vh] sm:-translate-y-[4vh]"
-                />
+                <div className="relative w-[68vw] max-w-[480px] -translate-y-[6vh] sm:-translate-y-[4vh]">
+                  <img
+                    src="/images/invi/logo.png"
+                    alt=""
+                    className="absolute inset-0 h-auto w-full translate-x-1 -translate-y-1 object-contain opacity-25 blur-[0.5px] mix-blend-screen"
+                    style={{ filter: "invert(71%) sepia(42%) saturate(801%) hue-rotate(176deg) brightness(96%)" }}
+                  />
+                  <img
+                    src="/images/invi/logo.png"
+                    alt=""
+                    className="absolute inset-0 h-auto w-full -translate-x-1 translate-y-1 object-contain opacity-20 blur-[0.5px] mix-blend-screen"
+                    style={{ filter: "invert(78%) sepia(58%) saturate(1069%) hue-rotate(292deg) brightness(101%)" }}
+                  />
+                  <img
+                    src="/images/invi/logo.png"
+                    alt="InVi Logo"
+                    className="relative h-auto w-full object-contain opacity-72 mix-blend-multiply"
+                    style={{ filter: "invert(1) brightness(0.72) saturate(0.85)" }}
+                  />
+                </div>
               </div>
             </div>
 
@@ -487,7 +518,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/ran.png"
                   alt="ラン"
-                  className="absolute bottom-0 left-1/2 -translate-x-[12%] sm:-translate-x-[24%] h-[58%] sm:h-[70%] lg:h-[84%] w-auto object-contain select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)]"
+                  className="absolute bottom-[-30vh] left-1/2 -translate-x-[2%] sm:bottom-[-28vh] sm:-translate-x-[16%] lg:bottom-[-32vh] h-[92%] sm:h-[108%] lg:h-[128%] w-auto object-contain select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)]"
                 />
               </div>
             </div>
@@ -500,7 +531,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/sui.png"
                   alt="スイ"
-                  className="absolute bottom-0 left-1/2 -translate-x-[76%] sm:-translate-x-[84%] h-[56%] sm:h-[68%] lg:h-[80%] w-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
+                  className="absolute bottom-[-29vh] left-1/2 -translate-x-[90%] sm:bottom-[-27vh] sm:-translate-x-[96%] lg:bottom-[-31vh] h-[90%] sm:h-[105%] lg:h-[124%] w-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
                 />
               </div>
             </div>
@@ -524,18 +555,18 @@ export default function InViPage() {
 
         {/* 左側コピー */}
         <div className="invi-copy absolute inset-y-0 left-12 sm:left-16 z-30 flex items-center pointer-events-none">
-          <div className="pl-[5vw] max-w-[30rem] space-y-5 pt-12 sm:space-y-6">
+          <div className="pl-[5vw] max-w-[46rem] space-y-5 pt-12 sm:space-y-6">
             <p className="anim-fade-up text-[10px] font-medium uppercase tracking-[0.4em] text-gray-400 flex items-center gap-3">
               <span className="w-6 h-px bg-gray-300" />
-              RPG / Narrative
+              2D x 2D Action / Narrative
             </p>
-            <h1 className="anim-fade-up font-serif text-[2.25rem] sm:text-5xl lg:text-6xl font-medium leading-[1.2] text-gray-900 tracking-wide">
-              <span className="block mb-2">奥行きを失った世界で、</span>
+            <h1 className="anim-fade-up font-serif text-[2.35rem] sm:text-5xl lg:text-6xl font-medium leading-[1.12] text-gray-900 tracking-normal">
+              <span className="mb-2 block sm:whitespace-nowrap">奥行きを失った世界で、</span>
               <span className="block text-gray-400">生きる。</span>
             </h1>
             <p className="anim-fade-up text-xs sm:text-sm leading-loose text-gray-500 max-w-sm tracking-wide">
-              神の死が残した歪みの中で、<br />
-              ふたりの少女が運命に選ばされていく。
+              トップダウンと横スクロールを切り替え、<br />
+              空間の錯覚で戦うスタイリッシュ2Dアクション。
             </p>
           </div>
         </div>
@@ -589,6 +620,13 @@ export default function InViPage() {
 
         {/* 右下ボタン群（PC） */}
         <div className="hidden md:flex absolute right-[4vw] bottom-[22vh] z-30 items-center gap-4 xl:bottom-[8vh]">
+          <a
+            href="/InvI/wiki"
+            className="anim-fade-up group relative inline-flex items-center gap-3 bg-gray-950 border border-gray-950 px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-white transition-all hover:bg-gray-800 hover:border-gray-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
+          >
+            <span className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-blue-200 to-pink-200 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            Open Archive
+          </a>
           <a
             href="https://x.com/seraf_dev"
             target="_blank"
@@ -659,58 +697,6 @@ export default function InViPage() {
             </div>
           </section>
 
-          {/* WORLD */}
-          <section id="world" className="invi-section pt-32 space-y-12">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-px bg-black/20" />
-                  <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
-                    01 — World
-                  </p>
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
-                  平成中期、日本の山奥で
-                </h2>
-              </div>
-              <p className="max-w-xl text-xs sm:text-sm leading-loose text-gray-500 tracking-wide">
-                この集落には、かつて"神"と呼ばれた男がいた。<br />
-                彼は奇跡を起こし、願いを叶え、人々の信仰を一身に受けていた——暴走する、その力に気づくまでは。<br />
-                神は討たれ、残されたのは"力"だけ。やがてそれは遺跡にこびりつき、世界から「奥行き」を奪っていく。
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {WORLD_CARDS.map((item, i) => (
-                <div key={i} className="group relative bg-white p-8 border border-black/5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:border-black/10">
-                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-blue-100 to-pink-100 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                  <p className="text-[9px] font-serif uppercase tracking-[0.3em] text-gray-400">{item.label}</p>
-                  <p className="mt-4 text-sm font-bold text-gray-800 tracking-wide">{item.title}</p>
-                  <p className="mt-4 text-[11px] leading-loose text-gray-500">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="grid gap-8 border border-black/5 bg-white/60 p-6 sm:p-8 md:grid-cols-[0.9fr_1.1fr]">
-              <div>
-                <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">Incident Chain</p>
-                <h3 className="mt-4 font-serif text-2xl text-gray-900">神が死に、村だけが残った。</h3>
-              </div>
-              <div className="space-y-5">
-                {[
-                  ["01", "願いを叶える男が現れ、信仰は生活の一部になった。"],
-                  ["02", "奇跡の代償が人に向き始め、アガタ家は神殺しを選んだ。"],
-                  ["03", "遺跡に沈殿した力が、スイとランというふたつの器を呼び寄せる。"],
-                ].map(([num, text]) => (
-                  <div key={num} className="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-black/5 pb-5 last:border-b-0 last:pb-0">
-                    <span className="font-serif text-xs tracking-[0.3em] text-gray-300">{num}</span>
-                    <p className="text-xs leading-loose tracking-wide text-gray-600">{text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
           {/* VISUALS / SCENES */}
           <section id="visuals" className="invi-section pt-32 space-y-12 overflow-hidden">
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
@@ -718,7 +704,7 @@ export default function InViPage() {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-8 h-px bg-black/20" />
                   <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
-                    02 — Fragments
+                    01 — Fragments
                   </p>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
@@ -783,6 +769,108 @@ export default function InViPage() {
             </div>
           </section>
 
+          {/* SYSTEMS */}
+          <section id="systems" className="invi-section pt-32 space-y-10">
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-8 h-px bg-black/20" />
+                  <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
+                    02 — System
+                  </p>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
+                  視点を切り替え、奥行きを制する。
+                </h2>
+              </div>
+              <p className="max-w-xl text-xs sm:text-sm leading-loose text-gray-500 tracking-wide">
+                トップダウンと横スクロール。ふたつの2D視点を瞬時に切り替え、敵の攻撃、位置、重なりを読み替えて戦う。
+              </p>
+            </div>
+
+            <div className="grid overflow-hidden border border-black/5 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.05)] lg:grid-cols-[1.08fr_0.92fr]">
+              <div className="relative min-h-[22rem] bg-gray-950">
+                <img
+                  src="/images/invi/gallery_scene01.jpg"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-55 mix-blend-screen"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,23,42,0.96),rgba(15,23,42,0.35)_52%,rgba(236,72,153,0.22))]" />
+                <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:38px_38px]" />
+                <div className="relative flex h-full min-h-[22rem] flex-col justify-between p-7 sm:p-9">
+                  <div className="flex flex-wrap gap-2">
+                    {GAME_OVERVIEW.map((item) => (
+                      <span key={item.label} className="border border-white/15 bg-white/10 px-3 py-2 text-[9px] font-bold uppercase tracking-[0.24em] text-white/70 backdrop-blur-md">
+                        {item.value}
+                      </span>
+                    ))}
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.38em] text-blue-200">2D x 2D Action</p>
+                    <h3 className="mt-4 max-w-xl font-serif text-3xl leading-tight tracking-normal text-white sm:text-5xl">
+                      奥行きのない遺跡を、
+                      <span className="block text-white/55">視点で突破する。</span>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div className="divide-y divide-black/5 bg-[#fbfaf6]">
+                {[
+                  ["01", "切り替える", "トップダウンと横スクロールをボタン操作で瞬時に変更。見え方が変わると、敵との距離も攻略ルートも変化する。"],
+                  ["02", "ずらして避ける", "横視点では避けにくい攻撃を、奥方向への移動でかわす。平面の中に隠れた奥行きを使う。"],
+                  ["03", "重ねて倒す", "奥に並ぶ敵を視点変更でひとつのラインへ重ね、一気に斬り伏せる。空間の錯覚が攻撃手段になる。"],
+                ].map(([num, title, desc]) => (
+                  <article key={num} className="grid gap-5 p-6 sm:grid-cols-[4rem_1fr] sm:p-7">
+                    <span className="font-serif text-3xl text-gray-300">{num}</span>
+                    <div>
+                      <h3 className="text-base font-bold tracking-[0.2em] text-gray-900">{title}</h3>
+                      <p className="mt-3 text-xs leading-loose tracking-wide text-gray-500">{desc}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-5 lg:grid-cols-3">
+              {SYSTEMS.map((system) => (
+                <article key={system.label} className="group relative min-h-[15rem] overflow-hidden border border-black/5 bg-white p-7 shadow-[0_10px_36px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]">
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-200 via-white to-pink-200 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <div className="relative flex h-full flex-col justify-between gap-10">
+                    <span className="font-serif text-xs tracking-[0.45em] text-gray-300">{system.label}</span>
+                    <div>
+                      <h3 className="font-serif text-2xl tracking-wide text-gray-950">{system.title}</h3>
+                      <p className="mt-5 text-xs leading-loose tracking-wide text-gray-500">{system.desc}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* MOVIE / TRAILER */}
+          <section id="movie" className="invi-section pt-32 space-y-12">
+            <div className="flex items-center gap-3 px-6 sm:px-12 max-w-5xl mx-auto">
+              <span className="w-8 h-px bg-black/20" />
+              <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
+                03 — Movie
+              </p>
+            </div>
+
+            {/* YouTube埋め込み */}
+            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="relative aspect-video w-full bg-black overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+                <iframe
+                  src="https://www.youtube.com/embed/0MKQKQDTbNc?rel=0&modestbranding=1&color=white"
+                  title="InVi Concept Movie"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+            </div>
+          </section>
+
           {/* CHARACTERS */}
           <section id="characters" className="invi-section pt-32 space-y-12">
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
@@ -790,7 +878,7 @@ export default function InViPage() {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-8 h-px bg-black/20" />
                   <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
-                    03 — Characters
+                    04 — Characters
                   </p>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
@@ -869,61 +957,53 @@ export default function InViPage() {
             </div>
           </section>
 
-          {/* SYSTEMS */}
-          <section id="systems" className="invi-section pt-32 space-y-12">
+          {/* WORLD */}
+          <section id="world" className="invi-section pt-32 space-y-12">
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
               <div>
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-8 h-px bg-black/20" />
                   <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
-                    04 — Systems
+                    05 — World
                   </p>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
-                  読む、迷う、斬る。
+                  平成初期、日本の奥深い集落で
                 </h2>
               </div>
               <p className="max-w-xl text-xs sm:text-sm leading-loose text-gray-500 tracking-wide">
-                RPG とノベルの境目で、視点と距離が揺らぐ。世界の歪みを観察し、ふたりの能力で閉じた村の記録をほどいていく。
+                超常の存在「ナルカミ」により、遺跡は"奥行きのない世界"と化した。<br />
+                特異な力を持つ少女スイは、集落を統治する本家アガタと力を巡って激突する。
               </p>
             </div>
 
-            <div className="grid gap-5 lg:grid-cols-3">
-              {SYSTEMS.map((system) => (
-                <article key={system.label} className="group relative min-h-[18rem] overflow-hidden border border-black/5 bg-gray-950 p-7 text-white shadow-[0_18px_60px_rgba(15,23,42,0.12)]">
-                  <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:32px_32px]" />
-                  <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-300/20 blur-3xl transition-opacity group-hover:opacity-80" />
-                  <div className="relative flex h-full flex-col justify-between gap-12">
-                    <span className="font-serif text-xs tracking-[0.45em] text-white/35">{system.label}</span>
-                    <div>
-                      <h3 className="font-serif text-2xl tracking-wide text-white">{system.title}</h3>
-                      <p className="mt-5 text-xs leading-loose tracking-wide text-white/60">{system.desc}</p>
-                    </div>
-                  </div>
-                </article>
+            <div className="grid gap-6 md:grid-cols-3">
+              {WORLD_CARDS.map((item, i) => (
+                <div key={i} className="group relative bg-white p-8 border border-black/5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:border-black/10">
+                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-blue-100 to-pink-100 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                  <p className="text-[9px] font-serif uppercase tracking-[0.3em] text-gray-400">{item.label}</p>
+                  <p className="mt-4 text-sm font-bold text-gray-800 tracking-wide">{item.title}</p>
+                  <p className="mt-4 text-[11px] leading-loose text-gray-500">{item.desc}</p>
+                </div>
               ))}
             </div>
-          </section>
 
-          {/* MOVIE / TRAILER */}
-          <section id="movie" className="invi-section pt-32 space-y-12">
-            <div className="flex items-center gap-3 px-6 sm:px-12 max-w-5xl mx-auto">
-              <span className="w-8 h-px bg-black/20" />
-              <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
-                05 — Movie
-              </p>
-            </div>
-
-            {/* YouTube埋め込み */}
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="relative aspect-video w-full bg-black overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-                <iframe
-                  src="https://www.youtube.com/embed/0MKQKQDTbNc?rel=0&modestbranding=1&color=white"
-                  title="InVi Concept Movie"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
+            <div className="grid gap-8 border border-black/5 bg-white/60 p-6 sm:p-8 md:grid-cols-[0.9fr_1.1fr]">
+              <div>
+                <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">Incident Chain</p>
+                <h3 className="mt-4 font-serif text-2xl text-gray-900">遺跡は、奥行きを失った。</h3>
+              </div>
+              <div className="space-y-5">
+                {[
+                  ["01", "平成初期、日本の奥深い集落に超常の存在「ナルカミ」が現れる。"],
+                  ["02", "ナルカミの影響により、遺跡は奥行きのない異常空間へ変貌する。"],
+                  ["03", "特異な力を持つスイは、本家アガタと力を巡って激突する。"],
+                ].map(([num, text]) => (
+                  <div key={num} className="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-black/5 pb-5 last:border-b-0 last:pb-0">
+                    <span className="font-serif text-xs tracking-[0.3em] text-gray-300">{num}</span>
+                    <p className="text-xs leading-loose tracking-wide text-gray-600">{text}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -1051,13 +1131,13 @@ export default function InViPage() {
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="border border-black/5 bg-gray-50/50 p-8 sm:p-12">
                 <p className="text-lg sm:text-xl font-serif text-gray-900 leading-loose tracking-wide">
-                  これは、"神の死"が残した歪みと、<br />
-                  それに運命を選ばされた少女たちの物語。
+                  これは、奥行きのない世界で、<br />
+                  スイが力を巡る争いへ踏み込む物語。
                 </p>
                 <p className="mt-8 text-xs sm:text-sm leading-loose text-gray-600 tracking-wide">
-                  神がいなくなったあとも、力だけは世界に残る。<br />
-                  集落の大人たちは、その力を恐れながらも手放せず、「奇跡」と「悲劇」を名前だけ変えて子どもたちに押しつけていく。<br />
-                  スイとランは、自分たちが何のために選ばれたのかを知ったとき、世界の歪みと向き合うか、それとも物語ごと拒絶するかを選ばされる。
+                  平成初期、日本の奥深い集落。超常の存在「ナルカミ」により、遺跡は奥行きのない世界へ変貌した。<br />
+                  特異な力を持つ少女スイは、集落を統治する本家アガタと力を巡り激突する。<br />
+                  美麗なイラストによるADVパートでは、戦いの裏側にある因縁と感情が描かれていく。
                 </p>
               </div>
               <div className="relative overflow-hidden border border-black/5 bg-white p-8 sm:p-10">
@@ -1068,15 +1148,13 @@ export default function InViPage() {
                 />
                 <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">Development Note</p>
                 <p className="mt-5 text-sm leading-loose tracking-wide text-gray-600">
-                  現在制作中。物語、探索、戦闘、ビジュアルを順次公開予定です。最新情報は Seraf() の X で発信します。
+                  本編とは別の視点から、杉沢村、不可分領域、ナルカミに関する補足記録を整理しています。設定資料庫も順次更新予定です。
                 </p>
                 <a
-                  href="https://x.com/seraf_dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/InvI/wiki"
                   className="mt-8 inline-flex items-center border border-black/10 bg-gray-950 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-colors hover:bg-gray-800"
                 >
-                  Follow Updates
+                  Open Archive
                 </a>
               </div>
             </div>
