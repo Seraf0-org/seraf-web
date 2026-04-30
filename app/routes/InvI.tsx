@@ -115,13 +115,6 @@ export default function InViPage() {
       { duration: 40, easing: "linear", repeat: Infinity }
     );
 
-    // Gallery horizontal scroll animation
-    (animate as any)(
-      ".invi-gallery-track",
-      { x: ["0%", "-50%"] },
-      { duration: 50, easing: "linear", repeat: Infinity }
-    );
-
     // Hero entry animations
     (animate as any)(
       ".anim-fade-up",
@@ -490,36 +483,56 @@ export default function InViPage() {
               </p>
             </div>
 
-            {/* 横スクロールギャラリー */}
-            <div className="relative w-screen -ml-[calc(50vw-50%)] overflow-hidden flex py-8 border-y border-black/5 bg-gray-50/30">
-              <div className="invi-gallery-track flex gap-8 px-4 w-max">
-                {/* アニメーションをループさせるために2セット同じものを並べる */}
-                {[...Array(2)].map((_, groupIndex) => (
-                  <div key={groupIndex} className="flex gap-8">
+            {/* 横スクロールギャラリー — 純CSS無限ループ */}
+            <div className="relative w-screen -ml-[calc(50vw-50%)] overflow-hidden border-y border-black/5 bg-gray-50/30 py-6">
+              {/* フェードエッジ */}
+              <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-gray-50/60 to-transparent pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-gray-50/60 to-transparent pointer-events-none" />
+
+              <div
+                className="flex gap-6"
+                style={{
+                  width: "max-content",
+                  animation: "invi-marquee 60s linear infinite",
+                }}
+              >
+                {/* 4セット並べてシームレスなループを保証 */}
+                {[...Array(4)].map((_, groupIndex) => (
+                  <div key={groupIndex} className="flex gap-6 shrink-0">
                     {[
-                      { id: 1, text: "SCENE_01 / AWAKENING", width: "w-[400px] sm:w-[500px]" },
-                      { id: 2, text: "SCENE_02 / ENCOUNTER", width: "w-[500px] sm:w-[700px]" },
-                      { id: 3, text: "SCENE_03 / RESONANCE", width: "w-[450px] sm:w-[600px]" },
-                      { id: 4, text: "SCENE_04 / CONFLICT", width: "w-[400px] sm:w-[550px]" },
-                      { id: 5, text: "SCENE_05 / TRUTH", width: "w-[550px] sm:w-[750px]" },
+                      { src: "/images/invi/gallery_key_visual.png", alt: "InVi Key Visual", text: "KEY VISUAL", w: 700, hasImage: true },
+                      { src: "/images/invi/gallery_scene01.jpg", alt: "Scene — Encounter", text: "SCENE_01 / ENCOUNTER", w: 700, hasImage: true },
+                      { src: null, alt: null, text: "SCENE_02 / AWAKENING", w: 500, hasImage: false },
+                      { src: null, alt: null, text: "SCENE_03 / RESONANCE", w: 560, hasImage: false },
+                      { src: null, alt: null, text: "SCENE_04 / TRUTH", w: 480, hasImage: false },
                     ].map((item, i) => (
-                      <div 
-                        key={i} 
-                        className={`relative h-[250px] sm:h-[400px] ${item.width} shrink-0 bg-white border border-black/5 flex items-center justify-center overflow-hidden group shadow-sm transition-shadow hover:shadow-md`}
+                      <div
+                        key={i}
+                        className="relative h-[220px] sm:h-[380px] shrink-0 overflow-hidden group"
+                        style={{ width: `${item.w}px` }}
                       >
-                        {/* プレースホルダーの斜線背景 */}
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGw0MCA0ME00MCAwbC00MCA0MCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utb3BhY2l0eT0iMC4wMiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==')] opacity-50" />
-                        
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-black/[0.02] transition-opacity duration-500" />
-                        
-                        <div className="relative flex flex-col items-center gap-4 transition-transform duration-500 group-hover:scale-105">
-                          <span className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 bg-white">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                          </span>
-                          <span className="text-[10px] font-serif tracking-[0.3em] text-gray-400 bg-white px-2 py-1">
-                            {item.text}
-                          </span>
-                        </div>
+                        {item.hasImage ? (
+                          <>
+                            <img
+                              src={item.src!}
+                              alt={item.alt!}
+                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-500" />
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                              <span className="text-[9px] font-serif tracking-[0.4em] text-white/70 uppercase">{item.text}</span>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="absolute inset-0 bg-white border border-black/5" />
+                            <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "repeating-linear-gradient(45deg, #aaa 0, #aaa 1px, transparent 0, transparent 50%)", backgroundSize: "8px 8px" }} />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                              <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                              <span className="text-[9px] font-serif tracking-[0.3em] text-gray-400">{item.text}</span>
+                            </div>
+                          </>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -623,24 +636,16 @@ export default function InViPage() {
               </p>
             </div>
             
-            {/* 巨大な動画プレースホルダー */}
+            {/* YouTube埋め込み */}
             <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="relative aspect-video w-full bg-black overflow-hidden group cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
-                {/* プレースホルダー背景（後でiframeやvideoタグに差し替える） */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 transition-transform duration-1000 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGw0MCA0ME00MCAwbC00MCA0MCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utb3BhY2l0eT0iMC4wNSIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==')] opacity-50 mix-blend-overlay" />
-                
-                {/* 中央のPLAYボタン */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 transition-all duration-500 group-hover:bg-white/10 group-hover:scale-110">
-                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white translate-x-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <p className="mt-8 text-white/50 font-serif tracking-[0.5em] text-[10px] uppercase">
-                    Play Concept Movie
-                  </p>
-                </div>
+              <div className="relative aspect-video w-full bg-black overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+                <iframe
+                  src="https://www.youtube.com/embed/0MKQKQDTbNc?rel=0&modestbranding=1&color=white"
+                  title="InVi Concept Movie"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
               </div>
             </div>
           </section>

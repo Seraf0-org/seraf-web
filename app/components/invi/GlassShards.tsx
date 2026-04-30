@@ -3,38 +3,108 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-// 3種類の異なるガラス片形状（板ガラスが割れたような形）を生成
-function createShardGeometry(type: number) {
+// ガラス破片の不規則な形状を生成（頂点が多く、凹みや鋭角を持つ）
+function createShardGeometry(type: number, seed: number) {
+  // seedを使って決定論的なランダム性を作る
+  const rng = (n: number) => {
+    const x = Math.sin(seed * 9301 + n * 49297) * 0.5 + 0.5;
+    return x;
+  };
+
   const shape = new THREE.Shape();
-  
+
   if (type === 0) {
-    // 鋭く尖ったナイフのような破片
-    shape.moveTo(0, 1.5);
-    shape.lineTo(0.4, -1.0);
-    shape.lineTo(-0.3, -0.8);
-    shape.lineTo(-0.1, 0.2);
+    // 非常に鋭く、長い剣のような破片（ジャグド付き）
+    shape.moveTo(0.05 * rng(1), 1.8);
+    shape.lineTo(0.35 + rng(2) * 0.1, 0.9);
+    shape.lineTo(0.55, 0.1 + rng(3) * 0.15);
+    shape.lineTo(0.2 + rng(4) * 0.1, -0.4);
+    shape.lineTo(0.05, -1.2 - rng(5) * 0.3);
+    shape.lineTo(-0.15 - rng(6) * 0.1, -0.5);
+    shape.lineTo(-0.4 - rng(7) * 0.1, 0.2);
+    shape.lineTo(-0.25, 0.7 + rng(8) * 0.2);
+    shape.lineTo(-0.1, 1.3);
   } else if (type === 1) {
-    // 台形・多角形の破片
-    shape.moveTo(-0.6, 1.0);
-    shape.lineTo(0.5, 1.2);
-    shape.lineTo(0.8, -0.2);
-    shape.lineTo(0.2, -1.2);
-    shape.lineTo(-0.7, -0.5);
+    // 大きな多角形、斜めに割れた板ガラス（片側が鋭く、片側がなだらか）
+    shape.moveTo(-0.8 - rng(1) * 0.15, 1.1);
+    shape.lineTo(0.1, 1.3 + rng(2) * 0.1);
+    shape.lineTo(0.6 + rng(3) * 0.1, 0.7);
+    shape.lineTo(0.85, 0.0);
+    shape.lineTo(0.7 + rng(4) * 0.1, -0.5);
+    shape.lineTo(0.3, -1.0 - rng(5) * 0.2);
+    shape.lineTo(-0.3 - rng(6) * 0.15, -1.1);
+    shape.lineTo(-0.8, -0.4 - rng(7) * 0.1);
+    shape.lineTo(-0.6 - rng(8) * 0.1, 0.3);
+  } else if (type === 2) {
+    // 細長い三角に近い破片（鋭角が2つ）
+    shape.moveTo(0.0, 2.0 + rng(1) * 0.2);
+    shape.lineTo(0.25 + rng(2) * 0.1, 0.5);
+    shape.lineTo(0.5 + rng(3) * 0.1, -0.3);
+    shape.lineTo(0.15, -1.0 - rng(4) * 0.2);
+    shape.lineTo(-0.05 - rng(5) * 0.1, 0.1);
+    shape.lineTo(-0.3 - rng(6) * 0.1, 0.6);
+    shape.lineTo(-0.1, 1.3 + rng(7) * 0.2);
+  } else if (type === 3) {
+    // 薄く横長の破片（クラッシュした窓ガラス）
+    shape.moveTo(-1.5 - rng(1) * 0.2, 0.35);
+    shape.lineTo(-0.9 - rng(2) * 0.1, 0.6 + rng(3) * 0.1);
+    shape.lineTo(-0.2, 0.55);
+    shape.lineTo(0.4 + rng(4) * 0.15, 0.7);
+    shape.lineTo(1.0 + rng(5) * 0.2, 0.4);
+    shape.lineTo(1.6, 0.1 + rng(6) * 0.1);
+    shape.lineTo(1.3 + rng(7) * 0.1, -0.35);
+    shape.lineTo(0.5, -0.5 - rng(8) * 0.1);
+    shape.lineTo(-0.1 - rng(9) * 0.1, -0.4);
+    shape.lineTo(-0.7, -0.55 - rng(10) * 0.1);
+    shape.lineTo(-1.2 - rng(11) * 0.1, -0.3);
+    shape.lineTo(-1.6, -0.05);
+  } else if (type === 4) {
+    // Lの字に近い、角が欠けた形
+    shape.moveTo(-0.3, 1.4 + rng(1) * 0.2);
+    shape.lineTo(0.5 + rng(2) * 0.1, 1.2);
+    shape.lineTo(0.4, 0.4 + rng(3) * 0.1);
+    shape.lineTo(1.2 + rng(4) * 0.15, 0.3);
+    shape.lineTo(1.1, -0.2 - rng(5) * 0.1);
+    shape.lineTo(0.3 + rng(6) * 0.1, -0.3);
+    shape.lineTo(0.2, -1.1 - rng(7) * 0.2);
+    shape.lineTo(-0.5 - rng(8) * 0.1, -1.0);
+    shape.lineTo(-0.6, -0.1 + rng(9) * 0.1);
+    shape.lineTo(-0.4 - rng(10) * 0.1, 0.7);
+  } else if (type === 5) {
+    // Z字型の動的な破片
+    shape.moveTo(-0.2, 1.6 + rng(1) * 0.15);
+    shape.lineTo(0.6 + rng(2) * 0.1, 1.5);
+    shape.lineTo(0.7, 0.8 + rng(3) * 0.1);
+    shape.lineTo(0.1 + rng(4) * 0.1, 0.3);
+    shape.lineTo(0.8, -0.1 - rng(5) * 0.1);
+    shape.lineTo(0.9 + rng(6) * 0.1, -0.7);
+    shape.lineTo(0.1, -0.9 - rng(7) * 0.2);
+    shape.lineTo(-0.5 - rng(8) * 0.1, -0.8);
+    shape.lineTo(-0.6, -0.2 + rng(9) * 0.1);
+    shape.lineTo(-0.1 - rng(10) * 0.1, 0.2);
+    shape.lineTo(-0.7, 0.6 + rng(11) * 0.1);
+    shape.lineTo(-0.5, 1.2 + rng(12) * 0.1);
   } else {
-    // 長方形に近いが斜めに割れた破片
-    shape.moveTo(-0.4, 1.8);
-    shape.lineTo(0.3, 1.5);
-    shape.lineTo(0.5, -1.5);
-    shape.lineTo(-0.5, -1.2);
+    // 非常に不規則な多角形（8〜9頂点、ギザギザ）
+    shape.moveTo(0.0, 1.5 + rng(1) * 0.3);
+    shape.lineTo(0.5 + rng(2) * 0.2, 1.1);
+    shape.lineTo(0.8 + rng(3) * 0.15, 0.4);
+    shape.lineTo(0.6, -0.2 - rng(4) * 0.15);
+    shape.lineTo(0.9 + rng(5) * 0.1, -0.6);
+    shape.lineTo(0.4 + rng(6) * 0.2, -1.2 - rng(7) * 0.2);
+    shape.lineTo(-0.3 - rng(8) * 0.15, -1.0);
+    shape.lineTo(-0.7 - rng(9) * 0.1, -0.3);
+    shape.lineTo(-0.5, 0.5 + rng(10) * 0.15);
+    shape.lineTo(-0.2 - rng(11) * 0.1, 1.0);
   }
 
   const extrudeSettings = {
-    depth: 0.08,           // 板ガラスの厚み
+    depth: 0.06,
     bevelEnabled: true,
     bevelSegments: 2,
     steps: 1,
-    bevelSize: 0.03,       // 割れ目のエッジ（光を鋭く反射させる）
-    bevelThickness: 0.03,
+    bevelSize: 0.025,
+    bevelThickness: 0.02,
   };
   const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
   geom.center();
@@ -42,10 +112,10 @@ function createShardGeometry(type: number) {
   return geom;
 }
 
-function ShardGroup({ count = 50, type = 0 }) {
+function ShardGroup({ count = 50, type = 0, seed = 1 }) {
   const mesh = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  const geometry = useMemo(() => createShardGeometry(type), [type]);
+  const geometry = useMemo(() => createShardGeometry(type, seed), [type, seed]);
 
   // 破片の初期パラメータ生成
   const particles = useMemo(() => {
@@ -133,7 +203,9 @@ export function GlassShards({
   count?: number;
   className?: string;
 }) {
-  const countPerGroup = Math.floor(count / 3);
+  // 7種類の形状に均等に分配
+  const countPerGroup = Math.floor(count / 7);
+  const remainder = count % 7;
 
   return (
     <div className={className}>
@@ -148,9 +220,13 @@ export function GlassShards({
         <Environment preset="city" />
 
         <Float speed={0.5} rotationIntensity={0.5} floatIntensity={1}>
-          <ShardGroup count={countPerGroup} type={0} />
-          <ShardGroup count={countPerGroup} type={1} />
-          <ShardGroup count={countPerGroup + (count % 3)} type={2} />
+          <ShardGroup count={countPerGroup + remainder} type={0} seed={1.0} />
+          <ShardGroup count={countPerGroup} type={1} seed={2.3} />
+          <ShardGroup count={countPerGroup} type={2} seed={3.7} />
+          <ShardGroup count={countPerGroup} type={3} seed={5.1} />
+          <ShardGroup count={countPerGroup} type={4} seed={7.9} />
+          <ShardGroup count={countPerGroup} type={5} seed={11.3} />
+          <ShardGroup count={countPerGroup} type={6} seed={13.6} />
         </Float>
       </Canvas>
     </div>

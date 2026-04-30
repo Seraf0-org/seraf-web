@@ -39,3 +39,9 @@
     pointer-events: none;
   }
 }
+
+/* InVi Gallery 無限横スクロールマーキー */
+@keyframes invi-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
