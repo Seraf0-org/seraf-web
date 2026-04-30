@@ -1,4 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useEffect } from "react";
+import Lenis from "lenis";
+import { ArchiveBackground } from "~/components/invi/ArchiveBackground";
 
 export const meta: MetaFunction = () => {
   return [
@@ -128,66 +131,94 @@ const TERMS = [
 ];
 
 export default function InViWikiPage() {
-  return (
-    <main className="min-h-screen bg-[#f2f1ed] text-gray-900 selection:bg-slate-900 selection:text-white">
-      <div className="pointer-events-none fixed inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(15,23,42,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:42px_42px]" />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(191,219,254,0.45),transparent_28%),radial-gradient(circle_at_90%_20%,rgba(251,207,232,0.35),transparent_24%)]" />
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-      <header className="relative z-10 border-b border-black/10 bg-[#f7f6f1]/80 backdrop-blur-xl">
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.7,
+    });
+
+    let rafId = 0;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-[#091016] text-slate-200 selection:bg-cyan-200 selection:text-slate-950">
+      <ArchiveBackground />
+      <div className="pointer-events-none fixed inset-0 z-[1] bg-[radial-gradient(circle_at_16%_12%,rgba(14,165,233,0.18),transparent_26%),radial-gradient(circle_at_88%_10%,rgba(244,114,182,0.1),transparent_24%),linear-gradient(180deg,rgba(2,6,23,0.08),rgba(2,6,23,0.7))]" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 h-px bg-cyan-200/50" />
+
+      <header className="relative z-10 border-b border-cyan-100/10 bg-slate-950/78 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="/InvI" className="font-serif text-sm font-bold uppercase tracking-[0.35em] text-gray-700">
-            InvI
+          <a href="/InvI" className="text-[11px] font-bold uppercase tracking-[0.42em] text-cyan-100">
+            Sugisawa Archive
           </a>
-          <nav className="flex items-center gap-5 text-[10px] font-bold uppercase tracking-[0.28em] text-gray-500">
-            <a href="#records" className="transition-colors hover:text-gray-950">Records</a>
-            <a href="#timeline" className="transition-colors hover:text-gray-950">Timeline</a>
-            <a href="#terms" className="transition-colors hover:text-gray-950">Glossary</a>
+          <nav className="flex items-center gap-5 text-[10px] font-bold uppercase tracking-[0.28em] text-slate-500">
+            <a href="#records" className="transition-colors hover:text-cyan-100">Records</a>
+            <a href="#timeline" className="transition-colors hover:text-cyan-100">Timeline</a>
+            <a href="#terms" className="transition-colors hover:text-cyan-100">Glossary</a>
           </nav>
         </div>
       </header>
 
       <section className="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[17rem_1fr] lg:py-20">
         <aside className="lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)]">
-          <div className="border border-black/10 bg-white/55 p-5 backdrop-blur-xl">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gray-400">Classified Index</p>
-            <h1 className="mt-6 font-serif text-3xl leading-tight tracking-normal text-gray-950">
+          <div className="border border-cyan-100/15 bg-slate-950/72 p-5 font-mono shadow-[0_0_40px_rgba(14,165,233,0.08)] backdrop-blur-xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-cyan-300">Classified Index</p>
+            <h1 className="mt-6 font-serif text-3xl leading-tight tracking-normal text-slate-50">
               不可分領域
-              <span className="block text-gray-400">資料庫</span>
+              <span className="block text-cyan-200/45">資料庫</span>
             </h1>
-            <p className="mt-6 text-xs leading-loose tracking-wide text-gray-600">
+            <p className="mt-6 text-xs leading-loose tracking-wide text-slate-400">
               外部組織が杉沢村事案を補足するために再編した閲覧用アーカイブ。ゲーム本編外の視点から、地名、家系、異常現象を記録する。
             </p>
-            <div className="mt-8 space-y-2 border-t border-black/10 pt-5 text-[10px] font-bold uppercase tracking-[0.25em] text-gray-500">
-              <p>Access: Provisional</p>
-              <p>Sector: Sugisawa</p>
-              <p>Status: Observation</p>
+            <div className="mt-8 space-y-2 border-t border-cyan-100/15 pt-5 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500">
+              <p><span className="text-cyan-300">Access</span>: Provisional</p>
+              <p><span className="text-cyan-300">Sector</span>: Sugisawa</p>
+              <p><span className="text-cyan-300">Status</span>: Observation</p>
             </div>
           </div>
         </aside>
 
         <div className="space-y-14">
-          <section className="border border-black/10 bg-[#fbfaf6]/75 p-6 backdrop-blur-xl sm:p-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500">Observation Note</p>
-            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-normal text-gray-950 sm:text-6xl">
-              これは外伝のための、
-              <span className="block text-gray-400">集落記録である。</span>
+          <section className="relative overflow-hidden border border-cyan-100/15 bg-slate-950/78 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:p-10">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-300/70 via-transparent to-pink-300/40" />
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.4em] text-cyan-300">Observation Note / External Casefile</p>
+            <h2 className="mt-5 font-serif text-4xl leading-tight tracking-normal text-slate-50 sm:text-6xl">
+              組織保管資料
+              <span className="block text-cyan-100/35">杉沢村事案</span>
             </h2>
-            <p className="mt-8 max-w-2xl text-sm leading-loose tracking-wide text-gray-600">
+            <p className="mt-8 max-w-2xl text-sm leading-loose tracking-wide text-slate-400">
               『InvI』は杉沢村で発生した不可分領域事案を描く外伝です。本ページでは、組織が保管する調査記録という体裁で、村の歴史、御三家、ナルカミ、禁足地の異常を整理します。
             </p>
           </section>
 
           <section id="records" className="space-y-5">
             <ArchiveHeading number="01" title="Primary Records" caption="杉沢村事案 / 主要記録" />
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-px overflow-hidden border border-cyan-100/15 bg-cyan-100/15 md:grid-cols-2">
               {RECORDS.map((record) => (
-                <article key={record.code} className="border border-black/10 bg-white/70 p-6 backdrop-blur-xl">
-                  <div className="flex items-center justify-between gap-4 border-b border-black/10 pb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-gray-400">{record.code}</span>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-blue-500">{record.label}</span>
+                <article key={record.code} className="bg-slate-950/82 p-6 backdrop-blur-xl">
+                  <div className="flex items-center justify-between gap-4 border-b border-cyan-100/10 pb-4 font-mono">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-slate-500">{record.code}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-cyan-300">{record.label}</span>
                   </div>
-                  <h3 className="mt-5 font-serif text-2xl text-gray-950">{record.title}</h3>
-                  <p className="mt-4 text-sm leading-loose tracking-wide text-gray-600">{record.body}</p>
+                  <h3 className="mt-5 font-serif text-2xl text-slate-50">{record.title}</h3>
+                  <p className="mt-4 text-sm leading-loose tracking-wide text-slate-400">{record.body}</p>
                 </article>
               ))}
             </div>
@@ -195,12 +226,12 @@ export default function InViWikiPage() {
 
           <section id="houses" className="space-y-5">
             <ArchiveHeading number="02" title="Village Houses" caption="杉沢村御三家 / 外様" />
-            <div className="grid gap-px overflow-hidden border border-black/10 bg-black/10 md:grid-cols-2">
+            <div className="grid gap-px overflow-hidden border border-cyan-100/15 bg-cyan-100/15 md:grid-cols-2">
               {HOUSES.map((house) => (
-                <article key={house.name} className="bg-[#fbfaf6] p-6">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-pink-500">{house.role}</p>
-                  <h3 className="mt-3 font-serif text-2xl text-gray-950">{house.name}</h3>
-                  <p className="mt-4 text-sm leading-loose tracking-wide text-gray-600">{house.desc}</p>
+                <article key={house.name} className="bg-slate-900/88 p-6">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-pink-300">{house.role}</p>
+                  <h3 className="mt-3 font-serif text-2xl text-slate-50">{house.name}</h3>
+                  <p className="mt-4 text-sm leading-loose tracking-wide text-slate-400">{house.desc}</p>
                 </article>
               ))}
             </div>
@@ -208,14 +239,14 @@ export default function InViWikiPage() {
 
           <section id="timeline" className="space-y-5">
             <ArchiveHeading number="03" title="Chronology" caption="不可分領域関連年表" />
-            <div className="border border-black/10 bg-white/65 p-6 sm:p-8">
+            <div className="border border-cyan-100/15 bg-slate-950/82 p-6 sm:p-8">
               {TIMELINE.map((item, index) => (
-                <article key={`${item.year}-${item.title}`} className="grid gap-4 border-b border-black/10 py-6 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[8rem_1fr]">
-                  <div className="font-serif text-2xl text-gray-400">{item.year}</div>
+                <article key={`${item.year}-${item.title}`} className="grid gap-4 border-b border-cyan-100/10 py-6 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[8rem_1fr]">
+                  <div className="font-mono text-xl text-cyan-300/70">{item.year}</div>
                   <div>
-                    <h3 className="text-base font-bold tracking-[0.18em] text-gray-900">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-loose tracking-wide text-gray-600">{item.body}</p>
-                    <span className="mt-4 inline-block text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
+                    <h3 className="text-base font-bold tracking-[0.18em] text-slate-50">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-loose tracking-wide text-slate-400">{item.body}</p>
+                    <span className="mt-4 inline-block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500">
                       Record {String(index + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -228,11 +259,11 @@ export default function InViWikiPage() {
             <ArchiveHeading number="04" title="Persons" caption="主要人物 / 観測対象" />
             <div className="grid gap-4 md:grid-cols-2">
               {PERSONS.map((person) => (
-                <article key={person.name} className="relative overflow-hidden border border-black/10 bg-gray-950 p-6 text-white">
-                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full border border-white/10" />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-blue-200">{person.alias}</p>
+                <article key={person.name} className="relative overflow-hidden border border-cyan-100/15 bg-[#111827] p-6 text-white">
+                  <div className="absolute -right-12 -top-12 h-32 w-32 border border-cyan-100/10" />
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-cyan-200">{person.alias}</p>
                   <h3 className="mt-4 font-serif text-2xl">{person.name}</h3>
-                  <p className="mt-4 text-sm leading-loose tracking-wide text-gray-300">{person.desc}</p>
+                  <p className="mt-4 text-sm leading-loose tracking-wide text-slate-400">{person.desc}</p>
                 </article>
               ))}
             </div>
@@ -240,11 +271,11 @@ export default function InViWikiPage() {
 
           <section id="terms" className="space-y-5 pb-20">
             <ArchiveHeading number="05" title="Glossary" caption="用語索引" />
-            <div className="grid gap-px overflow-hidden border border-black/10 bg-black/10">
+            <div className="grid gap-px overflow-hidden border border-cyan-100/15 bg-cyan-100/15">
               {TERMS.map(([term, desc]) => (
-                <article key={term} className="grid gap-3 bg-[#fbfaf6] p-5 sm:grid-cols-[10rem_1fr]">
-                  <h3 className="font-serif text-xl text-gray-950">{term}</h3>
-                  <p className="text-sm leading-loose tracking-wide text-gray-600">{desc}</p>
+                <article key={term} className="grid gap-3 bg-slate-950/82 p-5 sm:grid-cols-[10rem_1fr]">
+                  <h3 className="font-serif text-xl text-slate-50">{term}</h3>
+                  <p className="text-sm leading-loose tracking-wide text-slate-400">{desc}</p>
                 </article>
               ))}
             </div>
@@ -257,12 +288,12 @@ export default function InViWikiPage() {
 
 function ArchiveHeading({ number, title, caption }: { number: string; title: string; caption: string }) {
   return (
-    <div className="flex items-end justify-between gap-6 border-b border-black/10 pb-4">
+    <div className="flex items-end justify-between gap-6 border-b border-cyan-100/15 pb-4">
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-gray-400">{number} / Archive</p>
-        <h2 className="mt-2 font-serif text-3xl text-gray-950">{title}</h2>
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.35em] text-cyan-300/70">{number} / Archive</p>
+        <h2 className="mt-2 font-serif text-3xl text-slate-50">{title}</h2>
       </div>
-      <p className="hidden text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400 sm:block">{caption}</p>
+      <p className="hidden font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 sm:block">{caption}</p>
     </div>
   );
 }

@@ -207,23 +207,6 @@ export default function InViPage() {
 
     const ease = [0.22, 0.61, 0.36, 1];
 
-    // 強化版 Entrance Shutter
-    (animate as any)(
-      ".invi-shutter-panel",
-      { scaleY: [1, 0] },
-      { delay: 0.1, duration: 1.2, easing: [0.76, 0, 0.24, 1] }
-    );
-    (animate as any)(
-      ".invi-shutter-content",
-      { opacity: [1, 0], scale: [1, 0.95] },
-      { duration: 0.6, easing: ease }
-    );
-    (animate as any)(
-      ".invi-shutter-container",
-      { display: "none" },
-      { delay: 1.5 }
-    );
-
     // Parallax
     scroll(animate(".parallax-bg-deep", { y: [0, 400] }));
     scroll(animate(".parallax-bg", { y: [0, 200], scale: [1, 1.05] }));
@@ -288,39 +271,41 @@ export default function InViPage() {
       <GlassShards count={34} className="fixed inset-0 z-[1] pointer-events-none opacity-55" />
 
       {/* ===== 強化版ローディング画面 ===== */}
-      <div className="invi-shutter-container fixed inset-0 z-[100] pointer-events-none flex flex-col">
-        {/* 上下のシャッターパネル */}
-        <div className="invi-shutter-panel origin-top w-full h-1/2 bg-[#FDFDFD] border-b border-gray-100" />
-        <div className="invi-shutter-panel origin-bottom w-full h-1/2 bg-[#FDFDFD] border-t border-gray-100" />
+      {isLoading && (
+        <div className="invi-shutter-container fixed inset-0 z-[100] pointer-events-none flex flex-col">
+          {/* 上下のシャッターパネル */}
+          <div className="invi-shutter-panel origin-top w-full h-1/2 bg-[#FDFDFD] border-b border-gray-100" />
+          <div className="invi-shutter-panel origin-bottom w-full h-1/2 bg-[#FDFDFD] border-t border-gray-100" />
 
-        {/* ローディングコンテンツ */}
-        <div className="invi-shutter-content absolute inset-0 flex flex-col items-center justify-center">
-          {/* 追加いただいたエンブレムロゴ */}
-          <img
-            src="/images/invi/emblem.png"
-            alt="Loading Emblem"
-            className="w-12 h-12 object-contain opacity-80 mb-6 animate-pulse invert mix-blend-multiply"
-          />
-
-          {/* パーセンテージ表示 */}
-          <div className="font-serif text-3xl tracking-widest text-gray-800 mb-2">
-            {progress.toString().padStart(3, '0')}<span className="text-sm text-gray-400 ml-1">%</span>
-          </div>
-
-          {/* ステータステキスト */}
-          <span className="font-serif text-[9px] tracking-[0.4em] text-gray-400 uppercase">
-            {progress < 100 ? "Establishing Connection..." : "System Ready"}
-          </span>
-
-          {/* プログレスバー */}
-          <div className="w-48 h-[1px] bg-gray-200 mt-6 relative overflow-hidden">
-            <div
-              className="absolute left-0 top-0 bottom-0 bg-gray-800 transition-all duration-75 ease-out"
-              style={{ width: `${progress}%` }}
+          {/* ローディングコンテンツ */}
+          <div className="invi-shutter-content absolute inset-0 flex flex-col items-center justify-center">
+            {/* 追加いただいたエンブレムロゴ */}
+            <img
+              src="/images/invi/emblem.png"
+              alt="Loading Emblem"
+              className="w-12 h-12 object-contain opacity-80 mb-6 animate-pulse invert mix-blend-multiply"
             />
+
+            {/* パーセンテージ表示 */}
+            <div className="font-serif text-3xl tracking-widest text-gray-800 mb-2">
+              {progress.toString().padStart(3, '0')}<span className="text-sm text-gray-400 ml-1">%</span>
+            </div>
+
+            {/* ステータステキスト */}
+            <span className="font-serif text-[9px] tracking-[0.4em] text-gray-400 uppercase">
+              {progress < 100 ? "Establishing Connection..." : "System Ready"}
+            </span>
+
+            {/* プログレスバー */}
+            <div className="w-48 h-[1px] bg-gray-200 mt-6 relative overflow-hidden">
+              <div
+                className="absolute left-0 top-0 bottom-0 bg-gray-800 transition-all duration-75 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ===== 左・縦ナビバー ===== */}
       <nav className="invi-sidenav fixed left-0 inset-y-0 z-40 w-12 sm:w-16 flex flex-col items-center justify-between py-8 bg-white/40 backdrop-blur-md border-r border-black/5">
@@ -518,7 +503,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/ran.png"
                   alt="ラン"
-                  className="absolute bottom-[-30vh] left-1/2 -translate-x-[2%] sm:bottom-[-28vh] sm:-translate-x-[16%] lg:bottom-[-32vh] h-[92%] sm:h-[108%] lg:h-[128%] w-auto object-contain select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)]"
+                  className="absolute bottom-[-46vh] left-1/2 h-[108%] w-auto -translate-x-[1%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-47vh] sm:h-[128%] sm:-translate-x-[14%] lg:bottom-[-55vh] lg:h-[152%] xl:bottom-[-59vh] xl:h-[160%]"
                 />
               </div>
             </div>
@@ -531,7 +516,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/sui.png"
                   alt="スイ"
-                  className="absolute bottom-[-29vh] left-1/2 -translate-x-[90%] sm:bottom-[-27vh] sm:-translate-x-[96%] lg:bottom-[-31vh] h-[90%] sm:h-[105%] lg:h-[124%] w-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
+                  className="absolute bottom-[-45vh] left-1/2 h-[106%] w-auto -translate-x-[90%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-46vh] sm:h-[126%] sm:-translate-x-[97%] lg:bottom-[-54vh] lg:h-[148%] xl:bottom-[-58vh] xl:h-[156%]"
                 />
               </div>
             </div>
