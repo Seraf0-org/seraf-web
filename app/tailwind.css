@@ -108,3 +108,56 @@
 .invi-metric:nth-child(3) {
   animation-delay: -3.6s;
 }
+
+@keyframes invi-loader-scan {
+  0% {
+    transform: translateY(-130%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes invi-loader-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes invi-loader-ring-slow {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes invi-loader-core {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(125, 211, 252, 0.18));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 28px rgba(244, 114, 182, 0.2));
+    transform: scale(1.025);
+  }
+}
+
+.invi-loader-scan {
+  animation: invi-loader-scan 2.6s linear infinite;
+}
+
+.invi-loader-ring {
+  animation: invi-loader-ring 4.2s linear infinite;
+}
+
+.invi-loader-ring-slow {
+  animation: invi-loader-ring-slow 6.5s linear infinite;
+}
+
+.invi-loader-core {
+  animation: invi-loader-core 3.2s ease-in-out infinite;
+}

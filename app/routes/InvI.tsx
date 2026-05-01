@@ -300,36 +300,80 @@ export default function InViPage() {
 
       {/* ===== 強化版ローディング画面 ===== */}
       {isLoading && (
-        <div className="invi-shutter-container fixed inset-0 z-[100] pointer-events-none flex flex-col">
+        <div className="invi-shutter-container fixed inset-0 z-[100] pointer-events-none overflow-hidden bg-[#f8fbff]">
+          <img
+            src="/images/invi/lower-data-field.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.26] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/gallery-hud-frame.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.2] mix-blend-multiply"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(255,255,255,0.16),rgba(255,255,255,0.78)_42%,rgba(226,242,255,0.92)_100%)]" />
+          <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(15,23,42,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.16)_1px,transparent_1px)] [background-size:100%_8px,8px_100%]" />
+          <div className="invi-loader-scan absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-cyan-200/45 via-white/20 to-transparent" />
+          <div className="absolute left-[8vw] top-1/2 hidden w-56 -translate-y-1/2 border-y border-white/50 py-4 text-[8px] font-bold uppercase tracking-[0.24em] text-gray-500 md:block">
+            {["Archive Link", "Depth Scan", "Miracle Index"].map((item, index) => (
+              <div key={item} className="flex items-center justify-between border-b border-black/10 py-3 last:border-b-0">
+                <span>{item}</span>
+                <span className="text-cyan-600">0{index + 1}</span>
+              </div>
+            ))}
+          </div>
+          <div className="absolute right-[8vw] top-1/2 hidden w-56 -translate-y-1/2 border-y border-white/50 py-4 text-[8px] font-bold uppercase tracking-[0.24em] text-gray-500 md:block">
+            {["Top View", "Side View", "Mignite"].map((item, index) => (
+              <div key={item} className="flex items-center justify-between border-b border-black/10 py-3 last:border-b-0">
+                <span>{item}</span>
+                <span className="text-pink-500">0{index + 1}</span>
+              </div>
+            ))}
+          </div>
+
           {/* 上下のシャッターパネル */}
-          <div className="invi-shutter-panel origin-top w-full h-1/2 bg-[#FDFDFD] border-b border-gray-100" />
-          <div className="invi-shutter-panel origin-bottom w-full h-1/2 bg-[#FDFDFD] border-t border-gray-100" />
+          <div className="invi-shutter-panel absolute inset-x-0 top-0 h-1/2 origin-top border-b border-white/60 bg-white/22 backdrop-blur-sm" />
+          <div className="invi-shutter-panel absolute inset-x-0 bottom-0 h-1/2 origin-bottom border-t border-white/60 bg-white/22 backdrop-blur-sm" />
 
           {/* ローディングコンテンツ */}
           <div className="invi-shutter-content absolute inset-0 flex flex-col items-center justify-center">
-            {/* 追加いただいたエンブレムロゴ */}
-            <img
-              src="/images/invi/emblem.png"
-              alt="Loading Emblem"
-              className="w-12 h-12 object-contain opacity-80 mb-6 animate-pulse invert mix-blend-multiply"
-            />
+            <div className="invi-loader-core relative flex h-52 w-52 items-center justify-center">
+              <div className="absolute inset-0 rounded-full border border-cyan-200/80" />
+              <div className="absolute inset-6 rounded-full border border-pink-200/70" />
+              <div className="absolute inset-12 rounded-full border border-black/10" />
+              <div className="invi-loader-ring absolute inset-0 rounded-full border-t border-cyan-400/90 border-r border-transparent border-b border-transparent border-l border-transparent" />
+              <div className="invi-loader-ring-slow absolute inset-5 rounded-full border-b border-pink-300/80 border-r border-transparent border-t border-transparent border-l border-transparent" />
+              <img
+                src="/images/invi/emblem.png"
+                alt="Loading Emblem"
+                className="relative h-14 w-14 object-contain opacity-72 invert mix-blend-multiply"
+              />
+            </div>
 
             {/* パーセンテージ表示 */}
-            <div className="font-serif text-3xl tracking-widest text-gray-800 mb-2">
+            <div className="mt-6 font-serif text-4xl tracking-widest text-gray-800">
               {progress.toString().padStart(3, '0')}<span className="text-sm text-gray-400 ml-1">%</span>
             </div>
 
             {/* ステータステキスト */}
-            <span className="font-serif text-[9px] tracking-[0.4em] text-gray-400 uppercase">
+            <span className="mt-3 font-serif text-[9px] tracking-[0.45em] text-gray-400 uppercase">
               {progress < 100 ? "Establishing Connection..." : "System Ready"}
             </span>
 
             {/* プログレスバー */}
-            <div className="w-48 h-[1px] bg-gray-200 mt-6 relative overflow-hidden">
+            <div className="relative mt-7 h-[3px] w-72 overflow-hidden bg-black/10">
               <div
-                className="absolute left-0 top-0 bottom-0 bg-gray-800 transition-all duration-75 ease-out"
+                className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-cyan-300 via-white to-pink-300 transition-all duration-75 ease-out"
                 style={{ width: `${progress}%` }}
               />
+            </div>
+            <div className="mt-4 grid w-72 grid-cols-5 gap-2">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <span
+                  key={index}
+                  className={`h-px ${progress >= (index + 1) * 20 ? "bg-cyan-400/80" : "bg-black/10"}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -831,13 +875,8 @@ export default function InViPage() {
             </div>
 
             {/* 横スクロールギャラリー — 純CSS無限ループ */}
-            <div className="relative w-screen -ml-[calc(50vw-50%)] overflow-hidden border-y border-black/10 bg-white/25 py-8">
-              <img
-                src="/images/invi/gallery-hud-frame.png"
-                alt=""
-                className="absolute inset-0 h-full w-full object-cover opacity-[0.16] mix-blend-multiply"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.72),rgba(255,255,255,0.28)_35%,rgba(255,255,255,0.28)_65%,rgba(255,255,255,0.72))]" />
+            <div className="relative w-screen -ml-[calc(50vw-50%)] overflow-hidden border-y border-black/10 bg-white/35 py-8">
+              <div className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(15,23,42,0.35)_1px,transparent_1px)] [background-size:100%_6px]" />
               {/* フェードエッジ */}
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-gray-50/60 to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-gray-50/60 to-transparent pointer-events-none" />
@@ -866,11 +905,10 @@ export default function InViPage() {
                               alt={item.alt!}
                               className="absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] object-cover transition-transform duration-700 group-hover:scale-105"
                             />
-                            <div className="absolute inset-2 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
                             <img
-                              src="/images/invi/gallery-hud-frame.png"
+                              src="/images/invi/gallery-frame-overlay.png"
                               alt=""
-                              className="absolute inset-0 h-full w-full object-cover opacity-[0.42] mix-blend-screen"
+                              className="absolute inset-0 h-full w-full object-fill"
                             />
                             <div className="absolute left-0 top-0 h-10 w-10 border-l border-t border-cyan-200/90" />
                             <div className="absolute right-0 top-0 h-10 w-10 border-r border-t border-white/80" />
