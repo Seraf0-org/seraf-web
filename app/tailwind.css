@@ -109,6 +109,44 @@
   animation-delay: -3.6s;
 }
 
+@keyframes invi-frame-bloom {
+  0%, 100% {
+    opacity: 0.58;
+    filter: blur(10px) saturate(1.55) brightness(1.18) drop-shadow(0 0 18px rgba(34, 211, 238, 0.38));
+  }
+  50% {
+    opacity: 0.82;
+    filter: blur(15px) saturate(1.9) brightness(1.34) drop-shadow(0 0 34px rgba(244, 114, 182, 0.3));
+  }
+}
+
+@keyframes invi-frame-spark {
+  0%, 100% {
+    opacity: 0.28;
+    transform: translateX(-18%) scaleX(0.72);
+  }
+  50% {
+    opacity: 0.78;
+    transform: translateX(18%) scaleX(1);
+  }
+}
+
+.invi-frame-bloom {
+  animation: invi-frame-bloom 4.8s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.invi-frame-crisp {
+  filter:
+    drop-shadow(0 0 10px rgba(34, 211, 238, 0.5))
+    drop-shadow(0 0 24px rgba(244, 114, 182, 0.18))
+    drop-shadow(0 12px 32px rgba(15, 23, 42, 0.18));
+}
+
+.invi-frame-spark {
+  animation: invi-frame-spark 5.6s ease-in-out infinite;
+}
+
 @keyframes invi-loader-ring {
   to {
     transform: rotate(360deg);

@@ -99,12 +99,12 @@ function createShardGeometry(type: number, seed: number) {
   }
 
   const extrudeSettings = {
-    depth: 0.09,
+    depth: 0.18,
     bevelEnabled: true,
-    bevelSegments: 3,
+    bevelSegments: 5,
     steps: 1,
-    bevelSize: 0.04,
-    bevelThickness: 0.035,
+    bevelSize: 0.055,
+    bevelThickness: 0.045,
   };
   const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
   geom.center();
@@ -181,10 +181,10 @@ function ShardGroup({ count = 50, type = 0, seed = 1 }) {
       const z = THREE.MathUtils.lerp(-18, 8, depthLayer);
       
       // 平板ガラスの破片なので、スケールは元の形状比率を維持しつつランダムに
-      const baseScale = THREE.MathUtils.lerp(0.16, 0.72, depthLayer) * (Math.random() * 0.45 + 0.9);
+      const baseScale = THREE.MathUtils.lerp(0.14, 0.62, depthLayer) * (Math.random() * 0.45 + 0.9);
       const scaleX = baseScale * THREE.MathUtils.lerp(0.8, 1.35, Math.random());
       const scaleY = baseScale * (Math.random() * 0.7 + 1.0);
-      const scaleZ = baseScale;
+      const scaleZ = baseScale * 0.85;
 
       // 舞い上がるスピードをゆったりと
       const speed = Math.random() * 0.004 + 0.0008;
@@ -242,7 +242,7 @@ function ShardGroup({ count = 50, type = 0, seed = 1 }) {
       if (prismMesh.current) {
         dummy.position.set(p.x + scrollShiftX + floatX + 0.04, wrappedY - 0.04, p.z + floatZ - 0.08);
         dummy.rotation.set(p.rotX, p.rotY, p.rotZ + 0.2);
-        dummy.scale.set(i % 2 === 0 ? p.scaleX * 0.7 * scalePulse : 0, i % 2 === 0 ? p.scaleY * 1.05 * scalePulse : 0, 1);
+        dummy.scale.set(i % 2 === 0 ? p.scaleX * 0.9 * scalePulse : 0, i % 2 === 0 ? p.scaleY * 1.22 * scalePulse : 0, 1);
         dummy.updateMatrix();
         prismMesh.current.setMatrixAt(i, dummy.matrix);
       }
@@ -259,7 +259,7 @@ function ShardGroup({ count = 50, type = 0, seed = 1 }) {
         <meshBasicMaterial
           map={prismTexture}
           transparent
-          opacity={0.42}
+          opacity={0.64}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           side={THREE.DoubleSide}
@@ -270,21 +270,21 @@ function ShardGroup({ count = 50, type = 0, seed = 1 }) {
         <meshPhysicalMaterial
           transmission={1}
           transparent
-          opacity={0.92}
-          roughness={0.015}
+          opacity={0.36}
+          roughness={0.002}
           metalness={0}
-          ior={1.78}
-          thickness={1.25}
-          envMapIntensity={4.5}
+          ior={2.08}
+          thickness={2.15}
+          envMapIntensity={8.4}
           clearcoat={1}
-          clearcoatRoughness={0.03}
+          clearcoatRoughness={0}
           reflectivity={1}
           iridescence={1}
-          iridescenceIOR={2.1}
-          iridescenceThicknessRange={[80, 900]}
-          color="#ffffff"
-          attenuationColor="#dff7ff"
-          attenuationDistance={0.85}
+          iridescenceIOR={2.5}
+          iridescenceThicknessRange={[180, 1450]}
+          color="#f8feff"
+          attenuationColor="#d7fbff"
+          attenuationDistance={0.72}
         />
       </instancedMesh>
     </>
@@ -306,14 +306,14 @@ export function GlassShards({
     <div className={className}>
       <Canvas camera={{ position: [0, 0, 16], fov: 50 }} gl={{ alpha: true, antialias: true }}>
         <fog attach="fog" args={['#ffffff', 18, 42]} />
-        <ambientLight intensity={0.75} />
+        <ambientLight intensity={0.32} />
         {/* ガラスの反射・屈折にプリズム（シアン・マゼンタ・イエロー）を強く当てる */}
-        <directionalLight position={[10, 10, 10]} intensity={5.5} color="#22d3ee" />
-        <directionalLight position={[-10, -8, -8]} intensity={4.8} color="#f472b6" />
-        <directionalLight position={[0, -10, 10]} intensity={4.2} color="#fde047" />
-        <pointLight position={[-4, 3, 8]} intensity={35} distance={18} color="#60a5fa" />
-        <pointLight position={[5, -3, 6]} intensity={28} distance={16} color="#fb7185" />
-        <pointLight position={[0, 6, 4]} intensity={18} distance={14} color="#fef3c7" />
+        <directionalLight position={[10, 10, 10]} intensity={5.2} color="#67e8f9" />
+        <directionalLight position={[-10, -8, -8]} intensity={4.6} color="#f0abfc" />
+        <directionalLight position={[0, -10, 10]} intensity={3.2} color="#fde68a" />
+        <pointLight position={[-4, 3, 8]} intensity={26} distance={18} color="#38bdf8" />
+        <pointLight position={[5, -3, 6]} intensity={22} distance={16} color="#fb7185" />
+        <pointLight position={[0, 6, 4]} intensity={14} distance={14} color="#ffffff" />
         
         {/* 環境マップ：ガラスの反射に必須 */}
         <Environment preset="sunset" />

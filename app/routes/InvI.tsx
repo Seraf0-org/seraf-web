@@ -299,6 +299,7 @@ export default function InViPage() {
 
       {/* 全体に漂う1層目のガラス破片（少なめ） */}
       <GlassShards count={34} className="fixed inset-0 z-[1] pointer-events-none opacity-55" />
+      <div className="pointer-events-none fixed inset-0 z-[1] opacity-[0.14] backdrop-blur-[2.5px] [mask-image:radial-gradient(ellipse_at_24%_18%,black_0,rgba(0,0,0,0.76)_7%,transparent_16%),radial-gradient(ellipse_at_74%_32%,black_0,rgba(0,0,0,0.72)_6%,transparent_14%),radial-gradient(ellipse_at_42%_74%,black_0,rgba(0,0,0,0.68)_6%,transparent_15%)]" />
 
       {/* ===== 強化版ローディング画面 ===== */}
       {isLoading && (
@@ -503,20 +504,12 @@ export default function InViPage() {
         <div className="invi-art absolute inset-0 z-[4] flex items-end justify-center pointer-events-none">
           <div className="relative w-full h-full max-w-7xl mx-auto">
 
-            {/* 浮遊するガラス片 (パララックス) */}
-            <div className="parallax-front absolute top-[20%] left-[15%] z-[30] opacity-80 transition-transform duration-1000 ease-out" style={{ transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px) rotate(15deg)` }}>
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-100/40 via-purple-50/20 to-white/60 backdrop-blur-sm border border-white shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-tl-3xl rounded-br-3xl" />
-            </div>
-            <div className="parallax-bg absolute bottom-[40%] right-[10%] z-0 opacity-60 transition-transform duration-1000 ease-out" style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px) rotate(-25deg)` }}>
-              <div className="w-40 h-40 bg-gradient-to-tr from-pink-50/30 via-white/50 to-blue-50/20 backdrop-blur-md border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.02)] rounded-full" />
-            </div>
-
             {/* 超特大アクセントテキスト（最前面・超高速スクロール） */}
             <div className="parallax-extreme absolute top-[70%] left-[-5%] z-[100] opacity-5 pointer-events-none">
               <span className="font-serif text-[12rem] sm:text-[18rem] font-bold tracking-widest text-transparent" style={{ WebkitTextStroke: "1px rgba(0,0,0,0.5)" }}>DEPTH</span>
             </div>
 
-            <div className="parallax-bg absolute left-[2.5vw] top-[62%] z-[6] hidden w-[16rem] pointer-events-none xl:block">
+            <div className="parallax-bg absolute left-[1.5vw] top-[48%] z-[6] hidden w-[16rem] -translate-y-1/2 pointer-events-none xl:block">
               <div
                 className="relative overflow-hidden border-y border-white/45 py-4 text-gray-800 transition-transform duration-700 ease-out"
                 style={{ transform: `translate(${mousePos.x * 12}px, ${mousePos.y * 8}px)` }}
@@ -627,7 +620,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/ran.png"
                   alt="ラン"
-                  className="absolute bottom-[-53vh] left-1/2 h-[112%] w-auto -translate-x-[16%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-56vh] sm:h-[134%] sm:-translate-x-[24%] lg:bottom-[-66vh] lg:h-[160%] lg:-translate-x-[30%] xl:bottom-[-72vh] xl:h-[168%] xl:-translate-x-[34%]"
+                  className="absolute bottom-[-65vh] left-1/2 h-[122%] w-auto -translate-x-[16%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-70vh] sm:h-[148%] sm:-translate-x-[24%] lg:bottom-[-84vh] lg:h-[180%] lg:-translate-x-[30%] xl:bottom-[-92vh] xl:h-[188%] xl:-translate-x-[34%]"
                 />
               </div>
             </div>
@@ -640,7 +633,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/sui.png"
                   alt="スイ"
-                  className="absolute bottom-[-52vh] left-1/2 h-[110%] w-auto -translate-x-[74%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-55vh] sm:h-[132%] sm:-translate-x-[80%] lg:bottom-[-65vh] lg:h-[156%] lg:-translate-x-[76%] xl:bottom-[-71vh] xl:h-[164%] xl:-translate-x-[74%]"
+                  className="absolute bottom-[-64vh] left-1/2 h-[120%] w-auto -translate-x-[74%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-69vh] sm:h-[146%] sm:-translate-x-[80%] lg:bottom-[-83vh] lg:h-[176%] lg:-translate-x-[76%] xl:bottom-[-91vh] xl:h-[184%] xl:-translate-x-[74%]"
                 />
               </div>
             </div>
@@ -731,16 +724,16 @@ export default function InViPage() {
           </div>
         </div>
 
-        <div className="absolute right-[4vw] bottom-[15vh] z-30 hidden w-[24rem] border-y border-white/50 bg-white/34 px-5 py-3 text-gray-800 shadow-[0_16px_48px_rgba(15,23,42,0.08)] backdrop-blur-xl md:block">
+        <div className="absolute right-[4vw] bottom-[17vh] z-30 hidden w-[34rem] border-y border-white/60 bg-white/36 px-6 py-5 text-gray-800 shadow-[0_20px_60px_rgba(15,23,42,0.1)] backdrop-blur-xl md:block">
           <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(15,23,42,0.42)_1px,transparent_1px)] [background-size:100%_5px]" />
           <div className="relative grid grid-cols-2 gap-4">
             <div>
-              <p className="text-[8px] font-bold uppercase tracking-[0.26em] text-cyan-600/80">Platform</p>
-              <p className="mt-1 font-serif text-lg leading-none tracking-wide text-gray-950">PC（Steam）</p>
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-cyan-600/80">Platform</p>
+              <p className="mt-2 font-serif text-3xl leading-none tracking-wide text-gray-950">PC（Steam）</p>
             </div>
-            <div className="border-l border-black/10 pl-4">
-              <p className="text-[8px] font-bold uppercase tracking-[0.26em] text-pink-500/75">Release</p>
-              <p className="mt-1 font-serif text-lg leading-none tracking-wide text-gray-950">2026年秋</p>
+            <div className="border-l border-black/10 pl-6">
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-pink-500/75">Release</p>
+              <p className="mt-2 font-serif text-3xl leading-none tracking-wide text-gray-950">2026年秋</p>
             </div>
           </div>
         </div>
@@ -903,13 +896,20 @@ export default function InViPage() {
                             <img
                               src={item.src!}
                               alt={item.alt!}
-                              className="absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] object-cover transition-transform duration-700 group-hover:scale-105"
+                              className="absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] object-cover"
                             />
                             <img
                               src="/images/invi/gallery-frame-overlay.png"
                               alt=""
-                              className="absolute inset-0 h-full w-full object-fill"
+                              className="invi-frame-bloom absolute inset-0 h-full w-full scale-[1.02] object-fill opacity-70"
                             />
+                            <img
+                              src="/images/invi/gallery-frame-overlay.png"
+                              alt=""
+                              className="invi-frame-crisp absolute inset-0 h-full w-full object-fill"
+                            />
+                            <div className="invi-frame-spark pointer-events-none absolute inset-x-8 top-3 h-px bg-gradient-to-r from-transparent via-cyan-200/90 to-transparent blur-[1px]" />
+                            <div className="invi-frame-spark pointer-events-none absolute inset-x-10 bottom-3 h-px bg-gradient-to-r from-transparent via-pink-200/80 to-transparent blur-[1px]" />
                             <div className="absolute left-0 top-0 h-10 w-10 border-l border-t border-cyan-200/90" />
                             <div className="absolute right-0 top-0 h-10 w-10 border-r border-t border-white/80" />
                             <div className="absolute bottom-0 left-0 h-10 w-10 border-b border-l border-white/80" />
@@ -1025,24 +1025,74 @@ export default function InViPage() {
           </section>
 
           {/* MOVIE / TRAILER */}
-          <section id="movie" className="invi-section pt-32 space-y-12">
-            <div className="flex items-center gap-3 px-6 sm:px-12 max-w-5xl mx-auto">
-              <span className="w-8 h-px bg-black/20" />
-              <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
-                03 — Movie
+          <section id="movie" className="invi-section relative pt-32 space-y-12 overflow-hidden">
+            <img
+              src="/images/invi/lower-transition-band.png"
+              alt=""
+              className="absolute inset-x-[-14vw] top-8 h-[42rem] w-[128vw] max-w-none object-cover opacity-[0.16] mix-blend-multiply"
+            />
+            <div className="absolute inset-0 bg-white/42" />
+            <div className="relative flex flex-col gap-6 border-b border-black/5 pb-8 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-8 h-px bg-black/20" />
+                  <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-gray-400">
+                    03 — Movie
+                  </p>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
+                  コンセプトムービー
+                </h2>
+              </div>
+              <p className="max-w-xl text-xs sm:text-sm leading-loose text-gray-500 tracking-wide">
+                ふたつの視点、転加、戦闘テンポを映像で確認できます。開発中の挙動を含むコンセプト映像です。
               </p>
             </div>
 
             {/* YouTube埋め込み */}
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="relative aspect-video w-full bg-black overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-                <iframe
-                  src="https://www.youtube.com/embed/0MKQKQDTbNc?rel=0&modestbranding=1&color=white"
-                  title="InVi Concept Movie"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
+            <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+              <div className="pointer-events-none absolute -inset-x-6 -inset-y-10 border border-cyan-200/40 bg-white/18 shadow-[0_28px_90px_rgba(15,23,42,0.13)] backdrop-blur-sm" />
+              <div className="relative z-10 px-5 py-6 sm:px-9 sm:py-10">
+                <img
+                  src="/images/invi/movie-outer-frame-v2.png"
+                  alt=""
+                  className="invi-frame-bloom pointer-events-none absolute inset-0 z-[1] h-full w-full scale-[1.015] object-fill opacity-80"
                 />
+                <img
+                  src="/images/invi/movie-outer-frame-v2.png"
+                  alt=""
+                  className="invi-frame-crisp pointer-events-none absolute inset-0 z-[2] h-full w-full object-fill opacity-95"
+                />
+                <div className="invi-frame-spark pointer-events-none absolute left-16 right-16 top-8 z-[3] h-px bg-gradient-to-r from-transparent via-cyan-200/95 to-transparent blur-[1.5px]" />
+                <div className="invi-frame-spark pointer-events-none absolute bottom-8 left-16 right-16 z-[3] h-px bg-gradient-to-r from-transparent via-pink-200/90 to-transparent blur-[1.5px]" />
+                <div className="relative z-10 bg-white/18 p-3 shadow-[0_22px_70px_rgba(15,23,42,0.18)] backdrop-blur-md sm:p-5">
+                  <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-white/55 pb-3">
+                    <span className="border border-cyan-200/70 bg-gray-950/80 px-4 py-2 text-[9px] font-bold uppercase tracking-[0.28em] text-white/80">
+                      Concept Movie / 03
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {["View Shift", "Mignite", "Battle"].map((item) => (
+                        <span key={item} className="border border-white/70 bg-white/45 px-3 py-2 text-[8px] font-bold uppercase tracking-[0.22em] text-gray-700">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="relative aspect-video w-full overflow-hidden border border-black/15 bg-black shadow-[0_18px_52px_rgba(0,0,0,0.24)]">
+                    <iframe
+                      src="https://www.youtube.com/embed/0MKQKQDTbNc?rel=0&modestbranding=1&color=white"
+                      title="InVi Concept Movie"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                  <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                    <span className="h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-cyan-300/20" />
+                    <span className="font-serif text-[9px] uppercase tracking-[0.38em] text-gray-400">Playback Archive</span>
+                    <span className="h-px bg-gradient-to-l from-transparent via-pink-200/70 to-pink-200/20" />
+                  </div>
+                </div>
               </div>
             </div>
           </section>
