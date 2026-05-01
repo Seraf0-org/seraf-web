@@ -45,3 +45,66 @@
   0%   { transform: translateX(0); }
   100% { transform: translateX(-25%); }
 }
+
+@keyframes invi-scanline {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  52% {
+    opacity: 0.36;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes invi-panel-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0.35rem, -0.45rem, 0);
+  }
+}
+
+@keyframes invi-metric-pulse {
+  0%, 100% {
+    background-color: rgba(255, 255, 255, 0.22);
+  }
+  50% {
+    background-color: rgba(224, 242, 254, 0.44);
+  }
+}
+
+.invi-scanline {
+  animation: invi-scanline 7.5s linear infinite;
+}
+
+.invi-motion-panel {
+  animation: invi-panel-drift 8s ease-in-out infinite;
+}
+
+.invi-motion-panel:nth-child(2) {
+  animation-delay: -2.3s;
+}
+
+.invi-motion-panel:nth-child(3) {
+  animation-delay: -4.6s;
+}
+
+.invi-metric {
+  animation: invi-metric-pulse 5.6s ease-in-out infinite;
+}
+
+.invi-metric:nth-child(2) {
+  animation-delay: -1.8s;
+}
+
+.invi-metric:nth-child(3) {
+  animation-delay: -3.6s;
+}

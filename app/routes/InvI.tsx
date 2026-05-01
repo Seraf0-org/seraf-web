@@ -54,6 +54,18 @@ const NEWS_ITEMS = [
   { category: "Movie", date: "2026.04.29", title: "コンセプトムービーを公開しました。" },
 ];
 
+const HERO_METRICS = [
+  { label: "View", value: "2D x 2D" },
+  { label: "Depth", value: "Lost" },
+  { label: "Shift", value: "Instant" },
+];
+
+const MOTION_PANELS = [
+  { label: "Layer 01", title: "Top View", value: "Observe" },
+  { label: "Layer 02", title: "Side View", value: "Strike" },
+  { label: "Layer 03", title: "Tenka", value: "Reflect" },
+];
+
 const CHARACTERS = [
   {
     id: "sui",
@@ -233,6 +245,16 @@ export default function InViPage() {
       { delay: 0.8, duration: 1.0, easing: ease }
     );
     (animate as any)(
+      ".invi-motion-panel",
+      { opacity: [0, 1], x: [28, 0], filter: ["blur(6px)", "blur(0px)"] },
+      { delay: stagger(0.12, { startDelay: 1.05 }), duration: 0.9, easing: ease }
+    );
+    (animate as any)(
+      ".invi-metric",
+      { opacity: [0, 1], y: [14, 0] },
+      { delay: stagger(0.08, { startDelay: 1.2 }), duration: 0.65, easing: ease }
+    );
+    (animate as any)(
       ".invi-sidenav",
       { opacity: [0, 1] },
       { delay: 0.4, duration: 0.6, easing: ease }
@@ -373,6 +395,24 @@ export default function InViPage() {
         {/* ヒーロー背景：青とピンクのドラマチックな空 */}
         <SkyBackground />
 
+        <div className="pointer-events-none absolute inset-0 z-[0] overflow-hidden bg-[#eef7ff]">
+          <img
+            src="/images/invi/motion-hero-bg.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-center opacity-82 mix-blend-multiply"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.18),rgba(255,255,255,0.62)_34%,rgba(239,246,255,0.34)_58%,rgba(15,23,42,0.12)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent_16%,transparent_82%,rgba(226,242,255,0.28))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.42),transparent_20%,transparent_74%,rgba(255,255,255,0.34))]" />
+        </div>
+
+        <div className="pointer-events-none absolute inset-0 z-[3] opacity-70">
+          <div className="invi-scanline absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-cyan-200/35 via-white/20 to-transparent" />
+          <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(15,23,42,0.34)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.18)_1px,transparent_1px)] [background-size:100%_7px,7px_100%]" />
+          <div className="absolute left-[18%] top-[18%] h-[22rem] w-[22rem] rounded-full border border-cyan-200/50 shadow-[0_0_80px_rgba(125,211,252,0.28)]" />
+          <div className="absolute right-[6%] bottom-[17%] h-[18rem] w-[18rem] rounded-full border border-pink-200/45 shadow-[0_0_70px_rgba(244,114,182,0.2)]" />
+        </div>
+
         {/* 背景キャンバスとグリッド */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden z-[1] mix-blend-overlay opacity-50">
 
@@ -427,6 +467,30 @@ export default function InViPage() {
               <span className="font-serif text-[12rem] sm:text-[18rem] font-bold tracking-widest text-transparent" style={{ WebkitTextStroke: "1px rgba(0,0,0,0.5)" }}>DEPTH</span>
             </div>
 
+            <div className="parallax-bg absolute left-[7%] top-[56%] z-[6] hidden w-56 pointer-events-none lg:block">
+              <div
+                className="transition-transform duration-700 ease-out"
+                style={{ transform: `translate(${mousePos.x * 16}px, ${mousePos.y * 10}px)` }}
+              >
+                {MOTION_PANELS.map((panel, index) => (
+                  <div
+                    key={panel.label}
+                    className="invi-motion-panel mb-3 border border-white/50 bg-white/32 px-4 py-3 text-gray-700 shadow-[0_18px_60px_rgba(59,130,246,0.12)] backdrop-blur-xl"
+                    style={{ clipPath: index === 1 ? "polygon(0 0, 100% 0, 92% 100%, 0 100%)" : "polygon(8% 0, 100% 0, 100% 100%, 0 100%, 0 18%)" }}
+                  >
+                    <div className="flex items-center justify-between gap-4 text-[8px] font-bold uppercase tracking-[0.28em] text-cyan-600/80">
+                      <span>{panel.label}</span>
+                      <span>0{index + 1}</span>
+                    </div>
+                    <div className="mt-3 flex items-end justify-between gap-4">
+                      <span className="font-serif text-xl leading-none tracking-wide text-gray-950">{panel.title}</span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-gray-500">{panel.value}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* 背面の巨大エンブレム */}
             <div className="parallax-bg absolute inset-0 z-[8] pointer-events-none">
               <div
@@ -464,7 +528,7 @@ export default function InViPage() {
                   <img
                     src="/images/invi/logo.png"
                     alt="InVi Logo"
-                    className="relative h-auto w-full object-contain opacity-72 mix-blend-multiply"
+                    className="relative h-auto w-full object-contain opacity-80 mix-blend-multiply drop-shadow-[0_18px_50px_rgba(255,255,255,0.72)]"
                     style={{ filter: "invert(1) brightness(0.72) saturate(0.85)" }}
                   />
                 </div>
@@ -576,6 +640,19 @@ export default function InViPage() {
             ))}
           </div>
         </aside>
+
+        <div className="absolute left-12 right-0 top-[72vh] z-30 hidden sm:left-16 lg:block xl:top-[69vh]">
+          <div className="mx-auto flex max-w-7xl justify-end px-8">
+            <div className="grid w-[34rem] grid-cols-3 border border-white/50 bg-white/38 text-gray-700 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
+              {HERO_METRICS.map((metric) => (
+                <div key={metric.label} className="invi-metric border-r border-white/50 p-4 last:border-r-0">
+                  <p className="text-[8px] font-bold uppercase tracking-[0.28em] text-cyan-600/80">{metric.label}</p>
+                  <p className="mt-2 font-serif text-2xl leading-none tracking-wide text-gray-950">{metric.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         <div className="absolute bottom-10 left-12 right-0 z-30 hidden border-t border-black/5 bg-white/55 backdrop-blur-xl md:block sm:left-16">
           <div className="mx-auto grid max-w-7xl grid-cols-[12rem_1fr] items-stretch">
