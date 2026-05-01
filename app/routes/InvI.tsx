@@ -63,7 +63,7 @@ const HERO_METRICS = [
 const MOTION_PANELS = [
   { label: "Layer 01", title: "Top View", value: "Observe" },
   { label: "Layer 02", title: "Side View", value: "Strike" },
-  { label: "Layer 03", title: "Tenka", value: "Reflect" },
+  { label: "Layer 03", title: "Mignite", value: "Reflect" },
 ];
 
 const CHARACTERS = [
@@ -473,27 +473,38 @@ export default function InViPage() {
               <span className="font-serif text-[12rem] sm:text-[18rem] font-bold tracking-widest text-transparent" style={{ WebkitTextStroke: "1px rgba(0,0,0,0.5)" }}>DEPTH</span>
             </div>
 
-            <div className="parallax-bg absolute left-[7%] top-[56%] z-[6] hidden w-56 pointer-events-none lg:block">
+            <div className="parallax-bg absolute left-[5vw] top-[54%] z-[6] hidden w-[17rem] pointer-events-none xl:block">
               <div
-                className="transition-transform duration-700 ease-out"
+                className="relative overflow-hidden border-y border-white/45 py-4 text-gray-800 transition-transform duration-700 ease-out"
                 style={{ transform: `translate(${mousePos.x * 16}px, ${mousePos.y * 10}px)` }}
               >
+                <img
+                  src="/images/invi/detail-ui-panel.png"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-[0.24] mix-blend-multiply"
+                />
+                <div className="absolute inset-0 bg-white/32 backdrop-blur-[2px]" />
+                <div className="absolute inset-y-3 left-0 w-px bg-cyan-300/80" />
+                <div className="absolute inset-y-3 right-0 w-px bg-pink-200/70" />
+                <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-200/70 to-transparent" />
+                <div className="relative space-y-3 px-4">
                 {MOTION_PANELS.map((panel, index) => (
                   <div
                     key={panel.label}
-                    className="invi-motion-panel mb-3 border border-white/50 bg-white/32 px-4 py-3 text-gray-700 shadow-[0_18px_60px_rgba(59,130,246,0.12)] backdrop-blur-xl"
-                    style={{ clipPath: index === 1 ? "polygon(0 0, 100% 0, 92% 100%, 0 100%)" : "polygon(8% 0, 100% 0, 100% 100%, 0 100%, 0 18%)" }}
+                    className="invi-motion-panel grid grid-cols-[5.2rem_1fr] items-baseline gap-4 border-b border-black/10 pb-3 last:border-b-0 last:pb-0"
                   >
-                    <div className="flex items-center justify-between gap-4 text-[8px] font-bold uppercase tracking-[0.28em] text-cyan-600/80">
+                    <div className="flex items-center gap-2 text-[8px] font-bold uppercase tracking-[0.24em] text-cyan-700/75">
+                      <span className="h-1.5 w-1.5 bg-cyan-400/80" />
                       <span>{panel.label}</span>
-                      <span>0{index + 1}</span>
                     </div>
-                    <div className="mt-3 flex items-end justify-between gap-4">
+                    <div className="flex items-baseline justify-between gap-3">
                       <span className="font-serif text-xl leading-none tracking-wide text-gray-950">{panel.title}</span>
-                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-gray-500">{panel.value}</span>
+                      <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-gray-400">{panel.value}</span>
                     </div>
                   </div>
                 ))}
+                </div>
               </div>
             </div>
 
@@ -534,8 +545,8 @@ export default function InViPage() {
                   <img
                     src="/images/invi/logo.png"
                     alt="InVi Logo"
-                    className="relative h-auto w-full object-contain opacity-80 mix-blend-multiply drop-shadow-[0_18px_50px_rgba(255,255,255,0.72)]"
-                    style={{ filter: "invert(1) brightness(0.72) saturate(0.85)" }}
+                    className="relative h-auto w-full object-contain opacity-62 mix-blend-luminosity drop-shadow-[0_14px_46px_rgba(125,211,252,0.32)]"
+                    style={{ filter: "invert(1) brightness(1.08) contrast(0.78) saturate(0.55)" }}
                   />
                 </div>
               </div>
@@ -573,7 +584,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/ran.png"
                   alt="ラン"
-                  className="absolute bottom-[-50vh] left-1/2 h-[108%] w-auto -translate-x-[16%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-52vh] sm:h-[128%] sm:-translate-x-[24%] lg:bottom-[-61vh] lg:h-[152%] lg:-translate-x-[30%] xl:bottom-[-66vh] xl:h-[160%] xl:-translate-x-[34%]"
+                  className="absolute bottom-[-53vh] left-1/2 h-[112%] w-auto -translate-x-[16%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-56vh] sm:h-[134%] sm:-translate-x-[24%] lg:bottom-[-66vh] lg:h-[160%] lg:-translate-x-[30%] xl:bottom-[-72vh] xl:h-[168%] xl:-translate-x-[34%]"
                 />
               </div>
             </div>
@@ -586,7 +597,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/sui.png"
                   alt="スイ"
-                  className="absolute bottom-[-49vh] left-1/2 h-[106%] w-auto -translate-x-[74%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-51vh] sm:h-[126%] sm:-translate-x-[80%] lg:bottom-[-60vh] lg:h-[148%] lg:-translate-x-[76%] xl:bottom-[-65vh] xl:h-[156%] xl:-translate-x-[74%]"
+                  className="absolute bottom-[-52vh] left-1/2 h-[110%] w-auto -translate-x-[74%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-55vh] sm:h-[132%] sm:-translate-x-[80%] lg:bottom-[-65vh] lg:h-[156%] lg:-translate-x-[76%] xl:bottom-[-71vh] xl:h-[164%] xl:-translate-x-[74%]"
                 />
               </div>
             </div>
@@ -647,8 +658,11 @@ export default function InViPage() {
           </div>
         </aside>
 
-        <div className="pointer-events-none absolute right-[2vw] top-[48vh] z-[8] hidden w-[18rem] -translate-y-1/2 xl:block">
-          <div className="relative overflow-hidden border-y border-white/45 py-4 text-gray-800">
+        <div className="pointer-events-none absolute right-[7vw] top-[48vh] z-[8] hidden w-[18rem] -translate-y-1/2 xl:block">
+          <div
+            className="relative overflow-hidden border-y border-white/45 py-4 text-gray-800 transition-transform duration-700 ease-out"
+            style={{ transform: `translate(${mousePos.x * -14}px, ${mousePos.y * 10}px)` }}
+          >
             <img
               src="/images/invi/detail-ui-panel.png"
               alt=""
@@ -724,6 +738,16 @@ export default function InViPage() {
             className="absolute left-1/2 top-[144rem] h-[42rem] w-[140vw] max-w-none -translate-x-1/2 object-cover opacity-[0.08] mix-blend-multiply"
           />
           <img
+            src="/images/invi/lower-dossier-field.png"
+            alt=""
+            className="absolute left-1/2 top-[190rem] h-[72rem] w-[150vw] max-w-none -translate-x-1/2 object-cover opacity-[0.14] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/gallery-hud-frame.png"
+            alt=""
+            className="absolute left-1/2 top-[266rem] h-[42rem] w-[145vw] max-w-none -translate-x-1/2 object-cover opacity-[0.12] mix-blend-multiply"
+          />
+          <img
             src="/images/invi/lower-edge-accent.png"
             alt=""
             className="absolute right-[-8rem] top-[32rem] h-[86rem] w-[30rem] object-cover opacity-[0.16] mix-blend-multiply"
@@ -735,6 +759,7 @@ export default function InViPage() {
           />
           <div className="absolute inset-x-0 top-[76rem] h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
           <div className="absolute inset-x-0 top-[132rem] h-px bg-gradient-to-r from-transparent via-pink-300/25 to-transparent" />
+          <div className="absolute inset-x-0 top-[214rem] h-px bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent" />
           <div className="absolute left-[20%] inset-y-0 w-px bg-black/[0.03]" />
           <div className="absolute left-[50%] inset-y-0 w-px bg-black/[0.03]" />
           <div className="absolute left-[80%] inset-y-0 w-px bg-black/[0.03]" />
@@ -806,7 +831,13 @@ export default function InViPage() {
             </div>
 
             {/* 横スクロールギャラリー — 純CSS無限ループ */}
-            <div className="relative w-screen -ml-[calc(50vw-50%)] overflow-hidden border-y border-black/5 bg-gray-50/30 py-6">
+            <div className="relative w-screen -ml-[calc(50vw-50%)] overflow-hidden border-y border-black/10 bg-white/25 py-8">
+              <img
+                src="/images/invi/gallery-hud-frame.png"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover opacity-[0.16] mix-blend-multiply"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.72),rgba(255,255,255,0.28)_35%,rgba(255,255,255,0.28)_65%,rgba(255,255,255,0.72))]" />
               {/* フェードエッジ */}
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-gray-50/60 to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-gray-50/60 to-transparent pointer-events-none" />
@@ -824,19 +855,32 @@ export default function InViPage() {
                     {SCENE_FRAGMENTS.map((item, i) => (
                       <div
                         key={i}
-                        className="relative h-[220px] w-[min(82vw,var(--scene-w))] shrink-0 overflow-hidden group sm:h-[380px]"
+                        className="relative h-[220px] w-[min(82vw,var(--scene-w))] shrink-0 overflow-hidden border border-white/60 bg-white/32 p-2 shadow-[0_22px_70px_rgba(15,23,42,0.12)] backdrop-blur-sm group sm:h-[380px]"
                         style={{ "--scene-w": `${item.w}px` } as CSSProperties}
                       >
                         {item.hasImage ? (
                           <>
+                            <div className="absolute inset-2 border border-black/10" />
                             <img
                               src={item.src!}
                               alt={item.alt!}
-                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              className="absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] object-cover transition-transform duration-700 group-hover:scale-105"
                             />
-                            <div className="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-colors duration-500" />
-                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
-                              <span className="text-[9px] font-serif tracking-[0.4em] text-white/70 uppercase">{item.text}</span>
+                            <div className="absolute inset-2 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
+                            <img
+                              src="/images/invi/gallery-hud-frame.png"
+                              alt=""
+                              className="absolute inset-0 h-full w-full object-cover opacity-[0.42] mix-blend-screen"
+                            />
+                            <div className="absolute left-0 top-0 h-10 w-10 border-l border-t border-cyan-200/90" />
+                            <div className="absolute right-0 top-0 h-10 w-10 border-r border-t border-white/80" />
+                            <div className="absolute bottom-0 left-0 h-10 w-10 border-b border-l border-white/80" />
+                            <div className="absolute bottom-0 right-0 h-10 w-10 border-b border-r border-pink-200/90" />
+                            <div className="absolute bottom-2 left-2 right-2 p-4 bg-gradient-to-t from-black/72 to-transparent">
+                              <div className="flex items-center justify-between gap-4">
+                                <span className="text-[9px] font-serif tracking-[0.4em] text-white/80 uppercase">{item.text}</span>
+                                <span className="h-1.5 w-1.5 bg-cyan-300 shadow-[0_0_16px_rgba(103,232,249,0.75)]" />
+                              </div>
                             </div>
                           </>
                         ) : (
@@ -966,8 +1010,14 @@ export default function InViPage() {
           </section>
 
           {/* CHARACTERS */}
-          <section id="characters" className="invi-section pt-32 space-y-12">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
+          <section id="characters" className="invi-section relative pt-32 space-y-12 overflow-hidden">
+            <img
+              src="/images/invi/lower-dossier-field.png"
+              alt=""
+              className="absolute inset-x-[-18vw] top-10 h-[58rem] w-[136vw] max-w-none object-cover opacity-[0.12] mix-blend-multiply"
+            />
+            <div className="absolute inset-0 bg-white/42" />
+            <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-black/5 pb-8">
               <div>
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-8 h-px bg-black/20" />
@@ -984,7 +1034,7 @@ export default function InViPage() {
               </p>
             </div>
 
-            <div className="space-y-32">
+            <div className="relative z-10 space-y-32">
               {/* スイ */}
               <article className="group relative flex flex-col md:flex-row items-center gap-8 md:gap-16">
                 <div className="relative w-full md:w-1/2 flex justify-center h-[60vh] md:h-[80vh] min-h-[500px] max-h-[800px]">
@@ -998,18 +1048,24 @@ export default function InViPage() {
                     className="h-full w-auto select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)] transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="relative w-full md:w-1/2 py-8 bg-white/40 backdrop-blur-md p-8 sm:p-12 border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.02)]">
+                <div className="relative w-full overflow-hidden md:w-1/2 py-8 bg-white/46 backdrop-blur-md p-8 sm:p-12 border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
+                  <img
+                    src="/images/invi/lower-dossier-field.png"
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-[0.16] mix-blend-multiply"
+                  />
+                  <div className="absolute inset-0 bg-white/68" />
                   <div className="absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-blue-300 to-transparent scale-y-0 group-hover:scale-y-100 transition-transform origin-top" />
-                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                  <div className="relative flex flex-wrap items-center gap-4 mb-4">
                     <h3 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-widest">スイ</h3>
                     <span className="text-xs sm:text-sm font-bold tracking-[0.2em] text-blue-500 border border-blue-200 px-4 py-1.5">
                       奇跡の子
                     </span>
                   </div>
-                  <p className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.4em] text-gray-400 mb-8">
+                  <p className="relative text-[10px] sm:text-xs font-serif uppercase tracking-[0.4em] text-gray-400 mb-8">
                     Miracle-Aligned / Resonance
                   </p>
-                  <p className="text-sm sm:text-base leading-loose text-gray-700 tracking-wide">
+                  <p className="relative text-sm sm:text-base leading-loose text-gray-700 tracking-wide">
                     生まれつき"神の力"と強く共鳴する特殊な能力を持った少女。<br />
                     集落では"奇跡の子"として祭り上げられ、母と周囲からの寵愛を一身に受けて育った。<br />
                     無邪気で明るく、深く考えずに笑っていられる——その在り方自体が、誰かにとっての残酷さになることを知らないまま。
@@ -1030,18 +1086,24 @@ export default function InViPage() {
                     className="h-full w-auto select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)] transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="relative w-full md:w-1/2 py-8 bg-white/40 backdrop-blur-md p-8 sm:p-12 border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.02)]">
+                <div className="relative w-full overflow-hidden md:w-1/2 py-8 bg-white/46 backdrop-blur-md p-8 sm:p-12 border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
+                  <img
+                    src="/images/invi/lower-dossier-field.png"
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-[0.16] mix-blend-multiply"
+                  />
+                  <div className="absolute inset-0 bg-white/68" />
                   <div className="absolute right-0 top-0 h-full w-[2px] bg-gradient-to-b from-pink-300 to-transparent scale-y-0 group-hover:scale-y-100 transition-transform origin-top" />
-                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                  <div className="relative flex flex-wrap items-center gap-4 mb-4">
                     <h3 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-widest">ラン</h3>
                     <span className="text-xs sm:text-sm font-bold tracking-[0.2em] text-pink-500 border border-pink-200 px-4 py-1.5">
                       悲劇の子
                     </span>
                   </div>
-                  <p className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.4em] text-gray-400 mb-8">
+                  <p className="relative text-[10px] sm:text-xs font-serif uppercase tracking-[0.4em] text-gray-400 mb-8">
                     Blade-Wielder / Counter-Miracle
                   </p>
-                  <p className="text-sm sm:text-base leading-loose text-gray-700 tracking-wide">
+                  <p className="relative text-sm sm:text-base leading-loose text-gray-700 tracking-wide">
                     集落で絶大な権力を誇るアガタ家が、"奇跡の子"スイに対抗するために生み出した最高傑作。<br />
                     数多の剣を自在に操る力を与えられ、戦うためだけに育てられた少女。<br />
                     愛情よりも期待と義務を浴び続けた彼女は、同じ"選ばれた子"であるスイの存在を、運命への問いとして突きつけられる。
