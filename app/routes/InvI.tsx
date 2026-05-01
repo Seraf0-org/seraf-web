@@ -106,26 +106,26 @@ const WORLD_CARDS = [
 const SCENE_FRAGMENTS = [
   { src: "/images/invi/gallery_key_visual.png", alt: "InVi Key Visual", text: "KEY VISUAL", w: 720, hasImage: true },
   { src: "/images/invi/gallery_scene01.jpg", alt: "Scene Encounter", text: "SCENE_01 / ENCOUNTER", w: 680, hasImage: true },
-  { src: null, alt: null, text: "SCENE_02 / DEPTHLESS RUINS", w: 480, hasImage: false },
-  { src: null, alt: null, text: "SCENE_03 / SWORD RITUAL", w: 540, hasImage: false },
-  { src: null, alt: null, text: "SCENE_04 / DEAD GOD", w: 500, hasImage: false },
+  { src: "/images/invi/game-topdown.png", alt: "Top-down gameplay", text: "GAMEPLAY_01 / TOPDOWN", w: 680, hasImage: true },
+  { src: "/images/invi/game-sideview.png", alt: "Side-view gameplay", text: "GAMEPLAY_02 / SIDE VIEW", w: 680, hasImage: true },
+  { src: "/images/invi/game-mignite.png", alt: "Mignite battle gameplay", text: "GAMEPLAY_03 / BATTLE", w: 680, hasImage: true },
 ];
 
 const SYSTEMS = [
   {
     label: "01",
     title: "2D x 2D Action",
-    desc: "トップダウンと横スクロール、ふたつの2D視点を瞬時に切り替えながら進むスタイリッシュアクション。コントローラー操作でスイを操り、敵をなぎ倒していく。",
+    desc: "上から見た視点と横から見た視点を切り替えながら進む2Dアクション。見え方を変えることで、移動や攻撃の方法も変わる。",
   },
   {
     label: "02",
     title: "Dimensional Shift",
-    desc: "横視点では避けられない攻撃を「奥」へ移動して回避し、奥に連なる敵を視点変更で1体に重ねて一掃する。空間の錯覚そのものが武器になる。",
+    desc: "同じ場所でも、視点を変えると通れる道や敵との距離が変わる。状況に合わせて視点を切り替えることが攻略の鍵になる。",
   },
   {
     label: "03",
     title: "Tenka",
-    desc: "物体の向きを変える「転加」によって、変則的な空中制動や敵弾反射が可能になる。視点変更と転加を組み合わせ、戦況を切り開く。",
+    desc: "物体の向きを変える「転加」で、移動、回避、反撃を広げる。視点切り替えと組み合わせて戦い方を組み立てる。",
   },
 ];
 
@@ -140,6 +140,12 @@ const PRODUCTS = [
   { label: "Teaser Site", title: "InvI Official Web", status: "Now Open" },
   { label: "Concept Movie", title: "Depthless World Trailer", status: "Watch" },
   { label: "Development", title: "2D x 2D Action Project", status: "In Progress" },
+];
+
+const CARD_BACKGROUNDS = [
+  "/images/invi/detail-ui-panel.png",
+  "/images/invi/lower-data-field.png",
+  "/images/invi/lower-transition-band.png",
 ];
 
 const CREDIT_GROUPS = [
@@ -567,7 +573,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/ran.png"
                   alt="ラン"
-                  className="absolute bottom-[-46vh] left-1/2 h-[108%] w-auto -translate-x-[1%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-47vh] sm:h-[128%] sm:-translate-x-[14%] lg:bottom-[-55vh] lg:h-[152%] xl:bottom-[-59vh] xl:h-[160%]"
+                  className="absolute bottom-[-50vh] left-1/2 h-[108%] w-auto -translate-x-[16%] select-none object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] sm:bottom-[-52vh] sm:h-[128%] sm:-translate-x-[24%] lg:bottom-[-61vh] lg:h-[152%] lg:-translate-x-[30%] xl:bottom-[-66vh] xl:h-[160%] xl:-translate-x-[34%]"
                 />
               </div>
             </div>
@@ -580,7 +586,7 @@ export default function InViPage() {
                 <img
                   src="/images/invi/sui.png"
                   alt="スイ"
-                  className="absolute bottom-[-45vh] left-1/2 h-[106%] w-auto -translate-x-[90%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-46vh] sm:h-[126%] sm:-translate-x-[97%] lg:bottom-[-54vh] lg:h-[148%] xl:bottom-[-58vh] xl:h-[156%]"
+                  className="absolute bottom-[-49vh] left-1/2 h-[106%] w-auto -translate-x-[74%] select-none object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] sm:bottom-[-51vh] sm:h-[126%] sm:-translate-x-[80%] lg:bottom-[-60vh] lg:h-[148%] lg:-translate-x-[76%] xl:bottom-[-65vh] xl:h-[156%] xl:-translate-x-[74%]"
                 />
               </div>
             </div>
@@ -654,34 +660,8 @@ export default function InViPage() {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-12 right-0 z-30 hidden border-t border-black/5 bg-white/55 backdrop-blur-xl md:block sm:left-16">
-          <div className="mx-auto grid max-w-7xl grid-cols-[12rem_1fr] items-stretch">
-            <div className="flex items-center border-r border-black/5 px-6">
-              <p className="text-[10px] font-serif uppercase tracking-[0.35em] text-gray-500">Character</p>
-            </div>
-            <div className="grid grid-cols-2">
-              {CHARACTERS.map((character) => (
-                <a key={character.id} href="#characters" className="group grid h-28 grid-cols-[5rem_1fr] overflow-hidden border-r border-black/5 last:border-r-0">
-                  <div className={`relative bg-gradient-to-br ${character.color}`}>
-                    <img
-                      src={character.image}
-                      alt=""
-                      className="absolute bottom-0 left-1/2 h-28 w-auto -translate-x-1/2 object-contain transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center px-5">
-                    <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-gray-400">{character.type}</span>
-                    <span className="mt-2 text-xl font-bold tracking-[0.18em] text-gray-900">{character.name}</span>
-                    <span className="mt-1 text-[10px] font-bold tracking-[0.24em] text-gray-500">{character.role}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* 右下ボタン群（PC） */}
-        <div className="hidden md:flex absolute right-[4vw] bottom-[22vh] z-30 items-center gap-4 xl:bottom-[8vh]">
+        <div className="hidden md:flex absolute right-[4vw] bottom-[8vh] z-30 items-center gap-4">
           <a
             href="/InvI/wiki"
             className="anim-fade-up group relative inline-flex items-center gap-3 bg-gray-950 border border-gray-950 px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-white transition-all hover:bg-gray-800 hover:border-gray-800 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
@@ -709,6 +689,38 @@ export default function InViPage() {
 
         {/* 背景グリッドの下層延長 */}
         <div className="absolute inset-0 pointer-events-none">
+          <img
+            src="/images/invi/lower-data-field.png"
+            alt=""
+            className="absolute left-1/2 top-[12rem] h-[58rem] w-[150vw] max-w-none -translate-x-1/2 object-cover opacity-[0.16] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/detail-ui-panel.png"
+            alt=""
+            className="absolute left-1/2 top-[58rem] h-[46rem] w-[140vw] max-w-none -translate-x-1/2 object-cover opacity-[0.1] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/lower-transition-band.png"
+            alt=""
+            className="absolute left-1/2 top-[96rem] h-[24rem] w-[150vw] max-w-none -translate-x-1/2 object-cover opacity-[0.18] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/detail-mood-banner.png"
+            alt=""
+            className="absolute left-1/2 top-[144rem] h-[42rem] w-[140vw] max-w-none -translate-x-1/2 object-cover opacity-[0.08] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/lower-edge-accent.png"
+            alt=""
+            className="absolute right-[-8rem] top-[32rem] h-[86rem] w-[30rem] object-cover opacity-[0.16] mix-blend-multiply"
+          />
+          <img
+            src="/images/invi/lower-edge-accent.png"
+            alt=""
+            className="absolute left-[-10rem] top-[118rem] h-[78rem] w-[30rem] scale-x-[-1] object-cover opacity-[0.13] mix-blend-multiply"
+          />
+          <div className="absolute inset-x-0 top-[76rem] h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
+          <div className="absolute inset-x-0 top-[132rem] h-px bg-gradient-to-r from-transparent via-pink-300/25 to-transparent" />
           <div className="absolute left-[20%] inset-y-0 w-px bg-black/[0.03]" />
           <div className="absolute left-[50%] inset-y-0 w-px bg-black/[0.03]" />
           <div className="absolute left-[80%] inset-y-0 w-px bg-black/[0.03]" />
@@ -842,11 +854,11 @@ export default function InViPage() {
                   </p>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-serif text-gray-900 tracking-wide">
-                  視点を切り替え、奥行きを制する。
+                  ふたつの視点を切り替えて戦う。
                 </h2>
               </div>
               <p className="max-w-xl text-xs sm:text-sm leading-loose text-gray-500 tracking-wide">
-                トップダウンと横スクロール。ふたつの2D視点を瞬時に切り替え、敵の攻撃、位置、重なりを読み替えて戦う。
+                上から見た画面と、横から見た画面を切り替えながら進むアクションゲーム。視点を変えることで、移動できる場所や敵との距離が変わる。
               </p>
             </div>
 
@@ -870,8 +882,8 @@ export default function InViPage() {
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.38em] text-blue-200">2D x 2D Action</p>
                     <h3 className="mt-4 max-w-xl font-serif text-3xl leading-tight tracking-normal text-white sm:text-5xl">
-                      奥行きのない遺跡を、
-                      <span className="block text-white/55">視点で突破する。</span>
+                      見え方を変えて、
+                      <span className="block text-white/55">道を作る。</span>
                     </h3>
                   </div>
                 </div>
@@ -879,9 +891,9 @@ export default function InViPage() {
 
               <div className="divide-y divide-black/5 bg-[#fbfaf6]">
                 {[
-                  ["01", "切り替える", "トップダウンと横スクロールをボタン操作で瞬時に変更。見え方が変わると、敵との距離も攻略ルートも変化する。"],
-                  ["02", "ずらして避ける", "横視点では避けにくい攻撃を、奥方向への移動でかわす。平面の中に隠れた奥行きを使う。"],
-                  ["03", "重ねて倒す", "奥に並ぶ敵を視点変更でひとつのラインへ重ね、一気に斬り伏せる。空間の錯覚が攻撃手段になる。"],
+                  ["01", "上から見る", "部屋全体の配置を見ながら移動する。敵の位置や進める場所を確認しやすい視点。"],
+                  ["02", "横から見る", "ジャンプや段差、攻撃の高さがわかりやすい視点。アクションの操作感が変わる。"],
+                  ["03", "切り替えて進む", "片方の視点では進めない場所も、もう片方の視点に変えると突破口が見える。"],
                 ].map(([num, title, desc]) => (
                   <article key={num} className="grid gap-5 p-6 sm:grid-cols-[4rem_1fr] sm:p-7">
                     <span className="font-serif text-3xl text-gray-300">{num}</span>
@@ -895,8 +907,14 @@ export default function InViPage() {
             </div>
 
             <div className="grid gap-5 lg:grid-cols-3">
-              {SYSTEMS.map((system) => (
+              {SYSTEMS.map((system, index) => (
                 <article key={system.label} className="group relative min-h-[15rem] overflow-hidden border border-black/5 bg-white p-7 shadow-[0_10px_36px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]">
+                  <img
+                    src={CARD_BACKGROUNDS[index % CARD_BACKGROUNDS.length]}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-[0.13] mix-blend-multiply transition-opacity duration-500 group-hover:opacity-[0.2]"
+                  />
+                  <div className="absolute inset-0 bg-white/74" />
                   <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-200 via-white to-pink-200 opacity-0 transition-opacity group-hover:opacity-100" />
                   <div className="relative flex h-full flex-col justify-between gap-10">
                     <span className="font-serif text-xs tracking-[0.45em] text-gray-300">{system.label}</span>
@@ -1041,11 +1059,19 @@ export default function InViPage() {
 
             <div className="grid gap-6 md:grid-cols-3">
               {WORLD_CARDS.map((item, i) => (
-                <div key={i} className="group relative bg-white p-8 border border-black/5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:border-black/10">
+                <div key={i} className="group relative overflow-hidden bg-white p-8 border border-black/5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:border-black/10">
+                  <img
+                    src={CARD_BACKGROUNDS[(i + 1) % CARD_BACKGROUNDS.length]}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-[0.1] mix-blend-multiply transition-opacity duration-500 group-hover:opacity-[0.18]"
+                  />
+                  <div className="absolute inset-0 bg-white/78" />
                   <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-blue-100 to-pink-100 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                  <p className="text-[9px] font-serif uppercase tracking-[0.3em] text-gray-400">{item.label}</p>
-                  <p className="mt-4 text-sm font-bold text-gray-800 tracking-wide">{item.title}</p>
-                  <p className="mt-4 text-[11px] leading-loose text-gray-500">{item.desc}</p>
+                  <div className="relative">
+                    <p className="text-[9px] font-serif uppercase tracking-[0.3em] text-gray-400">{item.label}</p>
+                    <p className="mt-4 text-sm font-bold text-gray-800 tracking-wide">{item.title}</p>
+                    <p className="mt-4 text-[11px] leading-loose text-gray-500">{item.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1090,14 +1116,22 @@ export default function InViPage() {
             </div>
 
             <div className="grid gap-5 md:grid-cols-3">
-              {PRODUCTS.map((product) => (
+              {PRODUCTS.map((product, index) => (
                 <article key={product.label} className="group relative overflow-hidden border border-black/5 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,0.04)]">
+                  <img
+                    src={CARD_BACKGROUNDS[(index + 2) % CARD_BACKGROUNDS.length]}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-multiply transition-opacity duration-500 group-hover:opacity-[0.22]"
+                  />
+                  <div className="absolute inset-0 bg-white/72" />
                   <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-blue-200 via-white to-pink-200 opacity-0 transition-opacity group-hover:opacity-100" />
-                  <p className="text-[10px] font-serif uppercase tracking-[0.35em] text-gray-400">{product.label}</p>
-                  <h3 className="mt-6 min-h-[4rem] font-serif text-2xl leading-snug tracking-wide text-gray-900">{product.title}</h3>
-                  <div className="mt-8 flex items-center justify-between border-t border-black/5 pt-4">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gray-500">{product.status}</span>
-                    <span className="text-lg text-gray-300 transition-colors group-hover:text-gray-900">→</span>
+                  <div className="relative">
+                    <p className="text-[10px] font-serif uppercase tracking-[0.35em] text-gray-400">{product.label}</p>
+                    <h3 className="mt-6 min-h-[4rem] font-serif text-2xl leading-snug tracking-wide text-gray-900">{product.title}</h3>
+                    <div className="mt-8 flex items-center justify-between border-t border-black/5 pt-4">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gray-500">{product.status}</span>
+                      <span className="text-lg text-gray-300 transition-colors group-hover:text-gray-900">→</span>
+                    </div>
                   </div>
                 </article>
               ))}
