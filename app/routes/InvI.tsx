@@ -165,6 +165,7 @@ function getMemberName(id: number) {
 export default function InViPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(true);
+  const [isOpening, setIsOpening] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -190,7 +191,8 @@ export default function InViPage() {
       if (elapsed < duration) {
         frameId = requestAnimationFrame(updateProgress);
       } else {
-        openTimer = setTimeout(() => setIsLoading(false), 300); // 100%になって少し待ってから開く
+        setIsOpening(true);
+        openTimer = setTimeout(() => setIsLoading(false), 980);
       }
     };
     frameId = requestAnimationFrame(updateProgress);
@@ -300,7 +302,7 @@ export default function InViPage() {
 
       {/* ===== 強化版ローディング画面 ===== */}
       {isLoading && (
-        <div className="invi-shutter-container fixed inset-0 z-[100] pointer-events-none overflow-hidden bg-[#f8fbff]">
+        <div className={`invi-shutter-container fixed inset-0 z-[100] pointer-events-none overflow-hidden bg-[#f8fbff] ${isOpening ? "invi-loading-open" : ""}`}>
           <img
             src="/images/invi/lower-data-field.png"
             alt=""
@@ -313,7 +315,6 @@ export default function InViPage() {
           />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(255,255,255,0.16),rgba(255,255,255,0.78)_42%,rgba(226,242,255,0.92)_100%)]" />
           <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(15,23,42,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.16)_1px,transparent_1px)] [background-size:100%_8px,8px_100%]" />
-          <div className="invi-loader-scan absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-cyan-200/45 via-white/20 to-transparent" />
           <div className="absolute left-[8vw] top-1/2 hidden w-56 -translate-y-1/2 border-y border-white/50 py-4 text-[8px] font-bold uppercase tracking-[0.24em] text-gray-500 md:block">
             {["Archive Link", "Depth Scan", "Miracle Index"].map((item, index) => (
               <div key={item} className="flex items-center justify-between border-b border-black/10 py-3 last:border-b-0">
@@ -331,13 +332,11 @@ export default function InViPage() {
             ))}
           </div>
 
-          {/* 上下のシャッターパネル */}
-          <div className="invi-shutter-panel absolute inset-x-0 top-0 h-1/2 origin-top border-b border-white/60 bg-white/22 backdrop-blur-sm" />
-          <div className="invi-shutter-panel absolute inset-x-0 bottom-0 h-1/2 origin-bottom border-t border-white/60 bg-white/22 backdrop-blur-sm" />
-
           {/* ローディングコンテンツ */}
           <div className="invi-shutter-content absolute inset-0 flex flex-col items-center justify-center">
             <div className="invi-loader-core relative flex h-52 w-52 items-center justify-center">
+              <div className="invi-circle-wipe absolute inset-0 rounded-full bg-white/72 backdrop-blur-sm" />
+              <div className="invi-circle-wipe-edge absolute inset-0 rounded-full border border-cyan-200/80" />
               <div className="absolute inset-0 rounded-full border border-cyan-200/80" />
               <div className="absolute inset-6 rounded-full border border-pink-200/70" />
               <div className="absolute inset-12 rounded-full border border-black/10" />
@@ -517,10 +516,10 @@ export default function InViPage() {
               <span className="font-serif text-[12rem] sm:text-[18rem] font-bold tracking-widest text-transparent" style={{ WebkitTextStroke: "1px rgba(0,0,0,0.5)" }}>DEPTH</span>
             </div>
 
-            <div className="parallax-bg absolute left-[5vw] top-[54%] z-[6] hidden w-[17rem] pointer-events-none xl:block">
+            <div className="parallax-bg absolute left-[2.5vw] top-[62%] z-[6] hidden w-[16rem] pointer-events-none xl:block">
               <div
                 className="relative overflow-hidden border-y border-white/45 py-4 text-gray-800 transition-transform duration-700 ease-out"
-                style={{ transform: `translate(${mousePos.x * 16}px, ${mousePos.y * 10}px)` }}
+                style={{ transform: `translate(${mousePos.x * 12}px, ${mousePos.y * 8}px)` }}
               >
                 <img
                   src="/images/invi/detail-ui-panel.png"
@@ -732,6 +731,20 @@ export default function InViPage() {
           </div>
         </div>
 
+        <div className="absolute right-[4vw] bottom-[15vh] z-30 hidden w-[24rem] border-y border-white/50 bg-white/34 px-5 py-3 text-gray-800 shadow-[0_16px_48px_rgba(15,23,42,0.08)] backdrop-blur-xl md:block">
+          <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(15,23,42,0.42)_1px,transparent_1px)] [background-size:100%_5px]" />
+          <div className="relative grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-[8px] font-bold uppercase tracking-[0.26em] text-cyan-600/80">Platform</p>
+              <p className="mt-1 font-serif text-lg leading-none tracking-wide text-gray-950">PC（Steam）</p>
+            </div>
+            <div className="border-l border-black/10 pl-4">
+              <p className="text-[8px] font-bold uppercase tracking-[0.26em] text-pink-500/75">Release</p>
+              <p className="mt-1 font-serif text-lg leading-none tracking-wide text-gray-950">2026年秋</p>
+            </div>
+          </div>
+        </div>
+
         {/* 右下ボタン群（PC） */}
         <div className="hidden md:flex absolute right-[4vw] bottom-[8vh] z-30 items-center gap-4">
           <a
@@ -761,55 +774,42 @@ export default function InViPage() {
 
         {/* 背景グリッドの下層延長 */}
         <div className="absolute inset-0 pointer-events-none">
-          <img
-            src="/images/invi/lower-data-field.png"
-            alt=""
-            className="absolute left-1/2 top-[12rem] h-[58rem] w-[150vw] max-w-none -translate-x-1/2 object-cover opacity-[0.16] mix-blend-multiply"
+          <div
+            className="parallax-bg-deep absolute -inset-x-[28vw] -top-72 bottom-[-90rem] opacity-[0.14] mix-blend-multiply"
+            style={{
+              backgroundImage: "url('/images/invi/lower-data-field.png')",
+              backgroundPosition: "center top",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
           />
-          <img
-            src="/images/invi/detail-ui-panel.png"
-            alt=""
-            className="absolute left-1/2 top-[58rem] h-[46rem] w-[140vw] max-w-none -translate-x-1/2 object-cover opacity-[0.1] mix-blend-multiply"
+          <div
+            className="parallax-bg absolute -inset-x-[22vw] -top-40 bottom-[-80rem] opacity-[0.1] mix-blend-multiply"
+            style={{
+              backgroundImage: "url('/images/invi/lower-dossier-field.png')",
+              backgroundPosition: "center 42%",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
           />
-          <img
-            src="/images/invi/lower-transition-band.png"
-            alt=""
-            className="absolute left-1/2 top-[96rem] h-[24rem] w-[150vw] max-w-none -translate-x-1/2 object-cover opacity-[0.18] mix-blend-multiply"
+          <div className="absolute -inset-x-[12vw] top-0 bottom-0 bg-[radial-gradient(circle_at_50%_8%,rgba(255,255,255,0.44),rgba(255,255,255,0)_30%),linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.72)_36%,rgba(255,255,255,0.58)_68%,rgba(255,255,255,0.8))]" />
+          <div className="parallax-bg absolute -inset-x-[18vw] top-[18rem] bottom-[-70rem] opacity-[0.075] mix-blend-multiply"
+            style={{
+              backgroundImage: "url('/images/invi/detail-ui-panel.png')",
+              backgroundPosition: "center center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
           />
-          <img
-            src="/images/invi/detail-mood-banner.png"
-            alt=""
-            className="absolute left-1/2 top-[144rem] h-[42rem] w-[140vw] max-w-none -translate-x-1/2 object-cover opacity-[0.08] mix-blend-multiply"
-          />
-          <img
-            src="/images/invi/lower-dossier-field.png"
-            alt=""
-            className="absolute left-1/2 top-[190rem] h-[72rem] w-[150vw] max-w-none -translate-x-1/2 object-cover opacity-[0.14] mix-blend-multiply"
-          />
-          <img
-            src="/images/invi/gallery-hud-frame.png"
-            alt=""
-            className="absolute left-1/2 top-[266rem] h-[42rem] w-[145vw] max-w-none -translate-x-1/2 object-cover opacity-[0.12] mix-blend-multiply"
-          />
-          <img
-            src="/images/invi/lower-edge-accent.png"
-            alt=""
-            className="absolute right-[-8rem] top-[32rem] h-[86rem] w-[30rem] object-cover opacity-[0.16] mix-blend-multiply"
-          />
-          <img
-            src="/images/invi/lower-edge-accent.png"
-            alt=""
-            className="absolute left-[-10rem] top-[118rem] h-[78rem] w-[30rem] scale-x-[-1] object-cover opacity-[0.13] mix-blend-multiply"
-          />
-          <div className="absolute inset-x-0 top-[76rem] h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-          <div className="absolute inset-x-0 top-[132rem] h-px bg-gradient-to-r from-transparent via-pink-300/25 to-transparent" />
-          <div className="absolute inset-x-0 top-[214rem] h-px bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent" />
+          <div className="absolute inset-x-0 top-[76rem] h-px bg-gradient-to-r from-transparent via-cyan-400/18 to-transparent" />
+          <div className="absolute inset-x-0 top-[132rem] h-px bg-gradient-to-r from-transparent via-pink-300/16 to-transparent" />
+          <div className="absolute inset-x-0 top-[214rem] h-px bg-gradient-to-r from-transparent via-cyan-400/16 to-transparent" />
           <div className="absolute left-[20%] inset-y-0 w-px bg-black/[0.03]" />
           <div className="absolute left-[50%] inset-y-0 w-px bg-black/[0.03]" />
           <div className="absolute left-[80%] inset-y-0 w-px bg-black/[0.03]" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6 sm:px-12 pb-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-10 pb-32">
 
           {/* NEWS */}
           <section id="news" className="invi-section pt-24 space-y-8">

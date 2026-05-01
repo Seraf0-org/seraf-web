@@ -109,20 +109,6 @@
   animation-delay: -3.6s;
 }
 
-@keyframes invi-loader-scan {
-  0% {
-    transform: translateY(-130%);
-    opacity: 0;
-  }
-  18% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-}
-
 @keyframes invi-loader-ring {
   to {
     transform: rotate(360deg);
@@ -146,10 +132,6 @@
   }
 }
 
-.invi-loader-scan {
-  animation: invi-loader-scan 2.6s linear infinite;
-}
-
 .invi-loader-ring {
   animation: invi-loader-ring 4.2s linear infinite;
 }
@@ -160,4 +142,67 @@
 
 .invi-loader-core {
   animation: invi-loader-core 3.2s ease-in-out infinite;
+}
+
+.invi-loading-open .invi-shutter-content {
+  animation: invi-loader-content-open 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.invi-loading-open .invi-circle-wipe {
+  animation: invi-circle-wipe-open 0.92s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.invi-loading-open .invi-circle-wipe-edge {
+  animation: invi-circle-wipe-edge-open 0.92s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes invi-circle-wipe-open {
+  0% {
+    transform: scale(1);
+    opacity: 0.68;
+  }
+  28% {
+    transform: scale(1.22);
+    opacity: 0.82;
+  }
+  100% {
+    transform: scale(18);
+    opacity: 0;
+  }
+}
+
+@keyframes invi-circle-wipe-edge-open {
+  0% {
+    transform: scale(1);
+    opacity: 0.95;
+    box-shadow: 0 0 0 rgba(125, 211, 252, 0);
+  }
+  30% {
+    transform: scale(1.3);
+    opacity: 1;
+    box-shadow: 0 0 42px rgba(125, 211, 252, 0.48), 0 0 82px rgba(244, 114, 182, 0.18);
+  }
+  100% {
+    transform: scale(18);
+    opacity: 0;
+    box-shadow: 0 0 120px rgba(255, 255, 255, 0.9);
+  }
+}
+
+@keyframes invi-loader-content-open {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.03);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(4px);
+  }
 }
