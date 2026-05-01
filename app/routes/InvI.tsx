@@ -114,17 +114,17 @@ const SCENE_FRAGMENTS = [
 const SYSTEMS = [
   {
     label: "01",
-    title: "2D x 2D Action",
+    title: "2つの2D視点",
     desc: "上から見た視点と横から見た視点を切り替えながら進む2Dアクション。見え方を変えることで、移動や攻撃の方法も変わる。",
   },
   {
     label: "02",
-    title: "Dimensional Shift",
+    title: "視点切り替え",
     desc: "同じ場所でも、視点を変えると通れる道や敵との距離が変わる。状況に合わせて視点を切り替えることが攻略の鍵になる。",
   },
   {
     label: "03",
-    title: "Tenka",
+    title: "転加",
     desc: "物体の向きを変える「転加」で、移動、回避、反撃を広げる。視点切り替えと組み合わせて戦い方を組み立てる。",
   },
 ];
@@ -647,13 +647,27 @@ export default function InViPage() {
           </div>
         </aside>
 
-        <div className="absolute left-12 right-0 top-[72vh] z-30 hidden sm:left-16 lg:block xl:top-[69vh]">
-          <div className="mx-auto flex max-w-7xl justify-end px-8">
-            <div className="grid w-[34rem] grid-cols-3 border border-white/50 bg-white/38 text-gray-700 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
-              {HERO_METRICS.map((metric) => (
-                <div key={metric.label} className="invi-metric border-r border-white/50 p-4 last:border-r-0">
-                  <p className="text-[8px] font-bold uppercase tracking-[0.28em] text-cyan-600/80">{metric.label}</p>
-                  <p className="mt-2 font-serif text-2xl leading-none tracking-wide text-gray-950">{metric.value}</p>
+        <div className="pointer-events-none absolute right-[2vw] top-[48vh] z-[8] hidden w-[18rem] -translate-y-1/2 xl:block">
+          <div className="relative overflow-hidden border-y border-white/45 py-4 text-gray-800">
+            <img
+              src="/images/invi/detail-ui-panel.png"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover opacity-[0.28] mix-blend-multiply"
+            />
+            <div className="absolute inset-0 bg-white/34 backdrop-blur-[2px]" />
+            <div className="absolute inset-y-3 left-0 w-px bg-cyan-300/80" />
+            <div className="absolute inset-y-3 right-0 w-px bg-pink-200/70" />
+            <div className="relative space-y-3 px-4">
+              {HERO_METRICS.map((metric, index) => (
+                <div key={metric.label} className="invi-metric grid grid-cols-[4.5rem_1fr] items-baseline gap-4 border-b border-black/10 pb-3 last:border-b-0 last:pb-0">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 bg-cyan-400/80" />
+                    <p className="text-[8px] font-bold uppercase tracking-[0.28em] text-cyan-700/75">{metric.label}</p>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="font-serif text-xl leading-none tracking-wide text-gray-950">{metric.value}</p>
+                    <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-gray-400">0{index + 1}</span>
+                  </div>
                 </div>
               ))}
             </div>
